@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/loreaxe/XenonRecomp_Rust/build",
-  "command": "/usr/bin/clang -I/home/loreaxe/XenonRecomp_Rust/thirdparty/libmspack/libmspack/mspack -O2 -g -DNDEBUG -fPIC -o thirdparty/CMakeFiles/libmspack.dir/libmspack/libmspack/mspack/lzxd.c.o -c /home/loreaxe/XenonRecomp_Rust/thirdparty/libmspack/libmspack/mspack/lzxd.c",
-  "file": "/home/loreaxe/XenonRecomp_Rust/thirdparty/libmspack/libmspack/mspack/lzxd.c",
-  "output": "thirdparty/CMakeFiles/libmspack.dir/libmspack/libmspack/mspack/lzxd.c.o"
-}
-]

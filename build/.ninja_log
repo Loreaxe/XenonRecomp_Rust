@@ -1,7 +1,0 @@
-# ninja log v5
-1	314	1763821679459611016	thirdparty/CMakeFiles/libmspack.dir/libmspack/libmspack/mspack/lzxd.c.o	7332fd04b9dbe697
-314	379	1763821679497500784	thirdparty/libmspack.a	62ea195792aa7c24
-1	14199	0	CMakeFiles/cargo_build	772857358177841
-1	14199	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
-1	185	0	CMakeFiles/cargo_build	772857358177841
-1	185	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
