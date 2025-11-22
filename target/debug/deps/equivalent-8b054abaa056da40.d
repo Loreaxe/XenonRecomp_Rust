@@ -1,5 +1,5 @@
-/home/loreaxe/Rexglue-lore/XenonRecomp_Rust/target/debug/deps/equivalent-8b054abaa056da40.d: /home/loreaxe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/equivalent-1.0.2/src/lib.rs
+/home/loreaxe/XenonRecomp_Rust/target/debug/deps/equivalent-8b054abaa056da40.d: /home/loreaxe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/equivalent-1.0.2/src/lib.rs
 
-/home/loreaxe/Rexglue-lore/XenonRecomp_Rust/target/debug/deps/libequivalent-8b054abaa056da40.rmeta: /home/loreaxe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/equivalent-1.0.2/src/lib.rs
+/home/loreaxe/XenonRecomp_Rust/target/debug/deps/libequivalent-8b054abaa056da40.rmeta: /home/loreaxe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/equivalent-1.0.2/src/lib.rs
 
 /home/loreaxe/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/equivalent-1.0.2/src/lib.rs:

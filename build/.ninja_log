@@ -1,21 +1,7 @@
 # ninja log v5
-1	65	1763821651017318711	thirdparty/CMakeFiles/libmspack.dir/libmspack/libmspack/mspack/lzxd.c.o	a0f2ecfb1080ff0
-66	146	1763821651068911989	thirdparty/libmspack.a	62ea195792aa7c24
-146	2988	0	CMakeFiles/cargo_build	818c80e70f6009e7
-146	2988	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	818c80e70f6009e7
 1	314	1763821679459611016	thirdparty/CMakeFiles/libmspack.dir/libmspack/libmspack/mspack/lzxd.c.o	7332fd04b9dbe697
 314	379	1763821679497500784	thirdparty/libmspack.a	62ea195792aa7c24
-379	14674	0	CMakeFiles/cargo_build	772857358177841
-379	14674	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
-2	13543	0	CMakeFiles/cargo_build	772857358177841
-2	13543	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
-1	14483	0	CMakeFiles/cargo_build	772857358177841
-1	14483	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
-1	13484	0	CMakeFiles/cargo_build	772857358177841
-1	13484	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
-1	13787	0	CMakeFiles/cargo_build	772857358177841
-1	13787	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
-0	13891	0	CMakeFiles/cargo_build	772857358177841
-0	13891	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
 1	14199	0	CMakeFiles/cargo_build	772857358177841
 1	14199	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841
+1	185	0	CMakeFiles/cargo_build	772857358177841
+1	185	0	/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build	772857358177841

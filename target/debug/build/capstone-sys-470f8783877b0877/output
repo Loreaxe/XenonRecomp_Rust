@@ -1,4 +1,4 @@
-OUT_DIR = Some(/home/loreaxe/Rexglue-lore/XenonRecomp_Rust/target/debug/build/capstone-sys-470f8783877b0877/out)
+OUT_DIR = Some(/home/loreaxe/XenonRecomp_Rust/target/debug/build/capstone-sys-470f8783877b0877/out)
 OPT_LEVEL = Some(0)
 TARGET = Some(x86_64-unknown-linux-gnu)
 CARGO_ENCODED_RUSTFLAGS = Some()
@@ -25,7 +25,7 @@ cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
 CFLAGS_x86_64_unknown_linux_gnu = None
 cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
 CFLAGS_x86_64-unknown-linux-gnu = None
-OUT_DIR = Some(/home/loreaxe/Rexglue-lore/XenonRecomp_Rust/target/debug/build/capstone-sys-470f8783877b0877/out)
+OUT_DIR = Some(/home/loreaxe/XenonRecomp_Rust/target/debug/build/capstone-sys-470f8783877b0877/out)
 cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
 cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
 CRATE_CC_NO_DEFAULTS = None
@@ -57,5 +57,5 @@ ARFLAGS_x86_64_unknown_linux_gnu = None
 cargo:rerun-if-env-changed=ARFLAGS_x86_64-unknown-linux-gnu
 ARFLAGS_x86_64-unknown-linux-gnu = None
 cargo:rustc-link-lib=static=capstone
-cargo:rustc-link-search=native=/home/loreaxe/Rexglue-lore/XenonRecomp_Rust/target/debug/build/capstone-sys-470f8783877b0877/out
+cargo:rustc-link-search=native=/home/loreaxe/XenonRecomp_Rust/target/debug/build/capstone-sys-470f8783877b0877/out
 cargo:rustc-link-lib=static=capstone
