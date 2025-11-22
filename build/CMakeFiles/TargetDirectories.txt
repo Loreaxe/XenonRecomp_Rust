@@ -1,0 +1,6 @@
+/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/cargo_build.dir
+/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/edit_cache.dir
+/home/loreaxe/XenonRecomp_Rust/build/CMakeFiles/rebuild_cache.dir
+/home/loreaxe/XenonRecomp_Rust/build/thirdparty/CMakeFiles/libmspack.dir
+/home/loreaxe/XenonRecomp_Rust/build/thirdparty/CMakeFiles/edit_cache.dir
+/home/loreaxe/XenonRecomp_Rust/build/thirdparty/CMakeFiles/rebuild_cache.dir

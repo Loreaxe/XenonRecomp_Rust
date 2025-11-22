@@ -1,0 +1,154 @@
+use anyhow::*;
+use std::path::{Path, PathBuf};
+use std::collections::HashMap;
+
+use crate::config::{RecompilerConfig, RecompilerSwitchTable};
+use crate::disasm::PpcCs;
+use crate::function::Function;
+use crate::image::{Image, SectionFlags};
+use crate::switch::{run_switch_collect, SwitchTable as ScannedSwitchTable};
+
+#[derive(Default)]
+pub struct Recompiler {
+    pub image: Image,
+    pub functions: Vec<Function>,
+    pub out: String,
+    pub cpp_file_index: usize,
+    pub config: RecompilerConfig,
+    pub switch_tables: HashMap<u32, RecompilerSwitchTable>, // base -> (r, labels)
+}
+
+impl Recompiler {
+    /// BE encoding of EIEIO
+    pub const C_EIEIO: u32 = 0x7C00_06AC;
+
+    pub fn load_config(&mut self, path: &str) -> Result<()> {
+        self.config = RecompilerConfig::load_from_file(path)?;
+        Ok(())
+    }
+
+    /// Merge switch tables from a TOML (if provided). TOML wins on conflicts.
+    fn ingest_switch_toml(&mut self) -> Result<()> {
+        if self.config.switch_table_file_path.is_empty() { return Ok(()); }
+        let path = if self.config.directory_path.is_empty() {
+            self.config.switch_table_file_path.clone()
+        } else {
+            format!("{}{}", self.config.directory_path, self.config.switch_table_file_path)
+        };
+        let txt = std::fs::read_to_string(&path)?;
+        let doc: toml::Value = toml::from_str(&txt)?;
+
+        if let Some(arr) = doc.get("switch").and_then(|v| v.as_array()) {
+            for entry in arr {
+                // base may be hex string or integer
+                let base = entry.get("base")
+                    .and_then(|v| v.as_str())
+                    .and_then(|s| u32::from_str_radix(s.trim_start_matches("0x"), 16).ok())
+                    .or_else(|| entry.get("base").and_then(|v| v.as_integer()).map(|n| n as u32))
+                    .ok_or_else(|| anyhow!("switch.base missing/invalid"))?;
+                let r = entry.get("r").and_then(|v| v.as_integer()).ok_or_else(|| anyhow!("switch.r missing"))? as u32;
+
+                let mut labels = Vec::<u32>::new();
+                if let Some(ls) = entry.get("labels").and_then(|v| v.as_array()) {
+                    for l in ls {
+                        let val = if let Some(s) = l.as_str() {
+                            u32::from_str_radix(s.trim_start_matches("0x"), 16).unwrap_or(0)
+                        } else if let Some(i) = l.as_integer() {
+                            i as u32
+                        } else { 0 };
+                        labels.push(val);
+                    }
+                }
+                self.switch_tables.insert(base, RecompilerSwitchTable { r, labels });
+            }
+        }
+        Ok(())
+    }
+
+    fn ingest_functions_from_config(&mut self) {
+        for (&base, &size) in &self.config.functions {
+            if let Some((sec, off)) = self.image.find(base) {
+                let end = (off as u32).saturating_add(size) as usize;
+                let end = end.min(sec.data.len());
+                let words: Vec<u32> = sec.data[off..end]
+                    .chunks_exact(4).map(|c| u32::from_be_bytes([c[0],c[1],c[2],c[3]])).collect();
+                self.functions.push(Function::analyze(&words, base as usize));
+            }
+        }
+    }
+
+    /// Load image, carve functions, collect switch tables (TOML + scan)
+    pub fn analyse(&mut self) -> Result<()> {
+        ensure!(!self.image.sections.is_empty(), "image not initialised; load it first");
+
+        if !self.config.functions.is_empty() {
+            self.ingest_functions_from_config();
+        } else {
+            for sec in &self.image.sections {
+                if !sec.flags.contains(SectionFlags::CODE) { continue; }
+                let words: Vec<u32> = sec.data
+                    .chunks_exact(4).map(|c| u32::from_be_bytes([c[0],c[1],c[2],c[3]])).collect();
+                self.functions.push(Function::analyze(&words, sec.base as usize));
+            }
+        }
+
+        // TOML (optional)
+        let _ = self.ingest_switch_toml();
+
+        // fresh scan — fill gaps (TOML wins)
+        let cs = PpcCs::new()?;
+        let scanned: Vec<ScannedSwitchTable> = run_switch_collect(&self.image, &cs)?;
+        for t in scanned {
+            self.switch_tables.entry(t.base)
+                .or_insert_with(|| RecompilerSwitchTable { r: t.r, labels: t.labels });
+        }
+
+        Ok(())
+    }
+
+    pub fn recompile_fn(&mut self, fnc: &Function, _cs: &PpcCs, _header: &Path) -> Result<()> {
+        self.println(format!("// ---- function 0x{:08X} size={}", fnc.base, fnc.size));
+        for b in &fnc.blocks {
+            let bb_start = fnc.base + b.base;
+            let bb_end   = bb_start + b.size;
+            self.println(format!("//   block [0x{:08X}..0x{:08X})", bb_start, bb_end));
+        }
+        if let Some(sw) = self.switch_tables.get(&(fnc.base as u32)) {
+            self.println(format!("//   switch r{} with {} labels", sw.r, sw.labels.len()));
+        }
+        Ok(())
+    }
+
+    pub fn recompile_all(&mut self, header_path: &Path) -> Result<()> {
+        let cs = PpcCs::new()?;
+        for f in &self.functions {
+            self.recompile_fn(f, &cs, header_path)?;
+        }
+        Ok(())
+    }
+
+    pub fn save_current_out_data(&mut self, name: Option<&str>) -> Result<()> {
+        let dir = if self.config.out_directory_path.is_empty() { ".".into() }
+                  else { self.config.out_directory_path.clone() };
+        std::fs::create_dir_all(&dir).ok();
+
+        let fname = name.map(|s| s.to_string()).unwrap_or_else(|| format!("out_{:03}.rs", self.cpp_file_index));
+        let path = PathBuf::from(&dir).join(fname);
+
+        if let Ok(existing) = std::fs::read(&path) {
+            if existing.len() == self.out.len() && existing == self.out.as_bytes() {
+                self.out.clear();
+                if name.is_none() { self.cpp_file_index += 1; }
+                return Ok(());
+            }
+        }
+
+        std::fs::write(&path, &self.out)?;
+        self.out.clear();
+        if name.is_none() { self.cpp_file_index += 1; }
+        Ok(())
+    }
+
+    #[inline] fn print(&mut self, s: impl AsRef<str>) { self.out.push_str(s.as_ref()); }
+    #[inline] fn println(&mut self, s: impl AsRef<str>) { self.out.push_str(s.as_ref()); self.out.push('\n'); }
+}

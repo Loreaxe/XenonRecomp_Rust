@@ -1,0 +1,1057 @@
+// src/recompiler/instructions.rs (Rust-only emitter)
+// ----------------------------------------------------------------------------------
+// This module lowers Capstone PPC instructions into *Rust source code* strings.
+// It deliberately avoids any C++ constructs (no goto/switch/templates/builtins).
+// The printed code expects a small runtime prelude available as `crate::rt`.
+// ----------------------------------------------------------------------------------
+
+#![allow(clippy::needless_return)]
+#![allow(clippy::useless_format)]
+#![allow(clippy::too_many_arguments)]
+#![allow(dead_code)]
+
+use capstone::arch::ppc::{PpcInsn, PpcOperand, PpcReg};
+use capstone::{Insn, Capstone, RegId};
+use capstone::arch::DetailsArchInsn;
+use std::fmt::Write as _;
+
+use crate::function::Function;
+use crate::recompiler::{CSRState, Recompiler, RecompilerLocalVariables};
+
+pub mod arith;
+pub mod logical;
+pub mod branch;
+pub mod compare;
+pub mod bitcount;
+pub mod cache;
+pub mod divide;
+pub mod system;
+pub mod extend;
+pub mod float_ops;
+pub mod loads;
+pub mod loads_vec;
+pub mod stores;
+pub mod stores_vec;
+pub mod moves_spr;
+pub mod rotate;
+pub mod shift;
+pub mod vector_arith;
+pub mod vector_cmp;
+pub mod vector_pack;
+pub mod vector_perm;
+pub mod vector_shift;
+pub mod vector_mem;
+pub mod vector_misc;
+
+use arith::*;
+use logical::*;
+use branch::*;
+use compare::*;
+use bitcount::*;
+use cache::*;
+use divide::*;
+use system::*;
+use extend::*;
+use float_ops::*;
+use loads::*;
+use loads_vec::*;
+use stores::*;
+use stores_vec::*;
+use moves_spr::*;
+use rotate::*;
+use shift::*;
+use vector_arith::*;
+use vector_cmp::*;
+use vector_pack::*;
+use vector_perm::*;
+use vector_shift::*;
+use vector_misc::*;
+
+/// Convenience to get Insn ID as u32
+#[inline]
+fn id_u32(i: &Insn<'_>) -> u32 { i.id().0 }
+
+/// A lowering context shared by all handlers.
+pub struct LowerCtx<'a> {
+    pub rec: &'a mut Recompiler,
+    pub fnc: &'a Function,
+    pub base: u32,
+    pub be_word: u32,
+    pub insn: &'a Insn<'a>,
+    pub cs: &'a Capstone,
+    pub locals: &'a mut RecompilerLocalVariables,
+    pub csr: &'a mut CSRState,
+    pub mmio: bool,
+    pub block_terminated: &'a mut bool,
+}
+
+#[inline]
+fn has_mn(ctx: &LowerCtx<'_>, want: &str) -> bool {
+    ctx.insn.mnemonic().map(|m| m.eq_ignore_ascii_case(want)).unwrap_or(false)
+}
+#[inline]
+fn has_any_mn(ctx: &LowerCtx<'_>, wants: &[&str]) -> bool {
+    let Some(m) = ctx.insn.mnemonic() else { return false; };
+    wants.iter().any(|w| m.eq_ignore_ascii_case(w))
+}
+
+impl<'a> LowerCtx<'a> {
+    #[inline] pub fn print(&mut self, s: impl AsRef<str>) { self.rec.out.push_str(s.as_ref()); }
+    #[inline] pub fn println(&mut self, s: impl AsRef<str>) { self.rec.out.push_str(s.as_ref()); self.rec.out.push('\n'); }
+    #[inline] pub fn println_fmt(&mut self, args: std::fmt::Arguments<'_>) { self.rec.out.write_fmt(args).unwrap(); self.rec.out.push('\n'); }
+
+    #[inline]
+    fn mark_block_terminated(&mut self) {
+        *self.block_terminated = true;
+    }
+
+    #[inline]
+    fn target_in_current_function(&self, target: u32) -> bool {
+        self.rec.addr_in_function(self.fnc, target)
+    }
+
+    #[inline]
+    fn resolve_callee_name(&self, target: u32) -> Option<String> {
+        self.rec.resolve_func_name_at(target)
+    }
+
+    #[inline]
+    fn resolve_extern_name(&self, target: u32) -> Option<String> {
+        self.rec
+            .resolve_extern_wrapper(target)
+            .map(|s| s.to_string())
+    }
+
+    #[inline]
+    fn target_in_any_function(&self, target: u32) -> bool {
+        self.rec.addr_in_any_function(target)
+    }
+
+    /// Emit a `// addr: BE_WORD  mnemonic operands` comment.
+    fn emit_disasm_comment(&mut self) {
+        let Some(mn) = self.insn.mnemonic() else { return; };
+
+        // Address of this instruction (same as ctx.base)
+        let addr = self.base;
+
+        // Big-endian instruction word as hex (from the caller)
+        let word = self.be_word; // already BE u32
+
+        // Build formatted comment
+        let mut line = String::new();
+        line.push_str("\t// ");
+
+        // Emit "82177E44: 38C6FFFE"
+        use std::fmt::Write;
+        write!(&mut line, "{addr:08X}: {word:08X}  ").unwrap();
+
+        // Emit mnemonic
+        line.push_str(mn);
+
+        // Emit operands
+        if let Some(ops) = self.insn.op_str() {
+            if !ops.is_empty() {
+                line.push(' ');
+                line.push_str(ops);
+            }
+        }
+
+        self.println(line);
+    }
+
+    // ----------------------------------------------------------------------------------
+    // Capstone operand helpers (correct GPR mapping + MEM base/disp)
+    // ----------------------------------------------------------------------------------
+
+    #[inline]
+    fn map_ppc_index(reg: RegId) -> Option<usize> {
+        let id = reg.0 as u16;
+        Some(match id {
+            // -------- GPRs r0..r31 --------
+            x if x == PpcReg::PPC_REG_R0  as u16 => 0,
+            x if x == PpcReg::PPC_REG_R1  as u16 => 1,
+            x if x == PpcReg::PPC_REG_R2  as u16 => 2,
+            x if x == PpcReg::PPC_REG_R3  as u16 => 3,
+            x if x == PpcReg::PPC_REG_R4  as u16 => 4,
+            x if x == PpcReg::PPC_REG_R5  as u16 => 5,
+            x if x == PpcReg::PPC_REG_R6  as u16 => 6,
+            x if x == PpcReg::PPC_REG_R7  as u16 => 7,
+            x if x == PpcReg::PPC_REG_R8  as u16 => 8,
+            x if x == PpcReg::PPC_REG_R9  as u16 => 9,
+            x if x == PpcReg::PPC_REG_R10 as u16 => 10,
+            x if x == PpcReg::PPC_REG_R11 as u16 => 11,
+            x if x == PpcReg::PPC_REG_R12 as u16 => 12,
+            x if x == PpcReg::PPC_REG_R13 as u16 => 13,
+            x if x == PpcReg::PPC_REG_R14 as u16 => 14,
+            x if x == PpcReg::PPC_REG_R15 as u16 => 15,
+            x if x == PpcReg::PPC_REG_R16 as u16 => 16,
+            x if x == PpcReg::PPC_REG_R17 as u16 => 17,
+            x if x == PpcReg::PPC_REG_R18 as u16 => 18,
+            x if x == PpcReg::PPC_REG_R19 as u16 => 19,
+            x if x == PpcReg::PPC_REG_R20 as u16 => 20,
+            x if x == PpcReg::PPC_REG_R21 as u16 => 21,
+            x if x == PpcReg::PPC_REG_R22 as u16 => 22,
+            x if x == PpcReg::PPC_REG_R23 as u16 => 23,
+            x if x == PpcReg::PPC_REG_R24 as u16 => 24,
+            x if x == PpcReg::PPC_REG_R25 as u16 => 25,
+            x if x == PpcReg::PPC_REG_R26 as u16 => 26,
+            x if x == PpcReg::PPC_REG_R27 as u16 => 27,
+            x if x == PpcReg::PPC_REG_R28 as u16 => 28,
+            x if x == PpcReg::PPC_REG_R29 as u16 => 29,
+            x if x == PpcReg::PPC_REG_R30 as u16 => 30,
+            x if x == PpcReg::PPC_REG_R31 as u16 => 31,
+
+            // -------- FPRs f0..f31 --------
+            x if x == PpcReg::PPC_REG_F0  as u16 => 0,
+            x if x == PpcReg::PPC_REG_F1  as u16 => 1,
+            x if x == PpcReg::PPC_REG_F2  as u16 => 2,
+            x if x == PpcReg::PPC_REG_F3  as u16 => 3,
+            x if x == PpcReg::PPC_REG_F4  as u16 => 4,
+            x if x == PpcReg::PPC_REG_F5  as u16 => 5,
+            x if x == PpcReg::PPC_REG_F6  as u16 => 6,
+            x if x == PpcReg::PPC_REG_F7  as u16 => 7,
+            x if x == PpcReg::PPC_REG_F8  as u16 => 8,
+            x if x == PpcReg::PPC_REG_F9  as u16 => 9,
+            x if x == PpcReg::PPC_REG_F10 as u16 => 10,
+            x if x == PpcReg::PPC_REG_F11 as u16 => 11,
+            x if x == PpcReg::PPC_REG_F12 as u16 => 12,
+            x if x == PpcReg::PPC_REG_F13 as u16 => 13,
+            x if x == PpcReg::PPC_REG_F14 as u16 => 14,
+            x if x == PpcReg::PPC_REG_F15 as u16 => 15,
+            x if x == PpcReg::PPC_REG_F16 as u16 => 16,
+            x if x == PpcReg::PPC_REG_F17 as u16 => 17,
+            x if x == PpcReg::PPC_REG_F18 as u16 => 18,
+            x if x == PpcReg::PPC_REG_F19 as u16 => 19,
+            x if x == PpcReg::PPC_REG_F20 as u16 => 20,
+            x if x == PpcReg::PPC_REG_F21 as u16 => 21,
+            x if x == PpcReg::PPC_REG_F22 as u16 => 22,
+            x if x == PpcReg::PPC_REG_F23 as u16 => 23,
+            x if x == PpcReg::PPC_REG_F24 as u16 => 24,
+            x if x == PpcReg::PPC_REG_F25 as u16 => 25,
+            x if x == PpcReg::PPC_REG_F26 as u16 => 26,
+            x if x == PpcReg::PPC_REG_F27 as u16 => 27,
+            x if x == PpcReg::PPC_REG_F28 as u16 => 28,
+            x if x == PpcReg::PPC_REG_F29 as u16 => 29,
+            x if x == PpcReg::PPC_REG_F30 as u16 => 30,
+            x if x == PpcReg::PPC_REG_F31 as u16 => 31,
+
+            // -------- Vector regs v0..v31 (Altivec-style) --------
+            x if x == PpcReg::PPC_REG_V0  as u16 => 0,
+            x if x == PpcReg::PPC_REG_V1  as u16 => 1,
+            x if x == PpcReg::PPC_REG_V2  as u16 => 2,
+            x if x == PpcReg::PPC_REG_V3  as u16 => 3,
+            x if x == PpcReg::PPC_REG_V4  as u16 => 4,
+            x if x == PpcReg::PPC_REG_V5  as u16 => 5,
+            x if x == PpcReg::PPC_REG_V6  as u16 => 6,
+            x if x == PpcReg::PPC_REG_V7  as u16 => 7,
+            x if x == PpcReg::PPC_REG_V8  as u16 => 8,
+            x if x == PpcReg::PPC_REG_V9  as u16 => 9,
+            x if x == PpcReg::PPC_REG_V10 as u16 => 10,
+            x if x == PpcReg::PPC_REG_V11 as u16 => 11,
+            x if x == PpcReg::PPC_REG_V12 as u16 => 12,
+            x if x == PpcReg::PPC_REG_V13 as u16 => 13,
+            x if x == PpcReg::PPC_REG_V14 as u16 => 14,
+            x if x == PpcReg::PPC_REG_V15 as u16 => 15,
+            x if x == PpcReg::PPC_REG_V16 as u16 => 16,
+            x if x == PpcReg::PPC_REG_V17 as u16 => 17,
+            x if x == PpcReg::PPC_REG_V18 as u16 => 18,
+            x if x == PpcReg::PPC_REG_V19 as u16 => 19,
+            x if x == PpcReg::PPC_REG_V20 as u16 => 20,
+            x if x == PpcReg::PPC_REG_V21 as u16 => 21,
+            x if x == PpcReg::PPC_REG_V22 as u16 => 22,
+            x if x == PpcReg::PPC_REG_V23 as u16 => 23,
+            x if x == PpcReg::PPC_REG_V24 as u16 => 24,
+            x if x == PpcReg::PPC_REG_V25 as u16 => 25,
+            x if x == PpcReg::PPC_REG_V26 as u16 => 26,
+            x if x == PpcReg::PPC_REG_V27 as u16 => 27,
+            x if x == PpcReg::PPC_REG_V28 as u16 => 28,
+            x if x == PpcReg::PPC_REG_V29 as u16 => 29,
+            x if x == PpcReg::PPC_REG_V30 as u16 => 30,
+            x if x == PpcReg::PPC_REG_V31 as u16 => 31,
+
+            // -------- CR fields cr0..cr7 --------
+            x if x == PpcReg::PPC_REG_CR0 as u16 => 0,
+            x if x == PpcReg::PPC_REG_CR1 as u16 => 1,
+            x if x == PpcReg::PPC_REG_CR2 as u16 => 2,
+            x if x == PpcReg::PPC_REG_CR3 as u16 => 3,
+            x if x == PpcReg::PPC_REG_CR4 as u16 => 4,
+            x if x == PpcReg::PPC_REG_CR5 as u16 => 5,
+            x if x == PpcReg::PPC_REG_CR6 as u16 => 6,
+            x if x == PpcReg::PPC_REG_CR7 as u16 => 7,
+
+            // Anything else we don't care about for now (CTR/LR/XER/etc).
+            _ => return None,
+        })
+    }
+
+    /// Kept the same name/signature. Returns a **GPR index 0..31** for Reg operands; 0 otherwise.
+    #[inline]
+    fn op_reg(&self, i: usize) -> usize {
+        let detail = match self.cs.insn_detail(self.insn) {
+            Ok(d) => d,
+            Err(_) => return 0,
+        };
+        let arch = detail.arch_detail();
+        let ppc = match arch.ppc() {
+            Some(p) => p,
+            None => return 0,
+        };
+        let Some(op) = ppc.operands().nth(i) else { return 0; };
+        match op {
+            PpcOperand::Reg(rid) => Self::map_ppc_index(rid).unwrap_or(0),
+            _ => 0,
+        }
+    }
+
+    #[inline]
+    fn op_imm(&self, i: usize) -> i64 {
+        let detail = match self.cs.insn_detail(self.insn) {
+            Ok(d) => d,
+            Err(_) => return 0,
+        };
+        let arch = detail.arch_detail();
+        let ppc = match arch.ppc() {
+            Some(p) => p,
+            None => return 0,
+        };
+        let Some(op) = ppc.operands().nth(i) else { return 0; };
+        match op {
+            PpcOperand::Imm(v) => v,
+            _ => 0,
+        }
+    }
+
+    /// Parse MEM operand `i`: returns (base_reg_index, disp).
+    #[inline]
+    fn op_mem(&self, i: usize) -> (Option<usize>, i64) {
+        let detail = match self.cs.insn_detail(self.insn) {
+            Ok(d) => d,
+            Err(_) => return (None, 0),
+        };
+        let arch = detail.arch_detail();
+        let ppc = match arch.ppc() {
+            Some(p) => p,
+            None => return (None, 0),
+        };
+        let Some(op) = ppc.operands().nth(i) else { return (None, 0); };
+        let PpcOperand::Mem(mem) = op else { return (None, 0); };
+
+        let base = Self::map_ppc_index(mem.base());
+        let disp = mem.disp() as i64;
+        (base, disp)
+    }
+
+    /// First immediate operand interpreted as a branch target (Capstone-style).
+    #[inline]
+    fn branch_target(&self) -> u32 {
+        let detail = match self.cs.insn_detail(self.insn) {
+            Ok(d) => d,
+            Err(_) => return 0,
+        };
+        let arch = detail.arch_detail();
+        let ppc = match arch.ppc() {
+            Some(p) => p,
+            None => return 0,
+        };
+
+        // Take the first immediate operand as the target
+        for op in ppc.operands() {
+            if let PpcOperand::Imm(v) = op {
+                return v as u32;
+            }
+        }
+        0
+    }
+
+    /// Try to find a CRx operand; if none is present, default to CR0.
+    #[inline]
+    pub(crate) fn branch_cr_index(&self) -> usize {
+        let detail = match self.cs.insn_detail(self.insn) {
+            Ok(d) => d,
+            Err(_) => return 0,
+        };
+        let arch = detail.arch_detail();
+        let ppc = match arch.ppc() {
+            Some(p) => p,
+            None => return 0,
+        };
+
+        for op in ppc.operands() {
+            if let PpcOperand::Reg(rid) = op {
+                let id = rid.0 as u16;
+                if id == PpcReg::PPC_REG_CR0 as u16
+                    || id == PpcReg::PPC_REG_CR1 as u16
+                    || id == PpcReg::PPC_REG_CR2 as u16
+                    || id == PpcReg::PPC_REG_CR3 as u16
+                    || id == PpcReg::PPC_REG_CR4 as u16
+                    || id == PpcReg::PPC_REG_CR5 as u16
+                    || id == PpcReg::PPC_REG_CR6 as u16
+                    || id == PpcReg::PPC_REG_CR7 as u16
+                {
+                    return Self::map_ppc_index(rid).unwrap_or(0);
+                }
+            }
+        }
+
+        0
+    }
+
+    /// Build an EA expression string using your runtime `(base, ea)` API.
+    #[inline]
+    fn ea_expr_u32(&mut self, base_reg: Option<usize>, disp: i64) -> String {
+        let d = disp as i64;
+        match base_reg {
+            Some(r) => format!("({}.u32 as u32).wrapping_add({:#x})", self.r(r), d as u32),
+            None    => format!("{:#x}", d as u32),
+        }
+    }
+
+    // -------- Register printers (index form for Rust) --------
+    fn r(&mut self, idx: usize) -> String {
+        let use_local =
+            (cfg!(feature = "non_argument_as_local") && matches!(idx, 0 | 2 | 11 | 12)) ||
+            (cfg!(feature = "non_volatile_as_local") && idx >= 14);
+
+        if use_local {
+            self.locals.r[idx] = true; format!("r[{idx}]")
+        } else { format!("ctx.r[{idx}]") }
+    }
+
+    fn f(&mut self, idx: usize) -> String {
+        let use_local =
+            (cfg!(feature = "non_argument_as_local") && idx == 0) ||
+            (cfg!(feature = "non_volatile_as_local") && idx >= 14);
+
+        if use_local {
+            self.locals.f[idx] = true; format!("f[{idx}]")
+        } else { format!("ctx.f[{idx}]") }
+    }
+
+    fn v(&mut self, idx: usize) -> String {
+        let non_arg = (32..=63).contains(&idx);
+        let nv = (14..=31).contains(&idx) || (64..=127).contains(&idx);
+        let use_local =
+            (cfg!(feature = "non_argument_as_local") && non_arg) ||
+            (cfg!(feature = "non_volatile_as_local") && nv);
+
+        if use_local {
+            self.locals.v[idx] = true; format!("v[{idx}]")
+        } else { format!("ctx.v[{idx}]") }
+    }
+
+    fn cr(&mut self, idx: usize) -> String {
+        if cfg!(feature = "cr_as_local") {
+            self.locals.cr[idx] = true; format!("cr[{idx}]")
+        } else { format!("ctx.cr[{idx}]") }
+    }
+
+    fn ctr(&mut self) -> String {
+        if cfg!(feature = "ctr_as_local") { self.locals.ctr = true; "ctr".into() } else { "ctx.ctr".into() }
+    }
+
+    fn xer(&mut self) -> String {
+        if cfg!(feature = "xer_as_local") { self.locals.xer = true; "xer".into() } else { "ctx.xer".into() }
+    }
+
+    fn reserved(&mut self) -> String {
+        if cfg!(feature = "reserved_as_local") { self.locals.reserved = true; "reserved".into() } else { "ctx.reserved".into() }
+    }
+
+    fn temp(&mut self) -> String { self.locals.temp = true; "tmp".into() }
+    fn vtemp(&mut self) -> String { self.locals.vtemp = true; "vtmp".into() }
+    fn env(&mut self) -> String { self.locals.env = true; "env".into() }
+    fn ea(&mut self) -> String { self.locals.ea = true; "ea".into() }
+
+    // -------- Control-flow emission helpers (Rust style) --------
+    fn goto(&mut self, target: u32) {
+        self.println_fmt(format_args!("\tpc = 0x{target:08X}; continue 'dispatch;"));
+    }
+
+    fn call_external(&mut self, addr: u32) {
+        self.println_fmt(format_args!(
+            "\tcrate::recompiler::externs::call(ctx, base, 0x{addr:08X});"
+        ));
+    }
+
+    fn print_function_call(&mut self, addr: u32) {
+        let cfg = &self.rec.config;
+
+        if addr == cfg.longJmpAddress {
+            self.println("\t// TODO: longjmp model");
+            self.println("\tunsafe { core::intrinsics::abort(); }");
+            return;
+        }
+
+        if addr == cfg.setJmpAddress {
+            let env = self.env();
+            let t   = self.temp();
+            let r3  = self.r(3);
+            self.println_fmt(format_args!("\t{env} = ctx.clone();"));
+            self.println_fmt(format_args!(
+                "\t{t}.s64 = 0; // TODO setjmp(&mut {env}, {r3}/*env addr*/);"
+            ));
+            self.println_fmt(format_args!(
+                "\tif {t}.s64 != 0 {{ ctx = {env}.clone(); }}"
+            ));
+            self.println_fmt(format_args!("\t{r3} = {t};"));
+            return;
+        }
+
+        if let Some(name) = self.resolve_callee_name(addr) {
+            self.println_fmt(format_args!("\t{name}(ctx, base);"));
+            return;
+        }
+
+        if let Some(ext) = self.resolve_extern_name(addr) {
+            self.println_fmt(format_args!("\t{ext}(ctx, base);"));
+            return;
+        }
+
+        self.call_external(addr);
+    }
+
+    fn print_conditional_branch(&mut self, invert: bool, cond_field: &str, target: u32) {
+        let cr_idx = self.branch_cr_index();
+        let cond = {
+            let cr = self.cr(cr_idx);
+            format!("{cr}.{cond_field}")
+        };
+
+        self.println_fmt(format_args!(
+            "\tif {}{} {{",
+            if invert { "!" } else { "" },
+            cond
+        ));
+
+        if self.target_in_current_function(target) {
+            self.goto(target);
+            self.println("\t}");
+            return;
+        }
+
+        if let Some(name) = self.resolve_callee_name(target) {
+            self.println_fmt(format_args!("\t\t{name}(ctx, base);"));
+            self.println("\t\treturn;");
+            self.println("\t}");
+            return;
+        }
+
+        self.print("\t");
+        self.print_function_call(target);
+        self.println("\t\treturn;");
+        self.println("\t}");
+    }
+
+    fn set_flush_mode(&mut self, enable: bool) {
+        let new_state = if enable { CSRState::VMX } else { CSRState::FPU };
+        if *self.csr != new_state {
+            if enable {
+                self.println("\tctx.fpscr.enable_flush_mode_unconditional();");
+            } else {
+                self.println("\tctx.fpscr.disable_flush_mode_unconditional();");
+            }
+            *self.csr = new_state;
+        }
+    }
+
+    fn emit_mid_asm_hook_if_any(&mut self, after_instruction: bool) {
+        let copied = if let Some(h) = self.rec.config.mid_asm_hooks.get(&self.base) {
+            if h.afterInst != after_instruction { return; }
+            Some((
+                h.name.clone(),
+                h.registers.clone(),
+                h.ret,
+                h.returnOnTrue,
+                h.returnOnFalse,
+                h.jumpAddressOnTrue,
+                h.jumpAddressOnFalse,
+            ))
+        } else { None };
+
+        let Some((name, registers, ret, ret_on_true, ret_on_false, jmp_true, jmp_false)) = copied else { return; };
+
+        let returns_bool = ret_on_false || ret_on_true || jmp_false != 0 || jmp_true != 0;
+
+        let mut call = String::new();
+        write!(&mut call, "{}(", name).unwrap();
+        let mut first = true;
+        for reg in &registers {
+            if !first { call.push_str(", "); } else { first = false; }
+            let s = reg.as_str();
+            if s == "ctr" { call.push_str(&self.ctr()); }
+            else if s == "reserved" { call.push_str(&self.reserved()); }
+            else if s == "fpscr" { call.push_str("ctx.fpscr"); }
+            else if s.starts_with("cr") { let idx: usize = s[2..].parse().unwrap_or(0); call.push_str(&self.cr(idx)); }
+            else if s.starts_with('r') { let idx: usize = s[1..].parse().unwrap_or(0); call.push_str(&self.r(idx)); }
+            else if s.starts_with('f') { let idx: usize = s[1..].parse().unwrap_or(0); call.push_str(&self.f(idx)); }
+            else if s.starts_with('v') { let idx: usize = s[1..].parse().unwrap_or(0); call.push_str(&self.v(idx)); }
+            else { call.push_str("/*unsupported-reg*/"); }
+        }
+        call.push(')');
+
+        if returns_bool {
+            self.println_fmt(format_args!("\tif {call} {{"));
+            if ret_on_true {
+                self.println("\t\treturn;");
+            } else if jmp_true != 0 {
+                self.goto(jmp_true);
+            }
+            self.println("\t} else {");
+            if ret_on_false {
+                self.println("\t\treturn;");
+            } else if jmp_false != 0 {
+                self.goto(jmp_false);
+            }
+            self.println("\t}");
+        } else {
+            self.println_fmt(format_args!("\t{call};"));
+            if ret { self.println("\treturn;"); }
+        }
+    }
+
+    fn is_mmio_store(&self, next_be_word: u32) -> bool { next_be_word == Recompiler::C_EIEIO }
+}
+
+pub const fn compute_mask(mut mstart: u32, mut mstop: u32) -> u64 {
+    mstart &= 0x3F;
+    mstop &= 0x3F;
+
+    let left  = u64::MAX >> mstart;
+    let right = if mstop >= 63 { 0 } else { u64::MAX >> (mstop + 1) };
+
+    let value = left ^ right;
+    if mstart <= mstop { value } else { !value }
+}
+
+#[allow(dead_code)]
+fn handle_link_if_needed(ctx: &mut LowerCtx<'_>) {
+    if !ctx.rec.config.skip_lr {
+        ctx.println_fmt(format_args!("\tctx.lr = 0x{:X};", ctx.base + 4));
+    }
+}
+
+// ==================================================================================
+// Dispatch table
+// ==================================================================================
+
+fn dispatch_by_id(ctx: &mut LowerCtx<'_>) -> bool {
+    match id_u32(ctx.insn) {
+        x if x == PpcInsn::PPC_INS_ADD as u32    => handle_add(ctx),
+        x if x == PpcInsn::PPC_INS_ADDE as u32   => handle_adde(ctx),
+        x if x == PpcInsn::PPC_INS_ADDI as u32   => handle_addi(ctx),
+        x if x == PpcInsn::PPC_INS_ADDIC as u32  => handle_addic(ctx),
+        x if x == PpcInsn::PPC_INS_ADDIS as u32  => handle_addis(ctx),
+        x if x == PpcInsn::PPC_INS_ADDZE as u32  => handle_addze(ctx),
+        x if x == PpcInsn::PPC_INS_AND as u32    => handle_and(ctx),
+        x if x == PpcInsn::PPC_INS_ANDC as u32   => handle_andc(ctx),
+        x if x == PpcInsn::PPC_INS_ANDI as u32   => handle_andi(ctx),
+        x if x == PpcInsn::PPC_INS_ANDIS as u32  => handle_andis(ctx),
+        x if x == PpcInsn::PPC_INS_B as u32      => handle_b(ctx),
+        x if x == PpcInsn::PPC_INS_BCTR as u32   => handle_bctr(ctx),
+        x if x == PpcInsn::PPC_INS_BCTRL as u32  => handle_bctrl(ctx),
+        x if x == PpcInsn::PPC_INS_BDZ as u32    => handle_bdz(ctx),
+        x if x == PpcInsn::PPC_INS_BDZLR as u32  => handle_bdzlr(ctx),
+        x if x == PpcInsn::PPC_INS_BDNZ as u32   => handle_bdnz(ctx),
+        x if x == PpcInsn::PPC_INS_BDNZF as u32  => handle_bdnzf(ctx),
+        x if x == PpcInsn::PPC_INS_BEQ as u32    => handle_beq(ctx),
+        x if x == PpcInsn::PPC_INS_BEQLR as u32  => handle_beqlr(ctx),
+        x if x == PpcInsn::PPC_INS_BGE as u32    => handle_bge(ctx),
+        x if x == PpcInsn::PPC_INS_BGELR as u32  => handle_bgelr(ctx),
+        x if x == PpcInsn::PPC_INS_BGT as u32    => handle_bgt(ctx),
+        x if x == PpcInsn::PPC_INS_BGTLR as u32  => handle_bgtlr(ctx),
+        x if x == PpcInsn::PPC_INS_BL as u32     => handle_bl(ctx),
+        x if x == PpcInsn::PPC_INS_BLE as u32    => handle_ble(ctx),
+        x if x == PpcInsn::PPC_INS_BLELR as u32  => handle_blelr(ctx),
+        x if x == PpcInsn::PPC_INS_BLR as u32    => handle_blr(ctx),
+        x if x == PpcInsn::PPC_INS_BLRL as u32   => handle_blrl(ctx),
+        x if x == PpcInsn::PPC_INS_BLT as u32    => handle_blt(ctx),
+        x if x == PpcInsn::PPC_INS_BLTLR as u32  => handle_bltlr(ctx),
+        x if x == PpcInsn::PPC_INS_BNE as u32    => handle_bne(ctx),
+        x if x == PpcInsn::PPC_INS_BNECTR as u32 => handle_bnectr(ctx),
+        x if x == PpcInsn::PPC_INS_BNELR as u32  => handle_bnelr(ctx),
+
+        _ if has_mn(ctx, "cctpl")      => handle_cctpl(ctx),
+        _ if has_mn(ctx, "cctpm")      => handle_cctpm(ctx),
+        x if x == PpcInsn::PPC_INS_CLRLDI as u32 => handle_clrldi(ctx),
+        x if x == PpcInsn::PPC_INS_CLRLWI as u32 => handle_clrlwi(ctx),
+
+        // ----- compares -----
+        x if x == PpcInsn::PPC_INS_CMPD as u32
+          || has_mn(ctx, "cmpd")               => handle_cmpd(ctx),
+        x if x == PpcInsn::PPC_INS_CMPDI as u32
+          || has_mn(ctx, "cmpdi")              => handle_cmpdi(ctx),
+
+        x if x == PpcInsn::PPC_INS_CMPLD as u32
+          || has_mn(ctx, "cmpld")              => handle_cmpld(ctx),
+        x if x == PpcInsn::PPC_INS_CMPLDI as u32
+          || has_mn(ctx, "cmpldi")             => handle_cmpldi(ctx),
+
+        x if x == PpcInsn::PPC_INS_CMPLW as u32
+          || has_mn(ctx, "cmplw")              => handle_cmplw(ctx),
+        x if x == PpcInsn::PPC_INS_CMPLWI as u32
+          || has_mn(ctx, "cmplwi")             => handle_cmplwi(ctx),
+
+        x if x == PpcInsn::PPC_INS_CMPW as u32
+          || has_mn(ctx, "cmpw")               => handle_cmpw(ctx),
+        x if x == PpcInsn::PPC_INS_CMPWI as u32
+          || has_mn(ctx, "cmpwi")              => handle_cmpwi(ctx),
+
+        x if x == PpcInsn::PPC_INS_CNTLZD as u32 => handle_cntlzd(ctx),
+        x if x == PpcInsn::PPC_INS_CNTLZW as u32 => handle_cntlzw(ctx),
+
+        _ if has_mn(ctx, "db16cyc")    => handle_db16cyc(ctx),
+        x if x == PpcInsn::PPC_INS_DCBF as u32    => handle_dcbf(ctx),
+        x if x == PpcInsn::PPC_INS_DCBT as u32    => handle_dcbt(ctx),
+        x if x == PpcInsn::PPC_INS_DCBTST as u32  => handle_dcbtst(ctx),
+        x if x == PpcInsn::PPC_INS_DCBZ as u32    => handle_dcbz(ctx),
+        x if x == PpcInsn::PPC_INS_DCBZL as u32   => handle_dcbzl(ctx),
+
+        x if x == PpcInsn::PPC_INS_DIVD as u32   => handle_divd(ctx),
+        x if x == PpcInsn::PPC_INS_DIVDU as u32  => handle_divdu(ctx),
+        x if x == PpcInsn::PPC_INS_DIVW as u32   => handle_divw(ctx),
+        x if x == PpcInsn::PPC_INS_DIVWU as u32  => handle_divwu(ctx),
+
+        x if x == PpcInsn::PPC_INS_EIEIO as u32  => handle_eieio(ctx),
+
+        x if x == PpcInsn::PPC_INS_EXTSB as u32  => handle_extsb(ctx),
+        x if x == PpcInsn::PPC_INS_EXTSH as u32  => handle_extsh(ctx),
+        x if x == PpcInsn::PPC_INS_EXTSW as u32  => handle_extsw(ctx),
+
+        x if x == PpcInsn::PPC_INS_FABS as u32   => handle_fabs(ctx),
+        x if x == PpcInsn::PPC_INS_FADD as u32   => handle_fadd(ctx),
+        x if x == PpcInsn::PPC_INS_FADDS as u32  => handle_fadds(ctx),
+        x if x == PpcInsn::PPC_INS_FCFID as u32  => handle_fcfid(ctx),
+        x if x == PpcInsn::PPC_INS_FCMPU as u32  => handle_fcmpu(ctx),
+        x if x == PpcInsn::PPC_INS_FCTID as u32  => handle_fctid(ctx),
+        x if x == PpcInsn::PPC_INS_FCTIDZ as u32 => handle_fctidz(ctx),
+        x if x == PpcInsn::PPC_INS_FCTIWZ as u32 => handle_fctiwz(ctx),
+        x if x == PpcInsn::PPC_INS_FDIV as u32   => handle_fdiv(ctx),
+        x if x == PpcInsn::PPC_INS_FDIVS as u32  => handle_fdivs(ctx),
+        x if x == PpcInsn::PPC_INS_FMADD as u32  => handle_fmadd(ctx),
+        x if x == PpcInsn::PPC_INS_FMADDS as u32 => handle_fmadds(ctx),
+        x if x == PpcInsn::PPC_INS_FMR as u32    => handle_fmr(ctx),
+        x if x == PpcInsn::PPC_INS_FMSUB as u32  => handle_fmsub(ctx),
+        x if x == PpcInsn::PPC_INS_FMSUBS as u32 => handle_fmsubs(ctx),
+        x if x == PpcInsn::PPC_INS_FMUL as u32   => handle_fmul(ctx),
+        x if x == PpcInsn::PPC_INS_FMULS as u32  => handle_fmuls(ctx),
+        x if x == PpcInsn::PPC_INS_FNABS as u32  => handle_fnabs(ctx),
+        x if x == PpcInsn::PPC_INS_FNEG as u32   => handle_fneg(ctx),
+        x if x == PpcInsn::PPC_INS_FNMADDS as u32=> handle_fnmadds(ctx),
+        x if x == PpcInsn::PPC_INS_FNMSUB as u32 => handle_fnmsub(ctx),
+        x if x == PpcInsn::PPC_INS_FNMSUBS as u32 => handle_fnmsubs(ctx),
+        x if x == PpcInsn::PPC_INS_FRES as u32   => handle_fres(ctx),
+        x if x == PpcInsn::PPC_INS_FRSP as u32   => handle_frsp(ctx),
+        x if x == PpcInsn::PPC_INS_FSEL as u32   => handle_fsel(ctx),
+        x if x == PpcInsn::PPC_INS_FSQRT as u32  => handle_fsqrt(ctx),
+        x if x == PpcInsn::PPC_INS_FSQRTS as u32 => handle_fsqrts(ctx),
+        x if x == PpcInsn::PPC_INS_FSUB as u32   => handle_fsub(ctx),
+        x if x == PpcInsn::PPC_INS_FSUBS as u32  => handle_fsubs(ctx),
+
+        x if x == PpcInsn::PPC_INS_LBZ as u32     => handle_lbz(ctx),
+        x if x == PpcInsn::PPC_INS_LBZU as u32    => handle_lbzu(ctx),
+        x if x == PpcInsn::PPC_INS_LBZX as u32    => handle_lbzx(ctx),
+        x if x == PpcInsn::PPC_INS_LD as u32      => handle_ld(ctx),
+        x if x == PpcInsn::PPC_INS_LDARX as u32   => handle_ldarx(ctx),
+        x if x == PpcInsn::PPC_INS_LDU as u32     => handle_ldu(ctx),
+        x if x == PpcInsn::PPC_INS_LDX as u32     => handle_ldx(ctx),
+        x if x == PpcInsn::PPC_INS_LFD as u32     => handle_lfd(ctx),
+        x if x == PpcInsn::PPC_INS_LFDX as u32    => handle_lfdx(ctx),
+        x if x == PpcInsn::PPC_INS_LFS as u32     => handle_lfs(ctx),
+        x if x == PpcInsn::PPC_INS_LFSX as u32    => handle_lfsx(ctx),
+        x if x == PpcInsn::PPC_INS_LHA as u32     => handle_lha(ctx),
+        x if x == PpcInsn::PPC_INS_LHAX as u32    => handle_lhax(ctx),
+        x if x == PpcInsn::PPC_INS_LHZ as u32     => handle_lhz(ctx),
+        x if x == PpcInsn::PPC_INS_LHZX as u32    => handle_lhzx(ctx),
+        x if x == PpcInsn::PPC_INS_LI as u32      => handle_li(ctx),
+        x if x == PpcInsn::PPC_INS_LIS as u32     => handle_lis(ctx),
+
+        _ if has_any_mn(ctx, &["lvewx", "lvewx128", "lvx", "lvx128"]) => handle_lvewx_like(ctx),
+        _ if has_any_mn(ctx, &["lvlx", "lvlx128"]) => handle_lvlx_like(ctx),
+        _ if has_any_mn(ctx, &["lvrx", "lvrx128"]) => handle_lvrx_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_LVSL as u32    => handle_lvsl(ctx),
+        x if x == PpcInsn::PPC_INS_LVSR as u32    => handle_lvsr(ctx),
+
+        x if x == PpcInsn::PPC_INS_LWA as u32     => handle_lwa(ctx),
+        x if x == PpcInsn::PPC_INS_LWARX as u32   => handle_lwarx(ctx),
+        x if x == PpcInsn::PPC_INS_LWAX as u32    => handle_lwax(ctx),
+        x if x == PpcInsn::PPC_INS_LWBRX as u32   => handle_lwbrx(ctx),
+        x if x == PpcInsn::PPC_INS_LWSYNC as u32  => handle_lwsync(ctx),
+        x if x == PpcInsn::PPC_INS_LWZ as u32     => handle_lwz(ctx),
+        x if x == PpcInsn::PPC_INS_LWZU as u32    => handle_lwzu(ctx),
+        x if x == PpcInsn::PPC_INS_LWZX as u32    => handle_lwzx(ctx),
+
+        x if x == PpcInsn::PPC_INS_MFCR as u32    => handle_mfcr(ctx),
+        x if x == PpcInsn::PPC_INS_MFFS as u32    => handle_mffs(ctx),
+        x if x == PpcInsn::PPC_INS_MFLR as u32    => handle_mflr(ctx),
+        x if x == PpcInsn::PPC_INS_MFMSR as u32   => handle_mfmsr(ctx),
+        x if x == PpcInsn::PPC_INS_MFOCRF as u32  => handle_mfocrf(ctx),
+        x if x == PpcInsn::PPC_INS_MFTB as u32    => handle_mftb(ctx),
+        x if x == PpcInsn::PPC_INS_MR as u32      => handle_mr(ctx),
+        x if x == PpcInsn::PPC_INS_MTCR as u32    => handle_mtcr(ctx),
+        x if x == PpcInsn::PPC_INS_MTCTR as u32   => handle_mtctr(ctx),
+        x if x == PpcInsn::PPC_INS_MTFSF as u32   => handle_mtfsf(ctx),
+        x if x == PpcInsn::PPC_INS_MTLR as u32    => handle_mtlr(ctx),
+        x if x == PpcInsn::PPC_INS_MTMSRD as u32  => handle_mtmsrd(ctx),
+        x if x == PpcInsn::PPC_INS_MTXER as u32   => handle_mtxer(ctx),
+
+        x if x == PpcInsn::PPC_INS_MULHW as u32   => handle_mulhw(ctx),
+        x if x == PpcInsn::PPC_INS_MULHWU as u32  => handle_mulhwu(ctx),
+        x if x == PpcInsn::PPC_INS_MULLD as u32   => handle_mulld(ctx),
+        x if x == PpcInsn::PPC_INS_MULLI as u32   => handle_mulli(ctx),
+        x if x == PpcInsn::PPC_INS_MULLW as u32   => handle_mullw(ctx),
+        x if x == PpcInsn::PPC_INS_NAND as u32    => handle_nand(ctx),
+        x if x == PpcInsn::PPC_INS_NEG as u32     => handle_neg(ctx),
+        x if x == PpcInsn::PPC_INS_NOP as u32     => handle_nop(ctx),
+        x if x == PpcInsn::PPC_INS_NOR as u32     => handle_nor(ctx),
+
+        x if x == PpcInsn::PPC_INS_NOT as u32    => handle_not(ctx),
+        x if x == PpcInsn::PPC_INS_OR as u32     => handle_or(ctx),
+        x if x == PpcInsn::PPC_INS_ORC as u32    => handle_orc(ctx),
+        x if x == PpcInsn::PPC_INS_ORI as u32    => handle_ori(ctx),
+        x if x == PpcInsn::PPC_INS_ORIS as u32   => handle_oris(ctx),
+
+        x if x == PpcInsn::PPC_INS_RLDICL as u32 => handle_rldicl(ctx),
+        x if x == PpcInsn::PPC_INS_RLDICR as u32 => handle_rldicr(ctx),
+        x if x == PpcInsn::PPC_INS_RLDIMI as u32 => handle_rldimi(ctx),
+        x if x == PpcInsn::PPC_INS_RLWIMI as u32 => handle_rlwimi(ctx),
+        x if x == PpcInsn::PPC_INS_RLWINM as u32 => handle_rlwinm(ctx),
+        x if x == PpcInsn::PPC_INS_ROTLDI as u32 => handle_rotldi(ctx),
+        x if x == PpcInsn::PPC_INS_ROTLW as u32  => handle_rotlw(ctx),
+        x if x == PpcInsn::PPC_INS_ROTLWI as u32 => handle_rotlwi(ctx),
+
+        x if x == PpcInsn::PPC_INS_SLD as u32    => handle_sld(ctx),
+        x if x == PpcInsn::PPC_INS_SLW as u32    => handle_slw(ctx),
+        x if x == PpcInsn::PPC_INS_SRAD as u32   => handle_srad(ctx),
+        x if x == PpcInsn::PPC_INS_SRADI as u32  => handle_sradi(ctx),
+        x if x == PpcInsn::PPC_INS_SRAW as u32   => handle_sraw(ctx),
+        x if x == PpcInsn::PPC_INS_SRAWI as u32  => handle_srawi(ctx),
+        x if x == PpcInsn::PPC_INS_SRD as u32    => handle_srd(ctx),
+        x if x == PpcInsn::PPC_INS_SRW as u32    => handle_srw(ctx),
+
+        x if x == PpcInsn::PPC_INS_STB as u32    => handle_stb(ctx),
+        x if x == PpcInsn::PPC_INS_STBU as u32   => handle_stbu(ctx),
+        x if x == PpcInsn::PPC_INS_STBX as u32   => handle_stbx(ctx),
+        x if x == PpcInsn::PPC_INS_STD as u32    => handle_std(ctx),
+        x if x == PpcInsn::PPC_INS_STDCX as u32  => handle_stdcx(ctx),
+        x if x == PpcInsn::PPC_INS_STDU as u32   => handle_stdu(ctx),
+        x if x == PpcInsn::PPC_INS_STDX as u32   => handle_stdx(ctx),
+        x if x == PpcInsn::PPC_INS_STFD as u32   => handle_stfd(ctx),
+        x if x == PpcInsn::PPC_INS_STFDX as u32  => handle_stfdx(ctx),
+        x if x == PpcInsn::PPC_INS_STFIWX as u32 => handle_stfiwx(ctx),
+        x if x == PpcInsn::PPC_INS_STFS as u32   => handle_stfs(ctx),
+        x if x == PpcInsn::PPC_INS_STFSX as u32  => handle_stfsx(ctx),
+        x if x == PpcInsn::PPC_INS_STH as u32    => handle_sth(ctx),
+        x if x == PpcInsn::PPC_INS_STHBRX as u32 => handle_sthbrx(ctx),
+        x if x == PpcInsn::PPC_INS_STHX as u32   => handle_sthx(ctx),
+        x if x == PpcInsn::PPC_INS_STVEHX as u32 => handle_stvehx(ctx),
+
+        _ if has_any_mn(ctx, &["stvewx", "stvewx128"]) => handle_stvewx_like(ctx),
+        _ if has_any_mn(ctx, &["stvlx", "stvlx128"])   => handle_stvlx_like(ctx),
+        _ if has_any_mn(ctx, &["stvrx", "stvrx128"])   => handle_stvrx_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_STVX as u32
+          || has_any_mn(ctx, &["stvx", "stvx128"]) => handle_stvx_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_STW as u32    => handle_stw(ctx),
+        x if x == PpcInsn::PPC_INS_STWBRX as u32 => handle_stwbrx(ctx),
+        x if x == PpcInsn::PPC_INS_STWCX as u32  => handle_stwcx(ctx),
+        x if x == PpcInsn::PPC_INS_STWU as u32   => handle_stwu(ctx),
+        x if x == PpcInsn::PPC_INS_STWUX as u32  => handle_stwux(ctx),
+        x if x == PpcInsn::PPC_INS_STWX as u32   => handle_stwx(ctx),
+
+        x if x == PpcInsn::PPC_INS_SUBF as u32   => handle_subf(ctx),
+        x if x == PpcInsn::PPC_INS_SUBFC as u32  => handle_subfc(ctx),
+        x if x == PpcInsn::PPC_INS_SUBFE as u32  => handle_subfe(ctx),
+        x if x == PpcInsn::PPC_INS_SUBFIC as u32 => handle_subfic(ctx),
+        x if x == PpcInsn::PPC_INS_SYNC as u32   => handle_sync(ctx),
+        x if x == PpcInsn::PPC_INS_TDLGEI as u32 => handle_tdlgei(ctx),
+        x if x == PpcInsn::PPC_INS_TDLLEI as u32 => handle_tdllei(ctx),
+        x if x == PpcInsn::PPC_INS_TWI as u32    => handle_twi(ctx),
+        x if x == PpcInsn::PPC_INS_TWLGEI as u32 => handle_twlgei(ctx),
+        x if x == PpcInsn::PPC_INS_TWLLEI as u32 => handle_twllei(ctx),
+
+        x if x == PpcInsn::PPC_INS_VADDFP as u32 || has_mn(ctx, "vaddfp128") => handle_vaddfp_like(ctx),
+        x if x == PpcInsn::PPC_INS_VADDSHS as u32   => handle_vaddshs(ctx),
+        x if x == PpcInsn::PPC_INS_VADDUBM as u32   => handle_vaddubm(ctx),
+        x if x == PpcInsn::PPC_INS_VADDUBS as u32   => handle_vaddubs(ctx),
+        x if x == PpcInsn::PPC_INS_VADDUHM as u32   => handle_vadduhm(ctx),
+        x if x == PpcInsn::PPC_INS_VADDUWM as u32   => handle_vadduwm(ctx),
+        x if x == PpcInsn::PPC_INS_VADDUWS as u32   => handle_vadduws(ctx),
+
+        x if x == PpcInsn::PPC_INS_VAND as u32 || has_mn(ctx, "vand128") => handle_vand_like(ctx),
+        _ if has_mn(ctx, "vandc128") => handle_vandc128(ctx),
+
+        x if x == PpcInsn::PPC_INS_VAVGSB as u32    => handle_vavgsb(ctx),
+        x if x == PpcInsn::PPC_INS_VAVGSH as u32    => handle_vavgsh(ctx),
+        x if x == PpcInsn::PPC_INS_VAVGUB as u32    => handle_vavgub(ctx),
+
+        _ if has_mn(ctx, "vcfpsxws128") => handle_vctsx_like(ctx),
+        _ if has_mn(ctx, "vcsxwfp128")  => handle_vcfsx_like(ctx),
+        _ if has_mn(ctx, "vcuxwfp128")  => handle_vcfux_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VCMPBFP as u32 || has_mn(ctx, "vcmpbfp128") => handle_vcmpbfp_like(ctx),
+        x if x == PpcInsn::PPC_INS_VCMPEQFP as u32 || has_mn(ctx, "vcmpeqfp128") => handle_vcmpeqfp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VCMPEQUB as u32   => handle_vcmpequb(ctx),
+        x if x == PpcInsn::PPC_INS_VCMPEQUW as u32 || has_mn(ctx, "vcmpequw128") => handle_vcmpequw_like(ctx),
+        x if x == PpcInsn::PPC_INS_VCMPGEFP as u32 || has_mn(ctx, "vcmpgefp128") => handle_vcmpgefp_like(ctx),
+        x if x == PpcInsn::PPC_INS_VCMPGTFP as u32 || has_mn(ctx, "vcmpgtfp128") => handle_vcmpgtfp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VCMPGTUB as u32   => handle_vcmpgtub(ctx),
+        x if x == PpcInsn::PPC_INS_VCMPGTUH as u32   => handle_vcmpgtuh(ctx),
+
+        x if x == PpcInsn::PPC_INS_VEXPTEFP as u32 || has_mn(ctx, "vexptefp128") => handle_vexptefp_like(ctx),
+        x if x == PpcInsn::PPC_INS_VLOGEFP as u32  || has_mn(ctx, "vlogefp128")  => handle_vlogefp_like(ctx),
+
+        _ if has_any_mn(ctx, &["vmaddfp", "vmaddfp128", "vmaddcfp128"]) => handle_vmaddfp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VMAXFP as u32 || has_mn(ctx, "vmaxfp128") => handle_vmaxfp_like(ctx),
+        x if x == PpcInsn::PPC_INS_VMAXSW as u32     => handle_vmaxsw(ctx),
+
+        x if x == PpcInsn::PPC_INS_VMINFP as u32 || has_mn(ctx, "vminfp128") => handle_vminfp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VMRGHB as u32     => handle_vmrg_hilo_common(ctx, "epi8",  true),
+        x if x == PpcInsn::PPC_INS_VMRGHH as u32     => handle_vmrg_hilo_common(ctx, "epi16", true),
+        x if x == PpcInsn::PPC_INS_VMRGHW as u32 || has_mn(ctx, "vmrghw128") => handle_vmrg_hilo_common(ctx, "epi32", true),
+
+        x if x == PpcInsn::PPC_INS_VMRGLB as u32     => handle_vmrg_hilo_common(ctx, "epi8",  false),
+        x if x == PpcInsn::PPC_INS_VMRGLH as u32     => handle_vmrg_hilo_common(ctx, "epi16", false),
+        x if x == PpcInsn::PPC_INS_VMRGLW as u32 || has_mn(ctx, "vmrglw128") => handle_vmrg_hilo_common(ctx, "epi32", false),
+
+        _ if has_mn(ctx, "vmsum3fp128") => handle_vmsum3fp128(ctx),
+        _ if has_mn(ctx, "vmsum4fp128") => handle_vmsum4fp128(ctx),
+        _ if has_mn(ctx, "vmulfp128")   => handle_vmulfp128(ctx),
+
+        x if x == PpcInsn::PPC_INS_VNMSUBFP as u32
+          || has_mn(ctx, "vnmsubfp128") => handle_vnmsubfp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VOR as u32
+          || has_mn(ctx, "vor128")      => handle_vor_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VPERM as u32
+          || has_mn(ctx, "vperm128")    => handle_vperm_like(ctx),
+
+        _ if has_mn(ctx, "vpermwi128")  => handle_vpermwi128(ctx),
+        _ if has_mn(ctx, "vpkd3d128")   => handle_vpkd3d128(ctx),
+
+        x if x == PpcInsn::PPC_INS_VPKSHUS as u32
+          || has_mn(ctx, "vpkshus128")         => handle_vpkshus_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VREFP as u32
+          || has_mn(ctx, "vrefp128")           => handle_vrefp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VRFIM as u32
+          || has_mn(ctx, "vrfim128")           => handle_vrfi_round(ctx, "neg"),
+        x if x == PpcInsn::PPC_INS_VRFIN as u32
+          || has_mn(ctx, "vrfin128")           => handle_vrfi_round(ctx, "nearest"),
+        x if x == PpcInsn::PPC_INS_VRFIZ as u32
+          || has_mn(ctx, "vrfiz128")           => handle_vrfi_round(ctx, "zero"),
+
+        _ if has_mn(ctx, "vrlimi128")          => handle_vrlimi128(ctx),
+
+        x if x == PpcInsn::PPC_INS_VRSQRTEFP as u32
+          || has_mn(ctx, "vrsqrtefp128")       => handle_vrsqrtefp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSEL as u32               => handle_vsel(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSLB as u32               => handle_vslb_scalar(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSLDOI as u32
+          || has_mn(ctx, "vsldoi128")          => handle_vsldoi_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSLW as u32
+          || has_mn(ctx, "vslw128")            => handle_vslw_scalar(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSPLTB as u32             => handle_vspltb(ctx),
+        x if x == PpcInsn::PPC_INS_VSPLTH as u32             => handle_vsplth(ctx),
+        x if x == PpcInsn::PPC_INS_VSPLTISB as u32           => handle_vspltisb(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSPLTISW as u32
+          || has_mn(ctx, "vspltisw128")        => handle_vspltisw_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSPLTW as u32
+          || has_mn(ctx, "vspltw128")          => handle_vspltw_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSR as u32                => handle_vsr(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSRAW as u32
+          || has_mn(ctx, "vsraw128")           => handle_vsraw_scalar(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSRW as u32
+          || has_mn(ctx, "vsrw128")            => handle_vsrw_scalar(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSUBFP as u32
+          || has_mn(ctx, "vsubfp128")          => handle_vsubfp_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSUBSWS as u32            => handle_vsubsws_scalar(ctx),
+
+        x if x == PpcInsn::PPC_INS_VSUBUBS as u32            => handle_vsububs(ctx),
+        x if x == PpcInsn::PPC_INS_VSUBUHM as u32            => handle_vsubuhm(ctx),
+
+        _ if has_mn(ctx, "vupkd3d128")         => handle_vupkd3d128(ctx),
+
+        x if x == PpcInsn::PPC_INS_VUPKHSB as u32
+          || has_mn(ctx, "vupkhsb128")         => handle_vupkhsb_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VUPKHSH as u32
+          || has_mn(ctx, "vupkhsh128")         => handle_vupkhsh_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VUPKLSB as u32
+          || has_mn(ctx, "vupklsb128")         => handle_vupklsb_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VUPKLSH as u32
+          || has_mn(ctx, "vupklsh128")         => handle_vupklsh_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_VXOR as u32
+          || has_mn(ctx, "vxor128")            => handle_vxor_like(ctx),
+
+        x if x == PpcInsn::PPC_INS_XOR as u32                => handle_xor_scalar(ctx),
+        x if x == PpcInsn::PPC_INS_XORI as u32               => handle_xori_scalar(ctx, false),
+        x if x == PpcInsn::PPC_INS_XORIS as u32              => handle_xori_scalar(ctx, true),
+
+        _ => false,
+    }
+}
+
+/// Public entry used by the main recompile loop.
+/// Returns `true` if the instruction was recognized/emitted.
+pub fn lower_one(
+    rec: &mut Recompiler,
+    fnc: &Function,
+    base: u32,
+    be_word: u32,
+    insn: &Insn<'_>,
+    locals: &mut RecompilerLocalVariables,
+    csr: &mut CSRState,
+    next_be_word: Option<u32>,
+    cs: &Capstone,
+    block_terminated: &mut bool,
+) -> bool {
+    let mmio = next_be_word.map_or(false, |n| n == Recompiler::C_EIEIO);
+
+    let mut ctx = LowerCtx {
+        rec,
+        fnc,
+        base,
+        be_word,
+        insn,
+        cs,
+        locals,
+        csr,
+        mmio,
+        block_terminated,
+    };
+
+    ctx.emit_mid_asm_hook_if_any(false);
+    ctx.emit_disasm_comment();
+    let ok = dispatch_by_id(&mut ctx);
+    if !ok {
+        if let Some(nxt) = next_be_word {
+            let _mmio = ctx.is_mmio_store(nxt);
+            let _ = _mmio;
+        }
+    }
+    ctx.emit_mid_asm_hook_if_any(true);
+    ok
+}

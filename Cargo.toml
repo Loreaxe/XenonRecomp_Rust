@@ -1,0 +1,72 @@
+[package]
+name = "xenon_recomp"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+# Optional: explicitly declare lib and bin (Cargo would infer these if files exist).
+[lib]
+name = "xenon_recomp"
+path = "src/lib.rs"
+
+[[bin]]
+name = "xenon_recomp"   # the CLI you run: `cargo run --bin xenon_recomp -- ...`
+path = "src/main.rs"
+
+[dependencies]
+capstone = "0.12"
+anyhow = "1"
+thiserror = "1"
+bytemuck = "1"
+byteorder = "1"
+bitflags = "2"
+memmap2 = "0.9"
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+# Add "env" so #[arg(env = "...")] works
+clap = { version = "4", features = ["derive", "env"] }
+aes = "0.8"
+cbc = { version = "0.1", features = ["alloc"] }
+sha1 = "0.10"
+libc = "0.2"
+rayon = "1.10"
+
+[features]
+# Default: include all registers (static recomp path).
+default = []
+
+# Feature flags to *omit* specific fields/behavior (use with cfg(feature = "...")).
+non_argument_as_local = []
+non_volatile_as_local = []
+ctr_as_local = []
+xer_as_local = []
+reserved_as_local = []
+cr_as_local = []
+skip_lr = []
+skip_msr = []
+externs_codegen = []
+
+# --------------------------------------------------------------------
+# Build profiles: Debug vs Release (with debug info)
+# --------------------------------------------------------------------
+
+[profile.dev]
+# Normal debug build: unoptimized but very debuggable
+opt-level = 0           # no optimizations
+debug = true            # full debug info
+debug-assertions = true
+overflow-checks = true
+incremental = true
+strip = "none"          # keep everything for debugging
+
+[profile.release]
+# "Release with debug info" — optimized but still fully debuggable
+opt-level = 3           # full optimizations
+debug = true            # <--- THIS is the key for release+debuginfo
+debug-assertions = false
+overflow-checks = false
+lto = "thin"            # nice speed/code size tradeoff; ok to tweak
+codegen-units = 1       # better optimization at cost of compile time
+incremental = false
+strip = "none"          # keep symbols & debuginfo; strip later if you want
+panic = "unwind"        # or "abort" if you want slightly smaller/faster

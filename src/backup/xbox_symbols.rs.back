@@ -1,0 +1,50 @@
+// src/xbox_symbols.rs
+//
+// XAM / XboxKrnl export name tables and helpers.
+// Used by XEX import thunk collection and any other symbol consumers.
+
+use std::collections::HashMap;
+
+// These paths stay the same as they were in xex.rs
+const XAM_INC:  &str = include_str!("xbox/xam_table.inc");
+const KRNL_INC: &str = include_str!("xbox/xboxkrnl_table.inc");
+
+fn parse_exports_inc(inc: &'static str) -> HashMap<u32, &'static str> {
+    let mut map = HashMap::new();
+
+    for line in inc.lines() {
+        let line = line.trim();
+        if !line.starts_with("XE_EXPORT(") {
+            continue;
+        }
+
+        if let (Some(l), Some(r)) = (line.find('('), line.rfind(')')) {
+            let args = &line[l + 1 .. r];
+            let mut parts = args.split(',').map(|s| s.trim());
+            let _module = parts.next().unwrap_or_default();
+            let ord_str = parts.next().unwrap_or_default();
+            let name    = parts.next().unwrap_or_default();
+
+            let ord = if let Some(s) = ord_str.strip_prefix("0x") {
+                u32::from_str_radix(s, 16).unwrap_or(0)
+            } else {
+                ord_str.parse::<u32>().unwrap_or(0)
+            };
+
+            if ord != 0 && !name.is_empty() {
+                map.insert(ord, name);
+            }
+        }
+    }
+
+    map
+}
+
+/// Return `(xam_exports, xboxkrnl_exports)` where each map is
+/// `ordinal -> symbol_name`.
+pub fn build_export_maps() -> (
+    HashMap<u32, &'static str>,
+    HashMap<u32, &'static str>,
+) {
+    (parse_exports_inc(XAM_INC), parse_exports_inc(KRNL_INC))
+}

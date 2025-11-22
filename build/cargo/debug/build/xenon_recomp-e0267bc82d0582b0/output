@@ -1,0 +1,5 @@
+cargo:include=/home/loreaxe/XenonRecomp_Rust/build/mspack_prefix/include
+cargo:rustc-link-search=native=/home/loreaxe/XenonRecomp_Rust/build/mspack_prefix/lib
+cargo:rustc-link-lib=static=mspack
+cargo:rerun-if-env-changed=MSPACK_INCDIR
+cargo:rerun-if-env-changed=MSPACK_LIBDIR

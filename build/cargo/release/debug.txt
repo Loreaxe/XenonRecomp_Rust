@@ -1,0 +1,690 @@
+[cmd::Auto] ▶ start
+[open_xex_cs_and_blob] ▶ start
+[xex::load_xex2] ▶ start
+XEX: header_size=0x4000 security_off=0x120 image_size=0x1620000 load_addr=0x82000000
+XEX: file_format_info: info_size=32 encryption=0 compression=1
+[xex::decomp_basic] ▶ start
+XEX: BASIC blocks=3 total_unpacked=23199744 bytes
+BASIC: block #0 data=20086784 zero=1900544 d=21987328
+BASIC: block #1 data=65536 zero=32768 d=22085632
+BASIC: block #2 data=1114112 zero=0 d=23199744
+[xex::decomp_basic] ◀ done in 3.04 ms
+XEX: security load_addr = 0x82000000
+PE: image_base=0x82000000 entry=0x00000000
+PE: NumberOfSections=15
+PE: section  0 name='.rdata' RVA=0x000600 VA=0x82000600 raw=1094144 virt=1093744 CODE=false
+PE: section  1 name='.pdata' RVA=0x10B800 VA=0x8210B800 raw=369664 virt=369440 CODE=false
+PE: section  2 name='BINKBSS' RVA=0x165C00 VA=0x82165C00 raw=10752 virt=10504 CODE=false
+PE: section  3 name='.text' RVA=0x170000 VA=0x82170000 raw=18131968 virt=18131900 CODE=true
+PE: section  4 name='BINK' RVA=0x12BAC00 VA=0x832BAC00 raw=62976 virt=62524 CODE=true
+PE: section  5 name='.data' RVA=0x12D0000 VA=0x832D0000 raw=335360 virt=2275724 CODE=false
+PE: section  6 name='.lhmem' RVA=0x14FBA00 VA=0x834FBA00 raw=512 virt=12 CODE=false
+PE: section  7 name='.XBMOVIE' RVA=0x14FBC00 VA=0x834FBC00 raw=512 virt=12 CODE=false
+PE: section  8 name='.tls' RVA=0x14FBE00 VA=0x834FBE00 raw=512 virt=25 CODE=false
+PE: section  9 name='.lhtrc' RVA=0x14FC000 VA=0x834FC000 raw=512 virt=8 CODE=false
+PE: section 10 name='BINKDATA' RVA=0x14FC200 VA=0x834FC200 raw=15872 virt=15688 CODE=false
+PE: section 11 name='.edata' RVA=0x1500000 VA=0x83500000 raw=7680 virt=7453 CODE=false
+PE: section 12 name='.idata' RVA=0x1510000 VA=0x83510000 raw=1536 virt=1190 CODE=false
+PE: section 13 name='.XBLD' RVA=0x1520000 VA=0x83520000 raw=512 virt=192 CODE=false
+PE: section 14 name='.reloc' RVA=0x1520200 VA=0x83520200 raw=1034240 virt=1034088 CODE=false
+DEBUG: word[0x82177E40] = 0x7D8802A6
+DEBUG: word[0x82170440] = 0x38C6FFFE
+[xex::load_xex2] ◀ done in 9.85 ms
+[xex::collect_import_symbols] ▶ start
+imports: libraries(raw)=["xam.xex", "xboxkrnl.exe"]
+imports: 0x82000600 -> XNotifyGetNext (ord 028B)
+imports: 0x832B9914 -> XNotifyGetNext (ord 028B)
+imports: 0x82000604 -> XGetVideoMode (ord 03D1)
+imports: 0x832B99B4 -> XGetVideoMode (ord 03D1)
+imports: 0x82000608 -> XamShowMessageBoxUIEx (ord 02DC)
+imports: 0x832B99C4 -> XamShowMessageBoxUIEx (ord 02DC)
+imports: 0x8200060C -> XGetLanguage (ord 03CD)
+imports: 0x832B99D4 -> XGetLanguage (ord 03CD)
+imports: 0x82000610 -> XGetAVPack (ord 03CB)
+imports: 0x832B99E4 -> XGetAVPack (ord 03CB)
+imports: 0x82000614 -> XamLoaderTerminateTitle (ord 01A9)
+imports: 0x832B99F4 -> XamLoaderTerminateTitle (ord 01A9)
+imports: 0x82000618 -> XMsgStartIORequest (ord 01F7)
+imports: 0x832B9A04 -> XMsgStartIORequest (ord 01F7)
+imports: 0x8200061C -> XamUserGetName (ord 020E)
+imports: 0x832B9A14 -> XamUserGetName (ord 020E)
+imports: 0x82000620 -> XamUserGetSigninState (ord 0210)
+imports: 0x832B9A24 -> XamUserGetSigninState (ord 0210)
+imports: 0x82000624 -> XamUserAreUsersFriends (ord 0213)
+imports: 0x832B9A34 -> XamUserAreUsersFriends (ord 0213)
+imports: 0x82000628 -> XamUserCheckPrivilege (ord 0212)
+imports: 0x832B9A44 -> XamUserCheckPrivilege (ord 0212)
+imports: 0x8200062C -> XamGetSystemVersion (ord 0282)
+imports: 0x832B9A54 -> XamGetSystemVersion (ord 0282)
+imports: 0x82000630 -> XamReadTileToTexture (ord 02F5)
+imports: 0x832B9A64 -> XamReadTileToTexture (ord 02F5)
+imports: 0x82000634 -> XamParseGamerTileKey (ord 030A)
+imports: 0x832B9A74 -> XamParseGamerTileKey (ord 030A)
+imports: 0x82000638 -> XamUserCreateAchievementEnumerator (ord 02EE)
+imports: 0x832B9A84 -> XamUserCreateAchievementEnumerator (ord 02EE)
+imports: 0x8200063C -> XamUserGetXUID (ord 020A)
+imports: 0x832B9A94 -> XamUserGetXUID (ord 020A)
+imports: 0x82000640 -> XamNotifyCreateListener (ord 028A)
+imports: 0x832B9AA4 -> XamNotifyCreateListener (ord 028A)
+imports: 0x82000644 -> XamShowSigninUI (ord 02BC)
+imports: 0x832B9AB4 -> XamShowSigninUI (ord 02BC)
+imports: 0x82000648 -> XamShowKeyboardUI (ord 02C1)
+imports: 0x832B9AC4 -> XamShowKeyboardUI (ord 02C1)
+imports: 0x8200064C -> XamShowGamerCardUIForXUID (ord 02D5)
+imports: 0x832B9AD4 -> XamShowGamerCardUIForXUID (ord 02D5)
+imports: 0x82000650 -> XamShowAchievementsUI (ord 02C5)
+imports: 0x832B9AE4 -> XamShowAchievementsUI (ord 02C5)
+imports: 0x82000654 -> XamShowMarketplaceUI (ord 02C7)
+imports: 0x832B9AF4 -> XamShowMarketplaceUI (ord 02C7)
+imports: 0x82000658 -> XamShowDeviceSelectorUI (ord 02CB)
+imports: 0x832B9B04 -> XamShowDeviceSelectorUI (ord 02CB)
+imports: 0x8200065C -> XamShowMessageBoxUI (ord 02CA)
+imports: 0x832B9B14 -> XamShowMessageBoxUI (ord 02CA)
+imports: 0x82000660 -> XamShowDirtyDiscErrorUI (ord 02D9)
+imports: 0x832B9B24 -> XamShowDirtyDiscErrorUI (ord 02D9)
+imports: 0x82000664 -> XamTaskSchedule (ord 01AF)
+imports: 0x832B9B34 -> XamTaskSchedule (ord 01AF)
+imports: 0x82000668 -> XMsgCancelIORequest (ord 01F8)
+imports: 0x832B9B44 -> XMsgCancelIORequest (ord 01F8)
+imports: 0x8200066C -> XamEnumerate (ord 0250)
+imports: 0x832B9B54 -> XamEnumerate (ord 0250)
+imports: 0x82000670 -> XamLoaderLaunchTitle (ord 01A4)
+imports: 0x832B9B64 -> XamLoaderLaunchTitle (ord 01A4)
+imports: 0x82000674 -> XamInputGetCapabilities (ord 0190)
+imports: 0x832B9B74 -> XamInputGetCapabilities (ord 0190)
+imports: 0x82000678 -> XamInputGetState (ord 0191)
+imports: 0x832B9B84 -> XamInputGetState (ord 0191)
+imports: 0x8200067C -> XamInputSetState (ord 0192)
+imports: 0x832B98F4 -> XamInputSetState (ord 0192)
+imports: 0x82000680 -> XamUserGetSigninInfo (ord 0227)
+imports: 0x832B9B94 -> XamUserGetSigninInfo (ord 0227)
+imports: 0x82000684 -> XamContentCreateEx (ord 0259)
+imports: 0x832B9BA4 -> XamContentCreateEx (ord 0259)
+imports: 0x82000688 -> XamContentClose (ord 025A)
+imports: 0x832B9BB4 -> XamContentClose (ord 025A)
+imports: 0x8200068C -> XamContentGetCreator (ord 0262)
+imports: 0x832B9BC4 -> XamContentGetCreator (ord 0262)
+imports: 0x82000690 -> XamContentGetLicenseMask (ord 0266)
+imports: 0x832B9BD4 -> XamContentGetLicenseMask (ord 0266)
+imports: 0x82000694 -> XamContentCreateEnumerator (ord 025C)
+imports: 0x832B9BE4 -> XamContentCreateEnumerator (ord 025C)
+imports: 0x82000698 -> XamContentGetDeviceState (ord 0265)
+imports: 0x832B9BF4 -> XamContentGetDeviceState (ord 0265)
+imports: 0x8200069C -> XamGetExecutionId (ord 0280)
+imports: 0x832B9C04 -> XamGetExecutionId (ord 0280)
+imports: 0x820006A0 -> XamAlloc (ord 01EA)
+imports: 0x832B9C14 -> XamAlloc (ord 01EA)
+imports: 0x820006A4 -> XamFree (ord 01EC)
+imports: 0x832B9C24 -> XamFree (ord 01EC)
+imports: 0x820006A8 -> XamGetOverlappedResult (ord 01FB)
+imports: 0x832B9C34 -> XamGetOverlappedResult (ord 01FB)
+imports: 0x820006AC -> XMsgCompleteIORequest (ord 01F5)
+imports: 0x832B9C44 -> XMsgCompleteIORequest (ord 01F5)
+imports: 0x820006B0 -> XMsgInProcessCall (ord 01F4)
+imports: 0x832B9C54 -> XMsgInProcessCall (ord 01F4)
+imports: 0x820006B4 -> XamGetPrivateEnumStructureFromHandle (ord 024F)
+imports: 0x832B9C64 -> XamGetPrivateEnumStructureFromHandle (ord 024F)
+imports: 0x820006B8 -> XGetGameRegion (ord 03CC)
+imports: 0x832B9C74 -> XGetGameRegion (ord 03CC)
+imports: 0x820006BC -> XamVoiceSubmitPacket (ord 030E)
+imports: 0x832BA6E4 -> XamVoiceSubmitPacket (ord 030E)
+imports: 0x820006C0 -> XamVoiceClose (ord 030F)
+imports: 0x832BA6D4 -> XamVoiceClose (ord 030F)
+imports: 0x820006C4 -> XamVoiceHeadsetPresent (ord 030D)
+imports: 0x832BA6C4 -> XamVoiceHeadsetPresent (ord 030D)
+imports: 0x820006C8 -> XamUserGetOnlineCountryFromXUID (ord 0218)
+imports: 0x832BA6B4 -> XamUserGetOnlineCountryFromXUID (ord 0218)
+imports: 0x820006CC -> XamUserGetMembershipTierFromXUID (ord 0217)
+imports: 0x832BA6A4 -> XamUserGetMembershipTierFromXUID (ord 0217)
+imports: 0x820006D0 -> XamUserWriteProfileSettings (ord 021A)
+imports: 0x832BA694 -> XamUserWriteProfileSettings (ord 021A)
+imports: 0x820006D4 -> XamUserReadProfileSettings (ord 0219)
+imports: 0x832BA684 -> XamUserReadProfileSettings (ord 0219)
+imports: 0x820006D8 -> XamSessionCreateHandle (ord 0316)
+imports: 0x832BA674 -> XamSessionCreateHandle (ord 0316)
+imports: 0x820006DC -> XamSessionRefObjByHandle (ord 0317)
+imports: 0x832BA664 -> XamSessionRefObjByHandle (ord 0317)
+imports: 0x820006E0 -> NetDll_XNetGetTitleXnAddr (ord 0049)
+imports: 0x832BA654 -> NetDll_XNetGetTitleXnAddr (ord 0049)
+imports: 0x820006E4 -> NetDll_XNetQosRelease (ord 0048)
+imports: 0x832BA644 -> NetDll_XNetQosRelease (ord 0048)
+imports: 0x820006E8 -> NetDll_XNetQosListen (ord 0045)
+imports: 0x832BA634 -> NetDll_XNetQosListen (ord 0045)
+imports: 0x820006EC -> NetDll_XNetGetConnectStatus (ord 0042)
+imports: 0x832BA624 -> NetDll_XNetGetConnectStatus (ord 0042)
+imports: 0x820006F0 -> NetDll_XNetConnect (ord 0041)
+imports: 0x832BA614 -> NetDll_XNetConnect (ord 0041)
+imports: 0x820006F4 -> NetDll_XNetXnAddrToMachineId (ord 0040)
+imports: 0x832BA604 -> NetDll_XNetXnAddrToMachineId (ord 0040)
+imports: 0x820006F8 -> NetDll_XNetUnregisterInAddr (ord 003F)
+imports: 0x832BA5F4 -> NetDll_XNetUnregisterInAddr (ord 003F)
+imports: 0x820006FC -> NetDll_XNetInAddrToXnAddr (ord 003C)
+imports: 0x832BA5E4 -> NetDll_XNetInAddrToXnAddr (ord 003C)
+imports: 0x82000700 -> NetDll_XNetXnAddrToInAddr (ord 0039)
+imports: 0x832BA5D4 -> NetDll_XNetXnAddrToInAddr (ord 0039)
+imports: 0x82000704 -> NetDll_XNetUnregisterKey (ord 0038)
+imports: 0x832BA5C4 -> NetDll_XNetUnregisterKey (ord 0038)
+imports: 0x82000708 -> NetDll_XNetRegisterKey (ord 0037)
+imports: 0x832BA5B4 -> NetDll_XNetRegisterKey (ord 0037)
+imports: 0x8200070C -> NetDll_XNetRandom (ord 0035)
+imports: 0x832BA5A4 -> NetDll_XNetRandom (ord 0035)
+imports: 0x82000710 -> NetDll_XNetCleanup (ord 0034)
+imports: 0x832BA594 -> NetDll_XNetCleanup (ord 0034)
+imports: 0x82000714 -> NetDll_XNetStartup (ord 0033)
+imports: 0x832BA584 -> NetDll_XNetStartup (ord 0033)
+imports: 0x82000718 -> NetDll___WSAFDIsSet (ord 0022)
+imports: 0x832BA574 -> NetDll___WSAFDIsSet (ord 0022)
+imports: 0x8200071C -> NetDll_WSAGetLastError (ord 001B)
+imports: 0x832BA564 -> NetDll_WSAGetLastError (ord 001B)
+imports: 0x82000720 -> NetDll_inet_addr (ord 001A)
+imports: 0x832BA554 -> NetDll_inet_addr (ord 001A)
+imports: 0x82000724 -> NetDll_WSASendTo (ord 0019)
+imports: 0x832BA544 -> NetDll_WSASendTo (ord 0019)
+imports: 0x82000728 -> NetDll_sendto (ord 0018)
+imports: 0x832BA534 -> NetDll_sendto (ord 0018)
+imports: 0x8200072C -> NetDll_send (ord 0016)
+imports: 0x832BA524 -> NetDll_send (ord 0016)
+imports: 0x82000730 -> NetDll_WSARecvFrom (ord 0015)
+imports: 0x832BA514 -> NetDll_WSARecvFrom (ord 0015)
+imports: 0x82000734 -> NetDll_recvfrom (ord 0014)
+imports: 0x832BA504 -> NetDll_recvfrom (ord 0014)
+imports: 0x82000738 -> NetDll_recv (ord 0012)
+imports: 0x832BA4F4 -> NetDll_recv (ord 0012)
+imports: 0x8200073C -> NetDll_WSAGetOverlappedResult (ord 0010)
+imports: 0x832BA4E4 -> NetDll_WSAGetOverlappedResult (ord 0010)
+imports: 0x82000740 -> NetDll_select (ord 000F)
+imports: 0x832BA4D4 -> NetDll_select (ord 000F)
+imports: 0x82000744 -> NetDll_accept (ord 000E)
+imports: 0x832BA4C4 -> NetDll_accept (ord 000E)
+imports: 0x82000748 -> NetDll_listen (ord 000D)
+imports: 0x832BA4B4 -> NetDll_listen (ord 000D)
+imports: 0x8200074C -> NetDll_connect (ord 000C)
+imports: 0x832BA4A4 -> NetDll_connect (ord 000C)
+imports: 0x82000750 -> NetDll_bind (ord 000B)
+imports: 0x832BA494 -> NetDll_bind (ord 000B)
+imports: 0x82000754 -> NetDll_setsockopt (ord 0007)
+imports: 0x832BA484 -> NetDll_setsockopt (ord 0007)
+imports: 0x82000758 -> NetDll_ioctlsocket (ord 0006)
+imports: 0x832BA474 -> NetDll_ioctlsocket (ord 0006)
+imports: 0x8200075C -> NetDll_closesocket (ord 0004)
+imports: 0x832BA464 -> NetDll_closesocket (ord 0004)
+imports: 0x82000760 -> NetDll_socket (ord 0003)
+imports: 0x832BA454 -> NetDll_socket (ord 0003)
+imports: 0x82000764 -> NetDll_WSACleanup (ord 0002)
+imports: 0x832BA444 -> NetDll_WSACleanup (ord 0002)
+imports: 0x82000768 -> NetDll_WSAStartup (ord 0001)
+imports: 0x832BA434 -> NetDll_WSAStartup (ord 0001)
+imports: 0x8200076C -> XNetLogonGetTitleID (ord 0136)
+imports: 0x832BA424 -> XNetLogonGetTitleID (ord 0136)
+imports: 0x82000770 -> XMsgStartIORequestEx (ord 01FC)
+imports: 0x832BA414 -> XMsgStartIORequestEx (ord 01FC)
+imports: 0x82000774 -> XamCreateEnumeratorHandle (ord 024E)
+imports: 0x832BA404 -> XamCreateEnumeratorHandle (ord 024E)
+imports: 0x82000778 -> XamVoiceCreate (ord 030C)
+imports: 0x832BA6F4 -> XamVoiceCreate (ord 030C)
+imports: xam.xex → added 190 thunk(s)
+imports: 0x82000780 -> XexGetProcedureAddress (ord 0197)
+imports: 0x832BA044 -> XexGetProcedureAddress (ord 0197)
+imports: 0x82000784 -> XexGetModuleHandle (ord 0195)
+imports: 0x832BA054 -> XexGetModuleHandle (ord 0195)
+imports: 0x82000788 -> ExEventObjectType (ord 000E)
+imports: 0x8200078C -> RtlFillMemoryUlong (ord 0126)
+imports: 0x832BA064 -> RtlFillMemoryUlong (ord 0126)
+imports: 0x82000790 -> KeQuerySystemTime (ord 0084)
+imports: 0x832BA034 -> KeQuerySystemTime (ord 0084)
+imports: 0x82000794 -> KeGetCurrentProcessType (ord 0066)
+imports: 0x832B9944 -> KeGetCurrentProcessType (ord 0066)
+imports: 0x82000798 -> RtlCompareMemoryUlong (ord 011B)
+imports: 0x832BA084 -> RtlCompareMemoryUlong (ord 011B)
+imports: 0x8200079C -> RtlRaiseException (ord 0136)
+imports: 0x832BA094 -> RtlRaiseException (ord 0136)
+imports: 0x820007A0 -> KeQueryPerformanceFrequency (ord 0083)
+imports: 0x832BA0A4 -> KeQueryPerformanceFrequency (ord 0083)
+imports: 0x820007A4 -> NtCreateSemaphore (ord 00D5)
+imports: 0x832BA0B4 -> NtCreateSemaphore (ord 00D5)
+imports: 0x820007A8 -> NtReleaseSemaphore (ord 00F3)
+imports: 0x832BA0C4 -> NtReleaseSemaphore (ord 00F3)
+imports: 0x820007AC -> NtWaitForMultipleObjectsEx (ord 00FE)
+imports: 0x832B99A4 -> NtWaitForMultipleObjectsEx (ord 00FE)
+imports: 0x820007B0 -> ExTerminateThread (ord 0019)
+imports: 0x832BA0D4 -> ExTerminateThread (ord 0019)
+imports: 0x820007B4 -> RtlTimeFieldsToTime (ord 013F)
+imports: 0x832BA0E4 -> RtlTimeFieldsToTime (ord 013F)
+imports: 0x820007B8 -> NtClearEvent (ord 00CE)
+imports: 0x832B9934 -> NtClearEvent (ord 00CE)
+imports: 0x820007BC -> NtSetInformationFile (ord 00F7)
+imports: 0x832BA0F4 -> NtSetInformationFile (ord 00F7)
+imports: 0x820007C0 -> NtDuplicateObject (ord 00DA)
+imports: 0x832BA104 -> NtDuplicateObject (ord 00DA)
+imports: 0x820007C4 -> NtQueryInformationFile (ord 00E8)
+imports: 0x832BA114 -> NtQueryInformationFile (ord 00E8)
+imports: 0x820007C8 -> NtResumeThread (ord 00F5)
+imports: 0x832BA124 -> NtResumeThread (ord 00F5)
+imports: 0x820007CC -> RtlFreeAnsiString (ord 0127)
+imports: 0x832BA134 -> RtlFreeAnsiString (ord 0127)
+imports: 0x820007D0 -> RtlUnicodeStringToAnsiString (ord 0142)
+imports: 0x832BA144 -> RtlUnicodeStringToAnsiString (ord 0142)
+imports: 0x820007D4 -> RtlInitUnicodeString (ord 012D)
+imports: 0x832BA154 -> RtlInitUnicodeString (ord 012D)
+imports: 0x820007D8 -> HalReturnToFirmware (ord 0028)
+imports: 0x832BA164 -> HalReturnToFirmware (ord 0028)
+imports: 0x820007DC -> NtQueryDirectoryFile (ord 00E4)
+imports: 0x832BA174 -> NtQueryDirectoryFile (ord 00E4)
+imports: 0x820007E0 -> NtReadFileScatter (ord 00F1)
+imports: 0x832BA184 -> NtReadFileScatter (ord 00F1)
+imports: 0x820007E4 -> XexUnloadImage (ord 01A1)
+imports: 0x832BA194 -> XexUnloadImage (ord 01A1)
+imports: 0x820007E8 -> XexLoadImage (ord 0199)
+imports: 0x832BA1A4 -> XexLoadImage (ord 0199)
+imports: 0x820007EC -> XexGetModuleSection (ord 0196)
+imports: 0x832BA1B4 -> XexGetModuleSection (ord 0196)
+imports: 0x820007F0 -> KeDelayExecutionThread (ord 005A)
+imports: 0x832BA1C4 -> KeDelayExecutionThread (ord 005A)
+imports: 0x820007F4 -> IoInvalidDeviceRequest (ord 0041)
+imports: 0x832BA1D4 -> IoInvalidDeviceRequest (ord 0041)
+imports: 0x820007F8 -> ObReferenceObject (ord 010F)
+imports: 0x832BA1E4 -> ObReferenceObject (ord 010F)
+imports: 0x820007FC -> IoCreateDevice (ord 0037)
+imports: 0x832BA1F4 -> IoCreateDevice (ord 0037)
+imports: 0x82000800 -> IoDeleteDevice (ord 0039)
+imports: 0x832BA204 -> IoDeleteDevice (ord 0039)
+imports: 0x82000804 -> ExAllocatePoolTypeWithTag (ord 000B)
+imports: 0x832BA214 -> ExAllocatePoolTypeWithTag (ord 000B)
+imports: 0x82000808 -> ExFreePool (ord 000F)
+imports: 0x832BA224 -> ExFreePool (ord 000F)
+imports: 0x8200080C -> RtlCompareStringN (ord 011D)
+imports: 0x832BA234 -> RtlCompareStringN (ord 011D)
+imports: 0x82000810 -> IoCompleteRequest (ord 0035)
+imports: 0x832BA244 -> IoCompleteRequest (ord 0035)
+imports: 0x82000814 -> KfReleaseSpinLock (ord 00B4)
+imports: 0x832B9924 -> KfReleaseSpinLock (ord 00B4)
+imports: 0x82000818 -> KfAcquireSpinLock (ord 00B1)
+imports: 0x832B9974 -> KfAcquireSpinLock (ord 00B1)
+imports: 0x8200081C -> ExCreateThread (ord 000D)
+imports: 0x832BA254 -> ExCreateThread (ord 000D)
+imports: 0x82000820 -> XboxHardwareInfo (ord 0156)
+imports: 0x82000824 -> RtlUpcaseUnicodeChar (ord 0149)
+imports: 0x832BA264 -> RtlUpcaseUnicodeChar (ord 0149)
+imports: 0x82000828 -> ObIsTitleObject (ord 0109)
+imports: 0x832BA274 -> ObIsTitleObject (ord 0109)
+imports: 0x8200082C -> IoCheckShareAccess (ord 0034)
+imports: 0x832BA284 -> IoCheckShareAccess (ord 0034)
+imports: 0x82000830 -> IoSetShareAccess (ord 0047)
+imports: 0x832BA294 -> IoSetShareAccess (ord 0047)
+imports: 0x82000834 -> IoRemoveShareAccess (ord 0045)
+imports: 0x832BA2A4 -> IoRemoveShareAccess (ord 0045)
+imports: 0x82000838 -> XeCryptShaInit (ord 018F)
+imports: 0x832BA2B4 -> XeCryptShaInit (ord 018F)
+imports: 0x8200083C -> XeCryptShaUpdate (ord 0190)
+imports: 0x832BA2C4 -> XeCryptShaUpdate (ord 0190)
+imports: 0x82000840 -> XeCryptShaFinal (ord 0191)
+imports: 0x832BA2D4 -> XeCryptShaFinal (ord 0191)
+imports: 0x82000844 -> _vsnprintf (ord 014D)
+imports: 0x832BA2E4 -> _vsnprintf (ord 014D)
+imports: 0x82000848 -> KeAcquireSpinLockAtRaisedIrql (ord 004D)
+imports: 0x832BA2F4 -> KeAcquireSpinLockAtRaisedIrql (ord 004D)
+imports: 0x8200084C -> KeRaiseIrqlToDpcLevel (ord 0085)
+imports: 0x832BA304 -> KeRaiseIrqlToDpcLevel (ord 0085)
+imports: 0x82000850 -> KfLowerIrql (ord 00B3)
+imports: 0x832BA314 -> KfLowerIrql (ord 00B3)
+imports: 0x82000854 -> KeTryToAcquireSpinLockAtRaisedIrql (ord 00AE)
+imports: 0x832BA324 -> KeTryToAcquireSpinLockAtRaisedIrql (ord 00AE)
+imports: 0x82000858 -> KeReleaseSpinLockFromRaisedIrql (ord 0089)
+imports: 0x832BA334 -> KeReleaseSpinLockFromRaisedIrql (ord 0089)
+imports: 0x8200085C -> MmGetPhysicalAddress (ord 00BE)
+imports: 0x832BA344 -> MmGetPhysicalAddress (ord 00BE)
+imports: 0x82000860 -> XMAReleaseContext (ord 0226)
+imports: 0x832BA354 -> XMAReleaseContext (ord 0226)
+imports: 0x82000864 -> XMACreateContext (ord 0224)
+imports: 0x832BA364 -> XMACreateContext (ord 0224)
+imports: 0x82000868 -> XAudioRegisterRenderDriverClient (ord 01F3)
+imports: 0x832BA374 -> XAudioRegisterRenderDriverClient (ord 01F3)
+imports: 0x8200086C -> XAudioUnregisterRenderDriverClient (ord 01F4)
+imports: 0x832BA384 -> XAudioUnregisterRenderDriverClient (ord 01F4)
+imports: 0x82000870 -> XAudioSubmitRenderDriverFrame (ord 01F5)
+imports: 0x832BA394 -> XAudioSubmitRenderDriverFrame (ord 01F5)
+imports: 0x82000874 -> KeReleaseSemaphore (ord 0088)
+imports: 0x832BA3A4 -> KeReleaseSemaphore (ord 0088)
+imports: 0x82000878 -> XAudioGetVoiceCategoryVolume (ord 01F8)
+imports: 0x832BA3B4 -> XAudioGetVoiceCategoryVolume (ord 01F8)
+imports: 0x8200087C -> XAudioGetVoiceCategoryVolumeChangeMask (ord 01F7)
+imports: 0x832BA3C4 -> XAudioGetVoiceCategoryVolumeChangeMask (ord 01F7)
+imports: 0x82000880 -> KeWaitForMultipleObjects (ord 00AF)
+imports: 0x832BA3D4 -> KeWaitForMultipleObjects (ord 00AF)
+imports: 0x82000884 -> KeResumeThread (ord 0092)
+imports: 0x832BA3E4 -> KeResumeThread (ord 0092)
+imports: 0x82000888 -> KeInitializeSemaphore (ord 0074)
+imports: 0x832BA3F4 -> KeInitializeSemaphore (ord 0074)
+imports: 0x8200088C -> RtlTimeToTimeFields (ord 0140)
+imports: 0x832BA024 -> RtlTimeToTimeFields (ord 0140)
+imports: 0x82000890 -> RtlUnicodeToMultiByteN (ord 0143)
+imports: 0x832BA014 -> RtlUnicodeToMultiByteN (ord 0143)
+imports: 0x82000894 -> NtQueryFullAttributesFile (ord 00E7)
+imports: 0x832BA004 -> NtQueryFullAttributesFile (ord 00E7)
+imports: 0x82000898 -> RtlMultiByteToUnicodeN (ord 0133)
+imports: 0x832B9FF4 -> RtlMultiByteToUnicodeN (ord 0133)
+imports: 0x8200089C -> NtSetEvent (ord 00F6)
+imports: 0x832B9984 -> NtSetEvent (ord 00F6)
+imports: 0x820008A0 -> NtYieldExecution (ord 0101)
+imports: 0x832B9FE4 -> NtYieldExecution (ord 0101)
+imports: 0x820008A4 -> XboxKrnlVersion (ord 0158)
+imports: 0x820008A8 -> vswprintf (ord 0151)
+imports: 0x832B9FD4 -> vswprintf (ord 0151)
+imports: 0x820008AC -> NtWaitForSingleObjectEx (ord 00FD)
+imports: 0x832B9994 -> NtWaitForSingleObjectEx (ord 00FD)
+imports: 0x820008B0 -> ExRegisterTitleTerminateNotification (ord 0015)
+imports: 0x832B9FC4 -> ExRegisterTitleTerminateNotification (ord 0015)
+imports: 0x820008B4 -> KeSetEvent (ord 009D)
+imports: 0x832B9FB4 -> KeSetEvent (ord 009D)
+imports: 0x820008B8 -> KeWaitForSingleObject (ord 00B0)
+imports: 0x832B9FA4 -> KeWaitForSingleObject (ord 00B0)
+imports: 0x820008BC -> KeResetEvent (ord 008F)
+imports: 0x832B9F94 -> KeResetEvent (ord 008F)
+imports: 0x820008C0 -> ObDeleteSymbolicLink (ord 0104)
+imports: 0x832B9F84 -> ObDeleteSymbolicLink (ord 0104)
+imports: 0x820008C4 -> ObCreateSymbolicLink (ord 0103)
+imports: 0x832B9F74 -> ObCreateSymbolicLink (ord 0103)
+imports: 0x820008C8 -> RtlNtStatusToDosError (ord 0135)
+imports: 0x832B9F64 -> RtlNtStatusToDosError (ord 0135)
+imports: 0x820008CC -> KeEnterCriticalRegion (ord 005F)
+imports: 0x832B9F54 -> KeEnterCriticalRegion (ord 005F)
+imports: 0x820008D0 -> NtFlushBuffersFile (ord 00DB)
+imports: 0x832B9F44 -> NtFlushBuffersFile (ord 00DB)
+imports: 0x820008D4 -> KeLeaveCriticalRegion (ord 007D)
+imports: 0x832B9F34 -> KeLeaveCriticalRegion (ord 007D)
+imports: 0x820008D8 -> _snprintf (ord 013A)
+imports: 0x832B9F24 -> _snprintf (ord 013A)
+imports: 0x820008DC -> NtAllocateVirtualMemory (ord 00CC)
+imports: 0x832B9F14 -> NtAllocateVirtualMemory (ord 00CC)
+imports: 0x820008E0 -> NtFreeVirtualMemory (ord 00DC)
+imports: 0x832B9F04 -> NtFreeVirtualMemory (ord 00DC)
+imports: 0x820008E4 -> NtCreateFile (ord 00D2)
+imports: 0x832B9EF4 -> NtCreateFile (ord 00D2)
+imports: 0x820008E8 -> NtReadFile (ord 00F0)
+imports: 0x832B9EE4 -> NtReadFile (ord 00F0)
+imports: 0x820008EC -> NtWriteFile (ord 00FF)
+imports: 0x832B9ED4 -> NtWriteFile (ord 00FF)
+imports: 0x820008F0 -> XeCryptSha (ord 0192)
+imports: 0x832B9EC4 -> XeCryptSha (ord 0192)
+imports: 0x820008F4 -> XexExecutableModuleHandle (ord 0193)
+imports: 0x820008F8 -> RtlImageXexHeaderField (ord 012B)
+imports: 0x832B9EB4 -> RtlImageXexHeaderField (ord 012B)
+imports: 0x820008FC -> NtOpenFile (ord 00DF)
+imports: 0x832B9EA4 -> NtOpenFile (ord 00DF)
+imports: 0x82000900 -> NtQueryVolumeInformationFile (ord 00EF)
+imports: 0x832B9E94 -> NtQueryVolumeInformationFile (ord 00EF)
+imports: 0x82000904 -> StfsCreateDevice (ord 0259)
+imports: 0x832B9E84 -> StfsCreateDevice (ord 0259)
+imports: 0x82000908 -> StfsControlDevice (ord 025A)
+imports: 0x832B9E74 -> StfsControlDevice (ord 025A)
+imports: 0x8200090C -> KeTimeStampBundle (ord 00AD)
+imports: 0x82000910 -> KeDebugMonitorData (ord 0059)
+imports: 0x82000914 -> KeSetAffinityThread (ord 0097)
+imports: 0x832B9E64 -> KeSetAffinityThread (ord 0097)
+imports: 0x82000918 -> NtQueueApcThread (ord 00E3)
+imports: 0x832B9E54 -> NtQueueApcThread (ord 00E3)
+imports: 0x8200091C -> NtSuspendThread (ord 00FC)
+imports: 0x832B9E44 -> NtSuspendThread (ord 00FC)
+imports: 0x82000920 -> ExThreadObjectType (ord 001B)
+imports: 0x82000924 -> ObReferenceObjectByHandle (ord 0110)
+imports: 0x832B9E34 -> ObReferenceObjectByHandle (ord 0110)
+imports: 0x82000928 -> KeSetBasePriorityThread (ord 0099)
+imports: 0x832B9E24 -> KeSetBasePriorityThread (ord 0099)
+imports: 0x8200092C -> ObDereferenceObject (ord 0105)
+imports: 0x832B9E14 -> ObDereferenceObject (ord 0105)
+imports: 0x82000930 -> MmQueryStatistics (ord 00C6)
+imports: 0x832B9E04 -> MmQueryStatistics (ord 00C6)
+imports: 0x82000934 -> NtQueryVirtualMemory (ord 00EE)
+imports: 0x832B9DF4 -> NtQueryVirtualMemory (ord 00EE)
+imports: 0x82000938 -> NtProtectVirtualMemory (ord 00E1)
+imports: 0x832B9DE4 -> NtProtectVirtualMemory (ord 00E1)
+imports: 0x8200093C -> DbgBreakPoint (ord 0001)
+imports: 0x832B9DD4 -> DbgBreakPoint (ord 0001)
+imports: 0x82000940 -> RtlInitAnsiString (ord 012C)
+imports: 0x832B98E4 -> RtlInitAnsiString (ord 012C)
+imports: 0x82000944 -> DbgPrint (ord 0003)
+imports: 0x832B9DC4 -> DbgPrint (ord 0003)
+imports: 0x82000948 -> XexCheckExecutablePrivilege (ord 0194)
+imports: 0x832B9DB4 -> XexCheckExecutablePrivilege (ord 0194)
+imports: 0x8200094C -> ExGetXConfigSetting (ord 0010)
+imports: 0x832B9DA4 -> ExGetXConfigSetting (ord 0010)
+imports: 0x82000950 -> NtCreateEvent (ord 00D1)
+imports: 0x832B9D94 -> NtCreateEvent (ord 00D1)
+imports: 0x82000954 -> NtClose (ord 00CF)
+imports: 0x832B9D84 -> NtClose (ord 00CF)
+imports: 0x82000958 -> MmQueryAddressProtect (ord 00C4)
+imports: 0x832B9D74 -> MmQueryAddressProtect (ord 00C4)
+imports: 0x8200095C -> MmFreePhysicalMemory (ord 00BD)
+imports: 0x832B9D64 -> MmFreePhysicalMemory (ord 00BD)
+imports: 0x82000960 -> MmSetAddressProtect (ord 00C7)
+imports: 0x832B9D54 -> MmSetAddressProtect (ord 00C7)
+imports: 0x82000964 -> MmQueryAllocationSize (ord 00C5)
+imports: 0x832B9D44 -> MmQueryAllocationSize (ord 00C5)
+imports: 0x82000968 -> MmAllocatePhysicalMemoryEx (ord 00BA)
+imports: 0x832B9D34 -> MmAllocatePhysicalMemoryEx (ord 00BA)
+imports: 0x8200096C -> ExLoadedCommandLine (ord 01AE)
+imports: 0x82000970 -> RtlCaptureContext (ord 0119)
+imports: 0x832B9D24 -> RtlCaptureContext (ord 0119)
+imports: 0x82000974 -> KeEnableFpuExceptions (ord 005D)
+imports: 0x832B9D14 -> KeEnableFpuExceptions (ord 005D)
+imports: 0x82000978 -> KeTlsFree (ord 0153)
+imports: 0x832B9D04 -> KeTlsFree (ord 0153)
+imports: 0x8200097C -> KeTlsSetValue (ord 0155)
+imports: 0x832B9CF4 -> KeTlsSetValue (ord 0155)
+imports: 0x82000980 -> KeTlsGetValue (ord 0154)
+imports: 0x832B9CE4 -> KeTlsGetValue (ord 0154)
+imports: 0x82000984 -> KeTlsAlloc (ord 0152)
+imports: 0x832B9CD4 -> KeTlsAlloc (ord 0152)
+imports: 0x82000988 -> KeBugCheck (ord 0052)
+imports: 0x832B9CC4 -> KeBugCheck (ord 0052)
+imports: 0x8200098C -> RtlUnwind (ord 0147)
+imports: 0x832B9CB4 -> RtlUnwind (ord 0147)
+imports: 0x82000990 -> __C_specific_handler (ord 01A5)
+imports: 0x832B9CA4 -> __C_specific_handler (ord 01A5)
+imports: 0x82000994 -> RtlTryEnterCriticalSection (ord 0141)
+imports: 0x832B9904 -> RtlTryEnterCriticalSection (ord 0141)
+imports: 0x82000998 -> RtlInitializeCriticalSectionAndSpinCount (ord 012F)
+imports: 0x832B9C94 -> RtlInitializeCriticalSectionAndSpinCount (ord 012F)
+imports: 0x8200099C -> RtlInitializeCriticalSection (ord 012E)
+imports: 0x832B9C84 -> RtlInitializeCriticalSection (ord 012E)
+imports: 0x820009A0 -> RtlLeaveCriticalSection (ord 0130)
+imports: 0x832B9954 -> RtlLeaveCriticalSection (ord 0130)
+imports: 0x820009A4 -> RtlEnterCriticalSection (ord 0125)
+imports: 0x832B9964 -> RtlEnterCriticalSection (ord 0125)
+imports: 0x820009A8 -> KeBugCheckEx (ord 0053)
+imports: 0x832BA074 -> KeBugCheckEx (ord 0053)
+imports: 0x820009AC -> VdGlobalXamDevice (ord 01BF)
+imports: 0x820009B0 -> VdGlobalDevice (ord 01BE)
+imports: 0x820009B4 -> VdEnableDisableClockGating (ord 01B4)
+imports: 0x832BA704 -> VdEnableDisableClockGating (ord 01B4)
+imports: 0x820009B8 -> sprintf (ord 013B)
+imports: 0x832BA714 -> sprintf (ord 013B)
+imports: 0x820009BC -> KeCertMonitorData (ord 0266)
+imports: 0x820009C0 -> VdSetSystemCommandBufferGpuIdentifierAddress (ord 01D9)
+imports: 0x832BA724 -> VdSetSystemCommandBufferGpuIdentifierAddress (ord 01D9)
+imports: 0x820009C4 -> KiApcNormalRoutineNop (ord 01DF)
+imports: 0x832BA734 -> KiApcNormalRoutineNop (ord 01DF)
+imports: 0x820009C8 -> VdInitializeRingBuffer (ord 01C3)
+imports: 0x832BA744 -> VdInitializeRingBuffer (ord 01C3)
+imports: 0x820009CC -> VdEnableRingBufferRPtrWriteBack (ord 01B6)
+imports: 0x832BA754 -> VdEnableRingBufferRPtrWriteBack (ord 01B6)
+imports: 0x820009D0 -> VdPersistDisplay (ord 01C7)
+imports: 0x832BA764 -> VdPersistDisplay (ord 01C7)
+imports: 0x820009D4 -> VdGetSystemCommandBuffer (ord 01BD)
+imports: 0x832BA774 -> VdGetSystemCommandBuffer (ord 01BD)
+imports: 0x820009D8 -> VdSwap (ord 025B)
+imports: 0x832BA784 -> VdSwap (ord 025B)
+imports: 0x820009DC -> VdGetCurrentDisplayGamma (ord 01B9)
+imports: 0x832BA794 -> VdGetCurrentDisplayGamma (ord 01B9)
+imports: 0x820009E0 -> KeLockL2 (ord 006B)
+imports: 0x832BA7A4 -> KeLockL2 (ord 006B)
+imports: 0x820009E4 -> KeUnlockL2 (ord 006C)
+imports: 0x832BA7B4 -> KeUnlockL2 (ord 006C)
+imports: 0x820009E8 -> VdQueryVideoMode (ord 01CA)
+imports: 0x832BA7C4 -> VdQueryVideoMode (ord 01CA)
+imports: 0x820009EC -> VdGetCurrentDisplayInformation (ord 01BA)
+imports: 0x832BA7D4 -> VdGetCurrentDisplayInformation (ord 01BA)
+imports: 0x820009F0 -> VdShutdownEngines (ord 01DC)
+imports: 0x832BA7E4 -> VdShutdownEngines (ord 01DC)
+imports: 0x820009F4 -> VdInitializeEngines (ord 01C2)
+imports: 0x832BA7F4 -> VdInitializeEngines (ord 01C2)
+imports: 0x820009F8 -> VdQueryVideoFlags (ord 01C9)
+imports: 0x832BA804 -> VdQueryVideoFlags (ord 01C9)
+imports: 0x820009FC -> VdSetGraphicsInterruptCallback (ord 01D5)
+imports: 0x832BA814 -> VdSetGraphicsInterruptCallback (ord 01D5)
+imports: 0x82000A00 -> VdIsHSIOTrainingSucceeded (ord 01C6)
+imports: 0x832BA824 -> VdIsHSIOTrainingSucceeded (ord 01C6)
+imports: 0x82000A04 -> VdSetDisplayMode (ord 01D3)
+imports: 0x832BA834 -> VdSetDisplayMode (ord 01D3)
+imports: 0x82000A08 -> VdGpuClockInMHz (ord 01C0)
+imports: 0x82000A0C -> VdInitializeScalerCommandBuffer (ord 01C5)
+imports: 0x832BA844 -> VdInitializeScalerCommandBuffer (ord 01C5)
+imports: 0x82000A10 -> VdCallGraphicsNotificationRoutines (ord 01B1)
+imports: 0x832BA854 -> VdCallGraphicsNotificationRoutines (ord 01B1)
+imports: 0x82000A14 -> VdRetrainEDRAM (ord 0269)
+imports: 0x832BA864 -> VdRetrainEDRAM (ord 0269)
+imports: 0x82000A18 -> VdRetrainEDRAMWorker (ord 026A)
+imports: 0x832BA874 -> VdRetrainEDRAMWorker (ord 026A)
+imports: 0x82000A1C -> VdHSIOCalibrationLock (ord 01C1)
+imports: 0x82000A20 -> NtCancelTimer (ord 00CD)
+imports: 0x832BA884 -> NtCancelTimer (ord 00CD)
+imports: 0x82000A24 -> NtSetTimerEx (ord 00FA)
+imports: 0x832BA894 -> NtSetTimerEx (ord 00FA)
+imports: 0x82000A28 -> NtCreateTimer (ord 00D7)
+imports: 0x832BA8A4 -> NtCreateTimer (ord 00D7)
+imports: 0x82000A2C -> NtCreateMutant (ord 00D4)
+imports: 0x832BA8B4 -> NtCreateMutant (ord 00D4)
+imports: 0x82000A30 -> NtReleaseMutant (ord 00F2)
+imports: 0x832BA8C4 -> NtReleaseMutant (ord 00F2)
+imports: xboxkrnl.exe → added 333 thunk(s)
+imports: collected 523 thunk name(s) total
+[xex::collect_import_symbols] ◀ done in 4.99 ms
+ℹ️  collected 523 import thunk names
+[open_xex_cs_and_blob] ◀ done in 17.80 ms
+[pass::AnalyseFunctions] ▶ start
+FUN: sections=15 entry=0x00000000
+FUN: span[3] '.text' VA=0x82170000..0x832BABBC len=18131900
+FUN: span[4] 'BINK' VA=0x832BAC00..0x832CA03C len=62524
+[pass::AnalyseFunctions.precompute_words] ▶ start
+[pass::AnalyseFunctions.precompute_words] ◀ done in 2.06 ms
+FUN: thunk bases restgpr14=0x82CA9420 savegpr14=0x82CA93D0 restfpr14=0x82CADCEC savefpr14=0x82CADCA0 restvmx14=0x830069F8 savevmx14=0x83006760 restvmx64=0x83006A8C savevmx64=0x830067F4 longjmp=0x00000000 setjmp=0x00000000
+[pass::AnalyseFunctions.seed_thunks] ▶ start
+FUN: seeded 236 thunk funcs
+[pass::AnalyseFunctions.seed_thunks] ◀ done in 0.03 ms
+[pass::AnalyseFunctions.decode_pdata] ▶ start
+FUN: .pdata EH landing pad alias 0x8223900C -> 0x822387B8
+FUN: .pdata EH landing pad alias 0x82239708 -> 0x82239490
+FUN: .pdata EH landing pad alias 0x82A01A20 -> 0x82A019C8
+FUN: .pdata EH landing pad alias 0x82A01B0C -> 0x82A01A58
+FUN: .pdata EH landing pad alias 0x82A01C0C -> 0x82A01B40
+FUN: .pdata EH landing pad alias 0x82B3DB58 -> 0x82B3DAE8
+FUN: .pdata EH landing pad alias 0x82C5FA98 -> 0x82C5FA50
+FUN: .pdata EH landing pad alias 0x82C5FE5C -> 0x82C5FC28
+FUN: .pdata EH landing pad alias 0x82C610A0 -> 0x82C60FD8
+FUN: .pdata EH landing pad alias 0x82C62070 -> 0x82C61B28
+FUN: .pdata EH landing pad alias 0x82C6226C -> 0x82C621E0
+FUN: .pdata EH landing pad alias 0x82C62394 -> 0x82C62308
+FUN: .pdata EH landing pad alias 0x82C62488 -> 0x82C623C8
+FUN: .pdata EH landing pad alias 0x82C62950 -> 0x82C62868
+FUN: .pdata EH landing pad alias 0x82C62A60 -> 0x82C62980
+FUN: .pdata EH landing pad alias 0x82C62B20 -> 0x82C62A90
+FUN: .pdata EH landing pad alias 0x82C633E8 -> 0x82C63320
+FUN: .pdata EH landing pad alias 0x82C634D4 -> 0x82C63448
+FUN: .pdata EH landing pad alias 0x82C63E90 -> 0x82C63DF8
+FUN: .pdata EH landing pad alias 0x82C64654 -> 0x82C64600
+FUN: .pdata EH landing pad alias 0x82C646DC -> 0x82C64688
+FUN: .pdata EH landing pad alias 0x82CA937C -> 0x82CA9298
+FUN: .pdata EH landing pad alias 0x82CA9C1C -> 0x82CA9BA8
+FUN: .pdata EH landing pad alias 0x82CA9EFC -> 0x82CA9E18
+FUN: .pdata EH landing pad alias 0x82CAAA44 -> 0x82CAA910
+FUN: .pdata EH landing pad alias 0x82CAACA8 -> 0x82CAABE8
+FUN: .pdata EH landing pad alias 0x82CAB020 -> 0x82CAAF70
+FUN: .pdata EH landing pad alias 0x82CAB2B4 -> 0x82CAB190
+FUN: .pdata EH landing pad alias 0x82CAB40C -> 0x82CAB370
+FUN: .pdata EH landing pad alias 0x82CAB5F8 -> 0x82CAB548
+FUN: .pdata EH landing pad alias 0x82CAB920 -> 0x82CAB880
+FUN: .pdata EH landing pad alias 0x82CADAE8 -> 0x82CAD8F0
+FUN: .pdata EH landing pad alias 0x82CADD38 -> 0x82CADCEC
+FUN: .pdata EH landing pad alias 0x82CAE478 -> 0x82CAE400
+FUN: .pdata EH landing pad alias 0x82CAE844 -> 0x82CAE7E0
+FUN: .pdata EH landing pad alias 0x82CAE938 -> 0x82CAE8B8
+FUN: .pdata EH landing pad alias 0x82CAEA60 -> 0x82CAE9E0
+FUN: .pdata EH landing pad alias 0x82CAF340 -> 0x82CAF170
+FUN: .pdata EH landing pad alias 0x82CAF9D0 -> 0x82CAF788
+FUN: .pdata EH landing pad alias 0x82CAFF08 -> 0x82CAFE08
+FUN: .pdata EH landing pad alias 0x82CB1B38 -> 0x82CB1A70
+FUN: .pdata EH landing pad alias 0x82CB5054 -> 0x82CB4EC8
+FUN: .pdata EH landing pad alias 0x82CB52A0 -> 0x82CB5188
+FUN: .pdata EH landing pad alias 0x82CB5744 -> 0x82CB5610
+FUN: .pdata EH landing pad alias 0x82CB58D0 -> 0x82CB57A8
+FUN: .pdata EH landing pad alias 0x82CB5B2C -> 0x82CB5A38
+FUN: .pdata EH landing pad alias 0x82CB5DCC -> 0x82CB5C98
+FUN: .pdata EH landing pad alias 0x82CB6CA0 -> 0x82CB6A00
+FUN: .pdata EH landing pad alias 0x82CB7C60 -> 0x82CB7BB8
+FUN: .pdata EH landing pad alias 0x82CBB268 -> 0x82CBB0F0
+FUN: .pdata EH landing pad alias 0x82CBB3A0 -> 0x82CBB318
+FUN: .pdata EH landing pad alias 0x82CBB714 -> 0x82CBB498
+FUN: .pdata EH landing pad alias 0x82CBB848 -> 0x82CBB728
+FUN: .pdata EH landing pad alias 0x82CBBFD8 -> 0x82CBBDD0
+FUN: .pdata EH landing pad alias 0x82CBC03C -> 0x82CBBFF0
+FUN: .pdata EH landing pad alias 0x82CBC094 -> 0x82CBC050
+FUN: .pdata EH landing pad alias 0x82CBC180 -> 0x82CBC0C0
+FUN: .pdata EH landing pad alias 0x82CBC454 -> 0x82CBC3C8
+FUN: .pdata EH landing pad alias 0x82CBD15C -> 0x82CBCFF8
+FUN: .pdata EH landing pad alias 0x82CBD4F8 -> 0x82CBD3C0
+FUN: .pdata EH landing pad alias 0x82CBF294 -> 0x82CBF190
+FUN: .pdata EH landing pad alias 0x82CBF608 -> 0x82CBF548
+FUN: .pdata EH landing pad alias 0x82CBF880 -> 0x82CBF670
+FUN: .pdata EH landing pad alias 0x82CC0BD8 -> 0x82CC0B48
+FUN: .pdata EH landing pad alias 0x82CC0E40 -> 0x82CC0E1C
+FUN: .pdata EH landing pad alias 0x82CC1134 -> 0x82CC0F90
+FUN: .pdata EH landing pad alias 0x82CC16FC -> 0x82CC1688
+FUN: .pdata EH landing pad alias 0x82CC1784 -> 0x82CC1728
+FUN: .pdata EH landing pad alias 0x82CC2384 -> 0x82CC21C0
+FUN: .pdata EH landing pad alias 0x82CC31EC -> 0x82CC2F10
+FUN: .pdata EH landing pad alias 0x82CC62CC -> 0x82CC5D38
+FUN: .pdata EH landing pad alias 0x82CC6B28 -> 0x82CC62E0
+FUN: .pdata EH landing pad alias 0x82CD0CBC -> 0x82CD0C60
+FUN: .pdata EH landing pad alias 0x82CD7A7C -> 0x82CD7A30
+FUN: .pdata EH landing pad alias 0x82CD7AF4 -> 0x82CD7AB0
+FUN: .pdata EH landing pad alias 0x82CD7B74 -> 0x82CD7B28
+FUN: .pdata EH landing pad alias 0x82CD8054 -> 0x82CD7FC8
+FUN: .pdata EH landing pad alias 0x82CD820C -> 0x82CD8198
+FUN: .pdata EH landing pad alias 0x82CD82A4 -> 0x82CD8240
+FUN: .pdata EH landing pad alias 0x82CD8404 -> 0x82CD8350
+FUN: .pdata EH landing pad alias 0x830033B8 -> 0x83003250
+FUN: .pdata EH landing pad alias 0x830040C4 -> 0x830038B8
+FUN: .pdata EH landing pad alias 0x83004B58 -> 0x83004AC8
+FUN: .pdata EH landing pad alias 0x830059EC -> 0x830051E0
+FUN: .pdata EH landing pad alias 0x83007484 -> 0x83007278
+FUN: .pdata EH landing pad alias 0x830077B0 -> 0x830074F0
+FUN: .pdata EH landing pad alias 0x83007C2C -> 0x83007A60
+FUN: .pdata EH landing pad alias 0x83007E50 -> 0x83007CF0
+FUN: .pdata EH landing pad alias 0x830080F4 -> 0x83007F38
+FUN: .pdata EH landing pad alias 0x83008248 -> 0x83008158
+FUN: .pdata EH landing pad alias 0x83009434 -> 0x830093E0
+FUN: .pdata EH landing pad alias 0x830099BC -> 0x830098A8
+FUN: .pdata EH landing pad alias 0x83009ED4 -> 0x83009DF8
+FUN: .pdata EH landing pad alias 0x8300B178 -> 0x8300B0D8
+FUN: .pdata EH landing pad alias 0x83048024 -> 0x830470C0
+FUN: .pdata EH landing pad alias 0x830F70F0 -> 0x830F6FC0
+FUN: .pdata EH landing pad alias 0x830F7270 -> 0x830F7158
+FUN: .pdata EH landing pad alias 0x830F7B3C -> 0x830F7A38
+FUN: .pdata EH landing pad alias 0x83101DB0 -> 0x83101CC0
+FUN: .pdata EH landing pad alias 0x8310410C -> 0x83104038
+FUN: .pdata EH landing pad alias 0x83104614 -> 0x83104590
+FUN: .pdata EH landing pad alias 0x83104B38 -> 0x831049F0
+FUN: .pdata EH landing pad alias 0x83104C98 -> 0x83104B50
+FUN: .pdata EH landing pad alias 0x8311E8D0 -> 0x8311E778
+FUN: .pdata EH landing pad alias 0x83237294 -> 0x83237228
+FUN: .pdata EH landing pad alias 0x832377E8 -> 0x83237770
+FUN: .pdata EH landing pad alias 0x8323CA40 -> 0x8323C9C8
+FUN: .pdata EH landing pad alias 0x8323CCC0 -> 0x8323CC50
+FUN: .pdata EH landing pad alias 0x8323CDBC -> 0x8323CCF8
+FUN: decoded 46180 .pdata entries into db.pdata, seeded 46174 root funcs
+[pass::AnalyseFunctions.decode_pdata] ◀ done in 2.84 ms
+[pass::AnalyseFunctions.BL_scan] ▶ start
+FUN: BL scan     5%
+FUN: BL scan    10%
+FUN: BL scan    15%
+FUN: BL scan    20%

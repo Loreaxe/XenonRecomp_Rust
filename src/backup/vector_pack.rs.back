@@ -1,0 +1,153 @@
+use super::*;
+
+
+fn handle_vpkd3d128(ctx: &mut LowerCtx) -> bool {
+    // Vector-pack (D3D / f16x4 forms)
+    ctx.set_flush_mode(true);
+    let a = ctx.op_reg(1);
+    let kind = ctx.op_imm(2) as u32;
+    let aux  = ctx.op_imm(3) as u32;
+    let dstw = ctx.op_imm(4) as usize;
+    let d = ctx.op_reg(0);
+
+    match kind {
+        0 => {
+            // D3D color (expects aux == 1)
+            // We keep the same behavior; if unexpected, just proceed (you can add a ctx.warn if you like).
+            for i in 0..4 {
+                // indices[] = {3,0,1,2}
+                let idx = [3,0,1,2][i];
+                ctx.println_fmt(format_args!("\t{}.u32[{}] = 0x404000FF;", ctx.vTemp(), i));
+                ctx.println_fmt(format_args!(
+                    "\t{}.f32[{}] = {}.f32[{}] < 3.0f ? 3.0f : ({}.f32[{}] > {}.f32[{}] ? {}.f32[{}] : {}.f32[{}]);",
+                    ctx.vTemp(), i, ctx.v(a), i, ctx.v(a), i, ctx.vTemp(), i, ctx.vTemp(), i, ctx.v(a), i
+                ));
+                ctx.println_fmt(format_args!(
+                    "\t{}.u32 {}= uint32_t({}.u8[{}]) << {};",
+                    ctx.temp(),
+                    if i==0 { "" } else { "|" },
+                    ctx.vTemp(),
+                    i*4,
+                    idx*8
+                ));
+            }
+            ctx.println_fmt(format_args!("\t{}.u32[{}] = {}.u32;", ctx.v(d), dstw, ctx.temp()));
+        }
+        5 => {
+            // float16_4 (expects aux == 2 and dstw <= 2)
+            for i in 0..4 {
+                // Strip sign from source
+                ctx.println_fmt(format_args!("\t{}.u32 = ({}.u32[{}]&0x7FFFFFFF);", ctx.temp(), ctx.v(a), i));
+                // If NaN or > 65504, clamp exponent to 0xFF; else save 8 exponent bits
+                ctx.println_fmt(format_args!(
+                    "\t{0}.u8[0] = ({1}.f32 != {1}.f32) || ({1}.f32 > 65504.0f) ? 0xFF : (({2}.u32[{3}]&0x7f800000)>>23);",
+                    ctx.vTemp(), ctx.temp(), ctx.v(a), i
+                ));
+                // If saved, save first 10 bits of mantissa
+                ctx.println_fmt(format_args!(
+                    "\t{}.u16 = {}.u8[0] != 0xFF ? (({}.u32[{}]&0x7FE000)>>13) : 0x0;",
+                    ctx.temp(), ctx.vTemp(), ctx.v(a), i
+                ));
+                // Convert exponent, shift mantissa per your logic
+                ctx.println_fmt(format_args!(
+                    "\t{0}.u16[{1}] = {2}.u8[0] != 0xFF ? ({2}.u8[0] > 0x70 ? ((({2}.u8[0]-0x70)<<10)+{3}.u16) : (0x71-{2}.u8[0] > 31 ? 0x0 : ((0x400+{3}.u16)>>(0x71-{2}.u8[0])))) : 0x7FFF;",
+                    ctx.v(d), i + 2*(dstw as usize), ctx.vTemp(), ctx.temp()
+                ));
+                // Add back original sign
+                ctx.println_fmt(format_args!(
+                    "\t{}.u16[{}] |= (({}.u32[{}]&0x80000000)>>16);",
+                    ctx.v(d), i + 2*(dstw as usize), ctx.v(a), i
+                ));
+            }
+        }
+        _ => {
+            ctx.println_fmt(format_args!("\t__builtin_debugtrap();"));
+        }
+    }
+    true
+}
+
+fn handle_vpkshus_like(ctx: &mut LowerCtx) -> bool {
+    // VPKSHUS / VPKSHUS128
+    let d = ctx.op_reg(0); let b = ctx.op_reg(2); let a = ctx.op_reg(1); // note operand order matches your C++
+    ctx.println_fmt(format_args!(
+        "\tsimde_mm_store_si128((simde__m128i*){}.u8, simde_mm_packus_epi16(simde_mm_load_si128((simde__m128i*){}.s16), simde_mm_load_si128((simde__m128i*){}.s16)));",
+        ctx.v(d), ctx.v(b), ctx.v(a)
+    ));
+    true
+}
+
+fn handle_vupkd3d128(ctx: &mut LowerCtx) -> bool {
+    // Unpack (D3D / 2 shorts) with reversal
+    let d = ctx.op_reg(0); let a = ctx.op_reg(1);
+    let kind = ((ctx.op_imm(2) as u32) >> 2) & 0x3;
+
+    match kind {
+        0 => {
+            // D3D color -> broadcast lanes to 1.0 + byte payload
+            for i in 0..4 {
+                let idx = [3,0,1,2][i];
+                ctx.println_fmt(format_args!(
+                    "\t{}.u32[{}] = {}.u8[{}] | 0x3F800000;",
+                    ctx.vTemp(), i, ctx.v(a), idx
+                ));
+            }
+            ctx.println_fmt(format_args!("\t{} = {};", ctx.v(d), ctx.vTemp()));
+        }
+        1 => {
+            // two shorts -> x,z = 3.0 + adds; y=0, w=1 (with reversal into indices 3-i)
+            for i in 0..2 {
+                ctx.println_fmt(format_args!("\t{}.f32 = 3.0f;", ctx.temp()));
+                ctx.println_fmt(format_args!("\t{}.s32 += {}.s16[{}];", ctx.temp(), ctx.v(a), 1 - i));
+                ctx.println_fmt(format_args!("\t{}.f32[{}] = {}.f32;", ctx.vTemp(), 3 - i, ctx.temp()));
+            }
+            ctx.println_fmt(format_args!("\t{}.f32[1] = 0.0f;", ctx.vTemp()));
+            ctx.println_fmt(format_args!("\t{}.f32[0] = 1.0f;", ctx.vTemp()));
+            ctx.println_fmt(format_args!("\t{} = {};", ctx.v(d), ctx.vTemp()));
+        }
+        _ => {
+            ctx.println_fmt(format_args!("\t__builtin_debugtrap();"));
+        }
+    }
+    true
+}
+
+fn handle_vupkhsb_like(ctx: &mut LowerCtx) -> bool {
+    // VUPKHSB / VUPKHSB128
+    let d = ctx.op_reg(0); let a = ctx.op_reg(1);
+    ctx.println_fmt(format_args!(
+        "\tsimde_mm_store_si128((simde__m128i*){}.s16, simde_mm_cvtepi8_epi16(simde_mm_unpackhi_epi64(simde_mm_load_si128((simde__m128i*){}.s8), simde_mm_load_si128((simde__m128i*){}.s8))));",
+        ctx.v(d), ctx.v(a), ctx.v(a)
+    ));
+    true
+}
+
+fn handle_vupkhsh_like(ctx: &mut LowerCtx) -> bool {
+    // VUPKHSH / VUPKHSH128
+    let d = ctx.op_reg(0); let a = ctx.op_reg(1);
+    ctx.println_fmt(format_args!(
+        "\tsimde_mm_store_si128((simde__m128i*){}.s32, simde_mm_cvtepi16_epi32(simde_mm_unpackhi_epi64(simde_mm_load_si128((simde__m128i*){}.s16), simde_mm_load_si128((simde__m128i*){}.s16))));",
+        ctx.v(d), ctx.v(a), ctx.v(a)
+    ));
+    true
+}
+
+fn handle_vupklsb_like(ctx: &mut LowerCtx) -> bool {
+    // VUPKLSB / VUPKLSB128  (note: your C++ stores into .s32 but uses cvtepi8_epi16 on .s16 source)
+    let d = ctx.op_reg(0); let a = ctx.op_reg(1);
+    ctx.println_fmt(format_args!(
+        "\tsimde_mm_store_si128((simde__m128i*){}.s32, simde_mm_cvtepi8_epi16(simde_mm_load_si128((simde__m128i*){}.s16)));",
+        ctx.v(d), ctx.v(a)
+    ));
+    true
+}
+
+fn handle_vupklsh_like(ctx: &mut LowerCtx) -> bool {
+    // VUPKLSH / VUPKLSH128
+    let d = ctx.op_reg(0); let a = ctx.op_reg(1);
+    ctx.println_fmt(format_args!(
+        "\tsimde_mm_store_si128((simde__m128i*){}.s32, simde_mm_cvtepi16_epi32(simde_mm_load_si128((simde__m128i*){}.s16)));",
+        ctx.v(d), ctx.v(a)
+    ));
+    true
+}

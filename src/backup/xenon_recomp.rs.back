@@ -1,0 +1,81 @@
+// src/bin/xenon_recomp.rs
+use anyhow::*;
+use clap::Parser;
+use memmap2::Mmap;
+use std::fs::File;
+use std::path::PathBuf;
+
+use xenon_recomp::disasm::PpcCs; // if you expose a lib; else adjust paths
+use xenon_recomp::image::Image;
+use xenon_recomp::recompiler::Recompiler;
+
+#[derive(Parser)]
+struct Args {
+    /// Input TOML config
+    #[arg(required_unless_present_any = ["conf_env", "test_mode"])]
+    config: Option<PathBuf>,
+
+    /// PPC context header file path (legacy arg)
+    #[arg(required_unless_present_any = ["header_env", "test_mode"])]
+    header: Option<PathBuf>,
+
+    /// If the first arg is not a regular file, we enter "test" mode like C++
+    #[arg(long)]
+    test_mode: bool,
+
+    /// Use compile-time config path (matches XENON_RECOMP_CONFIG_FILE_PATH)
+    #[arg(long, env = "XENON_RECOMP_CONFIG_FILE_PATH")]
+    conf_env: Option<String>,
+
+    /// Use compile-time header path (matches XENON_RECOMP_HEADER_FILE_PATH)
+    #[arg(long, env = "XENON_RECOMP_HEADER_FILE_PATH")]
+    header_env: Option<String>,
+}
+
+fn main() -> Result<()> {
+    let args = Args::parse();
+
+    // choose config path like the C++ #ifdef logic
+    let cfg_path = if let Some(p) = &args.conf_env {
+        p.clone()
+    } else {
+        args.config.as_ref().ok_or_else(|| anyhow!("missing config"))?.to_string_lossy().into()
+    };
+
+    // quick path existence check; if not a regular file, dispatch to tests (like C++)
+    if !std::path::Path::new(&cfg_path).is_file() {
+        // TestRecompiler::RecompileTests(path, argv[2]) equivalent goes here if you keep tests
+        bail!("test mode not implemented in this stub");
+    }
+
+    let header_path = if let Some(p) = &args.header_env {
+        PathBuf::from(p)
+    } else {
+        args.header.clone().ok_or_else(|| anyhow!("missing header path"))?
+    };
+
+    // Load config + XEX, then analyse + recompile
+    let mut r = Recompiler::default();
+    r.load_config(&cfg_path)?;
+
+    // mmap the XEX specified by config.main.file_path
+    let xex_path = if r.config.directory_path.is_empty() {
+        r.config.file_path.clone()
+    } else {
+        format!("{}{}", r.config.directory_path, r.config.file_path)
+    };
+    ensure!(!xex_path.is_empty(), "config.file_path is empty");
+    let f = File::open(&xex_path)?;
+    let map = unsafe { Mmap::map(&f)? };
+    r.image = Image::parse_xex(&map)?; // your placeholder or real parser
+
+    r.analyse()?;
+
+    // Optionally override entry symbol name to _xstart if you keep symbols in Image
+    // (left as a comment; your Image doesn’t carry symbols yet)
+
+    r.recompile_all(&header_path)?;
+    r.save_current_out_data(None)?;
+
+    Ok(())
+}

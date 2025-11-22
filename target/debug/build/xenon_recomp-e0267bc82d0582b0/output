@@ -1,0 +1,3 @@
+cargo:rustc-link-lib=static=mspack
+cargo:rerun-if-env-changed=MSPACK_INCDIR
+cargo:rerun-if-env-changed=MSPACK_LIBDIR
