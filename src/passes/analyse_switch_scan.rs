@@ -6,6 +6,7 @@ use crate::switch::{SwitchType, run_switch_collect, write_switch_toml};
 use crate::db::{SwitchEntry, SwitchKind};
 use crate::log::Phase;
 use crate::xlog;
+use crate::xdebug;
 use crate::image::SectionFlags;
 
 pub struct AnalyseSwitchScan { pub dump_to: Option<String> }
@@ -36,7 +37,7 @@ impl Pass for AnalyseSwitchScan {
         for t in &mut tables {
             // Default label sanity
             if t.default_label != 0 && !is_code_addr(ctx, t.default_label) {
-                xlog!(
+                xdebug!(
                     "SW: dropping non-code default label 0x{:08X} for switch @ 0x{:08X}",
                     t.default_label,
                     t.base
@@ -50,7 +51,7 @@ impl Pass for AnalyseSwitchScan {
             let new_len = t.labels.len();
 
             if new_len != old_len {
-                xlog!(
+                xdebug!(
                     "SW: pruned {} invalid labels for switch @ 0x{:08X}",
                     old_len - new_len,
                     t.base
@@ -61,7 +62,7 @@ impl Pass for AnalyseSwitchScan {
         xlog!("SW: found {} switch tables", tables.len());
 
         for t in &tables {
-            xlog!(
+            xdebug!(
                 "SW: base=0x{:08X} r={} labels={} type={:?}",
                 t.base, t.r, t.labels.len(), t.ty
             );

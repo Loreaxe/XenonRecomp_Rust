@@ -224,11 +224,27 @@ pub(crate) fn handle_mulhd(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_mulhw(ctx: &mut LowerCtx) -> bool {
-    let d=ctx.op_reg(0); let a=ctx.op_reg(1); let b=ctx.op_reg(2);
+    let d = ctx.op_reg(0);
+    let a = ctx.op_reg(1);
+    let b = ctx.op_reg(2);
+
     let rd = ctx.r(d).to_string();
     let ra = ctx.r(a).to_string();
     let rb = ctx.r(b).to_string();
-    ctx.println_fmt(format_args!("\t{rd}.s64 = (({ra}.s32 as i64 * {rb}.s32 as i64) >> 32);"));
+
+    let dotted = ctx.insn.mnemonic().unwrap_or_default().ends_with('.');
+    let xer    = ctx.xer().to_string();
+    let cr0    = if dotted { ctx.cr(0).to_string() } else { String::new() };
+
+    // High 32 bits of signed 32×32 product, sign-extended to 64.
+    ctx.println_fmt(format_args!(
+        "\t{rd}.s64 = (({ra}.s32 as i64 * {rb}.s32 as i64) >> 32);"
+    ));
+
+    if dotted {
+        ctx.println_fmt(format_args!("\t{cr0}.compare_i32({rd}.s32, 0, &mut {xer});"));
+    }
+
     true
 }
 
@@ -258,26 +274,48 @@ pub(crate) fn handle_mulld(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_mulli(ctx: &mut LowerCtx) -> bool {
-    let d=ctx.op_reg(0); let a=ctx.op_reg(1); let imm=ctx.op_imm(2) as i32;
+    // mulli rD, rA, SI
+    // rD = low 32 bits of (rA.s32 * SI.s16), sign-extended to 64.
+    let d   = ctx.op_reg(0);
+    let a   = ctx.op_reg(1);
+    let imm = ctx.op_imm(2) as i32; // SI already sign-extended from 16 bits
+
     let rd = ctx.r(d).to_string();
     let ra = ctx.r(a).to_string();
-    ctx.println_fmt(format_args!("\t{rd}.s64 = {ra}.s64 * {imm};"));
+
+    ctx.println_fmt(format_args!(
+        "\t{rd}.s32 = (({ra}.s32 as i64 * {imm} as i64) as i32);"
+    ));
+    ctx.println_fmt(format_args!("\t{rd}.s64 = {rd}.s32 as i64;"));
+
     true
 }
 
+
 pub(crate) fn handle_mullw(ctx: &mut LowerCtx) -> bool {
-    let d=ctx.op_reg(0); let a=ctx.op_reg(1); let b=ctx.op_reg(2);
+    // mullw rD, rA, rB
+    // rD = low 32 bits of (rA.s32 * rB.s32), sign-extended to 64.
+    let d = ctx.op_reg(0);
+    let a = ctx.op_reg(1);
+    let b = ctx.op_reg(2);
+
     let rd = ctx.r(d).to_string();
     let ra = ctx.r(a).to_string();
     let rb = ctx.r(b).to_string();
-    let xer = ctx.xer().to_string();
-    let dotted = ctx.insn.mnemonic().unwrap_or_default().ends_with('.');
-    let cr0 = if dotted { ctx.cr(0).to_string() } else { String::new() };
 
-    ctx.println_fmt(format_args!("\t{rd}.s64 = ({ra}.s32 as i64) * ({rb}.s32 as i64);"));
+    let xer    = ctx.xer().to_string();
+    let dotted = ctx.insn.mnemonic().unwrap_or_default().ends_with('.');
+    let cr0    = if dotted { ctx.cr(0).to_string() } else { String::new() };
+
+    ctx.println_fmt(format_args!(
+        "\t{rd}.s32 = (({ra}.s32 as i64 * {rb}.s32 as i64) as i32);"
+    ));
+    ctx.println_fmt(format_args!("\t{rd}.s64 = {rd}.s32 as i64;"));
+
     if dotted {
         ctx.println_fmt(format_args!("\t{cr0}.compare_i32({rd}.s32, 0, &mut {xer});"));
     }
+
     true
 }
 

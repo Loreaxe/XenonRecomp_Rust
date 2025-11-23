@@ -10,7 +10,7 @@ use crate::recompiler::symbol::build_export_maps;
 
 use crate::image::{Image, Section, SectionFlags};
 use crate::log::Phase;
-use crate::xlog;
+use crate::{xdebug, xlog};
 
 // ------------------------------ externs ------------------------------
 use crate::lzx::lzxDecompress;
@@ -985,7 +985,7 @@ pub fn collect_import_symbols(xex: &[u8], img: &Image) -> Result<Vec<(u32, Strin
                 )
             };
 
-            xlog!(
+            xdebug!(
                 "imports: 0x{:08X} -> {} (ord {:04X})",
                 thunk_va,
                 sym,
@@ -996,7 +996,7 @@ pub fn collect_import_symbols(xex: &[u8], img: &Image) -> Result<Vec<(u32, Strin
             total_seen += 1;
         }
 
-        xlog!("imports: {} → added {} thunk(s)", lib_name, added_this_lib);
+        xdebug!("imports: {} → added {} thunk(s)", lib_name, added_this_lib);
 
         // Advance to next library header, C++-style:
         let consumed_bytes =

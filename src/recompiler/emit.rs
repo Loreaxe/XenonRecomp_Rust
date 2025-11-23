@@ -8,6 +8,8 @@ use crate::function::Function;
 use crate::image::SectionFlags;
 use crate::log::Phase;
 use crate::xlog;
+use crate::xdebug;
+use crate::xtrace;
 
 use super::{CSRState, Recompiler, RecompilerLocalVariables};
 use super::lower_one;
@@ -195,6 +197,13 @@ impl Recompiler {
         let fn_start_va = fn_start as u32;
         let fn_end_va   = fn_end   as u32;
 
+        if fnc.base as u32 == 0x821DB538 {
+            eprintln!(
+                "DEBUG: sub_821DB538: fn_size={} (clamped), original size={}",
+                fn_size, fnc.size
+            );
+        }
+
         // --------------------------
         // 1) Build per-block ranges
         // --------------------------
@@ -209,17 +218,69 @@ impl Recompiler {
         // Always start with the function entry.
         block_starts.insert(fn_start_va);
 
-        // 1a) Existing analysed blocks (if any).
+        // 1a) NEW: direct branch targets inside this function.
+        //
+        // We do a quick disasm pass and grab the IMM operand of any branch
+        // that has an immediate target. Capstone resolves the PC-relative
+        // branch to an absolute VA for us.
+        {
+            use capstone::arch::ArchOperand;
+            use capstone::arch::ppc::{PpcInsn, PpcOperand};
+
+            let bytes = self.get_code_bytes(fn_start, fn_size)?;
+            let insns = cs.disasm_all(&bytes, fn_start as u64)?;
+
+            for insn in insns.iter() {
+                let id = insn.id().0;
+
+                // Only look at *direct* branch / branch-with-link opcodes.
+                let is_branch = matches!(
+                    id,
+                    x if x == PpcInsn::PPC_INS_B as u32
+                    || x == PpcInsn::PPC_INS_BL as u32
+                    || x == PpcInsn::PPC_INS_BDNZ as u32
+                    || x == PpcInsn::PPC_INS_BDNZF as u32
+                    || x == PpcInsn::PPC_INS_BDNZT as u32
+                    || x == PpcInsn::PPC_INS_BDZ as u32
+                    || x == PpcInsn::PPC_INS_BEQ as u32
+                    || x == PpcInsn::PPC_INS_BNE as u32
+                    || x == PpcInsn::PPC_INS_BGE as u32
+                    || x == PpcInsn::PPC_INS_BGT as u32
+                    || x == PpcInsn::PPC_INS_BLE as u32
+                    || x == PpcInsn::PPC_INS_BLT as u32
+                    // ... add any other `b*` with an immediate target you care about ...
+                );
+
+                if !is_branch {
+                    continue;
+                }
+
+                if let std::result::Result::Ok(detail) = cs.insn_detail(insn) {
+                    let arch = detail.arch_detail();
+                    for op in arch.operands() {
+                        // `op` is &ArchOperand; pattern-match on the value.
+                        if let ArchOperand::PpcOperand(PpcOperand::Imm(target)) = op {
+                            let target = target as u32;
+                            if target >= fn_start_va && target < fn_end_va {
+                                block_starts.insert(target);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 1b) Existing analysed blocks (if any).
         if !fnc.blocks.is_empty() {
             for b in &fnc.blocks {
                 let start = fnc.base + b.base;
                 if start >= fn_start && start < fn_end {
                     block_starts.insert(start as u32);
-                }
+                 }
             }
         }
 
-        // 1b) Switch-table labels inside this function.
+        // 1c) Switch-table labels inside this function.
         for (sw_base, sw) in &self.switch_tables {
             if *sw_base < fn_start_va || *sw_base >= fn_end_va {
                 continue;
@@ -435,7 +496,7 @@ impl Recompiler {
         block_terminated: &mut bool,
     ) -> anyhow::Result<()> {
         const CHUNK: usize = 256 * 1024; // 256 KiB
-        xlog!(
+        xtrace!(
             "RECOMP: lower_range base=0x{:08X} size={} (fn=0x{:08X})",
             range_start_va as u32,
             range_size,
@@ -443,6 +504,19 @@ impl Recompiler {
         );
 
         let bytes = self.get_code_bytes(range_start_va, range_size)?;
+        if range_start_va as u32 == 0x821DB538 {
+            eprintln!(
+                "DEBUG: lower_range for 0x821DB538: size={}, bytes_len={}",
+                range_size,
+                bytes.len()
+            );
+            if !bytes.is_empty() {
+                for (i, b) in bytes.iter().take(16).enumerate() {
+                    eprint!("{:02X} ", b);
+                }
+                eprintln!();
+            }
+        }
 
         // Only print per-instruction disasm comments when explicitly requested.
         let verbose = std::env::var_os("XENON_RECOMP_VERBOSE").is_some();

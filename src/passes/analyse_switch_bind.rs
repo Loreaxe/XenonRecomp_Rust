@@ -5,6 +5,7 @@ use anyhow::*;
 use crate::pipeline::{Pass, Ctx};
 use crate::log::Phase;
 use crate::xlog;
+use crate::xdebug;
 use crate::image::SectionFlags;
 
 /// After we have:
@@ -51,6 +52,14 @@ impl Pass for AnalyseSwitchBind {
             if addr == 0 {
                 return 0;
             }
+
+            // Respect db.aliases produced by AnalyseFunctions / decode_pdata:
+            // if this address is a known alias entrypoint (e.g. EH landing pad),
+            // canonicalise to its primary runtime entry.
+            if let Some(a) = ctx.db.aliases.iter().find(|a| a.alias == addr) {
+                return a.primary;
+            }
+
             if let Some((start, end)) = find_pdata_range(ctx, addr) {
                 if addr >= start && addr < end {
                     start
@@ -85,7 +94,7 @@ impl Pass for AnalyseSwitchBind {
 
             // Try to recover a function range from .pdata.
             let Some((start, end)) = find_pdata_range(ctx, addr) else {
-                xlog!(
+                xdebug!(
                     "SWB: switch at 0x{:08X} not covered by any function or .pdata entry",
                     addr
                 );
@@ -103,7 +112,7 @@ impl Pass for AnalyseSwitchBind {
                 if end > old_end {
                     f.size = end.wrapping_sub(f.base);
                     extended += 1;
-                    xlog!(
+                    xdebug!(
                         "SWB: extended func 0x{:08X} from 0x{:08X} to 0x{:08X} to cover switch at 0x{:08X}",
                         f.base,
                         old_end,
@@ -127,7 +136,7 @@ impl Pass for AnalyseSwitchBind {
                     blocks: Vec::new(),
                 });
                 added += 1;
-                xlog!(
+                xdebug!(
                     "SWB: added func 0x{:08X}-0x{:08X} from .pdata for switch at 0x{:08X}",
                     start,
                     end,
@@ -232,14 +241,14 @@ impl Pass for AnalyseSwitchBind {
                 let new_len = ctx.db.functions.len();
                 let removed = old_len.saturating_sub(new_len);
                 if removed != 0 {
-                    xlog!(
+                    xdebug!(
                         "SWB: clustered {} .pdata groups, removed {} inner helper funcs",
                         root_max_end.len(),
                         removed
                     );
                 }
             } else {
-                xlog!("SWB: no .pdata clusters to stitch after switch bind");
+                xdebug!("SWB: no .pdata clusters to stitch after switch bind");
             }
         }
 
@@ -512,17 +521,17 @@ impl Pass for AnalyseSwitchBind {
                 let removed = old_len.saturating_sub(new_len);
 
                 if removed != 0 {
-                    xlog!(
+                    xdebug!(
                         "SWB: switch_cluster merged {} case/helper funcs into dispatcher roots",
                         removed
                     );
                 } else {
-                    xlog!(
+                    xdebug!(
                         "SWB: switch_cluster: no separate case/helper funcs needed merging"
                     );
                 }
             } else {
-                xlog!("SWB: switch_cluster found no multi-function switch dispatchers");
+                xdebug!("SWB: switch_cluster found no multi-function switch dispatchers");
             }
         }
 
@@ -614,7 +623,7 @@ impl Pass for AnalyseSwitchBind {
             let new_len = ctx.db.functions.len();
             let removed = old_len.saturating_sub(new_len);
             if removed != 0 {
-                xlog!(
+                xdebug!(
                     "SWB: final clamp culled {} zero-sized/overlapping funcs",
                     removed
                 );

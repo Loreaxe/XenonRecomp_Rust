@@ -11,6 +11,7 @@ use crate::{
 };
 use crate::log::Phase;
 use crate::xlog;
+use crate::xdebug;
 
 use rayon::prelude::*; // parallel BL analyze
 
@@ -122,7 +123,7 @@ impl Pass for AnalyseFunctions {
         let mut code_spans: Vec<CodeSpan> = Vec::new();
         for (i, s) in ctx.img.sections.iter().enumerate() {
             if s.flags.contains(SectionFlags::CODE) && !s.data.is_empty() {
-                xlog!(
+                xdebug!(
                     "FUN: span[{}] '{}' VA=0x{:08X}..0x{:08X} len={}",
                     i,
                     s.name,
@@ -174,12 +175,22 @@ impl Pass for AnalyseFunctions {
         }
         drop(_p_words);
 
-        // If `addr` is inside one or more .pdata function ranges, snap it to the
+       // If `addr` is inside one or more .pdata function ranges, snap it to the
         // *nearest* function start: the one with the largest begin <= addr < end.
+        //
+        // Additionally, respect db.aliases created from .pdata EH landing-pad
+        // pairs: if `addr` is exactly an alias entrypoint, canonicalise to its
+        // primary.
         #[inline]
         fn canonicalize_to_pdata(ctx: &Ctx, addr: u32) -> u32 {
             if addr == 0 {
                 return 0;
+            }
+
+            // First, if this address is explicitly known as an alias, canonicalise
+            // directly to its primary function root.
+            if let Some(a) = ctx.db.aliases.iter().find(|a| a.alias == addr) {
+                return a.primary;
             }
 
             let mut best_start: u32 = 0;
@@ -526,10 +537,19 @@ impl Pass for AnalyseFunctions {
         }
 
         // Very fast single-path function boundary finder.
-        // This replaces the full CFG analyzer inside BL-scan and gap-rescan.
-        // It is much faster and safe because these passes only need function *boundaries*.
+        //
+        // Now takes:
+        //   - `words`: instructions starting at `fn_base`
+        //   - `fn_base`: VA of words[0]
+        //   - `fn_limit`: upper bound VA; branching past this is considered "leaving"
+        //
+        // Returns (size_in_bytes, saw_terminator).
         #[inline]
-        fn fast_function_size_with_term(words: &[u32]) -> (usize, bool) {
+        fn fast_function_size_with_term(
+            words: &[u32],
+            fn_base: u32,
+            fn_limit: u32,
+        ) -> (usize, bool) {
             if words.is_empty() {
                 return (0, false);
             }
@@ -537,7 +557,7 @@ impl Pass for AnalyseFunctions {
             let w0 = words[0];
             let w1 = *words.get(1).unwrap_or(&0);
 
-            // Tiny frameless helpers
+            // Tiny frameless helpers: just "blr"
             if w0 == 0x4E80_0020 {
                 // blr
                 return (4, true);
@@ -548,40 +568,79 @@ impl Pass for AnalyseFunctions {
                 return (8, true);
             }
 
-            let mut size = 0usize;
+            let mut size: usize = 0;
             let mut saw_term = false;
 
+            // Track the furthest forward *internal* branch target we've seen so far.
+            // If a BLR/BCTR occurs before this target, it's an internal early-return,
+            // not the true end of the function.
+            let mut max_internal_target: u32 = fn_base;
+
             for &w in words {
+                // Do not scan beyond the allowed [fn_base, fn_limit) envelope.
+                if fn_base.wrapping_add(size as u32) >= fn_limit {
+                    break;
+                }
+
+                let pc = fn_base.wrapping_add(size as u32);
                 size += 4;
 
-                let op  = (w >> 26) & 0x3F;
-                let xop = (w >> 1) & 0x3FF;
-                let lk  = w & 1;
-
                 if w == 0 {
+                    // Treat 0 as padding / end of meaningful code.
                     break;
                 }
 
-                // unconditional branch (B), non-link
+                let op = (w >> 26) & 0x3F;
+                let lk = w & 1;
+
+                // Unconditional branch (B), non-link.
+                //
+                // We only treat it as a *function terminator* if:
+                //   - it is a self-loop (b .), OR
+                //   - it jumps outside [fn_base, fn_limit).
+                //
+                // Otherwise it's an internal branch and we keep scanning, and
+                // remember the furthest forward target so BLR/BCTR before it
+                // are not treated as final terminators.
                 if op == 18 && lk == 0 {
-                    saw_term = true;
-                    break;
+                    let raw = PpcRaw::from_host_word(w);
+                    let target = raw.branch_target(pc);
+
+                    if target == pc || target < fn_base || target >= fn_limit {
+                        saw_term = true;
+                        break;
+                    } else {
+                        // Internal forward branch; remember the furthest target.
+                        if target > max_internal_target {
+                            max_internal_target = target;
+                        }
+                        continue;
+                    }
                 }
 
-                // blr / bctr family, non-link
-                if op == 19 && (xop == 16 || xop == 528) && lk == 0 {
+                // blr / bctr family, non-link.
+                //
+                // Normally these terminate the function, but if we've already seen
+                // an internal forward branch whose target lies *past* this point,
+                // then this BLR/BCTR is just an early-return on one path and the
+                // function's code continues at that target.
+                if w == 0x4E80_0020 /* blr */ || w == 0x4E80_0420 /* bctr */ {
+                    if max_internal_target > pc {
+                        // There is a path that jumps past this BLR/BCTR; keep scanning.
+                        continue;
+                    }
+
                     saw_term = true;
                     break;
                 }
             }
 
-            // tail expression (no semicolon) so the tuple is returned
             (size, saw_term)
         }
 
         #[inline]
-        fn fast_function_size(words: &[u32]) -> usize {
-            fast_function_size_with_term(words).0
+        fn fast_function_size(words: &[u32], fn_base: u32, fn_limit: u32) -> usize {
+            fast_function_size_with_term(words, fn_base, fn_limit).0
         }
 
         // Precompute how many instructions BL_scan will look at, for % reporting.
@@ -663,7 +722,7 @@ impl Pass for AnalyseFunctions {
                                     primary: prev_begin,
                                     alias: begin,
                                 });
-                                xlog!(
+                                xdebug!(
                                     "FUN: .pdata EH landing pad alias 0x{:08X} -> 0x{:08X}",
                                     begin,
                                     prev_begin
@@ -810,7 +869,9 @@ impl Pass for AnalyseFunctions {
                     let words = words_ref[span_idx].as_ref().unwrap();
 
                     // ---- FAST FUNCTION SIZE (no CFG analysis) ----
-                    let size = fast_function_size(&words[start_idx..]);
+                    let tgt_sec = &ctx.img.sections[span_idx];
+                    let sec_end = tgt_sec.base.wrapping_add(tgt_sec.data.len() as u32);
+                    let size = fast_function_size(&words[start_idx..], tgt, sec_end);
 
                     // ---- analysis-phase progress reporting ----
                     let done = processed_candidates.fetch_add(1, Ordering::Relaxed) + 1;
@@ -941,109 +1002,30 @@ impl Pass for AnalyseFunctions {
             }
         }
 
-        // ======================== Gap rescan (aggressive leaf search) ========================
+       // ======================== Gap rescan (aggressive leaf search) ========================
         //
-        // After BL scan + linear sweep, we still may have large gaps inside CODE sections
-        // that contain tiny frameless/leaf functions (no stwu/mflr prologue).
-        //
-        // Here we:
-        //   - build per-section function coverage from the current DB
-        //   - look for gaps > GAP_MIN_BYTES
-        //   - in each such gap, run a local, more aggressive sweep that:
-        //       * still respects invalid_instructions
-        //       * does NOT require a "likely_function_start" prologue
-        //       * uses fast_function_size (no CFG, no Capstone) to carve functions
+        // After BL scan, we may still have gaps between known functions that contain tiny
+        // frameless / leaf helpers (like 0x821DB5A0..0x821DB5E0 in your sample).
+        // We:
+        //   - build per-section function coverage from the current DB snapshot
+        //   - look for gaps >= GAP_MIN_BYTES
+        //   - for each gap, run a local sweep that:
+        //       * respects existing function ranges
+        //       * does NOT require a prologue
+        //       * uses fast_function_size_with_term to carve functions
         {
             let _p = Phase::new("pass::AnalyseFunctions.gap_rescan");
 
-            // Only bother with reasonably large gaps; tiny alignment holes are almost never code.
+            // Only bother with reasonably large gaps; tiny padding holes are rarely code.
             const GAP_MIN_BYTES: u32 = 0x40;
 
             let img = &ctx.img;
-            let cfg = &ctx.cfg;
 
-            // Helper: aggressively scan a [gap_start, gap_end) region inside `sec`,
-            // using fast_function_size instead of Function::analyze (no CFG, no Capstone).
-            #[inline]
-            fn scan_gap_fast(
-                gap_start: u32,
-                gap_end: u32,
-                sec: &Section,
-                sec_words: &[u32],
-                cfg: &crate::config::RecompilerConfig,
-                out: &mut Vec<crate::db::FunctionInfo>,
-            ) {
-                if gap_end <= gap_start {
-                    return;
-                }
-
-                let mut va   = gap_start;
-                let mut off  = (gap_start - sec.base) as usize;
-                let end_off  = (gap_end   - sec.base) as usize;
-                let data     = &sec.data;
-
-                while off + 4 <= end_off {
-                    // 1) Honor invalid_instructions, same as main linear_sweep.
-                    let word_be = u32::from_be_bytes([
-                        data[off + 0],
-                        data[off + 1],
-                        data[off + 2],
-                        data[off + 3],
-                    ]);
-
-                    if let Some(&skip_bytes) = cfg.invalid_instructions.get(&word_be) {
-                        va  = va.wrapping_add(skip_bytes);
-                        off += skip_bytes as usize;
-                        if off > end_off {
-                            break;
-                        }
-                        continue;
-                    }
-
-                    // 2) Use fast_function_size here (no Capstone, no CFG).
-                     let word_idx = off / 4;
-                    if word_idx >= sec_words.len() {
-                        break;
-                    }
-
-                    let (mut size_usize, has_term) =
-                        fast_function_size_with_term(&sec_words[word_idx..]);
-                    let mut size_u32 = size_usize as u32;
-
-                    // Clamp to the gap so we don't run off the end.
-                    let max_size = gap_end.wrapping_sub(va);
-                    if size_u32 == 0 || size_u32 > max_size {
-                        size_u32 = max_size;
-                    }
-
-                    // If we didn't see a real terminator, don't treat this as a function.
-                    if !has_term {
-                        va  = va.wrapping_add(4);
-                        off += 4;
-                        continue;
-                    }
-
-                    if size_u32 == 0 {
-                        // Shouldn't happen, but don't get stuck.
-                        size_u32 = 4;
-                    }
-
-                    out.push(crate::db::FunctionInfo {
-                        base: va,
-                        size: size_u32,
-                        blocks: Vec::new(),
-                    });
-
-                    va  = va.wrapping_add(size_u32);
-                    off += size_u32 as usize;
-                }
-            }
-
-            // Work on a snapshot of the current functions, sorted by base.
+            // Work on a snapshot of the current functions, sorted by base, so that our
+            // gap detection and "already covered" checks are stable for the whole pass.
             ctx.db.functions.sort_by_key(|f| f.base);
             let funcs_snapshot = ctx.db.functions.clone();
 
-            // Describe a single "gap job"
             #[derive(Clone, Copy)]
             struct GapJob {
                 span_idx: usize,
@@ -1057,7 +1039,7 @@ impl Pass for AnalyseFunctions {
             for span in &code_spans {
                 let sec = &img.sections[span.idx];
                 let sec_start = sec.base;
-                let sec_end   = sec.base.wrapping_add(sec.data.len() as u32);
+                let sec_end = sec.base.wrapping_add(sec.data.len() as u32);
 
                 // Collect all functions that lie in this CODE section.
                 let mut local_funcs: Vec<&crate::db::FunctionInfo> = funcs_snapshot
@@ -1066,18 +1048,16 @@ impl Pass for AnalyseFunctions {
                     .collect();
                 local_funcs.sort_by_key(|f| f.base);
 
-                // Track previous end to compute gaps.
                 let mut prev_end = sec_start;
 
                 for f in local_funcs {
                     let gap_start = prev_end;
-                    let gap_end   = f.base;
+                    let gap_end = f.base;
 
                     if gap_end > gap_start {
                         let gap_size = gap_end - gap_start;
                         // Do NOT try to carve new roots out of a gap that lies entirely
-                        // inside a single .pdata-described function. .pdata is treated
-                        // as the authoritative owner of those bytes.
+                        // inside a single .pdata-described function. .pdata "owns" that.
                         if gap_size >= GAP_MIN_BYTES
                             && !gap_inside_single_pdata(ctx, gap_start, gap_end)
                         {
@@ -1098,10 +1078,9 @@ impl Pass for AnalyseFunctions {
                 // Tail gap after the last function up to section end.
                 if sec_end > prev_end {
                     let gap_start = prev_end;
-                    let gap_end   = sec_end;
-                    let gap_size  = gap_end - gap_start;
+                    let gap_end = sec_end;
+                    let gap_size = gap_end - gap_start;
 
-                    // Same rule as above: don’t carve inside .pdata-owned ranges.
                     if gap_size >= GAP_MIN_BYTES
                         && !gap_inside_single_pdata(ctx, gap_start, gap_end)
                     {
@@ -1116,6 +1095,16 @@ impl Pass for AnalyseFunctions {
 
             if !jobs.is_empty() {
                 let words_ref = &words_per_sec;
+                let funcs_snapshot_ref = &funcs_snapshot;
+
+                // Local helper: check coverage against the snapshot (no &Ctx inside Rayon).
+                fn addr_in_snapshot(fns: &[crate::db::FunctionInfo], addr: u32) -> bool {
+                    fns.iter().any(|f| {
+                        let start = f.base;
+                        let end = start.wrapping_add(f.size);
+                        addr >= start && addr < end
+                    })
+                }
 
                 let per_job_new: Vec<Vec<crate::db::FunctionInfo>> =
                     jobs.par_iter()
@@ -1127,14 +1116,61 @@ impl Pass for AnalyseFunctions {
                                 return out;
                             };
 
-                            scan_gap_fast(
-                                job.start,
-                                job.end,
-                                sec,
-                                sec_words,
-                                cfg,
-                                &mut out,
-                            );
+                            let mut cursor = job.start;
+                            let job_end = job.end;
+
+                            while cursor + 4 <= job_end {
+                                // Require alignment and skip anything already covered by an
+                                // existing function in the snapshot.
+                                if (cursor & 3) != 0
+                                    || addr_in_snapshot(funcs_snapshot_ref, cursor)
+                                {
+                                    cursor = cursor.wrapping_add(4);
+                                    continue;
+                                }
+
+                                let start_idx = ((cursor - sec.base) / 4) as usize;
+                                if start_idx >= sec_words.len() {
+                                    break;
+                                }
+
+                                // Use the same terminator-aware boundary finder we use
+                                // elsewhere (no CFG, just a straight-line walk).
+                                let sec_end =
+                                    sec.base.wrapping_add(sec.data.len() as u32);
+                                let gap_limit = job_end.min(sec_end);
+
+                                let (size_usize, has_term) =
+                                    fast_function_size_with_term(&sec_words[start_idx..], cursor, gap_limit);
+                                let mut size_u32 = size_usize as u32;
+
+                                if size_u32 == 0 || !has_term {
+                                    cursor = cursor.wrapping_add(4);
+                                    continue;
+                                }
+
+                                // Clamp so we don't run past the gap or the section.
+                                let sec_end =
+                                    sec.base.wrapping_add(sec.data.len() as u32);
+                                let max_size =
+                                    job_end.min(sec_end).saturating_sub(cursor);
+                                if size_u32 > max_size {
+                                    size_u32 = max_size;
+                                }
+                                if size_u32 == 0 {
+                                    cursor = cursor.wrapping_add(4);
+                                    continue;
+                                }
+
+                                out.push(crate::db::FunctionInfo {
+                                    base: cursor,
+                                    size: size_u32,
+                                    blocks: Vec::new(),
+                                });
+
+                                // Jump past the just-carved function to avoid overlaps.
+                                cursor = cursor.wrapping_add(size_u32);
+                            }
 
                             out
                         })
@@ -1197,7 +1233,12 @@ impl Pass for AnalyseFunctions {
                     // we never want to create a brand new root function there.
                     // Instead, treat it as an alias of the .pdata primary.
                     if is_inside_pdata(ctx, val) {
-                        if let Some(p) = ctx
+                        // Prefer an existing alias mapping if one exists (e.g. EH pad).
+                        if let Some(a) = ctx.db.aliases.iter().find(|a| a.alias == val) {
+                            // Alias is already known; nothing more to do here.
+                            // We *still* do not create a new function root.
+                            let _ = a; // silence unused warning if you like
+                        } else if let Some(p) = ctx
                             .db
                             .pdata
                             .iter()
@@ -1256,8 +1297,9 @@ impl Pass for AnalyseFunctions {
                     }
 
                     // Use the same fast, terminator-aware boundary finder we use elsewhere.
+                    let sec_end = code_sec.base.wrapping_add(code_sec.data.len() as u32);
                     let (size_usize, has_term) =
-                        fast_function_size_with_term(&code_words[start_idx..]);
+                        fast_function_size_with_term(&code_words[start_idx..], val, sec_end);
                     let mut size_u32 = size_usize as u32;
 
                     if size_u32 == 0 || !has_term {
@@ -1291,118 +1333,6 @@ impl Pass for AnalyseFunctions {
                     added_aliases
                 );
             }
-        }
-
-       // ======================== Final linear sweep ========================
-        //
-        // Old C++ behaviour: walk every CODE byte and treat anything that
-        // isn’t inside an existing function / invalid blob as a potential fn.
-        // Here we approximate that with fast_function_size (no CFG, no Capstone).
-        {
-            let _p = Phase::new("pass::AnalyseFunctions.linear_sweep");
-
-            // Make sure functions are sorted – we’ll use this to skip ranges quickly.
-            ctx.db.functions.sort_by_key(|f| f.base);
-
-            // Helper: find the function that contains `addr`, if any.
-            #[inline]
-            fn containing_fn<'a>(
-                funcs: &'a [crate::db::FunctionInfo],
-                addr: u32,
-            ) -> Option<&'a crate::db::FunctionInfo> {
-                funcs.iter().find(|f| {
-                    let start = f.base;
-                    let end   = start.wrapping_add(f.size);
-                    addr >= start && addr < end
-                })
-            }
-
-            let cfg = &ctx.cfg;
-
-            for span in &code_spans {
-                let sec = &ctx.img.sections[span.idx];
-                let sec_start = sec.base;
-                let sec_end   = sec.base.wrapping_add(sec.data.len() as u32);
-
-                let Some(sec_words) = &words_per_sec[span.idx] else {
-                    continue;
-                };
-
-                let mut va  = sec_start;
-                let mut off = 0usize;
-                let data    = &sec.data;
-
-                while va < sec_end && off + 4 <= data.len() {
-                    // 1) Skip if we’re already inside a known function.
-                    if let Some(f) = containing_fn(&ctx.db.functions, va) {
-                        let f_end = f.base.wrapping_add(f.size);
-                        if f_end > va {
-                            // Jump straight to the end of this function.
-                            let skip = (f_end - va) as usize;
-                            va  = f_end;
-                            off = off.saturating_add(skip);
-                            continue;
-                        }
-                    }
-
-                    // 2) Honor invalid_instructions like the C++ sweep.
-                    let word_be = u32::from_be_bytes([
-                        data[off + 0],
-                        data[off + 1],
-                        data[off + 2],
-                        data[off + 3],
-                    ]);
-
-                    if let Some(&skip_bytes) = cfg.invalid_instructions.get(&word_be) {
-                        va  = va.wrapping_add(skip_bytes);
-                        off = off.saturating_add(skip_bytes as usize);
-                        continue;
-                    }
-
-                    // 3) Try to carve a function at this address.
-                    let word_idx = off / 4;
-                    if word_idx >= sec_words.len() {
-                        break;
-                    }
-
-                    let (mut size_usize, has_term) =
-                        fast_function_size_with_term(&sec_words[word_idx..]);
-                    let mut size_u32 = size_usize as u32;
-
-                    // Require a real terminator – don’t treat random garbage as a fn.
-                    if size_u32 == 0 || !has_term {
-                        va  = va.wrapping_add(4);
-                        off = off.saturating_add(4);
-                        continue;
-                    }
-
-                    // Clamp to section.
-                    let max_size = sec_end.saturating_sub(va);
-                    if size_u32 > max_size {
-                        size_u32 = max_size;
-                    }
-                    if size_u32 == 0 {
-                        va  = va.wrapping_add(4);
-                        off = off.saturating_add(4);
-                        continue;
-                    }
-
-                    // Dedup by base.
-                    if !ctx.db.functions.iter().any(|f| f.base == va) {
-                        ctx.db.functions.push(crate::db::FunctionInfo {
-                            base: va,
-                            size: size_u32,
-                            blocks: Vec::new(),
-                        });
-                    }
-
-                    va  = va.wrapping_add(size_u32);
-                    off = off.saturating_add(size_u32 as usize);
-                }
-            }
-
-            // Keep everything sorted for later passes.
-            ctx.db.functions.sort_by_key(|f| f.base);
         }
 
         // --- Bind longjmp/setjmp to actual function bases via their signatures ---
