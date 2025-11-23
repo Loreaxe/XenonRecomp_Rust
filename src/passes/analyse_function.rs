@@ -235,92 +235,85 @@ impl Pass for AnalyseFunctions {
         }
 
         // -------- signatures (big-endian bytes) --------
-        const SIG_RESTGPRLR14: &[u8] = &[0xE9, 0xC1, 0xFF, 0x68];
-        const SIG_SAVEGPRLR14: &[u8] = &[0xF9, 0xC1, 0xFF, 0x68];
-        const SIG_RESTFPR14: &[u8] = &[0xC9, 0xCC, 0xFF, 0x70];
-        const SIG_SAVEFPR14: &[u8] = &[0xD9, 0xCC, 0xFF, 0x70];
-        const SIG_RESTVMX14: &[u8] =
-            &[0x39, 0x60, 0xFE, 0xE0, 0x7D, 0xCB, 0x60, 0xCE];
-        const SIG_SAVEVMX14: &[u8] =
-            &[0x39, 0x60, 0xFE, 0xE0, 0x7D, 0xCB, 0x61, 0xCE];
-        const SIG_RESTVMX64: &[u8] =
-            &[0x39, 0x60, 0xFC, 0x00, 0x10, 0x0B, 0x60, 0xCB];
-        const SIG_SAVEVMX64: &[u8] =
-            &[0x39, 0x60, 0xFC, 0x00, 0x10, 0x0B, 0x61, 0xCB];
+        // These correspond 1:1 to the patterns in label_regsaveloads().
+        const SIG_SAVEGPRLR_CHAIN: &[u8] = &[
+            0xF9, 0xC1, 0xFF, 0x68,
+            0xF9, 0xE1, 0xFF, 0x70,
+        ];
+        const SIG_RESTGPRLR_CHAIN: &[u8] = &[
+            0xE9, 0xC1, 0xFF, 0x68,
+            0xE9, 0xE1, 0xFF, 0x70,
+        ];
+
+        const SIG_SAVEFPR_CHAIN: &[u8] = &[
+            0xD9, 0xCC, 0xFF, 0x70,
+            0xD9, 0xEC, 0xFF, 0x78,
+        ];
+        const SIG_RESTFPR_CHAIN: &[u8] = &[
+            0xC9, 0xCC, 0xFF, 0x70,
+            0xC9, 0xEC, 0xFF, 0x78,
+        ];
+
+        const SIG_SAVEVMX_CHAIN_14_32: &[u8] = &[
+            0x39, 0x60, 0xFE, 0xE0,
+            0x7D, 0xCB, 0x61, 0xCE,
+        ];
+        const SIG_RESTVMX_CHAIN_14_32: &[u8] = &[
+            0x39, 0x60, 0xFE, 0xE0,
+            0x7D, 0xCB, 0x60, 0xCE,
+        ];
+
+        const SIG_SAVEVMX_CHAIN_64_128: &[u8] = &[
+            0x39, 0x60, 0xFC, 0x00,
+            0x10, 0x0B, 0x61, 0xCB,
+        ];
+        const SIG_RESTVMX_CHAIN_64_128: &[u8] = &[
+            0x39, 0x60, 0xFC, 0x00,
+            0x10, 0x0B, 0x60, 0xCB,
+        ];
 
         // Real longjmp entry
         const SIG_LONGJMP: &[u8] = &[
-            0x7C,0x08,0x02,0xA6,
-            0x94,0x21,0xFF,0xB0,
-            0x90,0x01,0x00,0x50,
+            0x7C, 0x08, 0x02, 0xA6,
+            0x94, 0x21, 0xFF, 0xB0,
+            0x90, 0x01, 0x00, 0x50,
         ];
 
         // Real setjmp entry
         const SIG_SETJMP: &[u8] = &[
-            0x2C,0x00,0x00,0x00,
-            0x7C,0x09,0x03,0xA6,
-            0x4D,0x82,0x00,0x20,
-            0x7C,0x08,0x02,0xA6,
+            0x2C, 0x00, 0x00, 0x00,
+            0x7C, 0x09, 0x03, 0xA6,
+            0x4D, 0x82, 0x00, 0x20,
+            0x7C, 0x08, 0x02, 0xA6,
         ];
 
-        // -------- resolve thunk bases (config override > signature, then canonicalize via .pdata) --------
-        let restgprlr_14_address = if ctx.cfg.restGpr14Address != 0 {
-            ctx.cfg.restGpr14Address
-        } else {
-            find_sig(ctx.img, SIG_RESTGPRLR14).unwrap_or(0)
-        };
-        let savegprlr_14_address = if ctx.cfg.saveGpr14Address != 0 {
-            ctx.cfg.saveGpr14Address
-        } else {
-            find_sig(ctx.img, SIG_SAVEGPRLR14).unwrap_or(0)
-        };
-        let restfpr_14_address = if ctx.cfg.restFpr14Address != 0 {
-            ctx.cfg.restFpr14Address
-        } else {
-            find_sig(ctx.img, SIG_RESTFPR14).unwrap_or(0)
-        };
-        let savefpr_14_address = if ctx.cfg.saveFpr14Address != 0 {
-            ctx.cfg.saveFpr14Address
-        } else {
-            find_sig(ctx.img, SIG_SAVEFPR14).unwrap_or(0)
-        };
-        let restvmx_14_address = if ctx.cfg.restVmx14Address != 0 {
-            ctx.cfg.restVmx14Address
-        } else {
-            find_sig(ctx.img, SIG_RESTVMX14).unwrap_or(0)
-        };
-        let savevmx_14_address = if ctx.cfg.saveVmx14Address != 0 {
-            ctx.cfg.saveVmx14Address
-        } else {
-            find_sig(ctx.img, SIG_SAVEVMX14).unwrap_or(0)
-        };
-        let restvmx_64_address = if ctx.cfg.restVmx64Address != 0 {
-            ctx.cfg.restVmx64Address
-        } else {
-            find_sig(ctx.img, SIG_RESTVMX64).unwrap_or(0)
-        };
-        let savevmx_64_address = if ctx.cfg.saveVmx64Address != 0 {
-            ctx.cfg.saveVmx64Address
-        } else {
-            find_sig(ctx.img, SIG_SAVEVMX64).unwrap_or(0)
-        };
+        // -------- resolve thunk bases (signature only, then canonicalize via .pdata) --------
+        let restgprlr_14_address =
+            find_sig(ctx.img, SIG_RESTGPRLR_CHAIN).unwrap_or(0);
+        let savegprlr_14_address =
+            find_sig(ctx.img, SIG_SAVEGPRLR_CHAIN).unwrap_or(0);
+        let restfpr_14_address =
+            find_sig(ctx.img, SIG_RESTFPR_CHAIN).unwrap_or(0);
+        let savefpr_14_address =
+            find_sig(ctx.img, SIG_SAVEFPR_CHAIN).unwrap_or(0);
+        let restvmx_14_address =
+            find_sig(ctx.img, SIG_RESTVMX_CHAIN_14_32).unwrap_or(0);
+        let savevmx_14_address =
+            find_sig(ctx.img, SIG_SAVEVMX_CHAIN_14_32).unwrap_or(0);
+        let restvmx_64_address =
+            find_sig(ctx.img, SIG_RESTVMX_CHAIN_64_128).unwrap_or(0);
+        let savevmx_64_address =
+            find_sig(ctx.img, SIG_SAVEVMX_CHAIN_64_128).unwrap_or(0);
 
-        // Resolve longjmp/setjmp (config override > signature, then canonicalize via .pdata).
-        let mut longjmp_address: u32 = if ctx.cfg.longJmpAddress != 0 {
-            ctx.cfg.longJmpAddress
-        } else {
-            find_sig(ctx.img, SIG_LONGJMP).unwrap_or(0)
-        };
-
-        let mut setjmp_address: u32 = if ctx.cfg.setJmpAddress != 0 {
-            ctx.cfg.setJmpAddress
-        } else {
-            find_sig(ctx.img, SIG_SETJMP).unwrap_or(0)
-        };
+        // Resolve longjmp/setjmp (signature only, then canonicalize via .pdata).
+        let mut longjmp_address: u32 =
+            find_sig(ctx.img, SIG_LONGJMP).unwrap_or(0);
+        let mut setjmp_address: u32 =
+            find_sig(ctx.img, SIG_SETJMP).unwrap_or(0);
 
         // Snap them to their .pdata root if they lie inside a runtime function.
         longjmp_address = canonicalize_to_pdata(ctx, longjmp_address);
-        setjmp_address  = canonicalize_to_pdata(ctx, setjmp_address);
+        setjmp_address = canonicalize_to_pdata(ctx, setjmp_address);
 
         xlog!(
             "FUN: thunk bases restgpr14=0x{:08X} savegpr14=0x{:08X} restfpr14=0x{:08X} \
@@ -341,55 +334,139 @@ impl Pass for AnalyseFunctions {
         let mut seen: HashSet<u32> = HashSet::new();
         let mut inner_pdata_entries: Vec<u32> = Vec::new();
 
+        #[inline]
+        fn seed_thunk_chain(
+            seen: &mut HashSet<u32>,
+            ctx: &mut Ctx,
+            base_start: u32, // address of the start_reg thunk (e.g. __savegprlr_14)
+            start_reg: u32,
+            end_reg: u32,    // exclusive, e.g. 32
+            fn_size: u32,    // pattern.fn_size (per-reg stride in bytes)
+            final_size: u32, // pattern.final_size (size of last thunk body)
+        ) {
+            if base_start == 0 {
+                return;
+            }
+            if end_reg <= start_reg {
+                return;
+            }
+
+            // Total bytes from start_reg entrypoint to final BLR.
+            let reg_count = end_reg - start_reg;
+            let total_len = (reg_count - 1) * fn_size + final_size;
+
+            for r in start_reg..end_reg {
+                let delta_regs = r - start_reg;
+                let offset = delta_regs * fn_size;
+                let base = base_start.wrapping_add(offset);
+
+                // Body size for this entrypoint: from its label to the shared tail BLR.
+                let size = total_len - offset;
+
+                push_fn_if_new(seen, ctx, base, size);
+            }
+        }
+
         // -------- seed save/restore thunks --------
         {
             let _p_seed = Phase::new("pass::AnalyseFunctions.seed_thunks");
-            for i in 14u32..128u32 {
-                if i < 32 {
-                    if restgprlr_14_address != 0 {
-                        let base = restgprlr_14_address + (i - 14) * 4;
-                        let size = (32 - i) * 4 + 12;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                    if savegprlr_14_address != 0 {
-                        let base = savegprlr_14_address + (i - 14) * 4;
-                        let size = (32 - i) * 4 + 8;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                    if restfpr_14_address != 0 {
-                        let base = restfpr_14_address + (i - 14) * 4;
-                        let size = (32 - i) * 4 + 4;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                    if savefpr_14_address != 0 {
-                        let base = savefpr_14_address + (i - 14) * 4;
-                        let size = (32 - i) * 4 + 4;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                    if restvmx_14_address != 0 {
-                        let base = restvmx_14_address + (i - 14) * 8;
-                        let size = (32 - i) * 8 + 4;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                    if savevmx_14_address != 0 {
-                        let base = savevmx_14_address + (i - 14) * 8;
-                        let size = (32 - i) * 8 + 4;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                }
-                if i >= 64 {
-                    if restvmx_64_address != 0 {
-                        let base = restvmx_64_address + (i - 64) * 8;
-                        let size = (128 - i) * 8 + 4;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                    if savevmx_64_address != 0 {
-                        let base = savevmx_64_address + (i - 64) * 8;
-                        let size = (128 - i) * 8 + 4;
-                        push_fn_if_new(&mut seen, ctx, base, size);
-                    }
-                }
-            }
+
+            // GPR chain: "__savegprlr_%d" / "__restgprlr_%d"
+            //
+            // IDA pattern:
+            //   { "__savegprlr_%d", ..., true,  14, 32, 4, 12 }
+            //   { "__restgprlr_%d", ..., false, 14, 32, 4, 16 }
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                savegprlr_14_address,
+                14,
+                32,
+                4,
+                12,
+            );
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                restgprlr_14_address,
+                14,
+                32,
+                4,
+                16,
+            );
+
+            // FPR chain: "__savefpr_%d" / "__restfpr_%d"
+            //
+            // IDA pattern:
+            //   { "__savefpr_%d", ..., true,  14, 32, 4, 8 }
+            //   { "__restfpr_%d", ..., false, 14, 32, 4, 8 }
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                savefpr_14_address,
+                14,
+                32,
+                4,
+                8,
+            );
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                restfpr_14_address,
+                14,
+                32,
+                4,
+                8,
+            );
+
+            // VMX 14..31/32: "__savevmx_%d" / "__restvmx_%d" (classic 32-reg VMX)
+            //
+            // IDA pattern:
+            //   { "__savevmx_%d", ..., true,  14, 32, 8, 12 }
+            //   { "__restvmx_%d", ..., false, 14, 32, 8, 12 }
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                savevmx_14_address,
+                14,
+                32,
+                8,
+                12,
+            );
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                restvmx_14_address,
+                14,
+                32,
+                8,
+                12,
+            );
+
+            // VMX 64..127/128: "__savevmx_%d" / "__restvmx_%d" (vmx128 style)
+            //
+            // IDA pattern:
+            //   { "__savevmx_%d", ..., true,  64, 128, 8, 12 }
+            //   { "__restvmx_%d", ..., false, 64, 128, 8, 12 }
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                savevmx_64_address,
+                64,
+                128,
+                8,
+                12,
+            );
+            seed_thunk_chain(
+                &mut seen,
+                ctx,
+                restvmx_64_address,
+                64,
+                128,
+                8,
+                12,
+            );
+
             // Seed setjmp/longjmp as normal functions so BL scan doesn't have to guess.
             if longjmp_address != 0 {
                 push_fn_if_new(
@@ -407,18 +484,8 @@ impl Pass for AnalyseFunctions {
                     SIG_SETJMP.len() as u32,
                 );
             }
-            xlog!("FUN: seeded {} thunk funcs", seen.len());
-        }
 
-        // -------- config-provided (base,size) pairs --------
-        for (&address, &size) in &ctx.cfg.functions {
-            if seen.insert(address) {
-                ctx.db.functions.push(crate::db::FunctionInfo {
-                    base: address,
-                    size,
-                    blocks: Vec::new(),
-                });
-            }
+            xlog!("FUN: seeded {} thunk funcs", seen.len());
         }
 
         // -------- seed from entry point (if present) --------
@@ -680,31 +747,40 @@ impl Pass for AnalyseFunctions {
                         continue; // unused slot
                     }
 
-                    // Layout we're already assuming elsewhere:
-                    //   bits  0..7  : flags
-                    //   bits  8..19 : FunctionLength in 4-byte instructions (12 bits)
-                    //   bits 20..31 : extra metadata (prolog len / EH / etc, format-specific)
-                    let flags      = (data & 0xFF) as u8;
-                    let func_words = ((data >> 8) & 0x0FFF) as u16;
+                    // Layout matching the XEX RUNTIME_FUNCTION bitfield used in the IDA plugin:
+                    //
+                    //   bits  0..7  : PrologLength
+                    //   bits  8..29 : FunctionLength in 4-byte instructions (22 bits)
+                    //   bits 30..31 : FunctionType (2 bits)
+                    //
+                    // NOTE: if your format differs, reconcile this with your previous "flags/extra"
+                    // layout instead of blindly swapping it.
+                    let prolog_len = (data & 0xFF) as u8;
+                    let func_words = ((data >> 8) & 0x003F_FFFF) as u32; // 22 bits
                     if func_words == 0 {
                         continue;
                     }
-                    let extra      = (data >> 20) as u16;
-                    let size_bytes = (func_words as u32).saturating_mul(4);
+                    let func_type  = ((data >> 30) & 0x3) as u8;
+
+                    let size_bytes = func_words.saturating_mul(4);
                     if size_bytes == 0 {
                         continue;
                     }
 
                     let end    = begin.wrapping_add(size_bytes);
+
+                    // For EH landing-pad detection we only care about whether EH is present.
+                    // If you have a specific "EH flag" bit, you can derive has_eh from that.
+                    // For now we keep your previous has_eh logic if it came from elsewhere.
                     let has_eh = (data & 0x8000_0000) != 0;
 
-                    // Record the raw entry in db.pdata as before.
+                    // Record the raw entry in db.pdata.
                     ctx.db.pdata.push(crate::db::PdataEntry {
                         begin,
                         end,
-                        flags,
-                        func_words,
-                        extra,
+                        flags: prolog_len,
+                        func_words: func_words.min(u16::MAX as u32) as u16,
+                        extra: func_type as u16,
                         raw: data,
                     });
 
@@ -731,14 +807,28 @@ impl Pass for AnalyseFunctions {
                         }
                     }
 
-                    // Seed a root function for each .pdata entry (unchanged).
-                    if seen.insert(begin) {
-                        ctx.db.functions.push(crate::db::FunctionInfo {
-                            base: begin,
-                            size: size_bytes,
-                            blocks: Vec::new(),
-                        });
-                        added += 1;
+                    // Seed a root function for each .pdata entry, except for save/restore
+                    // millicode (vmx thunks) which we handle via signature-based chains.
+                    let is_millicode = match func_type {
+                        // Adjust these discriminants to match your RuntimeFunctionType enum.
+                        // Example mapping:
+                        //   0 = None/Normal
+                        //   1 = Export
+                        //   2 = SaveMillicode
+                        //   3 = RestoreMillicode
+                        2 | 3 => true, // SaveMillicode / RestoreMillicode
+                        _ => false,
+                    };
+
+                    if !is_millicode {
+                        if seen.insert(begin) {
+                            ctx.db.functions.push(crate::db::FunctionInfo {
+                                base: begin,
+                                size: size_bytes,
+                                blocks: Vec::new(),
+                            });
+                            added += 1;
+                        }
                     }
 
                     // Remember this entry for the next iteration.

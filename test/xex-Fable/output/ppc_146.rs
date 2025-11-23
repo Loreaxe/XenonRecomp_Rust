@@ -1,0 +1,22127 @@
+pub fn sub_82DAA3C0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAA3C0 size=268
+    let mut pc: u32 = 0x82DAA3C0;
+    'dispatch: loop {
+        match pc {
+            0x82DAA3C0 => {
+    //   block [0x82DAA3C0..0x82DAA41C)
+	// 82DAA3C0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAA3C4: 4BEFF039  bl 0x82ca93fc
+	ctx.lr = 0x82DAA3C8;
+	sub_82CA93D0(ctx, base);
+	// 82DAA3C8: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAA3CC: 834D0000  lwz r26, 0(r13)
+	ctx.r[26].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA3D0: 3B600008  li r27, 8
+	ctx.r[27].s64 = 8;
+	// 82DAA3D4: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAA3D8: 7C992378  mr r25, r4
+	ctx.r[25].u64 = ctx.r[4].u64;
+	// 82DAA3DC: 7CBF2B78  mr r31, r5
+	ctx.r[31].u64 = ctx.r[5].u64;
+	// 82DAA3E0: 7D5BD02E  lwzx r10, r27, r26
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[27].u32.wrapping_add(ctx.r[26].u32)) } as u64;
+	// 82DAA3E4: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA3E8: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA3EC: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA3F0: 4098002C  bge cr6, 0x82daa41c
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA41C; continue 'dispatch;
+	}
+	// 82DAA3F4: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAA3F8: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAA3FC: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAA400: 3908FE48  addi r8, r8, -0x1b8
+	ctx.r[8].s64 = ctx.r[8].s64 + -440;
+	// 82DAA404: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA408: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAA40C: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA410: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAA414: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA418: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA41C; continue 'dispatch;
+            }
+            0x82DAA41C => {
+    //   block [0x82DAA41C..0x82DAA4A8)
+	// 82DAA41C: 815F0008  lwz r10, 8(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA420: 390000D0  li r8, 0xd0
+	ctx.r[8].s64 = 208;
+	// 82DAA424: A17F0026  lhz r11, 0x26(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(38 as u32) ) } as u64;
+	// 82DAA428: 813C0000  lwz r9, 0(r28)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA42C: 38EB0001  addi r7, r11, 1
+	ctx.r[7].s64 = ctx.r[11].s64 + 1;
+	// 82DAA430: A3DF0024  lhz r30, 0x24(r31)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAA434: 5566103E  rotlwi r6, r11, 2
+	ctx.r[6].u64 = ((ctx.r[11].u32).rotate_left(2)) as u64;
+	// 82DAA438: 816A0050  lwz r11, 0x50(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAA43C: 38890190  addi r4, r9, 0x190
+	ctx.r[4].s64 = ctx.r[9].s64 + 400;
+	// 82DAA440: 80AA0030  lwz r5, 0x30(r10)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAA444: 54EA3830  slwi r10, r7, 7
+	ctx.r[10].u32 = ctx.r[7].u32.wrapping_shl(7);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAA448: 7FAB3214  add r29, r11, r6
+	ctx.r[29].u64 = ctx.r[11].u64 + ctx.r[6].u64;
+	// 82DAA44C: 7FC7F378  mr r7, r30
+	ctx.r[7].u64 = ctx.r[30].u64;
+	// 82DAA450: 7CAA2A14  add r5, r10, r5
+	ctx.r[5].u64 = ctx.r[10].u64 + ctx.r[5].u64;
+	// 82DAA454: 386901A0  addi r3, r9, 0x1a0
+	ctx.r[3].s64 = ctx.r[9].s64 + 416;
+	// 82DAA458: 7FA6EB78  mr r6, r29
+	ctx.r[6].u64 = ctx.r[29].u64;
+	// 82DAA45C: 4BFFE615  bl 0x82da8a70
+	ctx.lr = 0x82DAA460;
+	sub_82DA8A70(ctx, base);
+	// 82DAA460: 907F0028  stw r3, 0x28(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(40 as u32), ctx.r[3].u32 ) };
+	// 82DAA464: 817C0000  lwz r11, 0(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA468: 7FC5F378  mr r5, r30
+	ctx.r[5].u64 = ctx.r[30].u64;
+	// 82DAA46C: 7FA4EB78  mr r4, r29
+	ctx.r[4].u64 = ctx.r[29].u64;
+	// 82DAA470: 806B006C  lwz r3, 0x6c(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DAA474: 4BFFAAB5  bl 0x82da4f28
+	ctx.lr = 0x82DAA478;
+	sub_82DA4F28(ctx, base);
+	// 82DAA478: 7D7BD02E  lwzx r11, r27, r26
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[27].u32.wrapping_add(ctx.r[26].u32)) } as u64;
+	// 82DAA47C: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA480: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA484: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA488: 40980020  bge cr6, 0x82daa4a8
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA4A8; continue 'dispatch;
+	}
+	// 82DAA48C: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAA490: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAA494: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA498: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA49C: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DAA4A0: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA4A4: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA4A8; continue 'dispatch;
+            }
+            0x82DAA4A8 => {
+    //   block [0x82DAA4A8..0x82DAA4CC)
+	// 82DAA4A8: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAA4AC: 809C0008  lwz r4, 8(r28)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA4B0: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAA4B4: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DAA4B8: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAA4BC: 7F23CB78  mr r3, r25
+	ctx.r[3].u64 = ctx.r[25].u64;
+	// 82DAA4C0: 48321899  bl 0x830cbd58
+	ctx.lr = 0x82DAA4C4;
+	sub_830CBD58(ctx, base);
+	// 82DAA4C4: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAA4C8: 4BEFEF84  b 0x82ca944c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAA4D0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAA4D0 size=196
+    let mut pc: u32 = 0x82DAA4D0;
+    'dispatch: loop {
+        match pc {
+            0x82DAA4D0 => {
+    //   block [0x82DAA4D0..0x82DAA52C)
+	// 82DAA4D0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAA4D4: 4BEFEF31  bl 0x82ca9404
+	ctx.lr = 0x82DAA4D8;
+	sub_82CA93D0(ctx, base);
+	// 82DAA4D8: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAA4DC: 83AD0000  lwz r29, 0(r13)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA4E0: 3BC00008  li r30, 8
+	ctx.r[30].s64 = 8;
+	// 82DAA4E4: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAA4E8: 7C9B2378  mr r27, r4
+	ctx.r[27].u64 = ctx.r[4].u64;
+	// 82DAA4EC: 7CBF2B78  mr r31, r5
+	ctx.r[31].u64 = ctx.r[5].u64;
+	// 82DAA4F0: 7D5EE82E  lwzx r10, r30, r29
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAA4F4: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA4F8: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA4FC: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA500: 4098002C  bge cr6, 0x82daa52c
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA52C; continue 'dispatch;
+	}
+	// 82DAA504: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAA508: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAA50C: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAA510: 3908FE5C  addi r8, r8, -0x1a4
+	ctx.r[8].s64 = ctx.r[8].s64 + -420;
+	// 82DAA514: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA518: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAA51C: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA520: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAA524: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA528: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA52C; continue 'dispatch;
+            }
+            0x82DAA52C => {
+    //   block [0x82DAA52C..0x82DAA570)
+	// 82DAA52C: 817C0000  lwz r11, 0(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA530: 80BF0014  lwz r5, 0x14(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAA534: 386B01A0  addi r3, r11, 0x1a0
+	ctx.r[3].s64 = ctx.r[11].s64 + 416;
+	// 82DAA538: 809F0010  lwz r4, 0x10(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA53C: 480428E5  bl 0x82dece20
+	ctx.lr = 0x82DAA540;
+	sub_82DECE20(ctx, base);
+	// 82DAA540: 7D5EE82E  lwzx r10, r30, r29
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAA544: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA548: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA54C: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA550: 40980020  bge cr6, 0x82daa570
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA570; continue 'dispatch;
+	}
+	// 82DAA554: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAA558: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAA55C: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA560: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA564: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAA568: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA56C: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA570; continue 'dispatch;
+            }
+            0x82DAA570 => {
+    //   block [0x82DAA570..0x82DAA594)
+	// 82DAA570: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAA574: 809C0008  lwz r4, 8(r28)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA578: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAA57C: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DAA580: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAA584: 7F63DB78  mr r3, r27
+	ctx.r[3].u64 = ctx.r[27].u64;
+	// 82DAA588: 483217D1  bl 0x830cbd58
+	ctx.lr = 0x82DAA58C;
+	sub_830CBD58(ctx, base);
+	// 82DAA58C: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DAA590: 4BEFEEC4  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAA598(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAA598 size=296
+    let mut pc: u32 = 0x82DAA598;
+    'dispatch: loop {
+        match pc {
+            0x82DAA598 => {
+    //   block [0x82DAA598..0x82DAA5F4)
+	// 82DAA598: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAA59C: 4BEFEE69  bl 0x82ca9404
+	ctx.lr = 0x82DAA5A0;
+	sub_82CA93D0(ctx, base);
+	// 82DAA5A0: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAA5A4: 838D0000  lwz r28, 0(r13)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA5A8: 3BA00008  li r29, 8
+	ctx.r[29].s64 = 8;
+	// 82DAA5AC: 7C7E1B78  mr r30, r3
+	ctx.r[30].u64 = ctx.r[3].u64;
+	// 82DAA5B0: 7C9B2378  mr r27, r4
+	ctx.r[27].u64 = ctx.r[4].u64;
+	// 82DAA5B4: 7CBF2B78  mr r31, r5
+	ctx.r[31].u64 = ctx.r[5].u64;
+	// 82DAA5B8: 7D5DE02E  lwzx r10, r29, r28
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAA5BC: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA5C0: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA5C4: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA5C8: 4098002C  bge cr6, 0x82daa5f4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA5F4; continue 'dispatch;
+	}
+	// 82DAA5CC: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAA5D0: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAA5D4: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAA5D8: 3908FE68  addi r8, r8, -0x198
+	ctx.r[8].s64 = ctx.r[8].s64 + -408;
+	// 82DAA5DC: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA5E0: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAA5E4: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA5E8: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAA5EC: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA5F0: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA5F4; continue 'dispatch;
+            }
+            0x82DAA5F4 => {
+    //   block [0x82DAA5F4..0x82DAA638)
+	// 82DAA5F4: 815E0000  lwz r10, 0(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA5F8: 817F001C  lwz r11, 0x1c(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAA5FC: 813F0010  lwz r9, 0x10(r31)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA600: 2B090000  cmplwi cr6, r9, 0
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 0 as u32, &mut ctx.xer);
+	// 82DAA604: 814A02B8  lwz r10, 0x2b8(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(696 as u32) ) } as u64;
+	// 82DAA608: 80EB0008  lwz r7, 8(r11)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA60C: 80CB000C  lwz r6, 0xc(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA610: 810B0010  lwz r8, 0x10(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA614: 915F0014  stw r10, 0x14(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DAA618: 409A0040  bne cr6, 0x82daa658
+	if !ctx.cr[6].eq {
+	pc = 0x82DAA658; continue 'dispatch;
+	}
+	// 82DAA61C: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAA620: 396B000F  addi r11, r11, 0xf
+	ctx.r[11].s64 = ctx.r[11].s64 + 15;
+	// 82DAA624: 5569E13E  srwi r9, r11, 4
+	ctx.r[9].u32 = ctx.r[11].u32.wrapping_shr(4);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAA628: 2F090000  cmpwi cr6, r9, 0
+	ctx.cr[6].compare_i32(ctx.r[9].s32, 0, &mut ctx.xer);
+	// 82DAA62C: 4099002C  ble cr6, 0x82daa658
+	if !ctx.cr[6].gt {
+	pc = 0x82DAA658; continue 'dispatch;
+	}
+	// 82DAA630: 39680008  addi r11, r8, 8
+	ctx.r[11].s64 = ctx.r[8].s64 + 8;
+	// 82DAA634: 39400000  li r10, 0
+	ctx.r[10].s64 = 0;
+	pc = 0x82DAA638; continue 'dispatch;
+            }
+            0x82DAA638 => {
+    //   block [0x82DAA638..0x82DAA658)
+	// 82DAA638: 3929FFFF  addi r9, r9, -1
+	ctx.r[9].s64 = ctx.r[9].s64 + -1;
+	// 82DAA63C: 914BFFF8  stw r10, -8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-8 as u32), ctx.r[10].u32 ) };
+	// 82DAA640: 914BFFFC  stw r10, -4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-4 as u32), ctx.r[10].u32 ) };
+	// 82DAA644: 914B0000  stw r10, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAA648: 2B090000  cmplwi cr6, r9, 0
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 0 as u32, &mut ctx.xer);
+	// 82DAA64C: 914B0004  stw r10, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAA650: 396B0010  addi r11, r11, 0x10
+	ctx.r[11].s64 = ctx.r[11].s64 + 16;
+	// 82DAA654: 409AFFE4  bne cr6, 0x82daa638
+	if !ctx.cr[6].eq {
+	pc = 0x82DAA638; continue 'dispatch;
+	}
+	pc = 0x82DAA658; continue 'dispatch;
+            }
+            0x82DAA658 => {
+    //   block [0x82DAA658..0x82DAA69C)
+	// 82DAA658: 817E0000  lwz r11, 0(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA65C: 80BF0018  lwz r5, 0x18(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAA660: 386B01A0  addi r3, r11, 0x1a0
+	ctx.r[3].s64 = ctx.r[11].s64 + 416;
+	// 82DAA664: 809F0010  lwz r4, 0x10(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA668: 48047531  bl 0x82df1b98
+	ctx.lr = 0x82DAA66C;
+	sub_82DF1B98(ctx, base);
+	// 82DAA66C: 7D7DE02E  lwzx r11, r29, r28
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAA670: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA674: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA678: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA67C: 40980020  bge cr6, 0x82daa69c
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA69C; continue 'dispatch;
+	}
+	// 82DAA680: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAA684: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAA688: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA68C: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA690: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DAA694: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA698: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA69C; continue 'dispatch;
+            }
+            0x82DAA69C => {
+    //   block [0x82DAA69C..0x82DAA6C0)
+	// 82DAA69C: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAA6A0: 809E0008  lwz r4, 8(r30)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA6A4: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAA6A8: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DAA6AC: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAA6B0: 7F63DB78  mr r3, r27
+	ctx.r[3].u64 = ctx.r[27].u64;
+	// 82DAA6B4: 483216A5  bl 0x830cbd58
+	ctx.lr = 0x82DAA6B8;
+	sub_830CBD58(ctx, base);
+	// 82DAA6B8: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DAA6BC: 4BEFED98  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAA6C0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAA6C0 size=220
+    let mut pc: u32 = 0x82DAA6C0;
+    'dispatch: loop {
+        match pc {
+            0x82DAA6C0 => {
+    //   block [0x82DAA6C0..0x82DAA71C)
+	// 82DAA6C0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAA6C4: 4BEFED41  bl 0x82ca9404
+	ctx.lr = 0x82DAA6C8;
+	sub_82CA93D0(ctx, base);
+	// 82DAA6C8: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAA6CC: 83AD0000  lwz r29, 0(r13)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA6D0: 3BC00008  li r30, 8
+	ctx.r[30].s64 = 8;
+	// 82DAA6D4: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAA6D8: 7C9B2378  mr r27, r4
+	ctx.r[27].u64 = ctx.r[4].u64;
+	// 82DAA6DC: 7CBF2B78  mr r31, r5
+	ctx.r[31].u64 = ctx.r[5].u64;
+	// 82DAA6E0: 7D5EE82E  lwzx r10, r30, r29
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAA6E4: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA6E8: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA6EC: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA6F0: 4098002C  bge cr6, 0x82daa71c
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA71C; continue 'dispatch;
+	}
+	// 82DAA6F4: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAA6F8: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAA6FC: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAA700: 3908FE70  addi r8, r8, -0x190
+	ctx.r[8].s64 = ctx.r[8].s64 + -400;
+	// 82DAA704: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA708: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAA70C: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA710: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAA714: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA718: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA71C; continue 'dispatch;
+            }
+            0x82DAA71C => {
+    //   block [0x82DAA71C..0x82DAA778)
+	// 82DAA71C: 39400000  li r10, 0
+	ctx.r[10].s64 = 0;
+	// 82DAA720: 817C0000  lwz r11, 0(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA724: 38E10050  addi r7, r1, 0x50
+	ctx.r[7].s64 = ctx.r[1].s64 + 80;
+	// 82DAA728: 80DF0014  lwz r6, 0x14(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAA72C: 386B01A0  addi r3, r11, 0x1a0
+	ctx.r[3].s64 = ctx.r[11].s64 + 416;
+	// 82DAA730: 80BF0010  lwz r5, 0x10(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA734: 809F0018  lwz r4, 0x18(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAA738: 99410050  stb r10, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[10].u8 ) };
+	// 82DAA73C: 480427DD  bl 0x82decf18
+	ctx.lr = 0x82DAA740;
+	sub_82DECF18(ctx, base);
+	// 82DAA740: 89610050  lbz r11, 0x50(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAA744: 997F001C  stb r11, 0x1c(r31)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[31].u32.wrapping_add(28 as u32), ctx.r[11].u8 ) };
+	// 82DAA748: 7D5EE82E  lwzx r10, r30, r29
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAA74C: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA750: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA754: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA758: 40980020  bge cr6, 0x82daa778
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA778; continue 'dispatch;
+	}
+	// 82DAA75C: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAA760: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAA764: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA768: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA76C: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAA770: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA774: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA778; continue 'dispatch;
+            }
+            0x82DAA778 => {
+    //   block [0x82DAA778..0x82DAA79C)
+	// 82DAA778: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAA77C: 809C0008  lwz r4, 8(r28)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA780: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAA784: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DAA788: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAA78C: 7F63DB78  mr r3, r27
+	ctx.r[3].u64 = ctx.r[27].u64;
+	// 82DAA790: 483215C9  bl 0x830cbd58
+	ctx.lr = 0x82DAA794;
+	sub_830CBD58(ctx, base);
+	// 82DAA794: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAA798: 4BEFECBC  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAA7A0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAA7A0 size=204
+    let mut pc: u32 = 0x82DAA7A0;
+    'dispatch: loop {
+        match pc {
+            0x82DAA7A0 => {
+    //   block [0x82DAA7A0..0x82DAA7FC)
+	// 82DAA7A0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAA7A4: 4BEFEC61  bl 0x82ca9404
+	ctx.lr = 0x82DAA7A8;
+	sub_82CA93D0(ctx, base);
+	// 82DAA7A8: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAA7AC: 83CD0000  lwz r30, 0(r13)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA7B0: 3BE00008  li r31, 8
+	ctx.r[31].s64 = 8;
+	// 82DAA7B4: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAA7B8: 7C9B2378  mr r27, r4
+	ctx.r[27].u64 = ctx.r[4].u64;
+	// 82DAA7BC: 7CBD2B78  mr r29, r5
+	ctx.r[29].u64 = ctx.r[5].u64;
+	// 82DAA7C0: 7D5FF02E  lwzx r10, r31, r30
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[31].u32.wrapping_add(ctx.r[30].u32)) } as u64;
+	// 82DAA7C4: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA7C8: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA7CC: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA7D0: 4098002C  bge cr6, 0x82daa7fc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA7FC; continue 'dispatch;
+	}
+	// 82DAA7D4: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAA7D8: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAA7DC: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAA7E0: 3908FE7C  addi r8, r8, -0x184
+	ctx.r[8].s64 = ctx.r[8].s64 + -388;
+	// 82DAA7E4: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA7E8: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAA7EC: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA7F0: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAA7F4: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA7F8: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA7FC; continue 'dispatch;
+            }
+            0x82DAA7FC => {
+    //   block [0x82DAA7FC..0x82DAA848)
+	// 82DAA7FC: 817D0010  lwz r11, 0x10(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA800: 815C0000  lwz r10, 0(r28)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA804: 386A01A0  addi r3, r10, 0x1a0
+	ctx.r[3].s64 = ctx.r[10].s64 + 416;
+	// 82DAA808: 80CB0008  lwz r6, 8(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA80C: 80AB000C  lwz r5, 0xc(r11)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA810: 808B0010  lwz r4, 0x10(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA814: 4804C3A5  bl 0x82df6bb8
+	ctx.lr = 0x82DAA818;
+	sub_82DF6BB8(ctx, base);
+	// 82DAA818: 7D7FF02E  lwzx r11, r31, r30
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[31].u32.wrapping_add(ctx.r[30].u32)) } as u64;
+	// 82DAA81C: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA820: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA824: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA828: 40980020  bge cr6, 0x82daa848
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA848; continue 'dispatch;
+	}
+	// 82DAA82C: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAA830: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAA834: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA838: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA83C: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DAA840: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA844: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA848; continue 'dispatch;
+            }
+            0x82DAA848 => {
+    //   block [0x82DAA848..0x82DAA86C)
+	// 82DAA848: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAA84C: 809C0008  lwz r4, 8(r28)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA850: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAA854: 7FA6EB78  mr r6, r29
+	ctx.r[6].u64 = ctx.r[29].u64;
+	// 82DAA858: 7FA5EB78  mr r5, r29
+	ctx.r[5].u64 = ctx.r[29].u64;
+	// 82DAA85C: 7F63DB78  mr r3, r27
+	ctx.r[3].u64 = ctx.r[27].u64;
+	// 82DAA860: 483214F9  bl 0x830cbd58
+	ctx.lr = 0x82DAA864;
+	sub_830CBD58(ctx, base);
+	// 82DAA864: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DAA868: 4BEFEBEC  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAA870(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAA870 size=432
+    let mut pc: u32 = 0x82DAA870;
+    'dispatch: loop {
+        match pc {
+            0x82DAA870 => {
+    //   block [0x82DAA870..0x82DAA8CC)
+	// 82DAA870: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAA874: 4BEFEB89  bl 0x82ca93fc
+	ctx.lr = 0x82DAA878;
+	sub_82CA93D0(ctx, base);
+	// 82DAA878: 9421FEF0  stwu r1, -0x110(r1)
+	ea = ctx.r[1].u32.wrapping_add(-272 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAA87C: 836D0000  lwz r27, 0(r13)
+	ctx.r[27].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA880: 3B800008  li r28, 8
+	ctx.r[28].s64 = 8;
+	// 82DAA884: 7C7A1B78  mr r26, r3
+	ctx.r[26].u64 = ctx.r[3].u64;
+	// 82DAA888: 7C992378  mr r25, r4
+	ctx.r[25].u64 = ctx.r[4].u64;
+	// 82DAA88C: 7CBE2B78  mr r30, r5
+	ctx.r[30].u64 = ctx.r[5].u64;
+	// 82DAA890: 7D5CD82E  lwzx r10, r28, r27
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DAA894: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA898: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA89C: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA8A0: 4098002C  bge cr6, 0x82daa8cc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA8CC; continue 'dispatch;
+	}
+	// 82DAA8A4: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAA8A8: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAA8AC: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAA8B0: 3908FE68  addi r8, r8, -0x198
+	ctx.r[8].s64 = ctx.r[8].s64 + -408;
+	// 82DAA8B4: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA8B8: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAA8BC: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA8C0: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAA8C4: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA8C8: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA8CC; continue 'dispatch;
+            }
+            0x82DAA8CC => {
+    //   block [0x82DAA8CC..0x82DAA908)
+	// 82DAA8CC: 815E0028  lwz r10, 0x28(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAA8D0: 3BA00000  li r29, 0
+	ctx.r[29].s64 = 0;
+	// 82DAA8D4: 817E0010  lwz r11, 0x10(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAA8D8: 554A103A  slwi r10, r10, 2
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAA8DC: 80FE0018  lwz r7, 0x18(r30)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAA8E0: 811E001C  lwz r8, 0x1c(r30)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAA8E4: 394A000F  addi r10, r10, 0xf
+	ctx.r[10].s64 = ctx.r[10].s64 + 15;
+	// 82DAA8E8: 813E0020  lwz r9, 0x20(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAA8EC: 7CA75A14  add r5, r7, r11
+	ctx.r[5].u64 = ctx.r[7].u64 + ctx.r[11].u64;
+	// 82DAA8F0: 554AE13E  srwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shr(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAA8F4: 7C885A14  add r4, r8, r11
+	ctx.r[4].u64 = ctx.r[8].u64 + ctx.r[11].u64;
+	// 82DAA8F8: 7CC95A14  add r6, r9, r11
+	ctx.r[6].u64 = ctx.r[9].u64 + ctx.r[11].u64;
+	// 82DAA8FC: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAA900: 40990028  ble cr6, 0x82daa928
+	if !ctx.cr[6].gt {
+	pc = 0x82DAA928; continue 'dispatch;
+	}
+	// 82DAA904: 39660008  addi r11, r6, 8
+	ctx.r[11].s64 = ctx.r[6].s64 + 8;
+	pc = 0x82DAA908; continue 'dispatch;
+            }
+            0x82DAA908 => {
+    //   block [0x82DAA908..0x82DAA928)
+	// 82DAA908: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DAA90C: 93ABFFF8  stw r29, -8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-8 as u32), ctx.r[29].u32 ) };
+	// 82DAA910: 93ABFFFC  stw r29, -4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-4 as u32), ctx.r[29].u32 ) };
+	// 82DAA914: 93AB0000  stw r29, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[29].u32 ) };
+	// 82DAA918: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAA91C: 93AB0004  stw r29, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[29].u32 ) };
+	// 82DAA920: 396B0010  addi r11, r11, 0x10
+	ctx.r[11].s64 = ctx.r[11].s64 + 16;
+	// 82DAA924: 409AFFE4  bne cr6, 0x82daa908
+	if !ctx.cr[6].eq {
+	pc = 0x82DAA908; continue 'dispatch;
+	}
+	pc = 0x82DAA928; continue 'dispatch;
+            }
+            0x82DAA928 => {
+    //   block [0x82DAA928..0x82DAA9B4)
+	// 82DAA928: 817A0000  lwz r11, 0(r26)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA92C: 386B01A0  addi r3, r11, 0x1a0
+	ctx.r[3].s64 = ctx.r[11].s64 + 416;
+	// 82DAA930: 48044EC1  bl 0x82def7f0
+	ctx.lr = 0x82DAA934;
+	sub_82DEF7F0(ctx, base);
+	// 82DAA934: A17E0002  lhz r11, 2(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[30].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAA938: 83FE0008  lwz r31, 8(r30)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAA93C: 38C00000  li r6, 0
+	ctx.r[6].s64 = 0;
+	// 82DAA940: 38A00000  li r5, 0
+	ctx.r[5].s64 = 0;
+	// 82DAA944: 38810050  addi r4, r1, 0x50
+	ctx.r[4].s64 = ctx.r[1].s64 + 80;
+	// 82DAA948: 7F23CB78  mr r3, r25
+	ctx.r[3].u64 = ctx.r[25].u64;
+	// 82DAA94C: B1610052  sth r11, 0x52(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(82 as u32), ctx.r[11].u16 ) };
+	// 82DAA950: 3960000B  li r11, 0xb
+	ctx.r[11].s64 = 11;
+	// 82DAA954: 93E10058  stw r31, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[31].u32 ) };
+	// 82DAA958: B1610050  sth r11, 0x50(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[11].u16 ) };
+	// 82DAA95C: 817E0004  lwz r11, 4(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA960: 91610054  stw r11, 0x54(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[11].u32 ) };
+	// 82DAA964: 817F0078  lwz r11, 0x78(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(120 as u32) ) } as u64;
+	// 82DAA968: B3A10076  sth r29, 0x76(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(118 as u32), ctx.r[29].u16 ) };
+	// 82DAA96C: 91610060  stw r11, 0x60(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(96 as u32), ctx.r[11].u32 ) };
+	// 82DAA970: A17F0054  lhz r11, 0x54(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DAA974: B1610074  sth r11, 0x74(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(116 as u32), ctx.r[11].u16 ) };
+	// 82DAA978: 817F0014  lwz r11, 0x14(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAA97C: 91610070  stw r11, 0x70(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(112 as u32), ctx.r[11].u32 ) };
+	// 82DAA980: 48321341  bl 0x830cbcc0
+	ctx.lr = 0x82DAA984;
+	sub_830CBCC0(ctx, base);
+	// 82DAA984: 7D7CD82E  lwzx r11, r28, r27
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DAA988: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA98C: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA990: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA994: 40980020  bge cr6, 0x82daa9b4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA9B4; continue 'dispatch;
+	}
+	// 82DAA998: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAA99C: 3929FE7C  addi r9, r9, -0x184
+	ctx.r[9].s64 = ctx.r[9].s64 + -388;
+	// 82DAA9A0: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA9A4: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA9A8: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DAA9AC: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA9B0: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA9B4; continue 'dispatch;
+            }
+            0x82DAA9B4 => {
+    //   block [0x82DAA9B4..0x82DAA9FC)
+	// 82DAA9B4: 817A0000  lwz r11, 0(r26)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAA9B8: 80DF0030  lwz r6, 0x30(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAA9BC: 386B01A0  addi r3, r11, 0x1a0
+	ctx.r[3].s64 = ctx.r[11].s64 + 416;
+	// 82DAA9C0: 80BF003C  lwz r5, 0x3c(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(60 as u32) ) } as u64;
+	// 82DAA9C4: 809F0040  lwz r4, 0x40(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAA9C8: 4804C1F1  bl 0x82df6bb8
+	ctx.lr = 0x82DAA9CC;
+	sub_82DF6BB8(ctx, base);
+	// 82DAA9CC: 7D5CD82E  lwzx r10, r28, r27
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DAA9D0: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAA9D4: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAA9D8: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAA9DC: 40980020  bge cr6, 0x82daa9fc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAA9FC; continue 'dispatch;
+	}
+	// 82DAA9E0: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAA9E4: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAA9E8: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAA9EC: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAA9F0: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAA9F4: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAA9F8: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAA9FC; continue 'dispatch;
+            }
+            0x82DAA9FC => {
+    //   block [0x82DAA9FC..0x82DAAA20)
+	// 82DAA9FC: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAAA00: 809A0008  lwz r4, 8(r26)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAA04: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAAA08: 7FC6F378  mr r6, r30
+	ctx.r[6].u64 = ctx.r[30].u64;
+	// 82DAAA0C: 7FC5F378  mr r5, r30
+	ctx.r[5].u64 = ctx.r[30].u64;
+	// 82DAAA10: 7F23CB78  mr r3, r25
+	ctx.r[3].u64 = ctx.r[25].u64;
+	// 82DAAA14: 48321345  bl 0x830cbd58
+	ctx.lr = 0x82DAAA18;
+	sub_830CBD58(ctx, base);
+	// 82DAAA18: 38210110  addi r1, r1, 0x110
+	ctx.r[1].s64 = ctx.r[1].s64 + 272;
+	// 82DAAA1C: 4BEFEA30  b 0x82ca944c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAAA20(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAAA20 size=324
+    let mut pc: u32 = 0x82DAAA20;
+    'dispatch: loop {
+        match pc {
+            0x82DAAA20 => {
+    //   block [0x82DAAA20..0x82DAAA54)
+	// 82DAAA20: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAAA24: 4BEFE9E1  bl 0x82ca9404
+	ctx.lr = 0x82DAAA28;
+	sub_82CA93D0(ctx, base);
+	// 82DAAA28: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAAA2C: 7C7E1B78  mr r30, r3
+	ctx.r[30].u64 = ctx.r[3].u64;
+	// 82DAAA30: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	// 82DAAA34: 3B800000  li r28, 0
+	ctx.r[28].s64 = 0;
+	// 82DAAA38: 813E000C  lwz r9, 0xc(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAA3C: 837E0004  lwz r27, 4(r30)
+	ctx.r[27].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAA40: 817E0000  lwz r11, 0(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAA44: 2F1B0000  cmpwi cr6, r27, 0
+	ctx.cr[6].compare_i32(ctx.r[27].s32, 0, &mut ctx.xer);
+	// 82DAAA48: 91210050  stw r9, 0x50(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[9].u32 ) };
+	// 82DAAA4C: 409900D8  ble cr6, 0x82daab24
+	if !ctx.cr[6].gt {
+	pc = 0x82DAAB24; continue 'dispatch;
+	}
+	// 82DAAA50: 7D7D5B78  mr r29, r11
+	ctx.r[29].u64 = ctx.r[11].u64;
+	pc = 0x82DAAA54; continue 'dispatch;
+            }
+            0x82DAAA54 => {
+    //   block [0x82DAAA54..0x82DAAA88)
+	// 82DAAA54: 3B9C0001  addi r28, r28, 1
+	ctx.r[28].s64 = ctx.r[28].s64 + 1;
+	// 82DAAA58: 7FABEB78  mr r11, r29
+	ctx.r[11].u64 = ctx.r[29].u64;
+	// 82DAAA5C: 3BBD001C  addi r29, r29, 0x1c
+	ctx.r[29].s64 = ctx.r[29].s64 + 28;
+	// 82DAAA60: 7F1CD800  cmpw cr6, r28, r27
+	ctx.cr[6].compare_i32(ctx.r[28].s32, ctx.r[27].s32, &mut ctx.xer);
+	// 82DAAA64: 40980024  bge cr6, 0x82daaa88
+	if !ctx.cr[6].lt {
+	pc = 0x82DAAA88; continue 'dispatch;
+	}
+	// 82DAAA68: 815D0000  lwz r10, 0(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAA6C: 7C00522C  dcbt 0, r10
+	// 82DAAA70: 39000080  li r8, 0x80
+	ctx.r[8].s64 = 128;
+	// 82DAAA74: 7C08522C  dcbt r8, r10
+	// 82DAAA78: 815D0008  lwz r10, 8(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAA7C: 7C00522C  dcbt 0, r10
+	// 82DAAA80: 39490200  addi r10, r9, 0x200
+	ctx.r[10].s64 = ctx.r[9].s64 + 512;
+	// 82DAAA84: 7C00522C  dcbt 0, r10
+	pc = 0x82DAAA88; continue 'dispatch;
+            }
+            0x82DAAA88 => {
+    //   block [0x82DAAA88..0x82DAAB10)
+	// 82DAAA88: 814B000C  lwz r10, 0xc(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAA8C: 38C10050  addi r6, r1, 0x50
+	ctx.r[6].s64 = ctx.r[1].s64 + 80;
+	// 82DAAA90: 915F0038  stw r10, 0x38(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(56 as u32), ctx.r[10].u32 ) };
+	// 82DAAA94: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAAA98: 915F003C  stw r10, 0x3c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(60 as u32), ctx.r[10].u32 ) };
+	// 82DAAA9C: A14B0018  lhz r10, 0x18(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAAA0: 813E0008  lwz r9, 8(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAAA4: 554A383E  rotlwi r10, r10, 7
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(7)) as u64;
+	// 82DAAAA8: 7D4A4A14  add r10, r10, r9
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[9].u64;
+	// 82DAAAAC: 915F0030  stw r10, 0x30(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(48 as u32), ctx.r[10].u32 ) };
+	// 82DAAAB0: A14B001A  lhz r10, 0x1a(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAAAB4: 813E0008  lwz r9, 8(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAAB8: 554A383E  rotlwi r10, r10, 7
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(7)) as u64;
+	// 82DAAABC: 7D4A4A14  add r10, r10, r9
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[9].u64;
+	// 82DAAAC0: 915F0034  stw r10, 0x34(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(52 as u32), ctx.r[10].u32 ) };
+	// 82DAAAC4: A14B0018  lhz r10, 0x18(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAAC8: 915F0050  stw r10, 0x50(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(80 as u32), ctx.r[10].u32 ) };
+	// 82DAAACC: A14B001A  lhz r10, 0x1a(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAAAD0: 915F0054  stw r10, 0x54(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(84 as u32), ctx.r[10].u32 ) };
+	// 82DAAAD4: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAAD8: 915F0048  stw r10, 0x48(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(72 as u32), ctx.r[10].u32 ) };
+	// 82DAAADC: 814B0008  lwz r10, 8(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAAE0: 915F004C  stw r10, 0x4c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(76 as u32), ctx.r[10].u32 ) };
+	// 82DAAAE4: 814B0008  lwz r10, 8(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAAE8: 915F0058  stw r10, 0x58(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(88 as u32), ctx.r[10].u32 ) };
+	// 82DAAAEC: 806B0000  lwz r3, 0(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAAF0: A08B0014  lhz r4, 0x14(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAAAF4: A1630000  lhz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAAF8: 2B0B0016  cmplwi cr6, r11, 0x16
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 22 as u32, &mut ctx.xer);
+	// 82DAAAFC: 409A0014  bne cr6, 0x82daab10
+	if !ctx.cr[6].eq {
+	pc = 0x82DAAB10; continue 'dispatch;
+	}
+	// 82DAAB00: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DAAB04: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DAAB08: 48048D01  bl 0x82df3808
+	ctx.lr = 0x82DAAB0C;
+	sub_82DF3808(ctx, base);
+	// 82DAAB0C: 4800000C  b 0x82daab18
+	pc = 0x82DAAB18; continue 'dispatch;
+            }
+            0x82DAAB10 => {
+    //   block [0x82DAAB10..0x82DAAB18)
+	// 82DAAB10: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAAB14: 4803E50D  bl 0x82de9020
+	ctx.lr = 0x82DAAB18;
+	sub_82DE9020(ctx, base);
+	pc = 0x82DAAB18; continue 'dispatch;
+            }
+            0x82DAAB18 => {
+    //   block [0x82DAAB18..0x82DAAB24)
+	// 82DAAB18: 81210050  lwz r9, 0x50(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAAB1C: 7F1CD800  cmpw cr6, r28, r27
+	ctx.cr[6].compare_i32(ctx.r[28].s32, ctx.r[27].s32, &mut ctx.xer);
+	// 82DAAB20: 4198FF34  blt cr6, 0x82daaa54
+	if ctx.cr[6].lt {
+	pc = 0x82DAAA54; continue 'dispatch;
+	}
+	pc = 0x82DAAB24; continue 'dispatch;
+            }
+            0x82DAAB24 => {
+    //   block [0x82DAAB24..0x82DAAB3C)
+	// 82DAAB24: 897E0018  lbz r11, 0x18(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[30].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAB28: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAAB2C: 409A0010  bne cr6, 0x82daab3c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAAB3C; continue 'dispatch;
+	}
+	// 82DAAB30: 91690000  stw r11, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAAB34: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAAB38: 4BEFE91C  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            0x82DAAB3C => {
+    //   block [0x82DAAB3C..0x82DAAB5C)
+	// 82DAAB3C: 817E0010  lwz r11, 0x10(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAAB40: 7D695850  subf r11, r9, r11
+	ctx.r[11].s64 = ctx.r[11].s64 - ctx.r[9].s64;
+	// 82DAAB44: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAAB48: 40990014  ble cr6, 0x82daab5c
+	if !ctx.cr[6].gt {
+	pc = 0x82DAAB5C; continue 'dispatch;
+	}
+	// 82DAAB4C: 7D2A4B78  mr r10, r9
+	ctx.r[10].u64 = ctx.r[9].u64;
+	// 82DAAB50: 91690004  stw r11, 4(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DAAB54: 39000002  li r8, 2
+	ctx.r[8].s64 = 2;
+	// 82DAAB58: 990A0003  stb r8, 3(r10)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[10].u32.wrapping_add(3 as u32), ctx.r[8].u8 ) };
+	pc = 0x82DAAB5C; continue 'dispatch;
+            }
+            0x82DAAB5C => {
+    //   block [0x82DAAB5C..0x82DAAB64)
+	// 82DAAB5C: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAAB60: 4BEFE8F4  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAAB68(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAAB68 size=516
+    let mut pc: u32 = 0x82DAAB68;
+    'dispatch: loop {
+        match pc {
+            0x82DAAB68 => {
+    //   block [0x82DAAB68..0x82DAABC4)
+	// 82DAAB68: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAAB6C: 4BEFE87D  bl 0x82ca93e8
+	ctx.lr = 0x82DAAB70;
+	sub_82CA93D0(ctx, base);
+	// 82DAAB70: 9421FF40  stwu r1, -0xc0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-192 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAAB74: 82AD0000  lwz r21, 0(r13)
+	ctx.r[21].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAB78: 3AC00008  li r22, 8
+	ctx.r[22].s64 = 8;
+	// 82DAAB7C: 7C771B78  mr r23, r3
+	ctx.r[23].u64 = ctx.r[3].u64;
+	// 82DAAB80: 7C942378  mr r20, r4
+	ctx.r[20].u64 = ctx.r[4].u64;
+	// 82DAAB84: 7CB92B78  mr r25, r5
+	ctx.r[25].u64 = ctx.r[5].u64;
+	// 82DAAB88: 7D56A82E  lwzx r10, r22, r21
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[22].u32.wrapping_add(ctx.r[21].u32)) } as u64;
+	// 82DAAB8C: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAB90: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAB94: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAAB98: 4098002C  bge cr6, 0x82daabc4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAABC4; continue 'dispatch;
+	}
+	// 82DAAB9C: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAABA0: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAABA4: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAABA8: 3908FE8C  addi r8, r8, -0x174
+	ctx.r[8].s64 = ctx.r[8].s64 + -372;
+	// 82DAABAC: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAABB0: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAABB4: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAABB8: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAABBC: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAABC0: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAABC4; continue 'dispatch;
+            }
+            0x82DAABC4 => {
+    //   block [0x82DAABC4..0x82DAABFC)
+	// 82DAABC4: 81790010  lwz r11, 0x10(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[25].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAABC8: 3BF70080  addi r31, r23, 0x80
+	ctx.r[31].s64 = ctx.r[23].s64 + 128;
+	// 82DAABCC: 89590018  lbz r10, 0x18(r25)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[25].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAABD0: 3BCB0018  addi r30, r11, 0x18
+	ctx.r[30].s64 = ctx.r[11].s64 + 24;
+	// 82DAABD4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAABD8: 836B0014  lwz r27, 0x14(r11)
+	ctx.r[27].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAABDC: 838B0008  lwz r28, 8(r11)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAABE0: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAABE4: 834B0010  lwz r26, 0x10(r11)
+	ctx.r[26].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAABE8: 419A0014  beq cr6, 0x82daabfc
+	if ctx.cr[6].eq {
+	pc = 0x82DAABFC; continue 'dispatch;
+	}
+	// 82DAABEC: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAABF0: 3B000001  li r24, 1
+	ctx.r[24].s64 = 1;
+	// 82DAABF4: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAABF8: 409A0008  bne cr6, 0x82daac00
+	if !ctx.cr[6].eq {
+	pc = 0x82DAAC00; continue 'dispatch;
+	}
+	pc = 0x82DAABFC; continue 'dispatch;
+            }
+            0x82DAABFC => {
+    //   block [0x82DAABFC..0x82DAAC00)
+	// 82DAABFC: 3B000000  li r24, 0
+	ctx.r[24].s64 = 0;
+	pc = 0x82DAAC00; continue 'dispatch;
+            }
+            0x82DAAC00 => {
+    //   block [0x82DAAC00..0x82DAAC10)
+	// 82DAAC00: 91210050  stw r9, 0x50(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[9].u32 ) };
+	// 82DAAC04: 3BA00000  li r29, 0
+	ctx.r[29].s64 = 0;
+	// 82DAAC08: 2F1B0000  cmpwi cr6, r27, 0
+	ctx.cr[6].compare_i32(ctx.r[27].s32, 0, &mut ctx.xer);
+	// 82DAAC0C: 409900CC  ble cr6, 0x82daacd8
+	if !ctx.cr[6].gt {
+	pc = 0x82DAACD8; continue 'dispatch;
+	}
+	pc = 0x82DAAC10; continue 'dispatch;
+            }
+            0x82DAAC10 => {
+    //   block [0x82DAAC10..0x82DAAC44)
+	// 82DAAC10: 3BBD0001  addi r29, r29, 1
+	ctx.r[29].s64 = ctx.r[29].s64 + 1;
+	// 82DAAC14: 7FCBF378  mr r11, r30
+	ctx.r[11].u64 = ctx.r[30].u64;
+	// 82DAAC18: 3BDE001C  addi r30, r30, 0x1c
+	ctx.r[30].s64 = ctx.r[30].s64 + 28;
+	// 82DAAC1C: 7F1DD800  cmpw cr6, r29, r27
+	ctx.cr[6].compare_i32(ctx.r[29].s32, ctx.r[27].s32, &mut ctx.xer);
+	// 82DAAC20: 40980024  bge cr6, 0x82daac44
+	if !ctx.cr[6].lt {
+	pc = 0x82DAAC44; continue 'dispatch;
+	}
+	// 82DAAC24: 815E0000  lwz r10, 0(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAC28: 7C00522C  dcbt 0, r10
+	// 82DAAC2C: 39000080  li r8, 0x80
+	ctx.r[8].s64 = 128;
+	// 82DAAC30: 7C08522C  dcbt r8, r10
+	// 82DAAC34: 815E0008  lwz r10, 8(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAC38: 7C00522C  dcbt 0, r10
+	// 82DAAC3C: 39490200  addi r10, r9, 0x200
+	ctx.r[10].s64 = ctx.r[9].s64 + 512;
+	// 82DAAC40: 7C00522C  dcbt 0, r10
+	pc = 0x82DAAC44; continue 'dispatch;
+            }
+            0x82DAAC44 => {
+    //   block [0x82DAAC44..0x82DAACC4)
+	// 82DAAC44: 814B000C  lwz r10, 0xc(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAC48: 38C10050  addi r6, r1, 0x50
+	ctx.r[6].s64 = ctx.r[1].s64 + 80;
+	// 82DAAC4C: 915F0038  stw r10, 0x38(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(56 as u32), ctx.r[10].u32 ) };
+	// 82DAAC50: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAAC54: 915F003C  stw r10, 0x3c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(60 as u32), ctx.r[10].u32 ) };
+	// 82DAAC58: A14B0018  lhz r10, 0x18(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAC5C: 554A383E  rotlwi r10, r10, 7
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(7)) as u64;
+	// 82DAAC60: 7D4AE214  add r10, r10, r28
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[28].u64;
+	// 82DAAC64: 915F0030  stw r10, 0x30(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(48 as u32), ctx.r[10].u32 ) };
+	// 82DAAC68: A14B001A  lhz r10, 0x1a(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAAC6C: 554A383E  rotlwi r10, r10, 7
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(7)) as u64;
+	// 82DAAC70: 7D4AE214  add r10, r10, r28
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[28].u64;
+	// 82DAAC74: 915F0034  stw r10, 0x34(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(52 as u32), ctx.r[10].u32 ) };
+	// 82DAAC78: A14B0018  lhz r10, 0x18(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAC7C: 915F0050  stw r10, 0x50(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(80 as u32), ctx.r[10].u32 ) };
+	// 82DAAC80: A14B001A  lhz r10, 0x1a(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAAC84: 915F0054  stw r10, 0x54(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(84 as u32), ctx.r[10].u32 ) };
+	// 82DAAC88: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAC8C: 915F0048  stw r10, 0x48(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(72 as u32), ctx.r[10].u32 ) };
+	// 82DAAC90: 814B0008  lwz r10, 8(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAC94: 915F004C  stw r10, 0x4c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(76 as u32), ctx.r[10].u32 ) };
+	// 82DAAC98: 814B0008  lwz r10, 8(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAC9C: 915F0058  stw r10, 0x58(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(88 as u32), ctx.r[10].u32 ) };
+	// 82DAACA0: 806B0000  lwz r3, 0(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAACA4: A08B0014  lhz r4, 0x14(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAACA8: A1630000  lhz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAACAC: 2B0B0016  cmplwi cr6, r11, 0x16
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 22 as u32, &mut ctx.xer);
+	// 82DAACB0: 409A0014  bne cr6, 0x82daacc4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAACC4; continue 'dispatch;
+	}
+	// 82DAACB4: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DAACB8: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DAACBC: 48048B4D  bl 0x82df3808
+	ctx.lr = 0x82DAACC0;
+	sub_82DF3808(ctx, base);
+	// 82DAACC0: 4800000C  b 0x82daaccc
+	pc = 0x82DAACCC; continue 'dispatch;
+            }
+            0x82DAACC4 => {
+    //   block [0x82DAACC4..0x82DAACCC)
+	// 82DAACC4: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAACC8: 4803E359  bl 0x82de9020
+	ctx.lr = 0x82DAACCC;
+	sub_82DE9020(ctx, base);
+	pc = 0x82DAACCC; continue 'dispatch;
+            }
+            0x82DAACCC => {
+    //   block [0x82DAACCC..0x82DAACD8)
+	// 82DAACCC: 81210050  lwz r9, 0x50(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAACD0: 7F1DD800  cmpw cr6, r29, r27
+	ctx.cr[6].compare_i32(ctx.r[29].s32, ctx.r[27].s32, &mut ctx.xer);
+	// 82DAACD4: 4198FF3C  blt cr6, 0x82daac10
+	if ctx.cr[6].lt {
+	pc = 0x82DAAC10; continue 'dispatch;
+	}
+	pc = 0x82DAACD8; continue 'dispatch;
+            }
+            0x82DAACD8 => {
+    //   block [0x82DAACD8..0x82DAACF4)
+	// 82DAACD8: 7F0B0774  extsb r11, r24
+	ctx.r[11].s64 = ctx.r[24].s8 as i64;
+	// 82DAACDC: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAACE0: 409A0014  bne cr6, 0x82daacf4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAACF4; continue 'dispatch;
+	}
+	// 82DAACE4: 39400000  li r10, 0
+	ctx.r[10].s64 = 0;
+	// 82DAACE8: 7D2B4B78  mr r11, r9
+	ctx.r[11].u64 = ctx.r[9].u64;
+	// 82DAACEC: 91490000  stw r10, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAACF0: 48000020  b 0x82daad10
+	pc = 0x82DAAD10; continue 'dispatch;
+            }
+            0x82DAACF4 => {
+    //   block [0x82DAACF4..0x82DAAD10)
+	// 82DAACF4: 7D49D050  subf r10, r9, r26
+	ctx.r[10].s64 = ctx.r[26].s64 - ctx.r[9].s64;
+	// 82DAACF8: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAACFC: 4099001C  ble cr6, 0x82daad18
+	if !ctx.cr[6].gt {
+	pc = 0x82DAAD18; continue 'dispatch;
+	}
+	// 82DAAD00: 7D2B4B78  mr r11, r9
+	ctx.r[11].u64 = ctx.r[9].u64;
+	// 82DAAD04: 91490004  stw r10, 4(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAAD08: 39000002  li r8, 2
+	ctx.r[8].s64 = 2;
+	// 82DAAD0C: 990B0003  stb r8, 3(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(3 as u32), ctx.r[8].u8 ) };
+	pc = 0x82DAAD10; continue 'dispatch;
+            }
+            0x82DAAD10 => {
+    //   block [0x82DAAD10..0x82DAAD18)
+	// 82DAAD10: 396B0010  addi r11, r11, 0x10
+	ctx.r[11].s64 = ctx.r[11].s64 + 16;
+	// 82DAAD14: 91610050  stw r11, 0x50(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAAD18; continue 'dispatch;
+            }
+            0x82DAAD18 => {
+    //   block [0x82DAAD18..0x82DAAD48)
+	// 82DAAD18: 7D56A82E  lwzx r10, r22, r21
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[22].u32.wrapping_add(ctx.r[21].u32)) } as u64;
+	// 82DAAD1C: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAD20: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAD24: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAAD28: 40980020  bge cr6, 0x82daad48
+	if !ctx.cr[6].lt {
+	pc = 0x82DAAD48; continue 'dispatch;
+	}
+	// 82DAAD2C: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAAD30: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAAD34: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAAD38: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAAD3C: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAAD40: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAAD44: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAAD48; continue 'dispatch;
+            }
+            0x82DAAD48 => {
+    //   block [0x82DAAD48..0x82DAAD6C)
+	// 82DAAD48: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAAD4C: 80970008  lwz r4, 8(r23)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAD50: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAAD54: 7F26CB78  mr r6, r25
+	ctx.r[6].u64 = ctx.r[25].u64;
+	// 82DAAD58: 7F25CB78  mr r5, r25
+	ctx.r[5].u64 = ctx.r[25].u64;
+	// 82DAAD5C: 7E83A378  mr r3, r20
+	ctx.r[3].u64 = ctx.r[20].u64;
+	// 82DAAD60: 48320FF9  bl 0x830cbd58
+	ctx.lr = 0x82DAAD64;
+	sub_830CBD58(ctx, base);
+	// 82DAAD64: 382100C0  addi r1, r1, 0xc0
+	ctx.r[1].s64 = ctx.r[1].s64 + 192;
+	// 82DAAD68: 4BEFE6D0  b 0x82ca9438
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAAD70(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAAD70 size=472
+    let mut pc: u32 = 0x82DAAD70;
+    'dispatch: loop {
+        match pc {
+            0x82DAAD70 => {
+    //   block [0x82DAAD70..0x82DAADE0)
+	// 82DAAD70: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAAD74: 4BEFE679  bl 0x82ca93ec
+	ctx.lr = 0x82DAAD78;
+	sub_82CA93D0(ctx, base);
+	// 82DAAD78: 9421FF50  stwu r1, -0xb0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-176 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAAD7C: 7CB72B78  mr r23, r5
+	ctx.r[23].u64 = ctx.r[5].u64;
+	// 82DAAD80: 7C761B78  mr r22, r3
+	ctx.r[22].u64 = ctx.r[3].u64;
+	// 82DAAD84: 7C952378  mr r21, r4
+	ctx.r[21].u64 = ctx.r[4].u64;
+	// 82DAAD88: 3BD60080  addi r30, r22, 0x80
+	ctx.r[30].s64 = ctx.r[22].s64 + 128;
+	// 82DAAD8C: 83B70008  lwz r29, 8(r23)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAD90: 817D0074  lwz r11, 0x74(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAAD94: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAAD98: 4099018C  ble cr6, 0x82daaf24
+	if !ctx.cr[6].gt {
+	pc = 0x82DAAF24; continue 'dispatch;
+	}
+	// 82DAAD9C: 832D0000  lwz r25, 0(r13)
+	ctx.r[25].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAADA0: 3B000008  li r24, 8
+	ctx.r[24].s64 = 8;
+	// 82DAADA4: 7D59C02E  lwzx r10, r25, r24
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[25].u32.wrapping_add(ctx.r[24].u32)) } as u64;
+	// 82DAADA8: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAADAC: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAADB0: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAADB4: 4098002C  bge cr6, 0x82daade0
+	if !ctx.cr[6].lt {
+	pc = 0x82DAADE0; continue 'dispatch;
+	}
+	// 82DAADB8: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAADBC: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAADC0: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAADC4: 3908FEA0  addi r8, r8, -0x160
+	ctx.r[8].s64 = ctx.r[8].s64 + -352;
+	// 82DAADC8: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAADCC: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAADD0: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAADD4: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAADD8: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAADDC: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAADE0; continue 'dispatch;
+            }
+            0x82DAADE0 => {
+    //   block [0x82DAADE0..0x82DAADF8)
+	// 82DAADE0: 817D0074  lwz r11, 0x74(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAADE4: 3B400000  li r26, 0
+	ctx.r[26].s64 = 0;
+	// 82DAADE8: 7F5BD378  mr r27, r26
+	ctx.r[27].u64 = ctx.r[26].u64;
+	// 82DAADEC: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAADF0: 409900E0  ble cr6, 0x82daaed0
+	if !ctx.cr[6].gt {
+	pc = 0x82DAAED0; continue 'dispatch;
+	}
+	// 82DAADF4: 7F5CD378  mr r28, r26
+	ctx.r[28].u64 = ctx.r[26].u64;
+	pc = 0x82DAADF8; continue 'dispatch;
+            }
+            0x82DAADF8 => {
+    //   block [0x82DAADF8..0x82DAAE74)
+	// 82DAADF8: 817D0070  lwz r11, 0x70(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(112 as u32) ) } as u64;
+	// 82DAADFC: 7FEBE02E  lwzx r31, r11, r28
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAAE00: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAE04: 917E0048  stw r11, 0x48(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(72 as u32), ctx.r[11].u32 ) };
+	// 82DAAE08: 817F001C  lwz r11, 0x1c(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAAE0C: 917E004C  stw r11, 0x4c(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(76 as u32), ctx.r[11].u32 ) };
+	// 82DAAE10: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAE14: 815D0030  lwz r10, 0x30(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAAE18: 816B0090  lwz r11, 0x90(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(144 as u32) ) } as u64;
+	// 82DAAE1C: 7D6B5214  add r11, r11, r10
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DAAE20: 917E0030  stw r11, 0x30(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(48 as u32), ctx.r[11].u32 ) };
+	// 82DAAE24: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAE28: 815D0030  lwz r10, 0x30(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAAE2C: 816B0090  lwz r11, 0x90(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(144 as u32) ) } as u64;
+	// 82DAAE30: 7D6B5214  add r11, r11, r10
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DAAE34: 917E0034  stw r11, 0x34(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(52 as u32), ctx.r[11].u32 ) };
+	// 82DAAE38: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAE3C: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAAE40: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAE44: 917E0038  stw r11, 0x38(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(56 as u32), ctx.r[11].u32 ) };
+	// 82DAAE48: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAE4C: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAE50: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAAE54: 917E003C  stw r11, 0x3c(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(60 as u32), ctx.r[11].u32 ) };
+	// 82DAAE58: 897F0012  lbz r11, 0x12(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DAAE5C: 556B07FE  clrlwi r11, r11, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x00000001u64;
+	// 82DAAE60: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAAE64: 419A002C  beq cr6, 0x82daae90
+	if ctx.cr[6].eq {
+	pc = 0x82DAAE90; continue 'dispatch;
+	}
+	// 82DAAE68: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAE6C: 80BF000C  lwz r5, 0xc(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAE70: 806B000C  lwz r3, 0xc(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	pc = 0x82DAAE74; continue 'dispatch;
+            }
+            0x82DAAE74 => {
+    //   block [0x82DAAE74..0x82DAAE88)
+	// 82DAAE74: A1650000  lhz r11, 0(r5)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[5].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAE78: 2B0B0017  cmplwi cr6, r11, 0x17
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 23 as u32, &mut ctx.xer);
+	// 82DAAE7C: 4198000C  blt cr6, 0x82daae88
+	if ctx.cr[6].lt {
+	pc = 0x82DAAE88; continue 'dispatch;
+	}
+	// 82DAAE80: 80A50014  lwz r5, 0x14(r5)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAAE84: 4BFFFFF0  b 0x82daae74
+	pc = 0x82DAAE74; continue 'dispatch;
+            }
+            0x82DAAE88 => {
+    //   block [0x82DAAE88..0x82DAAE90)
+	// 82DAAE88: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAAE8C: 48003AE5  bl 0x82dae970
+	ctx.lr = 0x82DAAE90;
+	sub_82DAE970(ctx, base);
+	pc = 0x82DAAE90; continue 'dispatch;
+            }
+            0x82DAAE90 => {
+    //   block [0x82DAAE90..0x82DAAEBC)
+	// 82DAAE90: 897F0012  lbz r11, 0x12(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DAAE94: 556B077A  rlwinm r11, r11, 0, 0x1d, 0x1d
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAAE98: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAAE9C: 419A0020  beq cr6, 0x82daaebc
+	if ctx.cr[6].eq {
+	pc = 0x82DAAEBC; continue 'dispatch;
+	}
+	// 82DAAEA0: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAEA4: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAAEA8: 806B000C  lwz r3, 0xc(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAEAC: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAEB0: 816B0028  lwz r11, 0x28(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAAEB4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAAEB8: 4E800421  bctrl
+	ctx.lr = 0x82DAAEBC;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAAEBC => {
+    //   block [0x82DAAEBC..0x82DAAED0)
+	// 82DAAEBC: 817D0074  lwz r11, 0x74(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAAEC0: 3B7B0001  addi r27, r27, 1
+	ctx.r[27].s64 = ctx.r[27].s64 + 1;
+	// 82DAAEC4: 3B9C0004  addi r28, r28, 4
+	ctx.r[28].s64 = ctx.r[28].s64 + 4;
+	// 82DAAEC8: 7F1B5800  cmpw cr6, r27, r11
+	ctx.cr[6].compare_i32(ctx.r[27].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAAECC: 4198FF2C  blt cr6, 0x82daadf8
+	if ctx.cr[6].lt {
+	pc = 0x82DAADF8; continue 'dispatch;
+	}
+	pc = 0x82DAAED0; continue 'dispatch;
+            }
+            0x82DAAED0 => {
+    //   block [0x82DAAED0..0x82DAAF24)
+	// 82DAAED0: 39600004  li r11, 4
+	ctx.r[11].s64 = 4;
+	// 82DAAED4: 815D0074  lwz r10, 0x74(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAAED8: 38C00003  li r6, 3
+	ctx.r[6].s64 = 3;
+	// 82DAAEDC: 809D0070  lwz r4, 0x70(r29)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(112 as u32) ) } as u64;
+	// 82DAAEE0: 5545103A  slwi r5, r10, 2
+	ctx.r[5].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAAEE4: 7C79582E  lwzx r3, r25, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[25].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAAEE8: 4BFAA3E1  bl 0x82d552c8
+	ctx.lr = 0x82DAAEEC;
+	sub_82D552C8(ctx, base);
+	// 82DAAEEC: 935D0070  stw r26, 0x70(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(112 as u32), ctx.r[26].u32 ) };
+	// 82DAAEF0: 935D0074  stw r26, 0x74(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(116 as u32), ctx.r[26].u32 ) };
+	// 82DAAEF4: 7D59C02E  lwzx r10, r25, r24
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[25].u32.wrapping_add(ctx.r[24].u32)) } as u64;
+	// 82DAAEF8: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAEFC: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAF00: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAAF04: 40980020  bge cr6, 0x82daaf24
+	if !ctx.cr[6].lt {
+	pc = 0x82DAAF24; continue 'dispatch;
+	}
+	// 82DAAF08: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAAF0C: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAAF10: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAAF14: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAAF18: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAAF1C: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAAF20: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAAF24; continue 'dispatch;
+            }
+            0x82DAAF24 => {
+    //   block [0x82DAAF24..0x82DAAF48)
+	// 82DAAF24: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAAF28: 80960008  lwz r4, 8(r22)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[22].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAF2C: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAAF30: 7EE6BB78  mr r6, r23
+	ctx.r[6].u64 = ctx.r[23].u64;
+	// 82DAAF34: 7EE5BB78  mr r5, r23
+	ctx.r[5].u64 = ctx.r[23].u64;
+	// 82DAAF38: 7EA3AB78  mr r3, r21
+	ctx.r[3].u64 = ctx.r[21].u64;
+	// 82DAAF3C: 48320E1D  bl 0x830cbd58
+	ctx.lr = 0x82DAAF40;
+	sub_830CBD58(ctx, base);
+	// 82DAAF40: 382100B0  addi r1, r1, 0xb0
+	ctx.r[1].s64 = ctx.r[1].s64 + 176;
+	// 82DAAF44: 4BEFE4F8  b 0x82ca943c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAAF48(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAAF48 size=228
+    let mut pc: u32 = 0x82DAAF48;
+    'dispatch: loop {
+        match pc {
+            0x82DAAF48 => {
+    //   block [0x82DAAF48..0x82DAAFA4)
+	// 82DAAF48: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAAF4C: 4BEFE4B9  bl 0x82ca9404
+	ctx.lr = 0x82DAAF50;
+	sub_82CA93D0(ctx, base);
+	// 82DAAF50: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAAF54: 83AD0000  lwz r29, 0(r13)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAAF58: 3BC00008  li r30, 8
+	ctx.r[30].s64 = 8;
+	// 82DAAF5C: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAAF60: 7C9B2378  mr r27, r4
+	ctx.r[27].u64 = ctx.r[4].u64;
+	// 82DAAF64: 7CBF2B78  mr r31, r5
+	ctx.r[31].u64 = ctx.r[5].u64;
+	// 82DAAF68: 7D5EE82E  lwzx r10, r30, r29
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAAF6C: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAF70: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAF74: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAAF78: 4098002C  bge cr6, 0x82daafa4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAAFA4; continue 'dispatch;
+	}
+	// 82DAAF7C: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAAF80: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAAF84: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAAF88: 3908FEB8  addi r8, r8, -0x148
+	ctx.r[8].s64 = ctx.r[8].s64 + -328;
+	// 82DAAF8C: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAAF90: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAAF94: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAAF98: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAAF9C: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAAFA0: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAAFA4; continue 'dispatch;
+            }
+            0x82DAAFA4 => {
+    //   block [0x82DAAFA4..0x82DAB008)
+	// 82DAAFA4: A17F0014  lhz r11, 0x14(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAAFA8: 38C000D0  li r6, 0xd0
+	ctx.r[6].s64 = 208;
+	// 82DAAFAC: 815F0008  lwz r10, 8(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAAFB0: 387C0060  addi r3, r28, 0x60
+	ctx.r[3].s64 = ctx.r[28].s64 + 96;
+	// 82DAAFB4: 38EB0001  addi r7, r11, 1
+	ctx.r[7].s64 = ctx.r[11].s64 + 1;
+	// 82DAAFB8: 811F0010  lwz r8, 0x10(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAAFBC: 5569103E  rotlwi r9, r11, 2
+	ctx.r[9].u64 = ((ctx.r[11].u32).rotate_left(2)) as u64;
+	// 82DAAFC0: A0BF0016  lhz r5, 0x16(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(22 as u32) ) } as u64;
+	// 82DAAFC4: 54EB3830  slwi r11, r7, 7
+	ctx.r[11].u32 = ctx.r[7].u32.wrapping_shl(7);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAAFC8: 7C894214  add r4, r9, r8
+	ctx.r[4].u64 = ctx.r[9].u64 + ctx.r[8].u64;
+	// 82DAAFCC: 814A0030  lwz r10, 0x30(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAAFD0: 7CEB5214  add r7, r11, r10
+	ctx.r[7].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DAAFD4: 4BFFD645  bl 0x82da8618
+	ctx.lr = 0x82DAAFD8;
+	sub_82DA8618(ctx, base);
+	// 82DAAFD8: 7D7EE82E  lwzx r11, r30, r29
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAAFDC: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAAFE0: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAAFE4: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAAFE8: 40980020  bge cr6, 0x82dab008
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB008; continue 'dispatch;
+	}
+	// 82DAAFEC: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAAFF0: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAAFF4: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAAFF8: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAAFFC: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DAB000: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAB004: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAB008; continue 'dispatch;
+            }
+            0x82DAB008 => {
+    //   block [0x82DAB008..0x82DAB02C)
+	// 82DAB008: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAB00C: 809C0008  lwz r4, 8(r28)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAB010: 7F87E378  mr r7, r28
+	ctx.r[7].u64 = ctx.r[28].u64;
+	// 82DAB014: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DAB018: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAB01C: 7F63DB78  mr r3, r27
+	ctx.r[3].u64 = ctx.r[27].u64;
+	// 82DAB020: 48320D39  bl 0x830cbd58
+	ctx.lr = 0x82DAB024;
+	sub_830CBD58(ctx, base);
+	// 82DAB024: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DAB028: 4BEFE42C  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAB040(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAB040 size=792
+    let mut pc: u32 = 0x82DAB040;
+    'dispatch: loop {
+        match pc {
+            0x82DAB040 => {
+    //   block [0x82DAB040..0x82DAB0AC)
+	// 82DAB040: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAB044: 4BEFE39D  bl 0x82ca93e0
+	ctx.lr = 0x82DAB048;
+	sub_82CA93D0(ctx, base);
+	// 82DAB048: 9421FF30  stwu r1, -0xd0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-208 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAB04C: 832D0000  lwz r25, 0(r13)
+	ctx.r[25].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB050: 3B400004  li r26, 4
+	ctx.r[26].s64 = 4;
+	// 82DAB054: 83C10124  lwz r30, 0x124(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(292 as u32) ) } as u64;
+	// 82DAB058: 7D5F5378  mr r31, r10
+	ctx.r[31].u64 = ctx.r[10].u64;
+	// 82DAB05C: 7C781B78  mr r24, r3
+	ctx.r[24].u64 = ctx.r[3].u64;
+	// 82DAB060: 7C9D2378  mr r29, r4
+	ctx.r[29].u64 = ctx.r[4].u64;
+	// 82DAB064: 7CB42B78  mr r20, r5
+	ctx.r[20].u64 = ctx.r[5].u64;
+	// 82DAB068: 7D7AC82E  lwzx r11, r26, r25
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[26].u32.wrapping_add(ctx.r[25].u32)) } as u64;
+	// 82DAB06C: 7CDB3378  mr r27, r6
+	ctx.r[27].u64 = ctx.r[6].u64;
+	// 82DAB070: 82FF0000  lwz r23, 0(r31)
+	ctx.r[23].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB074: 7CF63B78  mr r22, r7
+	ctx.r[22].u64 = ctx.r[7].u64;
+	// 82DAB078: 827E0000  lwz r19, 0(r30)
+	ctx.r[19].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB07C: 7D124378  mr r18, r8
+	ctx.r[18].u64 = ctx.r[8].u64;
+	// 82DAB080: 7D354B78  mr r21, r9
+	ctx.r[21].u64 = ctx.r[9].u64;
+	// 82DAB084: 814B00B0  lwz r10, 0xb0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(176 as u32) ) } as u64;
+	// 82DAB088: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB08C: 419A0020  beq cr6, 0x82dab0ac
+	if ctx.cr[6].eq {
+	pc = 0x82DAB0AC; continue 'dispatch;
+	}
+	// 82DAB090: 812B00B4  lwz r9, 0xb4(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(180 as u32) ) } as u64;
+	// 82DAB094: 7D445378  mr r4, r10
+	ctx.r[4].u64 = ctx.r[10].u64;
+	// 82DAB098: 3929FFFF  addi r9, r9, -1
+	ctx.r[9].s64 = ctx.r[9].s64 + -1;
+	// 82DAB09C: 912B00B4  stw r9, 0xb4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(180 as u32), ctx.r[9].u32 ) };
+	// 82DAB0A0: 814A0000  lwz r10, 0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB0A4: 914B00B0  stw r10, 0xb0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(176 as u32), ctx.r[10].u32 ) };
+	// 82DAB0A8: 48000014  b 0x82dab0bc
+	pc = 0x82DAB0BC; continue 'dispatch;
+            }
+            0x82DAB0AC => {
+    //   block [0x82DAB0AC..0x82DAB0BC)
+	// 82DAB0AC: 3880000F  li r4, 0xf
+	ctx.r[4].s64 = 15;
+	// 82DAB0B0: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DAB0B4: 4BFA9F9D  bl 0x82d55050
+	ctx.lr = 0x82DAB0B8;
+	sub_82D55050(ctx, base);
+	// 82DAB0B8: 7C641B78  mr r4, r3
+	ctx.r[4].u64 = ctx.r[3].u64;
+	pc = 0x82DAB0BC; continue 'dispatch;
+            }
+            0x82DAB0BC => {
+    //   block [0x82DAB0BC..0x82DAB0D8)
+	// 82DAB0BC: 2B040000  cmplwi cr6, r4, 0
+	ctx.cr[6].compare_u32(ctx.r[4].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB0C0: 3B800000  li r28, 0
+	ctx.r[28].s64 = 0;
+	// 82DAB0C4: 419A0014  beq cr6, 0x82dab0d8
+	if ctx.cr[6].eq {
+	pc = 0x82DAB0D8; continue 'dispatch;
+	}
+	// 82DAB0C8: 93840014  stw r28, 0x14(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(20 as u32), ctx.r[28].u32 ) };
+	// 82DAB0CC: 93840010  stw r28, 0x10(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(16 as u32), ctx.r[28].u32 ) };
+	// 82DAB0D0: 93840000  stw r28, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[28].u32 ) };
+	// 82DAB0D4: 48000008  b 0x82dab0dc
+	pc = 0x82DAB0DC; continue 'dispatch;
+            }
+            0x82DAB0D8 => {
+    //   block [0x82DAB0D8..0x82DAB0DC)
+	// 82DAB0D8: 7F84E378  mr r4, r28
+	ctx.r[4].u64 = ctx.r[28].u64;
+	pc = 0x82DAB0DC; continue 'dispatch;
+            }
+            0x82DAB0DC => {
+    //   block [0x82DAB0DC..0x82DAB100)
+	// 82DAB0DC: 817B0000  lwz r11, 0(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB0E0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB0E4: 409A001C  bne cr6, 0x82dab100
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB100; continue 'dispatch;
+	}
+	// 82DAB0E8: 8961014F  lbz r11, 0x14f(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(335 as u32) ) } as u64;
+	// 82DAB0EC: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB0F0: 409A0020  bne cr6, 0x82dab110
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB110; continue 'dispatch;
+	}
+	// 82DAB0F4: 909D0000  stw r4, 0(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(0 as u32), ctx.r[4].u32 ) };
+	// 82DAB0F8: 939D0004  stw r28, 4(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(4 as u32), ctx.r[28].u32 ) };
+	// 82DAB0FC: 48000014  b 0x82dab110
+	pc = 0x82DAB110; continue 'dispatch;
+            }
+            0x82DAB100 => {
+    //   block [0x82DAB100..0x82DAB110)
+	// 82DAB100: 908B0000  stw r4, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[4].u32 ) };
+	// 82DAB104: 817B0000  lwz r11, 0(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB108: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB10C: 914B0010  stw r10, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	pc = 0x82DAB110; continue 'dispatch;
+            }
+            0x82DAB110 => {
+    //   block [0x82DAB110..0x82DAB14C)
+	// 82DAB110: 817D0004  lwz r11, 4(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB114: 80A1012C  lwz r5, 0x12c(r1)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(300 as u32) ) } as u64;
+	// 82DAB118: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAB11C: 917D0004  stw r11, 4(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DAB120: 93040004  stw r24, 4(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(4 as u32), ctx.r[24].u32 ) };
+	// 82DAB124: 81650004  lwz r11, 4(r5)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB128: 91640014  stw r11, 0x14(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(20 as u32), ctx.r[11].u32 ) };
+	// 82DAB12C: 81780030  lwz r11, 0x30(r24)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[24].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAB130: 92E4000C  stw r23, 0xc(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(12 as u32), ctx.r[23].u32 ) };
+	// 82DAB134: 91640008  stw r11, 8(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DAB138: 81050004  lwz r8, 4(r5)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB13C: 2F080000  cmpwi cr6, r8, 0
+	ctx.cr[6].compare_i32(ctx.r[8].s32, 0, &mut ctx.xer);
+	// 82DAB140: 409900A8  ble cr6, 0x82dab1e8
+	if !ctx.cr[6].gt {
+	pc = 0x82DAB1E8; continue 'dispatch;
+	}
+	// 82DAB144: 7F87E378  mr r7, r28
+	ctx.r[7].u64 = ctx.r[28].u64;
+	// 82DAB148: 3964001C  addi r11, r4, 0x1c
+	ctx.r[11].s64 = ctx.r[4].s64 + 28;
+	pc = 0x82DAB14C; continue 'dispatch;
+            }
+            0x82DAB14C => {
+    //   block [0x82DAB14C..0x82DAB1E8)
+	// 82DAB14C: 81450000  lwz r10, 0(r5)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB150: 3908FFFF  addi r8, r8, -1
+	ctx.r[8].s64 = ctx.r[8].s64 + -1;
+	// 82DAB154: 7D275214  add r9, r7, r10
+	ctx.r[9].u64 = ctx.r[7].u64 + ctx.r[10].u64;
+	// 82DAB158: 38E70008  addi r7, r7, 8
+	ctx.r[7].s64 = ctx.r[7].s64 + 8;
+	// 82DAB15C: 2B080000  cmplwi cr6, r8, 0
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB160: 81490000  lwz r10, 0(r9)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB164: 80CA000C  lwz r6, 0xc(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAB168: 90CBFFFC  stw r6, -4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-4 as u32), ctx.r[6].u32 ) };
+	// 82DAB16C: A0CA0010  lhz r6, 0x10(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAB170: B0CB0010  sth r6, 0x10(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[6].u16 ) };
+	// 82DAB174: 80CA0000  lwz r6, 0(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB178: 90CB0000  stw r6, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[6].u32 ) };
+	// 82DAB17C: 80CA001C  lwz r6, 0x1c(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAB180: 90CB0004  stw r6, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[6].u32 ) };
+	// 82DAB184: A0CA0020  lhz r6, 0x20(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAB188: B0CB0012  sth r6, 0x12(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[6].u16 ) };
+	// 82DAB18C: A0C90006  lhz r6, 6(r9)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAB190: A1290004  lhz r9, 4(r9)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB194: 39290001  addi r9, r9, 1
+	ctx.r[9].s64 = ctx.r[9].s64 + 1;
+	// 82DAB198: B12B0014  sth r9, 0x14(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[9].u16 ) };
+	// 82DAB19C: 39260001  addi r9, r6, 1
+	ctx.r[9].s64 = ctx.r[6].s64 + 1;
+	// 82DAB1A0: B12B0016  sth r9, 0x16(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(22 as u32), ctx.r[9].u16 ) };
+	// 82DAB1A4: 812A0004  lwz r9, 4(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB1A8: 392900E0  addi r9, r9, 0xe0
+	ctx.r[9].s64 = ctx.r[9].s64 + 224;
+	// 82DAB1AC: 912B0008  stw r9, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[9].u32 ) };
+	// 82DAB1B0: 812A0008  lwz r9, 8(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAB1B4: 392900E0  addi r9, r9, 0xe0
+	ctx.r[9].s64 = ctx.r[9].s64 + 224;
+	// 82DAB1B8: 912B000C  stw r9, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DAB1BC: 396B001C  addi r11, r11, 0x1c
+	ctx.r[11].s64 = ctx.r[11].s64 + 28;
+	// 82DAB1C0: A12A0014  lhz r9, 0x14(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAB1C4: 80DF0000  lwz r6, 0(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB1C8: 7D293214  add r9, r9, r6
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[6].u64;
+	// 82DAB1CC: 913F0000  stw r9, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAB1D0: A14A0018  lhz r10, 0x18(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAB1D4: 813E0000  lwz r9, 0(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB1D8: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAB1DC: 7D4A4A14  add r10, r10, r9
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[9].u64;
+	// 82DAB1E0: 915E0000  stw r10, 0(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAB1E4: 409AFF68  bne cr6, 0x82dab14c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB14C; continue 'dispatch;
+	}
+	pc = 0x82DAB1E8; continue 'dispatch;
+            }
+            0x82DAB1E8 => {
+    //   block [0x82DAB1E8..0x82DAB244)
+	// 82DAB1E8: 89610157  lbz r11, 0x157(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(343 as u32) ) } as u64;
+	// 82DAB1EC: 93850004  stw r28, 4(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(4 as u32), ctx.r[28].u32 ) };
+	// 82DAB1F0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB1F4: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB1F8: 396B0010  addi r11, r11, 0x10
+	ctx.r[11].s64 = ctx.r[11].s64 + 16;
+	// 82DAB1FC: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAB200: 91640010  stw r11, 0x10(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DAB204: 817E0000  lwz r11, 0(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB208: 396B000F  addi r11, r11, 0xf
+	ctx.r[11].s64 = ctx.r[11].s64 + 15;
+	// 82DAB20C: 556B0036  rlwinm r11, r11, 0, 0, 0x1b
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAB210: 917E0000  stw r11, 0(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAB214: 909B0000  stw r4, 0(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(0 as u32), ctx.r[4].u32 ) };
+	// 82DAB218: 419A0138  beq cr6, 0x82dab350
+	if ctx.cr[6].eq {
+	pc = 0x82DAB350; continue 'dispatch;
+	}
+	// 82DAB21C: 7C7AC82E  lwzx r3, r26, r25
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[26].u32.wrapping_add(ctx.r[25].u32)) } as u64;
+	// 82DAB220: 81630058  lwz r11, 0x58(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DAB224: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB228: 419A001C  beq cr6, 0x82dab244
+	if ctx.cr[6].eq {
+	pc = 0x82DAB244; continue 'dispatch;
+	}
+	// 82DAB22C: 8143005C  lwz r10, 0x5c(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(92 as u32) ) } as u64;
+	// 82DAB230: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DAB234: 9143005C  stw r10, 0x5c(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(92 as u32), ctx.r[10].u32 ) };
+	// 82DAB238: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB23C: 91430058  stw r10, 0x58(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(88 as u32), ctx.r[10].u32 ) };
+	// 82DAB240: 48000010  b 0x82dab250
+	pc = 0x82DAB250; continue 'dispatch;
+            }
+            0x82DAB244 => {
+    //   block [0x82DAB244..0x82DAB250)
+	// 82DAB244: 38800004  li r4, 4
+	ctx.r[4].s64 = 4;
+	// 82DAB248: 4BFA9E09  bl 0x82d55050
+	ctx.lr = 0x82DAB24C;
+	sub_82D55050(ctx, base);
+	// 82DAB24C: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	pc = 0x82DAB250; continue 'dispatch;
+            }
+            0x82DAB250 => {
+    //   block [0x82DAB250..0x82DAB26C)
+	// 82DAB250: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB254: 419A0018  beq cr6, 0x82dab26c
+	if ctx.cr[6].eq {
+	pc = 0x82DAB26C; continue 'dispatch;
+	}
+	// 82DAB258: 938B0000  stw r28, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[28].u32 ) };
+	// 82DAB25C: 9B8B001C  stb r28, 0x1c(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(28 as u32), ctx.r[28].u8 ) };
+	// 82DAB260: B38B001E  sth r28, 0x1e(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(30 as u32), ctx.r[28].u16 ) };
+	// 82DAB264: 938B0020  stw r28, 0x20(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(32 as u32), ctx.r[28].u32 ) };
+	// 82DAB268: 48000008  b 0x82dab270
+	pc = 0x82DAB270; continue 'dispatch;
+            }
+            0x82DAB26C => {
+    //   block [0x82DAB26C..0x82DAB270)
+	// 82DAB26C: 7F8BE378  mr r11, r28
+	ctx.r[11].u64 = ctx.r[28].u64;
+	pc = 0x82DAB270; continue 'dispatch;
+            }
+            0x82DAB270 => {
+    //   block [0x82DAB270..0x82DAB280)
+	// 82DAB270: 81560000  lwz r10, 0(r22)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[22].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB274: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB278: 419A0008  beq cr6, 0x82dab280
+	if ctx.cr[6].eq {
+	pc = 0x82DAB280; continue 'dispatch;
+	}
+	// 82DAB27C: 916A0000  stw r11, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAB280; continue 'dispatch;
+            }
+            0x82DAB280 => {
+    //   block [0x82DAB280..0x82DAB2A4)
+	// 82DAB280: 81210134  lwz r9, 0x134(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(308 as u32) ) } as u64;
+	// 82DAB284: 8141013C  lwz r10, 0x13c(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(316 as u32) ) } as u64;
+	// 82DAB288: 81090000  lwz r8, 0(r9)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB28C: 7F0A4000  cmpw cr6, r10, r8
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[8].s32, &mut ctx.xer);
+	// 82DAB290: 81010144  lwz r8, 0x144(r1)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(324 as u32) ) } as u64;
+	// 82DAB294: 419A007C  beq cr6, 0x82dab310
+	if ctx.cr[6].eq {
+	pc = 0x82DAB310; continue 'dispatch;
+	}
+	// 82DAB298: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAB29C: 409A0008  bne cr6, 0x82dab2a4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB2A4; continue 'dispatch;
+	}
+	// 82DAB2A0: 91740000  stw r11, 0(r20)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[20].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAB2A4; continue 'dispatch;
+            }
+            0x82DAB2A4 => {
+    //   block [0x82DAB2A4..0x82DAB2C8)
+	// 82DAB2A4: 91490000  stw r10, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAB2A8: 81560000  lwz r10, 0(r22)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[22].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2AC: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB2B0: 419A0054  beq cr6, 0x82dab304
+	if ctx.cr[6].eq {
+	pc = 0x82DAB304; continue 'dispatch;
+	}
+	// 82DAB2B4: 81280000  lwz r9, 0(r8)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2B8: 81520000  lwz r10, 0(r18)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[18].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2BC: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB2C0: A1290000  lhz r9, 0(r9)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2C4: 419A0028  beq cr6, 0x82dab2ec
+	if ctx.cr[6].eq {
+	pc = 0x82DAB2EC; continue 'dispatch;
+	}
+	pc = 0x82DAB2C8; continue 'dispatch;
+            }
+            0x82DAB2C8 => {
+    //   block [0x82DAB2C8..0x82DAB2EC)
+	// 82DAB2C8: 80F50000  lwz r7, 0(r21)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[21].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2CC: 7F0A3840  cmplw cr6, r10, r7
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[7].u32, &mut ctx.xer);
+	// 82DAB2D0: 419A001C  beq cr6, 0x82dab2ec
+	if ctx.cr[6].eq {
+	pc = 0x82DAB2EC; continue 'dispatch;
+	}
+	// 82DAB2D4: B12A001E  sth r9, 0x1e(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(30 as u32), ctx.r[9].u16 ) };
+	// 82DAB2D8: 80F50000  lwz r7, 0(r21)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[21].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2DC: 90EA0020  stw r7, 0x20(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(32 as u32), ctx.r[7].u32 ) };
+	// 82DAB2E0: 814A0000  lwz r10, 0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2E4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB2E8: 409AFFE0  bne cr6, 0x82dab2c8
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB2C8; continue 'dispatch;
+	}
+	pc = 0x82DAB2EC; continue 'dispatch;
+            }
+            0x82DAB2EC => {
+    //   block [0x82DAB2EC..0x82DAB304)
+	// 82DAB2EC: 81560000  lwz r10, 0(r22)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[22].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2F0: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DAB2F4: 992A001C  stb r9, 0x1c(r10)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[9].u8 ) };
+	// 82DAB2F8: 81560000  lwz r10, 0(r22)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[22].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB2FC: 394A001E  addi r10, r10, 0x1e
+	ctx.r[10].s64 = ctx.r[10].s64 + 30;
+	// 82DAB300: 91480000  stw r10, 0(r8)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[8].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	pc = 0x82DAB304; continue 'dispatch;
+            }
+            0x82DAB304 => {
+    //   block [0x82DAB304..0x82DAB310)
+	// 82DAB304: 81550000  lwz r10, 0(r21)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[21].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB308: 91520000  stw r10, 0(r18)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[18].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAB30C: 91750000  stw r11, 0(r21)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[21].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAB310; continue 'dispatch;
+            }
+            0x82DAB310 => {
+    //   block [0x82DAB310..0x82DAB350)
+	// 82DAB310: 81480000  lwz r10, 0(r8)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB314: A12A0000  lhz r9, 0(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB318: 39290001  addi r9, r9, 1
+	ctx.r[9].s64 = ctx.r[9].s64 + 1;
+	// 82DAB31C: B12A0000  sth r9, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u16 ) };
+	// 82DAB320: 930B0004  stw r24, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[24].u32 ) };
+	// 82DAB324: 81580030  lwz r10, 0x30(r24)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[24].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAB328: 92EB000C  stw r23, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[23].u32 ) };
+	// 82DAB32C: 926B0010  stw r19, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[19].u32 ) };
+	// 82DAB330: 914B0008  stw r10, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[10].u32 ) };
+	// 82DAB334: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB338: 7D575050  subf r10, r23, r10
+	ctx.r[10].s64 = ctx.r[10].s64 - ctx.r[23].s64;
+	// 82DAB33C: 914B0014  stw r10, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DAB340: 815E0000  lwz r10, 0(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB344: 7D535050  subf r10, r19, r10
+	ctx.r[10].s64 = ctx.r[10].s64 - ctx.r[19].s64;
+	// 82DAB348: 914B0018  stw r10, 0x18(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[10].u32 ) };
+	// 82DAB34C: 91760000  stw r11, 0(r22)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[22].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAB350; continue 'dispatch;
+            }
+            0x82DAB350 => {
+    //   block [0x82DAB350..0x82DAB358)
+	// 82DAB350: 382100D0  addi r1, r1, 0xd0
+	ctx.r[1].s64 = ctx.r[1].s64 + 208;
+	// 82DAB354: 4BEFE0DC  b 0x82ca9430
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAB358(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAB358 size=3756
+    let mut pc: u32 = 0x82DAB358;
+    'dispatch: loop {
+        match pc {
+            0x82DAB358 => {
+    //   block [0x82DAB358..0x82DAB3B4)
+	// 82DAB358: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAB35C: 4BEFE075  bl 0x82ca93d0
+	ctx.lr = 0x82DAB360;
+	sub_82CA93D0(ctx, base);
+	// 82DAB360: 9421FE90  stwu r1, -0x170(r1)
+	ea = ctx.r[1].u32.wrapping_add(-368 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAB364: 834D0000  lwz r26, 0(r13)
+	ctx.r[26].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB368: 39600008  li r11, 8
+	ctx.r[11].s64 = 8;
+	// 82DAB36C: 7C731B78  mr r19, r3
+	ctx.r[19].u64 = ctx.r[3].u64;
+	// 82DAB370: 9881018F  stb r4, 0x18f(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(399 as u32), ctx.r[4].u8 ) };
+	// 82DAB374: 7CAE2B78  mr r14, r5
+	ctx.r[14].u64 = ctx.r[5].u64;
+	// 82DAB378: 90C1019C  stw r6, 0x19c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(412 as u32), ctx.r[6].u32 ) };
+	// 82DAB37C: 90E101A4  stw r7, 0x1a4(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(420 as u32), ctx.r[7].u32 ) };
+	// 82DAB380: 7D7A582E  lwzx r11, r26, r11
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[26].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAB384: 93410058  stw r26, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[26].u32 ) };
+	// 82DAB388: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB38C: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAB390: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB394: 40980020  bge cr6, 0x82dab3b4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB3B4; continue 'dispatch;
+	}
+	// 82DAB398: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAB39C: 3929FEE0  addi r9, r9, -0x120
+	ctx.r[9].s64 = ctx.r[9].s64 + -288;
+	// 82DAB3A0: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAB3A4: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAB3A8: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DAB3AC: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAB3B0: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAB3B4; continue 'dispatch;
+            }
+            0x82DAB3B4 => {
+    //   block [0x82DAB3B4..0x82DAB40C)
+	// 82DAB3B4: 3B600004  li r27, 4
+	ctx.r[27].s64 = 4;
+	// 82DAB3B8: 83330050  lwz r25, 0x50(r19)
+	ctx.r[25].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAB3BC: 83F3001C  lwz r31, 0x1c(r19)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAB3C0: 3AC00000  li r22, 0
+	ctx.r[22].s64 = 0;
+	// 82DAB3C4: 8393004C  lwz r28, 0x4c(r19)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAB3C8: 572B103A  slwi r11, r25, 2
+	ctx.r[11].u32 = ctx.r[25].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB3CC: 395F0002  addi r10, r31, 2
+	ctx.r[10].s64 = ctx.r[31].s64 + 2;
+	// 82DAB3D0: 7DEBE214  add r15, r11, r28
+	ctx.r[15].u64 = ctx.r[11].u64 + ctx.r[28].u64;
+	// 82DAB3D4: 7C7AD82E  lwzx r3, r26, r27
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[26].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DAB3D8: 7ED0B378  mr r16, r22
+	ctx.r[16].u64 = ctx.r[22].u64;
+	// 82DAB3DC: 55441836  rlwinm r4, r10, 3, 0, 0x1b
+	ctx.r[4].u64 = ctx.r[10].u32 as u64 & 0x1FFFFFFFu64;
+	// 82DAB3E0: 93610054  stw r27, 0x54(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[27].u32 ) };
+	// 82DAB3E4: 93210074  stw r25, 0x74(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(116 as u32), ctx.r[25].u32 ) };
+	// 82DAB3E8: 81630020  lwz r11, 0x20(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAB3EC: 8123002C  lwz r9, 0x2c(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DAB3F0: 7D4B2214  add r10, r11, r4
+	ctx.r[10].u64 = ctx.r[11].u64 + ctx.r[4].u64;
+	// 82DAB3F4: 920100B4  stw r16, 0xb4(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(180 as u32), ctx.r[16].u32 ) };
+	// 82DAB3F8: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB3FC: 41990010  bgt cr6, 0x82dab40c
+	if ctx.cr[6].gt {
+	pc = 0x82DAB40C; continue 'dispatch;
+	}
+	// 82DAB400: 7D715B78  mr r17, r11
+	ctx.r[17].u64 = ctx.r[11].u64;
+	// 82DAB404: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DAB408: 48000018  b 0x82dab420
+	pc = 0x82DAB420; continue 'dispatch;
+            }
+            0x82DAB40C => {
+    //   block [0x82DAB40C..0x82DAB420)
+	// 82DAB40C: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB410: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAB414: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAB418: 4E800421  bctrl
+	ctx.lr = 0x82DAB41C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAB41C: 7C711B78  mr r17, r3
+	ctx.r[17].u64 = ctx.r[3].u64;
+            }
+            0x82DAB420 => {
+    //   block [0x82DAB420..0x82DAB46C)
+	// 82DAB420: 3FA08000  lis r29, -0x8000
+	ctx.r[29].s64 = -2147483648;
+	// 82DAB424: 7C7AD82E  lwzx r3, r26, r27
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[26].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DAB428: 83D3001C  lwz r30, 0x1c(r19)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAB42C: 7ED2B378  mr r18, r22
+	ctx.r[18].u64 = ctx.r[22].u64;
+	// 82DAB430: 7FEBEB78  or r11, r31, r29
+	ctx.r[11].u64 = ctx.r[31].u64 | ctx.r[29].u64;
+	// 82DAB434: 922100B0  stw r17, 0xb0(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(176 as u32), ctx.r[17].u32 ) };
+	// 82DAB438: 395E0002  addi r10, r30, 2
+	ctx.r[10].s64 = ctx.r[30].s64 + 2;
+	// 82DAB43C: 922100BC  stw r17, 0xbc(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(188 as u32), ctx.r[17].u32 ) };
+	// 82DAB440: 55441836  rlwinm r4, r10, 3, 0, 0x1b
+	ctx.r[4].u64 = ctx.r[10].u32 as u64 & 0x1FFFFFFFu64;
+	// 82DAB444: 8123002C  lwz r9, 0x2c(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DAB448: 924100A4  stw r18, 0xa4(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(164 as u32), ctx.r[18].u32 ) };
+	// 82DAB44C: 916100B8  stw r11, 0xb8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(184 as u32), ctx.r[11].u32 ) };
+	// 82DAB450: 81630020  lwz r11, 0x20(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAB454: 7D4B2214  add r10, r11, r4
+	ctx.r[10].u64 = ctx.r[11].u64 + ctx.r[4].u64;
+	// 82DAB458: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB45C: 41990010  bgt cr6, 0x82dab46c
+	if ctx.cr[6].gt {
+	pc = 0x82DAB46C; continue 'dispatch;
+	}
+	// 82DAB460: 7D745B78  mr r20, r11
+	ctx.r[20].u64 = ctx.r[11].u64;
+	// 82DAB464: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DAB468: 48000018  b 0x82dab480
+	pc = 0x82DAB480; continue 'dispatch;
+            }
+            0x82DAB46C => {
+    //   block [0x82DAB46C..0x82DAB480)
+	// 82DAB46C: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB470: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAB474: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAB478: 4E800421  bctrl
+	ctx.lr = 0x82DAB47C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAB47C: 7C741B78  mr r20, r3
+	ctx.r[20].u64 = ctx.r[3].u64;
+            }
+            0x82DAB480 => {
+    //   block [0x82DAB480..0x82DAB4C4)
+	// 82DAB480: 7FCBEB78  or r11, r30, r29
+	ctx.r[11].u64 = ctx.r[30].u64 | ctx.r[29].u64;
+	// 82DAB484: 7C7AD82E  lwzx r3, r26, r27
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[26].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DAB488: 83F3001C  lwz r31, 0x1c(r19)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAB48C: 928100A0  stw r20, 0xa0(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(160 as u32), ctx.r[20].u32 ) };
+	// 82DAB490: 395F0002  addi r10, r31, 2
+	ctx.r[10].s64 = ctx.r[31].s64 + 2;
+	// 82DAB494: 928100AC  stw r20, 0xac(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(172 as u32), ctx.r[20].u32 ) };
+	// 82DAB498: 92C100C4  stw r22, 0xc4(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(196 as u32), ctx.r[22].u32 ) };
+	// 82DAB49C: 916100A8  stw r11, 0xa8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(168 as u32), ctx.r[11].u32 ) };
+	// 82DAB4A0: 55441836  rlwinm r4, r10, 3, 0, 0x1b
+	ctx.r[4].u64 = ctx.r[10].u32 as u64 & 0x1FFFFFFFu64;
+	// 82DAB4A4: 81630020  lwz r11, 0x20(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAB4A8: 8123002C  lwz r9, 0x2c(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DAB4AC: 7D4B2214  add r10, r11, r4
+	ctx.r[10].u64 = ctx.r[11].u64 + ctx.r[4].u64;
+	// 82DAB4B0: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB4B4: 41990010  bgt cr6, 0x82dab4c4
+	if ctx.cr[6].gt {
+	pc = 0x82DAB4C4; continue 'dispatch;
+	}
+	// 82DAB4B8: 9161005C  stw r11, 0x5c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(92 as u32), ctx.r[11].u32 ) };
+	// 82DAB4BC: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DAB4C0: 48000018  b 0x82dab4d8
+	pc = 0x82DAB4D8; continue 'dispatch;
+            }
+            0x82DAB4C4 => {
+    //   block [0x82DAB4C4..0x82DAB4D8)
+	// 82DAB4C4: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB4C8: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAB4CC: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAB4D0: 4E800421  bctrl
+	ctx.lr = 0x82DAB4D4;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAB4D4: 9061005C  stw r3, 0x5c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(92 as u32), ctx.r[3].u32 ) };
+            }
+            0x82DAB4D8 => {
+    //   block [0x82DAB4D8..0x82DAB4F0)
+	// 82DAB4D8: 7FEBEB78  or r11, r31, r29
+	ctx.r[11].u64 = ctx.r[31].u64 | ctx.r[29].u64;
+	// 82DAB4DC: 3B000001  li r24, 1
+	ctx.r[24].s64 = 1;
+	// 82DAB4E0: 2F190040  cmpwi cr6, r25, 0x40
+	ctx.cr[6].compare_i32(ctx.r[25].s32, 64, &mut ctx.xer);
+	// 82DAB4E4: 916100C8  stw r11, 0xc8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(200 as u32), ctx.r[11].u32 ) };
+	// 82DAB4E8: 39600040  li r11, 0x40
+	ctx.r[11].s64 = 64;
+	// 82DAB4EC: 40990010  ble cr6, 0x82dab4fc
+	if !ctx.cr[6].gt {
+	pc = 0x82DAB4FC; continue 'dispatch;
+	}
+	pc = 0x82DAB4F0; continue 'dispatch;
+            }
+            0x82DAB4F0 => {
+    //   block [0x82DAB4F0..0x82DAB4FC)
+	// 82DAB4F0: 556B083C  slwi r11, r11, 1
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB4F4: 7F0BC800  cmpw cr6, r11, r25
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[25].s32, &mut ctx.xer);
+	// 82DAB4F8: 4198FFF8  blt cr6, 0x82dab4f0
+	if ctx.cr[6].lt {
+	pc = 0x82DAB4F0; continue 'dispatch;
+	}
+	pc = 0x82DAB4FC; continue 'dispatch;
+            }
+            0x82DAB4FC => {
+    //   block [0x82DAB4FC..0x82DAB52C)
+	// 82DAB4FC: 7C7AD82E  lwzx r3, r26, r27
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[26].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DAB500: 557F103A  slwi r31, r11, 2
+	ctx.r[31].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[31].u64 = ctx.r[31].u32 as u64;
+	// 82DAB504: 395F0004  addi r10, r31, 4
+	ctx.r[10].s64 = ctx.r[31].s64 + 4;
+	// 82DAB508: 55441036  rlwinm r4, r10, 2, 0, 0x1b
+	ctx.r[4].u64 = ctx.r[10].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DAB50C: 81630020  lwz r11, 0x20(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAB510: 8123002C  lwz r9, 0x2c(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DAB514: 7D4B2214  add r10, r11, r4
+	ctx.r[10].u64 = ctx.r[11].u64 + ctx.r[4].u64;
+	// 82DAB518: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB51C: 41990010  bgt cr6, 0x82dab52c
+	if ctx.cr[6].gt {
+	pc = 0x82DAB52C; continue 'dispatch;
+	}
+	// 82DAB520: 7D755B78  mr r21, r11
+	ctx.r[21].u64 = ctx.r[11].u64;
+	// 82DAB524: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DAB528: 48000018  b 0x82dab540
+	pc = 0x82DAB540; continue 'dispatch;
+            }
+            0x82DAB52C => {
+    //   block [0x82DAB52C..0x82DAB540)
+	// 82DAB52C: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB530: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAB534: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAB538: 4E800421  bctrl
+	ctx.lr = 0x82DAB53C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAB53C: 7C751B78  mr r21, r3
+	ctx.r[21].u64 = ctx.r[3].u64;
+            }
+            0x82DAB540 => {
+    //   block [0x82DAB540..0x82DAB560)
+	// 82DAB540: 57E5103A  slwi r5, r31, 2
+	ctx.r[5].u32 = ctx.r[31].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAB544: 7EA4AB78  mr r4, r21
+	ctx.r[4].u64 = ctx.r[21].u64;
+	// 82DAB548: 38610088  addi r3, r1, 0x88
+	ctx.r[3].s64 = ctx.r[1].s64 + 136;
+	// 82DAB54C: 4BFB4FED  bl 0x82d60538
+	ctx.lr = 0x82DAB550;
+	sub_82D60538(ctx, base);
+	// 82DAB550: 7EDFB378  mr r31, r22
+	ctx.r[31].u64 = ctx.r[22].u64;
+	// 82DAB554: 2F190000  cmpwi cr6, r25, 0
+	ctx.cr[6].compare_i32(ctx.r[25].s32, 0, &mut ctx.xer);
+	// 82DAB558: 40990028  ble cr6, 0x82dab580
+	if !ctx.cr[6].gt {
+	pc = 0x82DAB580; continue 'dispatch;
+	}
+	// 82DAB55C: 7F9EE378  mr r30, r28
+	ctx.r[30].u64 = ctx.r[28].u64;
+	pc = 0x82DAB560; continue 'dispatch;
+            }
+            0x82DAB560 => {
+    //   block [0x82DAB560..0x82DAB580)
+	// 82DAB560: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAB564: 809E0000  lwz r4, 0(r30)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB568: 38610088  addi r3, r1, 0x88
+	ctx.r[3].s64 = ctx.r[1].s64 + 136;
+	// 82DAB56C: 4B4BA695  bl 0x82265c00
+	ctx.lr = 0x82DAB570;
+	sub_82265C00(ctx, base);
+	// 82DAB570: 3BFF0001  addi r31, r31, 1
+	ctx.r[31].s64 = ctx.r[31].s64 + 1;
+	// 82DAB574: 3BDE0004  addi r30, r30, 4
+	ctx.r[30].s64 = ctx.r[30].s64 + 4;
+	// 82DAB578: 7F1FC800  cmpw cr6, r31, r25
+	ctx.cr[6].compare_i32(ctx.r[31].s32, ctx.r[25].s32, &mut ctx.xer);
+	// 82DAB57C: 4198FFE4  blt cr6, 0x82dab560
+	if ctx.cr[6].lt {
+	pc = 0x82DAB560; continue 'dispatch;
+	}
+	pc = 0x82DAB580; continue 'dispatch;
+            }
+            0x82DAB580 => {
+    //   block [0x82DAB580..0x82DAB5A8)
+	// 82DAB580: 3B400080  li r26, 0x80
+	ctx.r[26].s64 = 128;
+	// 82DAB584: 7F1C7840  cmplw cr6, r28, r15
+	ctx.cr[6].compare_u32(ctx.r[28].u32, ctx.r[15].u32, &mut ctx.xer);
+	// 82DAB588: 40980178  bge cr6, 0x82dab700
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB700; continue 'dispatch;
+	}
+	// 82DAB58C: 7D7C7850  subf r11, r28, r15
+	ctx.r[11].s64 = ctx.r[15].s64 - ctx.r[28].s64;
+	// 82DAB590: 3B7C0010  addi r27, r28, 0x10
+	ctx.r[27].s64 = ctx.r[28].s64 + 16;
+	// 82DAB594: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAB598: 556BF0BE  srwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shr(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB59C: 3AEB0001  addi r23, r11, 1
+	ctx.r[23].s64 = ctx.r[11].s64 + 1;
+	// 82DAB5A0: 3D600000  lis r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DAB5A4: 6179FFFF  ori r25, r11, 0xffff
+	ctx.r[25].u64 = ctx.r[11].u64 | 65535;
+	pc = 0x82DAB5A8; continue 'dispatch;
+            }
+            0x82DAB5A8 => {
+    //   block [0x82DAB5A8..0x82DAB5CC)
+	// 82DAB5A8: 813BFFF0  lwz r9, -0x10(r27)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(-16 as u32) ) } as u64;
+	// 82DAB5AC: 7F1B7840  cmplw cr6, r27, r15
+	ctx.cr[6].compare_u32(ctx.r[27].u32, ctx.r[15].u32, &mut ctx.xer);
+	// 82DAB5B0: 40980044  bge cr6, 0x82dab5f4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB5F4; continue 'dispatch;
+	}
+	// 82DAB5B4: 817BFFF8  lwz r11, -8(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAB5B8: A14B009C  lhz r10, 0x9c(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(156 as u32) ) } as u64;
+	// 82DAB5BC: 816B0098  lwz r11, 0x98(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(152 as u32) ) } as u64;
+	// 82DAB5C0: 5548083E  rotlwi r8, r10, 1
+	ctx.r[8].u64 = ((ctx.r[10].u32).rotate_left(1)) as u64;
+	// 82DAB5C4: 7D4A4214  add r10, r10, r8
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[8].u64;
+	// 82DAB5C8: 554A2036  slwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	pc = 0x82DAB5CC; continue 'dispatch;
+            }
+            0x82DAB5CC => {
+    //   block [0x82DAB5CC..0x82DAB5F4)
+	// 82DAB5CC: 7C005A2C  dcbt 0, r11
+	// 82DAB5D0: 39000080  li r8, 0x80
+	ctx.r[8].s64 = 128;
+	// 82DAB5D4: 7C085A2C  dcbt r8, r11
+	// 82DAB5D8: 394AFF00  addi r10, r10, -0x100
+	ctx.r[10].s64 = ctx.r[10].s64 + -256;
+	// 82DAB5DC: 396B0100  addi r11, r11, 0x100
+	ctx.r[11].s64 = ctx.r[11].s64 + 256;
+	// 82DAB5E0: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAB5E4: 4199FFE8  bgt cr6, 0x82dab5cc
+	if ctx.cr[6].gt {
+	pc = 0x82DAB5CC; continue 'dispatch;
+	}
+	// 82DAB5E8: 817B0000  lwz r11, 0(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB5EC: 396B0090  addi r11, r11, 0x90
+	ctx.r[11].s64 = ctx.r[11].s64 + 144;
+	// 82DAB5F0: 7C005A2C  dcbt 0, r11
+	pc = 0x82DAB5F4; continue 'dispatch;
+            }
+            0x82DAB5F4 => {
+    //   block [0x82DAB5F4..0x82DAB604)
+	// 82DAB5F4: 81690090  lwz r11, 0x90(r9)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(144 as u32) ) } as u64;
+	// 82DAB5F8: 7F1A5840  cmplw cr6, r26, r11
+	ctx.cr[6].compare_u32(ctx.r[26].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DAB5FC: 419A0008  beq cr6, 0x82dab604
+	if ctx.cr[6].eq {
+	pc = 0x82DAB604; continue 'dispatch;
+	}
+	// 82DAB600: 93490090  stw r26, 0x90(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(144 as u32), ctx.r[26].u32 ) };
+	pc = 0x82DAB604; continue 'dispatch;
+            }
+            0x82DAB604 => {
+    //   block [0x82DAB604..0x82DAB630)
+	// 82DAB604: A169009C  lhz r11, 0x9c(r9)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(156 as u32) ) } as u64;
+	// 82DAB608: 3B5A0080  addi r26, r26, 0x80
+	ctx.r[26].s64 = ctx.r[26].s64 + 128;
+	// 82DAB60C: 83E90098  lwz r31, 0x98(r9)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(152 as u32) ) } as u64;
+	// 82DAB610: 5569083E  rotlwi r9, r11, 1
+	ctx.r[9].u64 = ((ctx.r[11].u32).rotate_left(1)) as u64;
+	// 82DAB614: 7FEAFB78  mr r10, r31
+	ctx.r[10].u64 = ctx.r[31].u64;
+	// 82DAB618: 7D6B4A14  add r11, r11, r9
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[9].u64;
+	// 82DAB61C: 556B2036  slwi r11, r11, 4
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB620: 7F8B5214  add r28, r11, r10
+	ctx.r[28].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DAB624: 7F1FE040  cmplw cr6, r31, r28
+	ctx.cr[6].compare_u32(ctx.r[31].u32, ctx.r[28].u32, &mut ctx.xer);
+	// 82DAB628: 409800BC  bge cr6, 0x82dab6e4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB6E4; continue 'dispatch;
+	}
+	// 82DAB62C: 56DD043E  clrlwi r29, r22, 0x10
+	ctx.r[29].u64 = ctx.r[22].u32 as u64 & 0x0000FFFFu64;
+	pc = 0x82DAB630; continue 'dispatch;
+            }
+            0x82DAB630 => {
+    //   block [0x82DAB630..0x82DAB6B0)
+	// 82DAB630: 897F001A  lbz r11, 0x1a(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAB634: 39410084  addi r10, r1, 0x84
+	ctx.r[10].s64 = ctx.r[1].s64 + 132;
+	// 82DAB638: 93E10080  stw r31, 0x80(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(128 as u32), ctx.r[31].u32 ) };
+	// 82DAB63C: 7F25CB78  mr r5, r25
+	ctx.r[5].u64 = ctx.r[25].u64;
+	// 82DAB640: 23CB0001  subfic r30, r11, 1
+	ctx.xer.ca = ctx.r[11].u32 <= 1 as u32;
+	ctx.r[30].s64 = (1 as i64) - ctx.r[11].s64;
+	// 82DAB644: 556B083E  rotlwi r11, r11, 1
+	ctx.r[11].u64 = ((ctx.r[11].u32).rotate_left(1)) as u64;
+	// 82DAB648: 38610088  addi r3, r1, 0x88
+	ctx.r[3].s64 = ctx.r[1].s64 + 136;
+	// 82DAB64C: 7FAB532E  sthx r29, r11, r10
+	unsafe { crate::rt::store_u16(base as *mut u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32), ctx.r[29].u16) };
+	// 82DAB650: 397E0001  addi r11, r30, 1
+	ctx.r[11].s64 = ctx.r[30].s64 + 1;
+	// 82DAB654: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB658: 7C8BF82E  lwzx r4, r11, r31
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[31].u32)) } as u64;
+	// 82DAB65C: 4BFB502D  bl 0x82d60688
+	ctx.lr = 0x82DAB660;
+	sub_82D60688(ctx, base);
+	// 82DAB660: 897F001B  lbz r11, 0x1b(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(27 as u32) ) } as u64;
+	// 82DAB664: 57C9083C  slwi r9, r30, 1
+	ctx.r[9].u32 = ctx.r[30].u32.wrapping_shl(1);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAB668: 38E10084  addi r7, r1, 0x84
+	ctx.r[7].s64 = ctx.r[1].s64 + 132;
+	// 82DAB66C: 895F0012  lbz r10, 0x12(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DAB670: 7D6B0774  extsb r11, r11
+	ctx.r[11].s64 = ctx.r[11].s8 as i64;
+	// 82DAB674: 554A07BE  clrlwi r10, r10, 0x1e
+	ctx.r[10].u64 = ctx.r[10].u32 as u64 & 0x00000003u64;
+	// 82DAB678: 7D6B0034  cntlzw r11, r11
+	ctx.r[11].u64 = if ctx.r[11].u32 == 0 { 32 } else { ctx.r[11].u32.leading_zeros() as u64 };
+	// 82DAB67C: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB680: 556BDFFE  rlwinm r11, r11, 0x1b, 0x1f, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x0000001Fu64;
+	// 82DAB684: 7C693B2E  sthx r3, r9, r7
+	unsafe { crate::rt::store_u16(base as *mut u8, ctx.r[9].u32.wrapping_add(ctx.r[7].u32), ctx.r[3].u16) };
+	// 82DAB688: 696B0001  xori r11, r11, 1
+	ctx.r[11].u64 = ctx.r[11].u64 ^ 1;
+	// 82DAB68C: 7D78C038  and r24, r11, r24
+	ctx.r[24].u64 = ctx.r[11].u64 & ctx.r[24].u64;
+	// 82DAB690: E9610080  ld r11, 0x80(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(128 as u32) ) };
+	// 82DAB694: 419A001C  beq cr6, 0x82dab6b0
+	if ctx.cr[6].eq {
+	pc = 0x82DAB6B0; continue 'dispatch;
+	}
+	// 82DAB698: 814100C4  lwz r10, 0xc4(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(196 as u32) ) } as u64;
+	// 82DAB69C: 55491838  slwi r9, r10, 3
+	ctx.r[9].u32 = ctx.r[10].u32.wrapping_shl(3);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAB6A0: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DAB6A4: 914100C4  stw r10, 0xc4(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(196 as u32), ctx.r[10].u32 ) };
+	// 82DAB6A8: 8141005C  lwz r10, 0x5c(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(92 as u32) ) } as u64;
+	// 82DAB6AC: 7D69512A  stdx r11, r9, r10
+	unsafe { crate::rt::store_u64(base as *mut u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32), ctx.r[11].u64) };
+	pc = 0x82DAB6B0; continue 'dispatch;
+            }
+            0x82DAB6B0 => {
+    //   block [0x82DAB6B0..0x82DAB6CC)
+	// 82DAB6B0: 895F0013  lbz r10, 0x13(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(19 as u32) ) } as u64;
+	// 82DAB6B4: 2B0A0003  cmplwi cr6, r10, 3
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 3 as u32, &mut ctx.xer);
+	// 82DAB6B8: 40980014  bge cr6, 0x82dab6cc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB6CC; continue 'dispatch;
+	}
+	// 82DAB6BC: 560A1838  slwi r10, r16, 3
+	ctx.r[10].u32 = ctx.r[16].u32.wrapping_shl(3);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAB6C0: 3A100001  addi r16, r16, 1
+	ctx.r[16].s64 = ctx.r[16].s64 + 1;
+	// 82DAB6C4: 7D6A892A  stdx r11, r10, r17
+	unsafe { crate::rt::store_u64(base as *mut u8, ctx.r[10].u32.wrapping_add(ctx.r[17].u32), ctx.r[11].u64) };
+	// 82DAB6C8: 48000010  b 0x82dab6d8
+	pc = 0x82DAB6D8; continue 'dispatch;
+            }
+            0x82DAB6CC => {
+    //   block [0x82DAB6CC..0x82DAB6D8)
+	// 82DAB6CC: 564A1838  slwi r10, r18, 3
+	ctx.r[10].u32 = ctx.r[18].u32.wrapping_shl(3);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAB6D0: 3A520001  addi r18, r18, 1
+	ctx.r[18].s64 = ctx.r[18].s64 + 1;
+	// 82DAB6D4: 7D6AA12A  stdx r11, r10, r20
+	unsafe { crate::rt::store_u64(base as *mut u8, ctx.r[10].u32.wrapping_add(ctx.r[20].u32), ctx.r[11].u64) };
+	pc = 0x82DAB6D8; continue 'dispatch;
+            }
+            0x82DAB6D8 => {
+    //   block [0x82DAB6D8..0x82DAB6E4)
+	// 82DAB6D8: 3BFF0030  addi r31, r31, 0x30
+	ctx.r[31].s64 = ctx.r[31].s64 + 48;
+	// 82DAB6DC: 7F1FE040  cmplw cr6, r31, r28
+	ctx.cr[6].compare_u32(ctx.r[31].u32, ctx.r[28].u32, &mut ctx.xer);
+	// 82DAB6E0: 4198FF50  blt cr6, 0x82dab630
+	if ctx.cr[6].lt {
+	pc = 0x82DAB630; continue 'dispatch;
+	}
+	pc = 0x82DAB6E4; continue 'dispatch;
+            }
+            0x82DAB6E4 => {
+    //   block [0x82DAB6E4..0x82DAB700)
+	// 82DAB6E4: 3AF7FFFF  addi r23, r23, -1
+	ctx.r[23].s64 = ctx.r[23].s64 + -1;
+	// 82DAB6E8: 3B7B0004  addi r27, r27, 4
+	ctx.r[27].s64 = ctx.r[27].s64 + 4;
+	// 82DAB6EC: 3AD60001  addi r22, r22, 1
+	ctx.r[22].s64 = ctx.r[22].s64 + 1;
+	// 82DAB6F0: 2B170000  cmplwi cr6, r23, 0
+	ctx.cr[6].compare_u32(ctx.r[23].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB6F4: 409AFEB4  bne cr6, 0x82dab5a8
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB5A8; continue 'dispatch;
+	}
+	// 82DAB6F8: 924100A4  stw r18, 0xa4(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(164 as u32), ctx.r[18].u32 ) };
+	// 82DAB6FC: 920100B4  stw r16, 0xb4(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(180 as u32), ctx.r[16].u32 ) };
+	pc = 0x82DAB700; continue 'dispatch;
+            }
+            0x82DAB700 => {
+    //   block [0x82DAB700..0x82DAB738)
+	// 82DAB700: 38610088  addi r3, r1, 0x88
+	ctx.r[3].s64 = ctx.r[1].s64 + 136;
+	// 82DAB704: 4B4BB805  bl 0x82266f08
+	ctx.lr = 0x82DAB708;
+	sub_82266F08(ctx, base);
+	// 82DAB708: 83C10058  lwz r30, 0x58(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DAB70C: 83A10054  lwz r29, 0x54(r1)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DAB710: 7C7EE82E  lwzx r3, r30, r29
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAB714: 81630028  lwz r11, 0x28(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAB718: 92A30020  stw r21, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[21].u32 ) };
+	// 82DAB71C: 7F155840  cmplw cr6, r21, r11
+	ctx.cr[6].compare_u32(ctx.r[21].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DAB720: 409A0018  bne cr6, 0x82dab738
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB738; continue 'dispatch;
+	}
+	// 82DAB724: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB728: 7EA4AB78  mr r4, r21
+	ctx.r[4].u64 = ctx.r[21].u64;
+	// 82DAB72C: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAB730: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAB734: 4E800421  bctrl
+	ctx.lr = 0x82DAB738;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAB738 => {
+    //   block [0x82DAB738..0x82DAB780)
+	// 82DAB738: 39000008  li r8, 8
+	ctx.r[8].s64 = 8;
+	// 82DAB73C: 7D5E402E  lwzx r10, r30, r8
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[8].u32)) } as u64;
+	// 82DAB740: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB744: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAB748: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB74C: 40980034  bge cr6, 0x82dab780
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB780; continue 'dispatch;
+	}
+	// 82DAB750: 81210074  lwz r9, 0x74(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAB754: 7D2707B4  extsw r7, r9
+	ctx.r[7].s64 = ctx.r[9].s32 as i64;
+	// 82DAB758: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAB75C: 3929FD78  addi r9, r9, -0x288
+	ctx.r[9].s64 = ctx.r[9].s64 + -648;
+	// 82DAB760: F8E10080  std r7, 0x80(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(128 as u32), ctx.r[7].u64 ) };
+	// 82DAB764: C8010080  lfd f0, 0x80(r1)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	ctx.f[0].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(128 as u32) ) };
+	// 82DAB768: FC00069C  fcfid f0, f0
+	ctx.f[0].f64 = (ctx.f[0].s64 as f64);
+	// 82DAB76C: 38EB0008  addi r7, r11, 8
+	ctx.r[7].s64 = ctx.r[11].s64 + 8;
+	// 82DAB770: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAB774: FC000018  frsp f0, f0
+	ctx.f[0].f64 = (ctx.f[0].f64 as f32) as f64;
+	// 82DAB778: D00B0004  stfs f0, 4(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), tmp.u32 ) };
+	// 82DAB77C: 90EA0004  stw r7, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[7].u32 ) };
+	pc = 0x82DAB780; continue 'dispatch;
+            }
+            0x82DAB780 => {
+    //   block [0x82DAB780..0x82DAB7C4)
+	// 82DAB780: 7D5E402E  lwzx r10, r30, r8
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[8].u32)) } as u64;
+	// 82DAB784: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB788: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAB78C: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB790: 40980034  bge cr6, 0x82dab7c4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB7C4; continue 'dispatch;
+	}
+	// 82DAB794: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAB798: 3929FECC  addi r9, r9, -0x134
+	ctx.r[9].s64 = ctx.r[9].s64 + -308;
+	// 82DAB79C: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAB7A0: 392B0008  addi r9, r11, 8
+	ctx.r[9].s64 = ctx.r[11].s64 + 8;
+	// 82DAB7A4: 80F3001C  lwz r7, 0x1c(r19)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAB7A8: 7CE707B4  extsw r7, r7
+	ctx.r[7].s64 = ctx.r[7].s32 as i64;
+	// 82DAB7AC: F8E10080  std r7, 0x80(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(128 as u32), ctx.r[7].u64 ) };
+	// 82DAB7B0: C8010080  lfd f0, 0x80(r1)
+	ctx.f[0].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(128 as u32) ) };
+	// 82DAB7B4: FC00069C  fcfid f0, f0
+	ctx.f[0].f64 = (ctx.f[0].s64 as f64);
+	// 82DAB7B8: FC000018  frsp f0, f0
+	ctx.f[0].f64 = (ctx.f[0].f64 as f32) as f64;
+	// 82DAB7BC: D00B0004  stfs f0, 4(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), tmp.u32 ) };
+	// 82DAB7C0: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	pc = 0x82DAB7C4; continue 'dispatch;
+            }
+            0x82DAB7C4 => {
+    //   block [0x82DAB7C4..0x82DAB808)
+	// 82DAB7C4: 7D5E402E  lwzx r10, r30, r8
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[8].u32)) } as u64;
+	// 82DAB7C8: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB7CC: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAB7D0: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB7D4: 40980034  bge cr6, 0x82dab808
+	if !ctx.cr[6].lt {
+	pc = 0x82DAB808; continue 'dispatch;
+	}
+	// 82DAB7D8: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAB7DC: 3929FD88  addi r9, r9, -0x278
+	ctx.r[9].s64 = ctx.r[9].s64 + -632;
+	// 82DAB7E0: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAB7E4: 392B0008  addi r9, r11, 8
+	ctx.r[9].s64 = ctx.r[11].s64 + 8;
+	// 82DAB7E8: 81130010  lwz r8, 0x10(r19)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAB7EC: 7D0807B4  extsw r8, r8
+	ctx.r[8].s64 = ctx.r[8].s32 as i64;
+	// 82DAB7F0: F9010080  std r8, 0x80(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(128 as u32), ctx.r[8].u64 ) };
+	// 82DAB7F4: C8010080  lfd f0, 0x80(r1)
+	ctx.f[0].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(128 as u32) ) };
+	// 82DAB7F8: FC00069C  fcfid f0, f0
+	ctx.f[0].f64 = (ctx.f[0].s64 as f64);
+	// 82DAB7FC: FC000018  frsp f0, f0
+	ctx.f[0].f64 = (ctx.f[0].f64 as f32) as f64;
+	// 82DAB800: D00B0004  stfs f0, 4(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), tmp.u32 ) };
+	// 82DAB804: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	pc = 0x82DAB808; continue 'dispatch;
+            }
+            0x82DAB808 => {
+    //   block [0x82DAB808..0x82DAB89C)
+	// 82DAB808: 816101A4  lwz r11, 0x1a4(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(420 as u32) ) } as u64;
+	// 82DAB80C: 3B400000  li r26, 0
+	ctx.r[26].s64 = 0;
+	// 82DAB810: 3A4B0004  addi r18, r11, 4
+	ctx.r[18].s64 = ctx.r[11].s64 + 4;
+	// 82DAB814: 7D7AC050  subf r11, r26, r24
+	ctx.r[11].s64 = ctx.r[24].s64 - ctx.r[26].s64;
+	// 82DAB818: 7F54D378  mr r20, r26
+	ctx.r[20].u64 = ctx.r[26].u64;
+	// 82DAB81C: 7D6B0034  cntlzw r11, r11
+	ctx.r[11].u64 = if ctx.r[11].u32 == 0 { 32 } else { ctx.r[11].u32.leading_zeros() as u64 };
+	// 82DAB820: 7F51D378  mr r17, r26
+	ctx.r[17].u64 = ctx.r[26].u64;
+	// 82DAB824: 556ADFFE  rlwinm r10, r11, 0x1b, 0x1f, 0x1f
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0x0000001Fu64;
+	// 82DAB828: 3960FFFF  li r11, -1
+	ctx.r[11].s64 = -1;
+	// 82DAB82C: 7F50D378  mr r16, r26
+	ctx.r[16].u64 = ctx.r[26].u64;
+	// 82DAB830: 7F4FD378  mr r15, r26
+	ctx.r[15].u64 = ctx.r[26].u64;
+	// 82DAB834: 994E0059  stb r10, 0x59(r14)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[14].u32.wrapping_add(89 as u32), ctx.r[10].u8 ) };
+	// 82DAB838: 91610068  stw r11, 0x68(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(104 as u32), ctx.r[11].u32 ) };
+	// 82DAB83C: 9161006C  stw r11, 0x6c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(108 as u32), ctx.r[11].u32 ) };
+	// 82DAB840: 554B063E  clrlwi r11, r10, 0x18
+	ctx.r[11].u64 = ctx.r[10].u32 as u64 & 0x000000FFu64;
+	// 82DAB844: 7D6B0774  extsb r11, r11
+	ctx.r[11].s64 = ctx.r[11].s8 as i64;
+	// 82DAB848: 7D6B0034  cntlzw r11, r11
+	ctx.r[11].u64 = if ctx.r[11].u32 == 0 { 32 } else { ctx.r[11].u32.leading_zeros() as u64 };
+	// 82DAB84C: 556BDFFE  rlwinm r11, r11, 0x1b, 0x1f, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x0000001Fu64;
+	// 82DAB850: 696B0001  xori r11, r11, 1
+	ctx.r[11].u64 = ctx.r[11].u64 ^ 1;
+	// 82DAB854: 996E0058  stb r11, 0x58(r14)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[14].u32.wrapping_add(88 as u32), ctx.r[11].u8 ) };
+	// 82DAB858: 556B063E  clrlwi r11, r11, 0x18
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x000000FFu64;
+	// 82DAB85C: 83EE003C  lwz r31, 0x3c(r14)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[14].u32.wrapping_add(60 as u32) ) } as u64;
+	// 82DAB860: 7D6B0774  extsb r11, r11
+	ctx.r[11].s64 = ctx.r[11].s8 as i64;
+	// 82DAB864: 838E0040  lwz r28, 0x40(r14)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[14].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAB868: B3520000  sth r26, 0(r18)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[18].u32.wrapping_add(0 as u32), ctx.r[26].u16 ) };
+	// 82DAB86C: 7D6B0034  cntlzw r11, r11
+	ctx.r[11].u64 = if ctx.r[11].u32 == 0 { 32 } else { ctx.r[11].u32.leading_zeros() as u64 };
+	// 82DAB870: 7C7EE82E  lwzx r3, r30, r29
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAB874: 556BDFFE  rlwinm r11, r11, 0x1b, 0x1f, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x0000001Fu64;
+	// 82DAB878: 8123002C  lwz r9, 0x2c(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DAB87C: 99610050  stb r11, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[11].u8 ) };
+	// 82DAB880: 81630020  lwz r11, 0x20(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAB884: 394B0490  addi r10, r11, 0x490
+	ctx.r[10].s64 = ctx.r[11].s64 + 1168;
+	// 82DAB888: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB88C: 41990010  bgt cr6, 0x82dab89c
+	if ctx.cr[6].gt {
+	pc = 0x82DAB89C; continue 'dispatch;
+	}
+	// 82DAB890: 91610064  stw r11, 0x64(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(100 as u32), ctx.r[11].u32 ) };
+	// 82DAB894: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DAB898: 4800001C  b 0x82dab8b4
+	pc = 0x82DAB8B4; continue 'dispatch;
+            }
+            0x82DAB89C => {
+    //   block [0x82DAB89C..0x82DAB8B4)
+	// 82DAB89C: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB8A0: 38800490  li r4, 0x490
+	ctx.r[4].s64 = 1168;
+	// 82DAB8A4: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAB8A8: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAB8AC: 4E800421  bctrl
+	ctx.lr = 0x82DAB8B0;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAB8B0: 90610064  stw r3, 0x64(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(100 as u32), ctx.r[3].u32 ) };
+            }
+            0x82DAB8B4 => {
+    //   block [0x82DAB8B4..0x82DAB8E4)
+	// 82DAB8B4: 81610074  lwz r11, 0x74(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAB8B8: 7C7EE82E  lwzx r3, r30, r29
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[30].u32.wrapping_add(ctx.r[29].u32)) } as u64;
+	// 82DAB8BC: 396B0004  addi r11, r11, 4
+	ctx.r[11].s64 = ctx.r[11].s64 + 4;
+	// 82DAB8C0: 55641036  rlwinm r4, r11, 2, 0, 0x1b
+	ctx.r[4].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DAB8C4: 81630020  lwz r11, 0x20(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAB8C8: 8123002C  lwz r9, 0x2c(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DAB8CC: 7D4B2214  add r10, r11, r4
+	ctx.r[10].u64 = ctx.r[11].u64 + ctx.r[4].u64;
+	// 82DAB8D0: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAB8D4: 41990010  bgt cr6, 0x82dab8e4
+	if ctx.cr[6].gt {
+	pc = 0x82DAB8E4; continue 'dispatch;
+	}
+	// 82DAB8D8: 91610060  stw r11, 0x60(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(96 as u32), ctx.r[11].u32 ) };
+	// 82DAB8DC: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DAB8E0: 48000018  b 0x82dab8f8
+	pc = 0x82DAB8F8; continue 'dispatch;
+            }
+            0x82DAB8E4 => {
+    //   block [0x82DAB8E4..0x82DAB8F8)
+	// 82DAB8E4: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB8E8: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAB8EC: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAB8F0: 4E800421  bctrl
+	ctx.lr = 0x82DAB8F4;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAB8F4: 90610060  stw r3, 0x60(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(96 as u32), ctx.r[3].u32 ) };
+            }
+            0x82DAB8F8 => {
+    //   block [0x82DAB8F8..0x82DAB8FC)
+	// 82DAB8F8: 9341007C  stw r26, 0x7c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(124 as u32), ctx.r[26].u32 ) };
+	pc = 0x82DAB8FC; continue 'dispatch;
+            }
+            0x82DAB8FC => {
+    //   block [0x82DAB8FC..0x82DAB910)
+	// 82DAB8FC: 8161007C  lwz r11, 0x7c(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(124 as u32) ) } as u64;
+	// 82DAB900: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAB904: 419A000C  beq cr6, 0x82dab910
+	if ctx.cr[6].eq {
+	pc = 0x82DAB910; continue 'dispatch;
+	}
+	// 82DAB908: 396100A0  addi r11, r1, 0xa0
+	ctx.r[11].s64 = ctx.r[1].s64 + 160;
+	// 82DAB90C: 4800000C  b 0x82dab918
+	pc = 0x82DAB918; continue 'dispatch;
+            }
+            0x82DAB910 => {
+    //   block [0x82DAB910..0x82DAB918)
+	// 82DAB910: 396100B0  addi r11, r1, 0xb0
+	ctx.r[11].s64 = ctx.r[1].s64 + 176;
+	// 82DAB914: 3A800000  li r20, 0
+	ctx.r[20].s64 = 0;
+	pc = 0x82DAB918; continue 'dispatch;
+            }
+            0x82DAB918 => {
+    //   block [0x82DAB918..0x82DAB928)
+	// 82DAB918: 91610078  stw r11, 0x78(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(120 as u32), ctx.r[11].u32 ) };
+	// 82DAB91C: 816B0004  lwz r11, 4(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB920: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAB924: 419A0674  beq cr6, 0x82dabf98
+	if ctx.cr[6].eq {
+	pc = 0x82DABF98; continue 'dispatch;
+	}
+	pc = 0x82DAB928; continue 'dispatch;
+            }
+            0x82DAB928 => {
+    //   block [0x82DAB928..0x82DAB950)
+	// 82DAB928: 81210074  lwz r9, 0x74(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAB92C: 3BC00000  li r30, 0
+	ctx.r[30].s64 = 0;
+	// 82DAB930: 81010060  lwz r8, 0x60(r1)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(96 as u32) ) } as u64;
+	// 82DAB934: 2F090000  cmpwi cr6, r9, 0
+	ctx.cr[6].compare_i32(ctx.r[9].s32, 0, &mut ctx.xer);
+	// 82DAB938: 40990024  ble cr6, 0x82dab95c
+	if !ctx.cr[6].gt {
+	pc = 0x82DAB95C; continue 'dispatch;
+	}
+	// 82DAB93C: 7D0B4378  mr r11, r8
+	ctx.r[11].u64 = ctx.r[8].u64;
+	// 82DAB940: 7FCAF378  mr r10, r30
+	ctx.r[10].u64 = ctx.r[30].u64;
+	// 82DAB944: 2B090000  cmplwi cr6, r9, 0
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB948: 419A0014  beq cr6, 0x82dab95c
+	if ctx.cr[6].eq {
+	pc = 0x82DAB95C; continue 'dispatch;
+	}
+	// 82DAB94C: 7D2903A6  mtctr r9
+	ctx.ctr.u64 = ctx.r[9].u64;
+	pc = 0x82DAB950; continue 'dispatch;
+            }
+            0x82DAB950 => {
+    //   block [0x82DAB950..0x82DAB95C)
+	// 82DAB950: 914B0000  stw r10, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAB954: 396B0004  addi r11, r11, 4
+	ctx.r[11].s64 = ctx.r[11].s64 + 4;
+	// 82DAB958: 4200FFF8  bdnz 0x82dab950
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAB950; continue 'dispatch;
+	}
+	pc = 0x82DAB95C; continue 'dispatch;
+            }
+            0x82DAB95C => {
+    //   block [0x82DAB95C..0x82DAB998)
+	// 82DAB95C: 81610078  lwz r11, 0x78(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(120 as u32) ) } as u64;
+	// 82DAB960: 3B000001  li r24, 1
+	ctx.r[24].s64 = 1;
+	// 82DAB964: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB968: 832B0000  lwz r25, 0(r11)
+	ctx.r[25].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAB96C: 554B1838  slwi r11, r10, 3
+	ctx.r[11].u32 = ctx.r[10].u32.wrapping_shl(3);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB970: 81410068  lwz r10, 0x68(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(104 as u32) ) } as u64;
+	// 82DAB974: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DAB978: 7EABCA14  add r21, r11, r25
+	ctx.r[21].u64 = ctx.r[11].u64 + ctx.r[25].u64;
+	// 82DAB97C: 7F19A840  cmplw cr6, r25, r21
+	ctx.cr[6].compare_u32(ctx.r[25].u32, ctx.r[21].u32, &mut ctx.xer);
+	// 82DAB980: 91410068  stw r10, 0x68(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(104 as u32), ctx.r[10].u32 ) };
+	// 82DAB984: 7F2ACB78  mr r10, r25
+	ctx.r[10].u64 = ctx.r[25].u64;
+	// 82DAB988: 91410070  stw r10, 0x70(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(112 as u32), ctx.r[10].u32 ) };
+	// 82DAB98C: 40980374  bge cr6, 0x82dabd00
+	if !ctx.cr[6].lt {
+	pc = 0x82DABD00; continue 'dispatch;
+	}
+	// 82DAB990: 8961018F  lbz r11, 0x18f(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(399 as u32) ) } as u64;
+	// 82DAB994: 7D730774  extsb r19, r11
+	ctx.r[19].s64 = ctx.r[11].s8 as i64;
+	pc = 0x82DAB998; continue 'dispatch;
+            }
+            0x82DAB998 => {
+    //   block [0x82DAB998..0x82DAB9B0)
+	// 82DAB998: A1790004  lhz r11, 4(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAB99C: 93C10080  stw r30, 0x80(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(128 as u32), ctx.r[30].u32 ) };
+	// 82DAB9A0: 2B0BFFFF  cmplwi cr6, r11, 0xffff
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 65535 as u32, &mut ctx.xer);
+	// 82DAB9A4: 409A000C  bne cr6, 0x82dab9b0
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB9B0; continue 'dispatch;
+	}
+	// 82DAB9A8: 3AC10080  addi r22, r1, 0x80
+	ctx.r[22].s64 = ctx.r[1].s64 + 128;
+	// 82DAB9AC: 4800000C  b 0x82dab9b8
+	pc = 0x82DAB9B8; continue 'dispatch;
+            }
+            0x82DAB9B0 => {
+    //   block [0x82DAB9B0..0x82DAB9B8)
+	// 82DAB9B0: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB9B4: 7ECB4214  add r22, r11, r8
+	ctx.r[22].u64 = ctx.r[11].u64 + ctx.r[8].u64;
+	pc = 0x82DAB9B8; continue 'dispatch;
+            }
+            0x82DAB9B8 => {
+    //   block [0x82DAB9B8..0x82DAB9CC)
+	// 82DAB9B8: A1790006  lhz r11, 6(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAB9BC: 2B0BFFFF  cmplwi cr6, r11, 0xffff
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 65535 as u32, &mut ctx.xer);
+	// 82DAB9C0: 409A000C  bne cr6, 0x82dab9cc
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB9CC; continue 'dispatch;
+	}
+	// 82DAB9C4: 3AE10080  addi r23, r1, 0x80
+	ctx.r[23].s64 = ctx.r[1].s64 + 128;
+	// 82DAB9C8: 4800000C  b 0x82dab9d4
+	pc = 0x82DAB9D4; continue 'dispatch;
+            }
+            0x82DAB9CC => {
+    //   block [0x82DAB9CC..0x82DAB9D4)
+	// 82DAB9CC: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAB9D0: 7EEB4214  add r23, r11, r8
+	ctx.r[23].u64 = ctx.r[11].u64 + ctx.r[8].u64;
+	pc = 0x82DAB9D4; continue 'dispatch;
+            }
+            0x82DAB9D4 => {
+    //   block [0x82DAB9D4..0x82DABA18)
+	// 82DAB9D4: 2F1A0090  cmpwi cr6, r26, 0x90
+	ctx.cr[6].compare_i32(ctx.r[26].s32, 144, &mut ctx.xer);
+	// 82DAB9D8: 409A028C  bne cr6, 0x82dabc64
+	if !ctx.cr[6].eq {
+	pc = 0x82DABC64; continue 'dispatch;
+	}
+	// 82DAB9DC: 81410054  lwz r10, 0x54(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DAB9E0: 7FFDFB78  mr r29, r31
+	ctx.r[29].u64 = ctx.r[31].u64;
+	// 82DAB9E4: 81610058  lwz r11, 0x58(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DAB9E8: 7F9BE378  mr r27, r28
+	ctx.r[27].u64 = ctx.r[28].u64;
+	// 82DAB9EC: 7D6B502E  lwzx r11, r11, r10
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DAB9F0: 814B00B0  lwz r10, 0xb0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(176 as u32) ) } as u64;
+	// 82DAB9F4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAB9F8: 419A0020  beq cr6, 0x82daba18
+	if ctx.cr[6].eq {
+	pc = 0x82DABA18; continue 'dispatch;
+	}
+	// 82DAB9FC: 812B00B4  lwz r9, 0xb4(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(180 as u32) ) } as u64;
+	// 82DABA00: 7D475378  mr r7, r10
+	ctx.r[7].u64 = ctx.r[10].u64;
+	// 82DABA04: 3929FFFF  addi r9, r9, -1
+	ctx.r[9].s64 = ctx.r[9].s64 + -1;
+	// 82DABA08: 912B00B4  stw r9, 0xb4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(180 as u32), ctx.r[9].u32 ) };
+	// 82DABA0C: 814A0000  lwz r10, 0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABA10: 914B00B0  stw r10, 0xb0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(176 as u32), ctx.r[10].u32 ) };
+	// 82DABA14: 48000014  b 0x82daba28
+	pc = 0x82DABA28; continue 'dispatch;
+            }
+            0x82DABA18 => {
+    //   block [0x82DABA18..0x82DABA28)
+	// 82DABA18: 3880000F  li r4, 0xf
+	ctx.r[4].s64 = 15;
+	// 82DABA1C: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DABA20: 4BFA9631  bl 0x82d55050
+	ctx.lr = 0x82DABA24;
+	sub_82D55050(ctx, base);
+	// 82DABA24: 7C671B78  mr r7, r3
+	ctx.r[7].u64 = ctx.r[3].u64;
+	pc = 0x82DABA28; continue 'dispatch;
+            }
+            0x82DABA28 => {
+    //   block [0x82DABA28..0x82DABA40)
+	// 82DABA28: 2B070000  cmplwi cr6, r7, 0
+	ctx.cr[6].compare_u32(ctx.r[7].u32, 0 as u32, &mut ctx.xer);
+	// 82DABA2C: 419A0014  beq cr6, 0x82daba40
+	if ctx.cr[6].eq {
+	pc = 0x82DABA40; continue 'dispatch;
+	}
+	// 82DABA30: 93C70014  stw r30, 0x14(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(20 as u32), ctx.r[30].u32 ) };
+	// 82DABA34: 93C70010  stw r30, 0x10(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(16 as u32), ctx.r[30].u32 ) };
+	// 82DABA38: 93C70000  stw r30, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[30].u32 ) };
+	// 82DABA3C: 48000008  b 0x82daba44
+	pc = 0x82DABA44; continue 'dispatch;
+            }
+            0x82DABA40 => {
+    //   block [0x82DABA40..0x82DABA44)
+	// 82DABA40: 7FC7F378  mr r7, r30
+	ctx.r[7].u64 = ctx.r[30].u64;
+	pc = 0x82DABA44; continue 'dispatch;
+            }
+            0x82DABA44 => {
+    //   block [0x82DABA44..0x82DABA5C)
+	// 82DABA44: 8141019C  lwz r10, 0x19c(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(412 as u32) ) } as u64;
+	// 82DABA48: 2B140000  cmplwi cr6, r20, 0
+	ctx.cr[6].compare_u32(ctx.r[20].u32, 0 as u32, &mut ctx.xer);
+	// 82DABA4C: 409A0010  bne cr6, 0x82daba5c
+	if !ctx.cr[6].eq {
+	pc = 0x82DABA5C; continue 'dispatch;
+	}
+	// 82DABA50: 90EA0000  stw r7, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[7].u32 ) };
+	// 82DABA54: 93CA0004  stw r30, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[30].u32 ) };
+	// 82DABA58: 4800000C  b 0x82daba64
+	pc = 0x82DABA64; continue 'dispatch;
+            }
+            0x82DABA5C => {
+    //   block [0x82DABA5C..0x82DABA64)
+	// 82DABA5C: 90F40000  stw r7, 0(r20)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[20].u32.wrapping_add(0 as u32), ctx.r[7].u32 ) };
+	// 82DABA60: 93F40010  stw r31, 0x10(r20)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[20].u32.wrapping_add(16 as u32), ctx.r[31].u32 ) };
+	pc = 0x82DABA64; continue 'dispatch;
+            }
+            0x82DABA64 => {
+    //   block [0x82DABA64..0x82DABA94)
+	// 82DABA64: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DABA68: 39000090  li r8, 0x90
+	ctx.r[8].s64 = 144;
+	// 82DABA6C: 81210064  lwz r9, 0x64(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(100 as u32) ) } as u64;
+	// 82DABA70: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DABA74: 39290004  addi r9, r9, 4
+	ctx.r[9].s64 = ctx.r[9].s64 + 4;
+	// 82DABA78: 916A0004  stw r11, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DABA7C: 3967001C  addi r11, r7, 0x1c
+	ctx.r[11].s64 = ctx.r[7].s64 + 28;
+	// 82DABA80: 91C70004  stw r14, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[14].u32 ) };
+	// 82DABA84: 91070014  stw r8, 0x14(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(20 as u32), ctx.r[8].u32 ) };
+	// 82DABA88: 814E0030  lwz r10, 0x30(r14)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[14].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DABA8C: 93E7000C  stw r31, 0xc(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(12 as u32), ctx.r[31].u32 ) };
+	// 82DABA90: 91470008  stw r10, 8(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(8 as u32), ctx.r[10].u32 ) };
+	pc = 0x82DABA94; continue 'dispatch;
+            }
+            0x82DABA94 => {
+    //   block [0x82DABA94..0x82DABB70)
+	// 82DABA94: 8149FFFC  lwz r10, -4(r9)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(-4 as u32) ) } as u64;
+	// 82DABA98: 3908FFFF  addi r8, r8, -1
+	ctx.r[8].s64 = ctx.r[8].s64 + -1;
+	// 82DABA9C: 2B080000  cmplwi cr6, r8, 0
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 0 as u32, &mut ctx.xer);
+	// 82DABAA0: 80CA000C  lwz r6, 0xc(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DABAA4: 90CBFFFC  stw r6, -4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-4 as u32), ctx.r[6].u32 ) };
+	// 82DABAA8: A0CA0010  lhz r6, 0x10(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DABAAC: B0CB0010  sth r6, 0x10(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[6].u16 ) };
+	// 82DABAB0: 80CA0000  lwz r6, 0(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABAB4: 90CB0000  stw r6, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[6].u32 ) };
+	// 82DABAB8: 80CA001C  lwz r6, 0x1c(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DABABC: 90CB0004  stw r6, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[6].u32 ) };
+	// 82DABAC0: A0CA0020  lhz r6, 0x20(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DABAC4: B0CB0012  sth r6, 0x12(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[6].u16 ) };
+	// 82DABAC8: A0C90002  lhz r6, 2(r9)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DABACC: A0A90000  lhz r5, 0(r9)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABAD0: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DABAD4: 38C60001  addi r6, r6, 1
+	ctx.r[6].s64 = ctx.r[6].s64 + 1;
+	// 82DABAD8: 38A50001  addi r5, r5, 1
+	ctx.r[5].s64 = ctx.r[5].s64 + 1;
+	// 82DABADC: B0CB0016  sth r6, 0x16(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(22 as u32), ctx.r[6].u16 ) };
+	// 82DABAE0: B0AB0014  sth r5, 0x14(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[5].u16 ) };
+	// 82DABAE4: 80CA0004  lwz r6, 4(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DABAE8: 38C600E0  addi r6, r6, 0xe0
+	ctx.r[6].s64 = ctx.r[6].s64 + 224;
+	// 82DABAEC: 90CB0008  stw r6, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[6].u32 ) };
+	// 82DABAF0: 80CA0008  lwz r6, 8(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DABAF4: 38C600E0  addi r6, r6, 0xe0
+	ctx.r[6].s64 = ctx.r[6].s64 + 224;
+	// 82DABAF8: 90CB000C  stw r6, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[6].u32 ) };
+	// 82DABAFC: 396B001C  addi r11, r11, 0x1c
+	ctx.r[11].s64 = ctx.r[11].s64 + 28;
+	// 82DABB00: A0AA0018  lhz r5, 0x18(r10)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DABB04: A0CA0014  lhz r6, 0x14(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DABB08: 54AA103E  rotlwi r10, r5, 2
+	ctx.r[10].u64 = ((ctx.r[5].u32).rotate_left(2)) as u64;
+	// 82DABB0C: 7FE6FA14  add r31, r6, r31
+	ctx.r[31].u64 = ctx.r[6].u64 + ctx.r[31].u64;
+	// 82DABB10: 7F8AE214  add r28, r10, r28
+	ctx.r[28].u64 = ctx.r[10].u64 + ctx.r[28].u64;
+	// 82DABB14: 409AFF80  bne cr6, 0x82daba94
+	if !ctx.cr[6].eq {
+	pc = 0x82DABA94; continue 'dispatch;
+	}
+	// 82DABB18: 89610050  lbz r11, 0x50(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DABB1C: 3BFF0010  addi r31, r31, 0x10
+	ctx.r[31].s64 = ctx.r[31].s64 + 16;
+	// 82DABB20: 3B400000  li r26, 0
+	ctx.r[26].s64 = 0;
+	// 82DABB24: 7D7E0774  extsb r30, r11
+	ctx.r[30].s64 = ctx.r[11].s8 as i64;
+	// 82DABB28: 397C000F  addi r11, r28, 0xf
+	ctx.r[11].s64 = ctx.r[28].s64 + 15;
+	// 82DABB2C: 7CF43B78  mr r20, r7
+	ctx.r[20].u64 = ctx.r[7].u64;
+	// 82DABB30: 557C0036  rlwinm r28, r11, 0, 0, 0x1b
+	ctx.r[28].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DABB34: 93E70010  stw r31, 0x10(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(16 as u32), ctx.r[31].u32 ) };
+	// 82DABB38: 2F1E0000  cmpwi cr6, r30, 0
+	ctx.cr[6].compare_i32(ctx.r[30].s32, 0, &mut ctx.xer);
+	// 82DABB3C: 419A010C  beq cr6, 0x82dabc48
+	if ctx.cr[6].eq {
+	pc = 0x82DABC48; continue 'dispatch;
+	}
+	// 82DABB40: 81610058  lwz r11, 0x58(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DABB44: 81410054  lwz r10, 0x54(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DABB48: 7C6B502E  lwzx r3, r11, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DABB4C: 81630058  lwz r11, 0x58(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DABB50: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DABB54: 419A001C  beq cr6, 0x82dabb70
+	if ctx.cr[6].eq {
+	pc = 0x82DABB70; continue 'dispatch;
+	}
+	// 82DABB58: 8143005C  lwz r10, 0x5c(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(92 as u32) ) } as u64;
+	// 82DABB5C: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DABB60: 9143005C  stw r10, 0x5c(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(92 as u32), ctx.r[10].u32 ) };
+	// 82DABB64: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABB68: 91430058  stw r10, 0x58(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(88 as u32), ctx.r[10].u32 ) };
+	// 82DABB6C: 48000010  b 0x82dabb7c
+	pc = 0x82DABB7C; continue 'dispatch;
+            }
+            0x82DABB70 => {
+    //   block [0x82DABB70..0x82DABB7C)
+	// 82DABB70: 38800004  li r4, 4
+	ctx.r[4].s64 = 4;
+	// 82DABB74: 4BFA94DD  bl 0x82d55050
+	ctx.lr = 0x82DABB78;
+	sub_82D55050(ctx, base);
+	// 82DABB78: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	pc = 0x82DABB7C; continue 'dispatch;
+            }
+            0x82DABB7C => {
+    //   block [0x82DABB7C..0x82DABB98)
+	// 82DABB7C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DABB80: 419A0018  beq cr6, 0x82dabb98
+	if ctx.cr[6].eq {
+	pc = 0x82DABB98; continue 'dispatch;
+	}
+	// 82DABB84: 934B0000  stw r26, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[26].u32 ) };
+	// 82DABB88: 9B4B001C  stb r26, 0x1c(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(28 as u32), ctx.r[26].u8 ) };
+	// 82DABB8C: B34B001E  sth r26, 0x1e(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(30 as u32), ctx.r[26].u16 ) };
+	// 82DABB90: 934B0020  stw r26, 0x20(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(32 as u32), ctx.r[26].u32 ) };
+	// 82DABB94: 48000008  b 0x82dabb9c
+	pc = 0x82DABB9C; continue 'dispatch;
+            }
+            0x82DABB98 => {
+    //   block [0x82DABB98..0x82DABB9C)
+	// 82DABB98: 7F4BD378  mr r11, r26
+	ctx.r[11].u64 = ctx.r[26].u64;
+	pc = 0x82DABB9C; continue 'dispatch;
+            }
+            0x82DABB9C => {
+    //   block [0x82DABB9C..0x82DABBA8)
+	// 82DABB9C: 2B110000  cmplwi cr6, r17, 0
+	ctx.cr[6].compare_u32(ctx.r[17].u32, 0 as u32, &mut ctx.xer);
+	// 82DABBA0: 419A0008  beq cr6, 0x82dabba8
+	if ctx.cr[6].eq {
+	pc = 0x82DABBA8; continue 'dispatch;
+	}
+	// 82DABBA4: 91710000  stw r11, 0(r17)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[17].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DABBA8; continue 'dispatch;
+            }
+            0x82DABBA8 => {
+    //   block [0x82DABBA8..0x82DABBC8)
+	// 82DABBA8: 81410068  lwz r10, 0x68(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(104 as u32) ) } as u64;
+	// 82DABBAC: 8121006C  lwz r9, 0x6c(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DABBB0: 7F0A4800  cmpw cr6, r10, r9
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[9].s32, &mut ctx.xer);
+	// 82DABBB4: 419A0060  beq cr6, 0x82dabc14
+	if ctx.cr[6].eq {
+	pc = 0x82DABC14; continue 'dispatch;
+	}
+	// 82DABBB8: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DABBBC: 409A000C  bne cr6, 0x82dabbc8
+	if !ctx.cr[6].eq {
+	pc = 0x82DABBC8; continue 'dispatch;
+	}
+	// 82DABBC0: 812101A4  lwz r9, 0x1a4(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(420 as u32) ) } as u64;
+	// 82DABBC4: 91690000  stw r11, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DABBC8; continue 'dispatch;
+            }
+            0x82DABBC8 => {
+    //   block [0x82DABBC8..0x82DABBE4)
+	// 82DABBC8: 9141006C  stw r10, 0x6c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(108 as u32), ctx.r[10].u32 ) };
+	// 82DABBCC: 2B110000  cmplwi cr6, r17, 0
+	ctx.cr[6].compare_u32(ctx.r[17].u32, 0 as u32, &mut ctx.xer);
+	// 82DABBD0: 419A003C  beq cr6, 0x82dabc0c
+	if ctx.cr[6].eq {
+	pc = 0x82DABC0C; continue 'dispatch;
+	}
+	// 82DABBD4: A1320000  lhz r9, 0(r18)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[18].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABBD8: 7E0A8378  mr r10, r16
+	ctx.r[10].u64 = ctx.r[16].u64;
+	// 82DABBDC: 2B100000  cmplwi cr6, r16, 0
+	ctx.cr[6].compare_u32(ctx.r[16].u32, 0 as u32, &mut ctx.xer);
+	// 82DABBE0: 419A0020  beq cr6, 0x82dabc00
+	if ctx.cr[6].eq {
+	pc = 0x82DABC00; continue 'dispatch;
+	}
+	pc = 0x82DABBE4; continue 'dispatch;
+            }
+            0x82DABBE4 => {
+    //   block [0x82DABBE4..0x82DABC00)
+	// 82DABBE4: 7F0A7840  cmplw cr6, r10, r15
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[15].u32, &mut ctx.xer);
+	// 82DABBE8: 419A0018  beq cr6, 0x82dabc00
+	if ctx.cr[6].eq {
+	pc = 0x82DABC00; continue 'dispatch;
+	}
+	// 82DABBEC: B12A001E  sth r9, 0x1e(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(30 as u32), ctx.r[9].u16 ) };
+	// 82DABBF0: 91EA0020  stw r15, 0x20(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(32 as u32), ctx.r[15].u32 ) };
+	// 82DABBF4: 814A0000  lwz r10, 0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABBF8: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DABBFC: 409AFFE8  bne cr6, 0x82dabbe4
+	if !ctx.cr[6].eq {
+	pc = 0x82DABBE4; continue 'dispatch;
+	}
+	pc = 0x82DABC00; continue 'dispatch;
+            }
+            0x82DABC00 => {
+    //   block [0x82DABC00..0x82DABC0C)
+	// 82DABC00: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DABC04: 3A51001E  addi r18, r17, 0x1e
+	ctx.r[18].s64 = ctx.r[17].s64 + 30;
+	// 82DABC08: 9951001C  stb r10, 0x1c(r17)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[17].u32.wrapping_add(28 as u32), ctx.r[10].u8 ) };
+	pc = 0x82DABC0C; continue 'dispatch;
+            }
+            0x82DABC0C => {
+    //   block [0x82DABC0C..0x82DABC14)
+	// 82DABC0C: 7DF07B78  mr r16, r15
+	ctx.r[16].u64 = ctx.r[15].u64;
+	// 82DABC10: 7D6F5B78  mr r15, r11
+	ctx.r[15].u64 = ctx.r[11].u64;
+	pc = 0x82DABC14; continue 'dispatch;
+            }
+            0x82DABC14 => {
+    //   block [0x82DABC14..0x82DABC48)
+	// 82DABC14: A1520000  lhz r10, 0(r18)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[18].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABC18: 7D3DF850  subf r9, r29, r31
+	ctx.r[9].s64 = ctx.r[31].s64 - ctx.r[29].s64;
+	// 82DABC1C: 7D1BE050  subf r8, r27, r28
+	ctx.r[8].s64 = ctx.r[28].s64 - ctx.r[27].s64;
+	// 82DABC20: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DABC24: 7D715B78  mr r17, r11
+	ctx.r[17].u64 = ctx.r[11].u64;
+	// 82DABC28: B1520000  sth r10, 0(r18)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[18].u32.wrapping_add(0 as u32), ctx.r[10].u16 ) };
+	// 82DABC2C: 91CB0004  stw r14, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[14].u32 ) };
+	// 82DABC30: 814E0030  lwz r10, 0x30(r14)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[14].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DABC34: 93AB000C  stw r29, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[29].u32 ) };
+	// 82DABC38: 936B0010  stw r27, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[27].u32 ) };
+	// 82DABC3C: 912B0014  stw r9, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[9].u32 ) };
+	// 82DABC40: 910B0018  stw r8, 0x18(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[8].u32 ) };
+	// 82DABC44: 914B0008  stw r10, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[10].u32 ) };
+	pc = 0x82DABC48; continue 'dispatch;
+            }
+            0x82DABC48 => {
+    //   block [0x82DABC48..0x82DABC64)
+	// 82DABC48: 7FCB0034  cntlzw r11, r30
+	ctx.r[11].u64 = if ctx.r[30].u32 == 0 { 32 } else { ctx.r[30].u32.leading_zeros() as u64 };
+	// 82DABC4C: 81010060  lwz r8, 0x60(r1)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(96 as u32) ) } as u64;
+	// 82DABC50: 81410070  lwz r10, 0x70(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(112 as u32) ) } as u64;
+	// 82DABC54: 3BC00000  li r30, 0
+	ctx.r[30].s64 = 0;
+	// 82DABC58: 556BDFFE  rlwinm r11, r11, 0x1b, 0x1f, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x0000001Fu64;
+	// 82DABC5C: 696B0001  xori r11, r11, 1
+	ctx.r[11].u64 = ctx.r[11].u64 ^ 1;
+	// 82DABC60: 7F0BC214  add r24, r11, r24
+	ctx.r[24].u64 = ctx.r[11].u64 + ctx.r[24].u64;
+	pc = 0x82DABC64; continue 'dispatch;
+            }
+            0x82DABC64 => {
+    //   block [0x82DABC64..0x82DABC74)
+	// 82DABC64: 2F130000  cmpwi cr6, r19, 0
+	ctx.cr[6].compare_i32(ctx.r[19].s32, 0, &mut ctx.xer);
+	// 82DABC68: 419A000C  beq cr6, 0x82dabc74
+	if ctx.cr[6].eq {
+	pc = 0x82DABC74; continue 'dispatch;
+	}
+	// 82DABC6C: 2F180001  cmpwi cr6, r24, 1
+	ctx.cr[6].compare_i32(ctx.r[24].s32, 1, &mut ctx.xer);
+	// 82DABC70: 4199006C  bgt cr6, 0x82dabcdc
+	if ctx.cr[6].gt {
+	pc = 0x82DABCDC; continue 'dispatch;
+	}
+	pc = 0x82DABC74; continue 'dispatch;
+            }
+            0x82DABC74 => {
+    //   block [0x82DABC74..0x82DABC88)
+	// 82DABC74: 81760000  lwz r11, 0(r22)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[22].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABC78: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DABC7C: 419A000C  beq cr6, 0x82dabc88
+	if ctx.cr[6].eq {
+	pc = 0x82DABC88; continue 'dispatch;
+	}
+	// 82DABC80: 7F0BC000  cmpw cr6, r11, r24
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[24].s32, &mut ctx.xer);
+	// 82DABC84: 409A0018  bne cr6, 0x82dabc9c
+	if !ctx.cr[6].eq {
+	pc = 0x82DABC9C; continue 'dispatch;
+	}
+	pc = 0x82DABC88; continue 'dispatch;
+            }
+            0x82DABC88 => {
+    //   block [0x82DABC88..0x82DABC9C)
+	// 82DABC88: 81770000  lwz r11, 0(r23)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABC8C: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DABC90: 419A0020  beq cr6, 0x82dabcb0
+	if ctx.cr[6].eq {
+	pc = 0x82DABCB0; continue 'dispatch;
+	}
+	// 82DABC94: 7F0BC000  cmpw cr6, r11, r24
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[24].s32, &mut ctx.xer);
+	// 82DABC98: 419A0018  beq cr6, 0x82dabcb0
+	if ctx.cr[6].eq {
+	pc = 0x82DABCB0; continue 'dispatch;
+	}
+	pc = 0x82DABC9C; continue 'dispatch;
+            }
+            0x82DABC9C => {
+    //   block [0x82DABC9C..0x82DABCB0)
+	// 82DABC9C: E9790000  ld r11, 0(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) };
+	// 82DABCA0: F96A0000  std r11, 0(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[11].u64 ) };
+	// 82DABCA4: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DABCA8: 91410070  stw r10, 0x70(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(112 as u32), ctx.r[10].u32 ) };
+	// 82DABCAC: 48000020  b 0x82dabccc
+	pc = 0x82DABCCC; continue 'dispatch;
+            }
+            0x82DABCB0 => {
+    //   block [0x82DABCB0..0x82DABCCC)
+	// 82DABCB0: E9790000  ld r11, 0(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) };
+	// 82DABCB4: 57491838  slwi r9, r26, 3
+	ctx.r[9].u32 = ctx.r[26].u32.wrapping_shl(3);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DABCB8: 80E10064  lwz r7, 0x64(r1)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(100 as u32) ) } as u64;
+	// 82DABCBC: 3B5A0001  addi r26, r26, 1
+	ctx.r[26].s64 = ctx.r[26].s64 + 1;
+	// 82DABCC0: 7D69392A  stdx r11, r9, r7
+	unsafe { crate::rt::store_u64(base as *mut u8, ctx.r[9].u32.wrapping_add(ctx.r[7].u32), ctx.r[11].u64) };
+	// 82DABCC4: 93160000  stw r24, 0(r22)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[22].u32.wrapping_add(0 as u32), ctx.r[24].u32 ) };
+	// 82DABCC8: 93170000  stw r24, 0(r23)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[23].u32.wrapping_add(0 as u32), ctx.r[24].u32 ) };
+	pc = 0x82DABCCC; continue 'dispatch;
+            }
+            0x82DABCCC => {
+    //   block [0x82DABCCC..0x82DABCDC)
+	// 82DABCCC: 3B390008  addi r25, r25, 8
+	ctx.r[25].s64 = ctx.r[25].s64 + 8;
+	// 82DABCD0: 7F19A840  cmplw cr6, r25, r21
+	ctx.cr[6].compare_u32(ctx.r[25].u32, ctx.r[21].u32, &mut ctx.xer);
+	// 82DABCD4: 4198FCC4  blt cr6, 0x82dab998
+	if ctx.cr[6].lt {
+	pc = 0x82DAB998; continue 'dispatch;
+	}
+	// 82DABCD8: 48000028  b 0x82dabd00
+	pc = 0x82DABD00; continue 'dispatch;
+            }
+            0x82DABCDC => {
+    //   block [0x82DABCDC..0x82DABCE4)
+	// 82DABCDC: 7F19A840  cmplw cr6, r25, r21
+	ctx.cr[6].compare_u32(ctx.r[25].u32, ctx.r[21].u32, &mut ctx.xer);
+	// 82DABCE0: 40980020  bge cr6, 0x82dabd00
+	if !ctx.cr[6].lt {
+	pc = 0x82DABD00; continue 'dispatch;
+	}
+	pc = 0x82DABCE4; continue 'dispatch;
+            }
+            0x82DABCE4 => {
+    //   block [0x82DABCE4..0x82DABD00)
+	// 82DABCE4: E9790000  ld r11, 0(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) };
+	// 82DABCE8: 3B390008  addi r25, r25, 8
+	ctx.r[25].s64 = ctx.r[25].s64 + 8;
+	// 82DABCEC: 7F19A840  cmplw cr6, r25, r21
+	ctx.cr[6].compare_u32(ctx.r[25].u32, ctx.r[21].u32, &mut ctx.xer);
+	// 82DABCF0: F96A0000  std r11, 0(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[11].u64 ) };
+	// 82DABCF4: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DABCF8: 4198FFEC  blt cr6, 0x82dabce4
+	if ctx.cr[6].lt {
+	pc = 0x82DABCE4; continue 'dispatch;
+	}
+	// 82DABCFC: 91410070  stw r10, 0x70(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(112 as u32), ctx.r[10].u32 ) };
+	pc = 0x82DABD00; continue 'dispatch;
+            }
+            0x82DABD00 => {
+    //   block [0x82DABD00..0x82DABD44)
+	// 82DABD00: 2F1A0000  cmpwi cr6, r26, 0
+	ctx.cr[6].compare_i32(ctx.r[26].s32, 0, &mut ctx.xer);
+	// 82DABD04: 419A0270  beq cr6, 0x82dabf74
+	if ctx.cr[6].eq {
+	pc = 0x82DABF74; continue 'dispatch;
+	}
+	// 82DABD08: 83210058  lwz r25, 0x58(r1)
+	ctx.r[25].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DABD0C: 7FFEFB78  mr r30, r31
+	ctx.r[30].u64 = ctx.r[31].u64;
+	// 82DABD10: 83010054  lwz r24, 0x54(r1)
+	ctx.r[24].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DABD14: 7F9DE378  mr r29, r28
+	ctx.r[29].u64 = ctx.r[28].u64;
+	// 82DABD18: 7D79C02E  lwzx r11, r25, r24
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[25].u32.wrapping_add(ctx.r[24].u32)) } as u64;
+	// 82DABD1C: 814B00B0  lwz r10, 0xb0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(176 as u32) ) } as u64;
+	// 82DABD20: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DABD24: 419A0020  beq cr6, 0x82dabd44
+	if ctx.cr[6].eq {
+	pc = 0x82DABD44; continue 'dispatch;
+	}
+	// 82DABD28: 812B00B4  lwz r9, 0xb4(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(180 as u32) ) } as u64;
+	// 82DABD2C: 7D455378  mr r5, r10
+	ctx.r[5].u64 = ctx.r[10].u64;
+	// 82DABD30: 3929FFFF  addi r9, r9, -1
+	ctx.r[9].s64 = ctx.r[9].s64 + -1;
+	// 82DABD34: 912B00B4  stw r9, 0xb4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(180 as u32), ctx.r[9].u32 ) };
+	// 82DABD38: 814A0000  lwz r10, 0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABD3C: 914B00B0  stw r10, 0xb0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(176 as u32), ctx.r[10].u32 ) };
+	// 82DABD40: 48000014  b 0x82dabd54
+	pc = 0x82DABD54; continue 'dispatch;
+            }
+            0x82DABD44 => {
+    //   block [0x82DABD44..0x82DABD54)
+	// 82DABD44: 3880000F  li r4, 0xf
+	ctx.r[4].s64 = 15;
+	// 82DABD48: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DABD4C: 4BFA9305  bl 0x82d55050
+	ctx.lr = 0x82DABD50;
+	sub_82D55050(ctx, base);
+	// 82DABD50: 7C651B78  mr r5, r3
+	ctx.r[5].u64 = ctx.r[3].u64;
+	pc = 0x82DABD54; continue 'dispatch;
+            }
+            0x82DABD54 => {
+    //   block [0x82DABD54..0x82DABD70)
+	// 82DABD54: 2B050000  cmplwi cr6, r5, 0
+	ctx.cr[6].compare_u32(ctx.r[5].u32, 0 as u32, &mut ctx.xer);
+	// 82DABD58: 3B600000  li r27, 0
+	ctx.r[27].s64 = 0;
+	// 82DABD5C: 419A0014  beq cr6, 0x82dabd70
+	if ctx.cr[6].eq {
+	pc = 0x82DABD70; continue 'dispatch;
+	}
+	// 82DABD60: 93650014  stw r27, 0x14(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(20 as u32), ctx.r[27].u32 ) };
+	// 82DABD64: 93650010  stw r27, 0x10(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(16 as u32), ctx.r[27].u32 ) };
+	// 82DABD68: 93650000  stw r27, 0(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(0 as u32), ctx.r[27].u32 ) };
+	// 82DABD6C: 48000008  b 0x82dabd74
+	pc = 0x82DABD74; continue 'dispatch;
+            }
+            0x82DABD70 => {
+    //   block [0x82DABD70..0x82DABD74)
+	// 82DABD70: 7F65DB78  mr r5, r27
+	ctx.r[5].u64 = ctx.r[27].u64;
+	pc = 0x82DABD74; continue 'dispatch;
+            }
+            0x82DABD74 => {
+    //   block [0x82DABD74..0x82DABD8C)
+	// 82DABD74: 8141019C  lwz r10, 0x19c(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(412 as u32) ) } as u64;
+	// 82DABD78: 2B140000  cmplwi cr6, r20, 0
+	ctx.cr[6].compare_u32(ctx.r[20].u32, 0 as u32, &mut ctx.xer);
+	// 82DABD7C: 409A0010  bne cr6, 0x82dabd8c
+	if !ctx.cr[6].eq {
+	pc = 0x82DABD8C; continue 'dispatch;
+	}
+	// 82DABD80: 90AA0000  stw r5, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[5].u32 ) };
+	// 82DABD84: 936A0004  stw r27, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[27].u32 ) };
+	// 82DABD88: 4800000C  b 0x82dabd94
+	pc = 0x82DABD94; continue 'dispatch;
+            }
+            0x82DABD8C => {
+    //   block [0x82DABD8C..0x82DABD94)
+	// 82DABD8C: 90B40000  stw r5, 0(r20)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[20].u32.wrapping_add(0 as u32), ctx.r[5].u32 ) };
+	// 82DABD90: 93F40010  stw r31, 0x10(r20)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[20].u32.wrapping_add(16 as u32), ctx.r[31].u32 ) };
+	pc = 0x82DABD94; continue 'dispatch;
+            }
+            0x82DABD94 => {
+    //   block [0x82DABD94..0x82DABDCC)
+	// 82DABD94: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DABD98: 2F1A0000  cmpwi cr6, r26, 0
+	ctx.cr[6].compare_i32(ctx.r[26].s32, 0, &mut ctx.xer);
+	// 82DABD9C: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DABDA0: 916A0004  stw r11, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DABDA4: 91C50004  stw r14, 4(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(4 as u32), ctx.r[14].u32 ) };
+	// 82DABDA8: 93450014  stw r26, 0x14(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(20 as u32), ctx.r[26].u32 ) };
+	// 82DABDAC: 816E0030  lwz r11, 0x30(r14)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[14].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DABDB0: 93E5000C  stw r31, 0xc(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(12 as u32), ctx.r[31].u32 ) };
+	// 82DABDB4: 91650008  stw r11, 8(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DABDB8: 40990098  ble cr6, 0x82dabe50
+	if !ctx.cr[6].gt {
+	pc = 0x82DABE50; continue 'dispatch;
+	}
+	// 82DABDBC: 81610064  lwz r11, 0x64(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(100 as u32) ) } as u64;
+	// 82DABDC0: 7F48D378  mr r8, r26
+	ctx.r[8].u64 = ctx.r[26].u64;
+	// 82DABDC4: 392B0004  addi r9, r11, 4
+	ctx.r[9].s64 = ctx.r[11].s64 + 4;
+	// 82DABDC8: 3965001C  addi r11, r5, 0x1c
+	ctx.r[11].s64 = ctx.r[5].s64 + 28;
+	pc = 0x82DABDCC; continue 'dispatch;
+            }
+            0x82DABDCC => {
+    //   block [0x82DABDCC..0x82DABE50)
+	// 82DABDCC: 8149FFFC  lwz r10, -4(r9)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(-4 as u32) ) } as u64;
+	// 82DABDD0: 3908FFFF  addi r8, r8, -1
+	ctx.r[8].s64 = ctx.r[8].s64 + -1;
+	// 82DABDD4: 2B080000  cmplwi cr6, r8, 0
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 0 as u32, &mut ctx.xer);
+	// 82DABDD8: 80EA000C  lwz r7, 0xc(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DABDDC: 90EBFFFC  stw r7, -4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-4 as u32), ctx.r[7].u32 ) };
+	// 82DABDE0: A0EA0010  lhz r7, 0x10(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DABDE4: B0EB0010  sth r7, 0x10(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[7].u16 ) };
+	// 82DABDE8: 80EA0000  lwz r7, 0(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABDEC: 90EB0000  stw r7, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[7].u32 ) };
+	// 82DABDF0: 80EA001C  lwz r7, 0x1c(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DABDF4: 90EB0004  stw r7, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[7].u32 ) };
+	// 82DABDF8: A0EA0020  lhz r7, 0x20(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DABDFC: B0EB0012  sth r7, 0x12(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[7].u16 ) };
+	// 82DABE00: A0E90002  lhz r7, 2(r9)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DABE04: A0C90000  lhz r6, 0(r9)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABE08: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DABE0C: 38E70001  addi r7, r7, 1
+	ctx.r[7].s64 = ctx.r[7].s64 + 1;
+	// 82DABE10: 38C60001  addi r6, r6, 1
+	ctx.r[6].s64 = ctx.r[6].s64 + 1;
+	// 82DABE14: B0EB0016  sth r7, 0x16(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(22 as u32), ctx.r[7].u16 ) };
+	// 82DABE18: B0CB0014  sth r6, 0x14(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[6].u16 ) };
+	// 82DABE1C: 80EA0004  lwz r7, 4(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DABE20: 38E700E0  addi r7, r7, 0xe0
+	ctx.r[7].s64 = ctx.r[7].s64 + 224;
+	// 82DABE24: 90EB0008  stw r7, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[7].u32 ) };
+	// 82DABE28: 80EA0008  lwz r7, 8(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DABE2C: 38E700E0  addi r7, r7, 0xe0
+	ctx.r[7].s64 = ctx.r[7].s64 + 224;
+	// 82DABE30: 90EB000C  stw r7, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[7].u32 ) };
+	// 82DABE34: 396B001C  addi r11, r11, 0x1c
+	ctx.r[11].s64 = ctx.r[11].s64 + 28;
+	// 82DABE38: A0CA0018  lhz r6, 0x18(r10)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DABE3C: A0EA0014  lhz r7, 0x14(r10)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DABE40: 54CA103E  rotlwi r10, r6, 2
+	ctx.r[10].u64 = ((ctx.r[6].u32).rotate_left(2)) as u64;
+	// 82DABE44: 7FE7FA14  add r31, r7, r31
+	ctx.r[31].u64 = ctx.r[7].u64 + ctx.r[31].u64;
+	// 82DABE48: 7F8AE214  add r28, r10, r28
+	ctx.r[28].u64 = ctx.r[10].u64 + ctx.r[28].u64;
+	// 82DABE4C: 409AFF80  bne cr6, 0x82dabdcc
+	if !ctx.cr[6].eq {
+	pc = 0x82DABDCC; continue 'dispatch;
+	}
+	pc = 0x82DABE50; continue 'dispatch;
+            }
+            0x82DABE50 => {
+    //   block [0x82DABE50..0x82DABE9C)
+	// 82DABE50: 3BFF0010  addi r31, r31, 0x10
+	ctx.r[31].s64 = ctx.r[31].s64 + 16;
+	// 82DABE54: 89410050  lbz r10, 0x50(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DABE58: 397C000F  addi r11, r28, 0xf
+	ctx.r[11].s64 = ctx.r[28].s64 + 15;
+	// 82DABE5C: 7F7ADB78  mr r26, r27
+	ctx.r[26].u64 = ctx.r[27].u64;
+	// 82DABE60: 557C0036  rlwinm r28, r11, 0, 0, 0x1b
+	ctx.r[28].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DABE64: 7CB42B78  mr r20, r5
+	ctx.r[20].u64 = ctx.r[5].u64;
+	// 82DABE68: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DABE6C: 93E50010  stw r31, 0x10(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(16 as u32), ctx.r[31].u32 ) };
+	// 82DABE70: 419A0104  beq cr6, 0x82dabf74
+	if ctx.cr[6].eq {
+	pc = 0x82DABF74; continue 'dispatch;
+	}
+	// 82DABE74: 7C79C02E  lwzx r3, r25, r24
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[25].u32.wrapping_add(ctx.r[24].u32)) } as u64;
+	// 82DABE78: 81630058  lwz r11, 0x58(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DABE7C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DABE80: 419A001C  beq cr6, 0x82dabe9c
+	if ctx.cr[6].eq {
+	pc = 0x82DABE9C; continue 'dispatch;
+	}
+	// 82DABE84: 8143005C  lwz r10, 0x5c(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(92 as u32) ) } as u64;
+	// 82DABE88: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DABE8C: 9143005C  stw r10, 0x5c(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(92 as u32), ctx.r[10].u32 ) };
+	// 82DABE90: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABE94: 91430058  stw r10, 0x58(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(88 as u32), ctx.r[10].u32 ) };
+	// 82DABE98: 48000010  b 0x82dabea8
+	pc = 0x82DABEA8; continue 'dispatch;
+            }
+            0x82DABE9C => {
+    //   block [0x82DABE9C..0x82DABEA8)
+	// 82DABE9C: 38800004  li r4, 4
+	ctx.r[4].s64 = 4;
+	// 82DABEA0: 4BFA91B1  bl 0x82d55050
+	ctx.lr = 0x82DABEA4;
+	sub_82D55050(ctx, base);
+	// 82DABEA4: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	pc = 0x82DABEA8; continue 'dispatch;
+            }
+            0x82DABEA8 => {
+    //   block [0x82DABEA8..0x82DABEC4)
+	// 82DABEA8: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DABEAC: 419A0018  beq cr6, 0x82dabec4
+	if ctx.cr[6].eq {
+	pc = 0x82DABEC4; continue 'dispatch;
+	}
+	// 82DABEB0: 936B0000  stw r27, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[27].u32 ) };
+	// 82DABEB4: 9B6B001C  stb r27, 0x1c(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(28 as u32), ctx.r[27].u8 ) };
+	// 82DABEB8: B36B001E  sth r27, 0x1e(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(30 as u32), ctx.r[27].u16 ) };
+	// 82DABEBC: 936B0020  stw r27, 0x20(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(32 as u32), ctx.r[27].u32 ) };
+	// 82DABEC0: 48000008  b 0x82dabec8
+	pc = 0x82DABEC8; continue 'dispatch;
+            }
+            0x82DABEC4 => {
+    //   block [0x82DABEC4..0x82DABEC8)
+	// 82DABEC4: 7F6BDB78  mr r11, r27
+	ctx.r[11].u64 = ctx.r[27].u64;
+	pc = 0x82DABEC8; continue 'dispatch;
+            }
+            0x82DABEC8 => {
+    //   block [0x82DABEC8..0x82DABED4)
+	// 82DABEC8: 2B110000  cmplwi cr6, r17, 0
+	ctx.cr[6].compare_u32(ctx.r[17].u32, 0 as u32, &mut ctx.xer);
+	// 82DABECC: 419A0008  beq cr6, 0x82dabed4
+	if ctx.cr[6].eq {
+	pc = 0x82DABED4; continue 'dispatch;
+	}
+	// 82DABED0: 91710000  stw r11, 0(r17)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[17].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DABED4; continue 'dispatch;
+            }
+            0x82DABED4 => {
+    //   block [0x82DABED4..0x82DABEF4)
+	// 82DABED4: 81410068  lwz r10, 0x68(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(104 as u32) ) } as u64;
+	// 82DABED8: 8121006C  lwz r9, 0x6c(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DABEDC: 7F0A4800  cmpw cr6, r10, r9
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[9].s32, &mut ctx.xer);
+	// 82DABEE0: 419A0060  beq cr6, 0x82dabf40
+	if ctx.cr[6].eq {
+	pc = 0x82DABF40; continue 'dispatch;
+	}
+	// 82DABEE4: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DABEE8: 409A000C  bne cr6, 0x82dabef4
+	if !ctx.cr[6].eq {
+	pc = 0x82DABEF4; continue 'dispatch;
+	}
+	// 82DABEEC: 812101A4  lwz r9, 0x1a4(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(420 as u32) ) } as u64;
+	// 82DABEF0: 91690000  stw r11, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DABEF4; continue 'dispatch;
+            }
+            0x82DABEF4 => {
+    //   block [0x82DABEF4..0x82DABF10)
+	// 82DABEF4: 9141006C  stw r10, 0x6c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(108 as u32), ctx.r[10].u32 ) };
+	// 82DABEF8: 2B110000  cmplwi cr6, r17, 0
+	ctx.cr[6].compare_u32(ctx.r[17].u32, 0 as u32, &mut ctx.xer);
+	// 82DABEFC: 419A003C  beq cr6, 0x82dabf38
+	if ctx.cr[6].eq {
+	pc = 0x82DABF38; continue 'dispatch;
+	}
+	// 82DABF00: A1320000  lhz r9, 0(r18)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[18].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABF04: 7E0A8378  mr r10, r16
+	ctx.r[10].u64 = ctx.r[16].u64;
+	// 82DABF08: 2B100000  cmplwi cr6, r16, 0
+	ctx.cr[6].compare_u32(ctx.r[16].u32, 0 as u32, &mut ctx.xer);
+	// 82DABF0C: 419A0020  beq cr6, 0x82dabf2c
+	if ctx.cr[6].eq {
+	pc = 0x82DABF2C; continue 'dispatch;
+	}
+	pc = 0x82DABF10; continue 'dispatch;
+            }
+            0x82DABF10 => {
+    //   block [0x82DABF10..0x82DABF2C)
+	// 82DABF10: 7F0A7840  cmplw cr6, r10, r15
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[15].u32, &mut ctx.xer);
+	// 82DABF14: 419A0018  beq cr6, 0x82dabf2c
+	if ctx.cr[6].eq {
+	pc = 0x82DABF2C; continue 'dispatch;
+	}
+	// 82DABF18: B12A001E  sth r9, 0x1e(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(30 as u32), ctx.r[9].u16 ) };
+	// 82DABF1C: 91EA0020  stw r15, 0x20(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(32 as u32), ctx.r[15].u32 ) };
+	// 82DABF20: 814A0000  lwz r10, 0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABF24: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DABF28: 409AFFE8  bne cr6, 0x82dabf10
+	if !ctx.cr[6].eq {
+	pc = 0x82DABF10; continue 'dispatch;
+	}
+	pc = 0x82DABF2C; continue 'dispatch;
+            }
+            0x82DABF2C => {
+    //   block [0x82DABF2C..0x82DABF38)
+	// 82DABF2C: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DABF30: 3A51001E  addi r18, r17, 0x1e
+	ctx.r[18].s64 = ctx.r[17].s64 + 30;
+	// 82DABF34: 9951001C  stb r10, 0x1c(r17)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[17].u32.wrapping_add(28 as u32), ctx.r[10].u8 ) };
+	pc = 0x82DABF38; continue 'dispatch;
+            }
+            0x82DABF38 => {
+    //   block [0x82DABF38..0x82DABF40)
+	// 82DABF38: 7DF07B78  mr r16, r15
+	ctx.r[16].u64 = ctx.r[15].u64;
+	// 82DABF3C: 7D6F5B78  mr r15, r11
+	ctx.r[15].u64 = ctx.r[11].u64;
+	pc = 0x82DABF40; continue 'dispatch;
+            }
+            0x82DABF40 => {
+    //   block [0x82DABF40..0x82DABF74)
+	// 82DABF40: A1520000  lhz r10, 0(r18)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[18].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABF44: 7D3EF850  subf r9, r30, r31
+	ctx.r[9].s64 = ctx.r[31].s64 - ctx.r[30].s64;
+	// 82DABF48: 7D1DE050  subf r8, r29, r28
+	ctx.r[8].s64 = ctx.r[28].s64 - ctx.r[29].s64;
+	// 82DABF4C: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DABF50: 7D715B78  mr r17, r11
+	ctx.r[17].u64 = ctx.r[11].u64;
+	// 82DABF54: B1520000  sth r10, 0(r18)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[18].u32.wrapping_add(0 as u32), ctx.r[10].u16 ) };
+	// 82DABF58: 91CB0004  stw r14, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[14].u32 ) };
+	// 82DABF5C: 814E0030  lwz r10, 0x30(r14)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[14].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DABF60: 93CB000C  stw r30, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[30].u32 ) };
+	// 82DABF64: 93AB0010  stw r29, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[29].u32 ) };
+	// 82DABF68: 912B0014  stw r9, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[9].u32 ) };
+	// 82DABF6C: 910B0018  stw r8, 0x18(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[8].u32 ) };
+	// 82DABF70: 914B0008  stw r10, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[10].u32 ) };
+	pc = 0x82DABF74; continue 'dispatch;
+            }
+            0x82DABF74 => {
+    //   block [0x82DABF74..0x82DABF98)
+	// 82DABF74: 81610078  lwz r11, 0x78(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(120 as u32) ) } as u64;
+	// 82DABF78: 81210070  lwz r9, 0x70(r1)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(112 as u32) ) } as u64;
+	// 82DABF7C: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABF80: 7D4A4850  subf r10, r10, r9
+	ctx.r[10].s64 = ctx.r[9].s64 - ctx.r[10].s64;
+	// 82DABF84: 7D4A1E70  srawi r10, r10, 3
+	ctx.xer.ca = (ctx.r[10].s32 < 0) && ((ctx.r[10].u32 & ((1u32 << 3) - 1)) != 0);
+	ctx.r[10].s64 = (ctx.r[10].s32 >> 3) as i64;
+	// 82DABF88: 914B0004  stw r10, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DABF8C: 554B003E  slwi r11, r10, 0
+	ctx.r[11].u32 = ctx.r[10].u32.wrapping_shl(0);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DABF90: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DABF94: 409AF994  bne cr6, 0x82dab928
+	if !ctx.cr[6].eq {
+	pc = 0x82DAB928; continue 'dispatch;
+	}
+	pc = 0x82DABF98; continue 'dispatch;
+            }
+            0x82DABF98 => {
+    //   block [0x82DABF98..0x82DABFC8)
+	// 82DABF98: 8161007C  lwz r11, 0x7c(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(124 as u32) ) } as u64;
+	// 82DABF9C: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DABFA0: 2F0B0002  cmpwi cr6, r11, 2
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 2, &mut ctx.xer);
+	// 82DABFA4: 9161007C  stw r11, 0x7c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(124 as u32), ctx.r[11].u32 ) };
+	// 82DABFA8: 4198F954  blt cr6, 0x82dab8fc
+	if ctx.cr[6].lt {
+	pc = 0x82DAB8FC; continue 'dispatch;
+	}
+	// 82DABFAC: 89610050  lbz r11, 0x50(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DABFB0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DABFB4: 419A0068  beq cr6, 0x82dac01c
+	if ctx.cr[6].eq {
+	pc = 0x82DAC01C; continue 'dispatch;
+	}
+	// 82DABFB8: A1520000  lhz r10, 0(r18)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[18].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABFBC: 7E0B8378  mr r11, r16
+	ctx.r[11].u64 = ctx.r[16].u64;
+	// 82DABFC0: 2B100000  cmplwi cr6, r16, 0
+	ctx.cr[6].compare_u32(ctx.r[16].u32, 0 as u32, &mut ctx.xer);
+	// 82DABFC4: 419A0020  beq cr6, 0x82dabfe4
+	if ctx.cr[6].eq {
+	pc = 0x82DABFE4; continue 'dispatch;
+	}
+	pc = 0x82DABFC8; continue 'dispatch;
+            }
+            0x82DABFC8 => {
+    //   block [0x82DABFC8..0x82DABFE4)
+	// 82DABFC8: 7F0B7840  cmplw cr6, r11, r15
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[15].u32, &mut ctx.xer);
+	// 82DABFCC: 419A0018  beq cr6, 0x82dabfe4
+	if ctx.cr[6].eq {
+	pc = 0x82DABFE4; continue 'dispatch;
+	}
+	// 82DABFD0: B14B001E  sth r10, 0x1e(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(30 as u32), ctx.r[10].u16 ) };
+	// 82DABFD4: 91EB0020  stw r15, 0x20(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(32 as u32), ctx.r[15].u32 ) };
+	// 82DABFD8: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DABFDC: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DABFE0: 409AFFE8  bne cr6, 0x82dabfc8
+	if !ctx.cr[6].eq {
+	pc = 0x82DABFC8; continue 'dispatch;
+	}
+	pc = 0x82DABFE4; continue 'dispatch;
+            }
+            0x82DABFE4 => {
+    //   block [0x82DABFE4..0x82DAC01C)
+	// 82DABFE4: 39600001  li r11, 1
+	ctx.r[11].s64 = 1;
+	// 82DABFE8: 9971001C  stb r11, 0x1c(r17)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[17].u32.wrapping_add(28 as u32), ctx.r[11].u8 ) };
+	// 82DABFEC: A16E0054  lhz r11, 0x54(r14)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[14].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DABFF0: 812E0030  lwz r9, 0x30(r14)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[14].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DABFF4: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DABFF8: 390BFFFF  addi r8, r11, -1
+	ctx.r[8].s64 = ctx.r[11].s64 + -1;
+	// 82DABFFC: 556A3830  slwi r10, r11, 7
+	ctx.r[10].u32 = ctx.r[11].u32.wrapping_shl(7);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAC000: 550BC9FE  srwi r11, r8, 7
+	ctx.r[11].u32 = ctx.r[8].u32.wrapping_shr(7);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAC004: 7D4A4A14  add r10, r10, r9
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[9].u64;
+	// 82DAC008: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAC00C: 556B043E  clrlwi r11, r11, 0x10
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x0000FFFFu64;
+	// 82DAC010: 914E0034  stw r10, 0x34(r14)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[14].u32.wrapping_add(52 as u32), ctx.r[10].u32 ) };
+	// 82DAC014: B16E0038  sth r11, 0x38(r14)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[14].u32.wrapping_add(56 as u32), ctx.r[11].u16 ) };
+	// 82DAC018: B16E003A  sth r11, 0x3a(r14)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[14].u32.wrapping_add(58 as u32), ctx.r[11].u16 ) };
+	pc = 0x82DAC01C; continue 'dispatch;
+            }
+            0x82DAC01C => {
+    //   block [0x82DAC01C..0x82DAC070)
+	// 82DAC01C: 83C1019C  lwz r30, 0x19c(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(412 as u32) ) } as u64;
+	// 82DAC020: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DAC024: 83E100C4  lwz r31, 0xc4(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(196 as u32) ) } as u64;
+	// 82DAC028: 83A10058  lwz r29, 0x58(r1)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DAC02C: 83810054  lwz r28, 0x54(r1)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DAC030: 2F1F0000  cmpwi cr6, r31, 0
+	ctx.cr[6].compare_i32(ctx.r[31].s32, 0, &mut ctx.xer);
+	// 82DAC034: 917E000C  stw r11, 0xc(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(12 as u32), ctx.r[11].u32 ) };
+	// 82DAC038: 917E0008  stw r11, 8(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DAC03C: 419A0054  beq cr6, 0x82dac090
+	if ctx.cr[6].eq {
+	pc = 0x82DAC090; continue 'dispatch;
+	}
+	// 82DAC040: 38A00003  li r5, 3
+	ctx.r[5].s64 = 3;
+	// 82DAC044: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC048: 57E4103A  slwi r4, r31, 2
+	ctx.r[4].u32 = ctx.r[31].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DAC04C: 4BFA91FD  bl 0x82d55248
+	ctx.lr = 0x82DAC050;
+	sub_82D55248(ctx, base);
+	// 82DAC050: 7C691B78  mr r9, r3
+	ctx.r[9].u64 = ctx.r[3].u64;
+	// 82DAC054: 93FE000C  stw r31, 0xc(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(12 as u32), ctx.r[31].u32 ) };
+	// 82DAC058: 2F1F0000  cmpwi cr6, r31, 0
+	ctx.cr[6].compare_i32(ctx.r[31].s32, 0, &mut ctx.xer);
+	// 82DAC05C: 913E0008  stw r9, 8(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(8 as u32), ctx.r[9].u32 ) };
+	// 82DAC060: 83C1005C  lwz r30, 0x5c(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(92 as u32) ) } as u64;
+	// 82DAC064: 40990030  ble cr6, 0x82dac094
+	if !ctx.cr[6].gt {
+	pc = 0x82DAC094; continue 'dispatch;
+	}
+	// 82DAC068: 7FCAF378  mr r10, r30
+	ctx.r[10].u64 = ctx.r[30].u64;
+	// 82DAC06C: 7FEBFB78  mr r11, r31
+	ctx.r[11].u64 = ctx.r[31].u64;
+	pc = 0x82DAC070; continue 'dispatch;
+            }
+            0x82DAC070 => {
+    //   block [0x82DAC070..0x82DAC090)
+	// 82DAC070: 810A0000  lwz r8, 0(r10)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC074: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAC078: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DAC07C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC080: 91090000  stw r8, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[8].u32 ) };
+	// 82DAC084: 39290004  addi r9, r9, 4
+	ctx.r[9].s64 = ctx.r[9].s64 + 4;
+	// 82DAC088: 409AFFE8  bne cr6, 0x82dac070
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC070; continue 'dispatch;
+	}
+	// 82DAC08C: 48000008  b 0x82dac094
+	pc = 0x82DAC094; continue 'dispatch;
+            }
+            0x82DAC090 => {
+    //   block [0x82DAC090..0x82DAC094)
+	// 82DAC090: 83C1005C  lwz r30, 0x5c(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(92 as u32) ) } as u64;
+	pc = 0x82DAC094; continue 'dispatch;
+            }
+            0x82DAC094 => {
+    //   block [0x82DAC094..0x82DAC0BC)
+	// 82DAC094: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC098: 80810060  lwz r4, 0x60(r1)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(96 as u32) ) } as u64;
+	// 82DAC09C: 81630028  lwz r11, 0x28(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAC0A0: 90830020  stw r4, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[4].u32 ) };
+	// 82DAC0A4: 7F045840  cmplw cr6, r4, r11
+	ctx.cr[6].compare_u32(ctx.r[4].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DAC0A8: 409A0014  bne cr6, 0x82dac0bc
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC0BC; continue 'dispatch;
+	}
+	// 82DAC0AC: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC0B0: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAC0B4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAC0B8: 4E800421  bctrl
+	ctx.lr = 0x82DAC0BC;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAC0BC => {
+    //   block [0x82DAC0BC..0x82DAC0E4)
+	// 82DAC0BC: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC0C0: 80810064  lwz r4, 0x64(r1)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(100 as u32) ) } as u64;
+	// 82DAC0C4: 81630028  lwz r11, 0x28(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAC0C8: 90830020  stw r4, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[4].u32 ) };
+	// 82DAC0CC: 7F045840  cmplw cr6, r4, r11
+	ctx.cr[6].compare_u32(ctx.r[4].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DAC0D0: 409A0014  bne cr6, 0x82dac0e4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC0E4; continue 'dispatch;
+	}
+	// 82DAC0D4: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC0D8: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAC0DC: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAC0E0: 4E800421  bctrl
+	ctx.lr = 0x82DAC0E4;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAC0E4 => {
+    //   block [0x82DAC0E4..0x82DAC10C)
+	// 82DAC0E4: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC0E8: 81630028  lwz r11, 0x28(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAC0EC: 93C30020  stw r30, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[30].u32 ) };
+	// 82DAC0F0: 7F1E5840  cmplw cr6, r30, r11
+	ctx.cr[6].compare_u32(ctx.r[30].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DAC0F4: 409A0018  bne cr6, 0x82dac10c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC10C; continue 'dispatch;
+	}
+	// 82DAC0F8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC0FC: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAC100: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAC104: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAC108: 4E800421  bctrl
+	ctx.lr = 0x82DAC10C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAC10C => {
+    //   block [0x82DAC10C..0x82DAC130)
+	// 82DAC10C: 816100C8  lwz r11, 0xc8(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(200 as u32) ) } as u64;
+	// 82DAC110: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAC114: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAC118: 409A0018  bne cr6, 0x82dac130
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC130; continue 'dispatch;
+	}
+	// 82DAC11C: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DAC120: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC124: 55651838  slwi r5, r11, 3
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(3);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAC128: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAC12C: 4BFA919D  bl 0x82d552c8
+	ctx.lr = 0x82DAC130;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DAC130; continue 'dispatch;
+            }
+            0x82DAC130 => {
+    //   block [0x82DAC130..0x82DAC158)
+	// 82DAC130: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC134: 808100AC  lwz r4, 0xac(r1)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(172 as u32) ) } as u64;
+	// 82DAC138: 81630028  lwz r11, 0x28(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAC13C: 90830020  stw r4, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[4].u32 ) };
+	// 82DAC140: 7F045840  cmplw cr6, r4, r11
+	ctx.cr[6].compare_u32(ctx.r[4].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DAC144: 409A0014  bne cr6, 0x82dac158
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC158; continue 'dispatch;
+	}
+	// 82DAC148: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC14C: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAC150: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAC154: 4E800421  bctrl
+	ctx.lr = 0x82DAC158;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAC158 => {
+    //   block [0x82DAC158..0x82DAC17C)
+	// 82DAC158: 816100A8  lwz r11, 0xa8(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(168 as u32) ) } as u64;
+	// 82DAC15C: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAC160: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAC164: 409A0018  bne cr6, 0x82dac17c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC17C; continue 'dispatch;
+	}
+	// 82DAC168: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DAC16C: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC170: 55651838  slwi r5, r11, 3
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(3);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAC174: 808100A0  lwz r4, 0xa0(r1)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(160 as u32) ) } as u64;
+	// 82DAC178: 4BFA9151  bl 0x82d552c8
+	ctx.lr = 0x82DAC17C;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DAC17C; continue 'dispatch;
+            }
+            0x82DAC17C => {
+    //   block [0x82DAC17C..0x82DAC1A4)
+	// 82DAC17C: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC180: 808100BC  lwz r4, 0xbc(r1)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(188 as u32) ) } as u64;
+	// 82DAC184: 81630028  lwz r11, 0x28(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAC188: 90830020  stw r4, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[4].u32 ) };
+	// 82DAC18C: 7F045840  cmplw cr6, r4, r11
+	ctx.cr[6].compare_u32(ctx.r[4].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DAC190: 409A0014  bne cr6, 0x82dac1a4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC1A4; continue 'dispatch;
+	}
+	// 82DAC194: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC198: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAC19C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAC1A0: 4E800421  bctrl
+	ctx.lr = 0x82DAC1A4;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAC1A4 => {
+    //   block [0x82DAC1A4..0x82DAC1C8)
+	// 82DAC1A4: 816100B8  lwz r11, 0xb8(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(184 as u32) ) } as u64;
+	// 82DAC1A8: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAC1AC: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAC1B0: 409A0018  bne cr6, 0x82dac1c8
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC1C8; continue 'dispatch;
+	}
+	// 82DAC1B4: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DAC1B8: 7C7DE02E  lwzx r3, r29, r28
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[28].u32)) } as u64;
+	// 82DAC1BC: 55651838  slwi r5, r11, 3
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(3);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAC1C0: 808100B0  lwz r4, 0xb0(r1)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(176 as u32) ) } as u64;
+	// 82DAC1C4: 4BFA9105  bl 0x82d552c8
+	ctx.lr = 0x82DAC1C8;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DAC1C8; continue 'dispatch;
+            }
+            0x82DAC1C8 => {
+    //   block [0x82DAC1C8..0x82DAC1FC)
+	// 82DAC1C8: 39600008  li r11, 8
+	ctx.r[11].s64 = 8;
+	// 82DAC1CC: 7D5D582E  lwzx r10, r29, r11
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAC1D0: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC1D4: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC1D8: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC1DC: 40980020  bge cr6, 0x82dac1fc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC1FC; continue 'dispatch;
+	}
+	// 82DAC1E0: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAC1E4: 392964CC  addi r9, r9, 0x64cc
+	ctx.r[9].s64 = ctx.r[9].s64 + 25804;
+	// 82DAC1E8: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAC1EC: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAC1F0: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAC1F4: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAC1F8: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAC1FC; continue 'dispatch;
+            }
+            0x82DAC1FC => {
+    //   block [0x82DAC1FC..0x82DAC204)
+	// 82DAC1FC: 38210170  addi r1, r1, 0x170
+	ctx.r[1].s64 = ctx.r[1].s64 + 368;
+	// 82DAC200: 4BEFD220  b 0x82ca9420
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAC208(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAC208 size=1336
+    let mut pc: u32 = 0x82DAC208;
+    'dispatch: loop {
+        match pc {
+            0x82DAC208 => {
+    //   block [0x82DAC208..0x82DAC264)
+	// 82DAC208: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAC20C: 4BEFD1D1  bl 0x82ca93dc
+	ctx.lr = 0x82DAC210;
+	sub_82CA93D0(ctx, base);
+	// 82DAC210: 9421FEF0  stwu r1, -0x110(r1)
+	ea = ctx.r[1].u32.wrapping_add(-272 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAC214: 828D0000  lwz r20, 0(r13)
+	ctx.r[20].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC218: 3A400008  li r18, 8
+	ctx.r[18].s64 = 8;
+	// 82DAC21C: 7C731B78  mr r19, r3
+	ctx.r[19].u64 = ctx.r[3].u64;
+	// 82DAC220: 7C912378  mr r17, r4
+	ctx.r[17].u64 = ctx.r[4].u64;
+	// 82DAC224: 7CBB2B78  mr r27, r5
+	ctx.r[27].u64 = ctx.r[5].u64;
+	// 82DAC228: 7D54902E  lwzx r10, r20, r18
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[20].u32.wrapping_add(ctx.r[18].u32)) } as u64;
+	// 82DAC22C: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC230: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC234: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC238: 4098002C  bge cr6, 0x82dac264
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC264; continue 'dispatch;
+	}
+	// 82DAC23C: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAC240: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DAC244: 3929E324  addi r9, r9, -0x1cdc
+	ctx.r[9].s64 = ctx.r[9].s64 + -7388;
+	// 82DAC248: 3908E310  addi r8, r8, -0x1cf0
+	ctx.r[8].s64 = ctx.r[8].s64 + -7408;
+	// 82DAC24C: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAC250: 910B000C  stw r8, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DAC254: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAC258: 390B0010  addi r8, r11, 0x10
+	ctx.r[8].s64 = ctx.r[11].s64 + 16;
+	// 82DAC25C: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAC260: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAC264; continue 'dispatch;
+            }
+            0x82DAC264 => {
+    //   block [0x82DAC264..0x82DAC298)
+	// 82DAC264: 81730000  lwz r11, 0(r19)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC268: 3BC00000  li r30, 0
+	ctx.r[30].s64 = 0;
+	// 82DAC26C: 83BB0004  lwz r29, 4(r27)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC270: 3AAB0190  addi r21, r11, 0x190
+	ctx.r[21].s64 = ctx.r[11].s64 + 400;
+	// 82DAC274: 894B00A0  lbz r10, 0xa0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(160 as u32) ) } as u64;
+	// 82DAC278: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC27C: 409A0054  bne cr6, 0x82dac2d0
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC2D0; continue 'dispatch;
+	}
+	// 82DAC280: 3B9D003C  addi r28, r29, 0x3c
+	ctx.r[28].s64 = ctx.r[29].s64 + 60;
+	// 82DAC284: 7FDAF378  mr r26, r30
+	ctx.r[26].u64 = ctx.r[30].u64;
+	// 82DAC288: 817C0004  lwz r11, 4(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC28C: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAC290: 40990040  ble cr6, 0x82dac2d0
+	if !ctx.cr[6].gt {
+	pc = 0x82DAC2D0; continue 'dispatch;
+	}
+	// 82DAC294: 7FDFF378  mr r31, r30
+	ctx.r[31].u64 = ctx.r[30].u64;
+	pc = 0x82DAC298; continue 'dispatch;
+            }
+            0x82DAC298 => {
+    //   block [0x82DAC298..0x82DAC2BC)
+	// 82DAC298: 817C0000  lwz r11, 0(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC29C: 7C7F582E  lwzx r3, r31, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[31].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAC2A0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC2A4: 419A0018  beq cr6, 0x82dac2bc
+	if ctx.cr[6].eq {
+	pc = 0x82DAC2BC; continue 'dispatch;
+	}
+	// 82DAC2A8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC2AC: 7EA4AB78  mr r4, r21
+	ctx.r[4].u64 = ctx.r[21].u64;
+	// 82DAC2B0: 816B000C  lwz r11, 0xc(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC2B4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAC2B8: 4E800421  bctrl
+	ctx.lr = 0x82DAC2BC;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAC2BC => {
+    //   block [0x82DAC2BC..0x82DAC2D0)
+	// 82DAC2BC: 817C0004  lwz r11, 4(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC2C0: 3B5A0001  addi r26, r26, 1
+	ctx.r[26].s64 = ctx.r[26].s64 + 1;
+	// 82DAC2C4: 3BFF0004  addi r31, r31, 4
+	ctx.r[31].s64 = ctx.r[31].s64 + 4;
+	// 82DAC2C8: 7F1A5800  cmpw cr6, r26, r11
+	ctx.cr[6].compare_i32(ctx.r[26].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAC2CC: 4198FFCC  blt cr6, 0x82dac298
+	if ctx.cr[6].lt {
+	pc = 0x82DAC298; continue 'dispatch;
+	}
+	pc = 0x82DAC2D0; continue 'dispatch;
+            }
+            0x82DAC2D0 => {
+    //   block [0x82DAC2D0..0x82DAC2FC)
+	// 82DAC2D0: 39600004  li r11, 4
+	ctx.r[11].s64 = 4;
+	// 82DAC2D4: 7C74582E  lwzx r3, r20, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[20].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAC2D8: 83E30070  lwz r31, 0x70(r3)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(112 as u32) ) } as u64;
+	// 82DAC2DC: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC2E0: 419A001C  beq cr6, 0x82dac2fc
+	if ctx.cr[6].eq {
+	pc = 0x82DAC2FC; continue 'dispatch;
+	}
+	// 82DAC2E4: 81630074  lwz r11, 0x74(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DAC2E8: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAC2EC: 91630074  stw r11, 0x74(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(116 as u32), ctx.r[11].u32 ) };
+	// 82DAC2F0: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC2F4: 91630070  stw r11, 0x70(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(112 as u32), ctx.r[11].u32 ) };
+	// 82DAC2F8: 48000010  b 0x82dac308
+	pc = 0x82DAC308; continue 'dispatch;
+            }
+            0x82DAC2FC => {
+    //   block [0x82DAC2FC..0x82DAC308)
+	// 82DAC2FC: 38800007  li r4, 7
+	ctx.r[4].s64 = 7;
+	// 82DAC300: 4BFA8D51  bl 0x82d55050
+	ctx.lr = 0x82DAC304;
+	sub_82D55050(ctx, base);
+	// 82DAC304: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	pc = 0x82DAC308; continue 'dispatch;
+            }
+            0x82DAC308 => {
+    //   block [0x82DAC308..0x82DAC350)
+	// 82DAC308: 3AC00001  li r22, 1
+	ctx.r[22].s64 = 1;
+	// 82DAC30C: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC310: 419A0040  beq cr6, 0x82dac350
+	if ctx.cr[6].eq {
+	pc = 0x82DAC350; continue 'dispatch;
+	}
+	// 82DAC314: 3D608000  lis r11, -0x8000
+	ctx.r[11].s64 = -2147483648;
+	// 82DAC318: 92DF000C  stw r22, 0xc(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(12 as u32), ctx.r[22].u32 ) };
+	// 82DAC31C: 92DF0010  stw r22, 0x10(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(16 as u32), ctx.r[22].u32 ) };
+	// 82DAC320: 93DF0014  stw r30, 0x14(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(20 as u32), ctx.r[30].u32 ) };
+	// 82DAC324: 93DF0018  stw r30, 0x18(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(24 as u32), ctx.r[30].u32 ) };
+	// 82DAC328: 93DF005C  stw r30, 0x5c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(92 as u32), ctx.r[30].u32 ) };
+	// 82DAC32C: 93DF0060  stw r30, 0x60(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(96 as u32), ctx.r[30].u32 ) };
+	// 82DAC330: 917F0064  stw r11, 0x64(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(100 as u32), ctx.r[11].u32 ) };
+	// 82DAC334: 93DF0068  stw r30, 0x68(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(104 as u32), ctx.r[30].u32 ) };
+	// 82DAC338: 93DF006C  stw r30, 0x6c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(108 as u32), ctx.r[30].u32 ) };
+	// 82DAC33C: 93DF0070  stw r30, 0x70(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(112 as u32), ctx.r[30].u32 ) };
+	// 82DAC340: 93DF0074  stw r30, 0x74(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(116 as u32), ctx.r[30].u32 ) };
+	// 82DAC344: 93DF0078  stw r30, 0x78(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(120 as u32), ctx.r[30].u32 ) };
+	// 82DAC348: B3DF007C  sth r30, 0x7c(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(124 as u32), ctx.r[30].u16 ) };
+	// 82DAC34C: 48000008  b 0x82dac354
+	pc = 0x82DAC354; continue 'dispatch;
+            }
+            0x82DAC350 => {
+    //   block [0x82DAC350..0x82DAC354)
+	// 82DAC350: 7FDFF378  mr r31, r30
+	ctx.r[31].u64 = ctx.r[30].u64;
+	pc = 0x82DAC354; continue 'dispatch;
+            }
+            0x82DAC354 => {
+    //   block [0x82DAC354..0x82DAC3DC)
+	// 82DAC354: 833D0050  lwz r25, 0x50(r29)
+	ctx.r[25].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAC358: 7FD7F378  mr r23, r30
+	ctx.r[23].u64 = ctx.r[30].u64;
+	// 82DAC35C: 831D004C  lwz r24, 0x4c(r29)
+	ctx.r[24].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAC360: 573A043E  clrlwi r26, r25, 0x10
+	ctx.r[26].u64 = ctx.r[25].u32 as u64 & 0x0000FFFFu64;
+	// 82DAC364: 931F0050  stw r24, 0x50(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(80 as u32), ctx.r[24].u32 ) };
+	// 82DAC368: B35F0054  sth r26, 0x54(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(84 as u32), ctx.r[26].u16 ) };
+	// 82DAC36C: 817D0054  lwz r11, 0x54(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DAC370: 93DF0004  stw r30, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[30].u32 ) };
+	// 82DAC374: 92DF0008  stw r22, 8(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(8 as u32), ctx.r[22].u32 ) };
+	// 82DAC378: 93DF0014  stw r30, 0x14(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(20 as u32), ctx.r[30].u32 ) };
+	// 82DAC37C: 93DF0018  stw r30, 0x18(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(24 as u32), ctx.r[30].u32 ) };
+	// 82DAC380: B17F0056  sth r11, 0x56(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(86 as u32), ctx.r[11].u16 ) };
+	// 82DAC384: 93DF0020  stw r30, 0x20(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(32 as u32), ctx.r[30].u32 ) };
+	// 82DAC388: 93DF0068  stw r30, 0x68(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(104 as u32), ctx.r[30].u32 ) };
+	// 82DAC38C: 93DF0030  stw r30, 0x30(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(48 as u32), ctx.r[30].u32 ) };
+	// 82DAC390: 897D0024  lbz r11, 0x24(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[29].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAC394: 895D0027  lbz r10, 0x27(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[29].u32.wrapping_add(39 as u32) ) } as u64;
+	// 82DAC398: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAC39C: 554906B6  rlwinm r9, r10, 0, 0x1a, 0x1b
+	ctx.r[9].u64 = ctx.r[10].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAC3A0: 556B063E  clrlwi r11, r11, 0x18
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x000000FFu64;
+	// 82DAC3A4: 2B090000  cmplwi cr6, r9, 0
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC3A8: 997D0024  stb r11, 0x24(r29)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[29].u32.wrapping_add(36 as u32), ctx.r[11].u8 ) };
+	// 82DAC3AC: 409A0030  bne cr6, 0x82dac3dc
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC3DC; continue 'dispatch;
+	}
+	// 82DAC3B0: 554A0032  rlwinm r10, r10, 0, 0, 0x19
+	ctx.r[10].u64 = ctx.r[10].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAC3B4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC3B8: 419A007C  beq cr6, 0x82dac434
+	if ctx.cr[6].eq {
+	pc = 0x82DAC434; continue 'dispatch;
+	}
+	// 82DAC3BC: 556B077E  clrlwi r11, r11, 0x1d
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x00000007u64;
+	// 82DAC3C0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC3C4: 409A0070  bne cr6, 0x82dac434
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC434; continue 'dispatch;
+	}
+	// 82DAC3C8: 81730000  lwz r11, 0(r19)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC3CC: 896B00B8  lbz r11, 0xb8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(184 as u32) ) } as u64;
+	// 82DAC3D0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC3D4: 419A0060  beq cr6, 0x82dac434
+	if ctx.cr[6].eq {
+	pc = 0x82DAC434; continue 'dispatch;
+	}
+	// 82DAC3D8: 48000058  b 0x82dac430
+	pc = 0x82DAC430; continue 'dispatch;
+            }
+            0x82DAC3DC => {
+    //   block [0x82DAC3DC..0x82DAC3F0)
+	// 82DAC3DC: 813D0050  lwz r9, 0x50(r29)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAC3E0: 811D001C  lwz r8, 0x1c(r29)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAC3E4: 7F094000  cmpw cr6, r9, r8
+	ctx.cr[6].compare_i32(ctx.r[9].s32, ctx.r[8].s32, &mut ctx.xer);
+	// 82DAC3E8: 41990008  bgt cr6, 0x82dac3f0
+	if ctx.cr[6].gt {
+	pc = 0x82DAC3F0; continue 'dispatch;
+	}
+	// 82DAC3EC: 7D094378  mr r9, r8
+	ctx.r[9].u64 = ctx.r[8].u64;
+	pc = 0x82DAC3F0; continue 'dispatch;
+            }
+            0x82DAC3F0 => {
+    //   block [0x82DAC3F0..0x82DAC408)
+	// 82DAC3F0: 81130000  lwz r8, 0(r19)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC3F4: 810800A4  lwz r8, 0xa4(r8)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(164 as u32) ) } as u64;
+	// 82DAC3F8: 7F094000  cmpw cr6, r9, r8
+	ctx.cr[6].compare_i32(ctx.r[9].s32, ctx.r[8].s32, &mut ctx.xer);
+	// 82DAC3FC: 7EC9B378  mr r9, r22
+	ctx.r[9].u64 = ctx.r[22].u64;
+	// 82DAC400: 41980008  blt cr6, 0x82dac408
+	if ctx.cr[6].lt {
+	pc = 0x82DAC408; continue 'dispatch;
+	}
+	// 82DAC404: 7FC9F378  mr r9, r30
+	ctx.r[9].u64 = ctx.r[30].u64;
+	pc = 0x82DAC408; continue 'dispatch;
+            }
+            0x82DAC408 => {
+    //   block [0x82DAC408..0x82DAC424)
+	// 82DAC408: 7D290774  extsb r9, r9
+	ctx.r[9].s64 = ctx.r[9].s8 as i64;
+	// 82DAC40C: 2F090000  cmpwi cr6, r9, 0
+	ctx.cr[6].compare_i32(ctx.r[9].s32, 0, &mut ctx.xer);
+	// 82DAC410: 409A0014  bne cr6, 0x82dac424
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC424; continue 'dispatch;
+	}
+	// 82DAC414: 714A00CF  andi. r10, r10, 0xcf
+	ctx.r[10].u64 = ctx.r[10].u64 & 207;
+	ctx.cr[0].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAC418: 556B07BE  clrlwi r11, r11, 0x1e
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x00000003u64;
+	// 82DAC41C: 995D0027  stb r10, 0x27(r29)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[29].u32.wrapping_add(39 as u32), ctx.r[10].u8 ) };
+	// 82DAC420: 48000008  b 0x82dac428
+	pc = 0x82DAC428; continue 'dispatch;
+            }
+            0x82DAC424 => {
+    //   block [0x82DAC424..0x82DAC428)
+	// 82DAC424: 556B077E  clrlwi r11, r11, 0x1d
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x00000007u64;
+	pc = 0x82DAC428; continue 'dispatch;
+            }
+            0x82DAC428 => {
+    //   block [0x82DAC428..0x82DAC430)
+	// 82DAC428: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC42C: 409A0008  bne cr6, 0x82dac434
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC434; continue 'dispatch;
+	}
+	pc = 0x82DAC430; continue 'dispatch;
+            }
+            0x82DAC430 => {
+    //   block [0x82DAC430..0x82DAC434)
+	// 82DAC430: 7ED7B378  mr r23, r22
+	ctx.r[23].u64 = ctx.r[22].u64;
+	pc = 0x82DAC434; continue 'dispatch;
+            }
+            0x82DAC434 => {
+    //   block [0x82DAC434..0x82DAC470)
+	// 82DAC434: 817D000C  lwz r11, 0xc(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC438: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAC43C: 409A0070  bne cr6, 0x82dac4ac
+	if !ctx.cr[6].eq {
+	pc = 0x82DAC4AC; continue 'dispatch;
+	}
+	// 82DAC440: 7D54902E  lwzx r10, r20, r18
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[20].u32.wrapping_add(ctx.r[18].u32)) } as u64;
+	// 82DAC444: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC448: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC44C: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC450: 40980020  bge cr6, 0x82dac470
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC470; continue 'dispatch;
+	}
+	// 82DAC454: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAC458: 3929FF0C  addi r9, r9, -0xf4
+	ctx.r[9].s64 = ctx.r[9].s64 + -244;
+	// 82DAC45C: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAC460: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAC464: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAC468: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAC46C: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAC470; continue 'dispatch;
+            }
+            0x82DAC470 => {
+    //   block [0x82DAC470..0x82DAC4AC)
+	// 82DAC470: 390000D0  li r8, 0xd0
+	ctx.r[8].s64 = 208;
+	// 82DAC474: 80FD0050  lwz r7, 0x50(r29)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAC478: 38B50030  addi r5, r21, 0x30
+	ctx.r[5].s64 = ctx.r[21].s64 + 48;
+	// 82DAC47C: 80DD004C  lwz r6, 0x4c(r29)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAC480: 7EA4AB78  mr r4, r21
+	ctx.r[4].u64 = ctx.r[21].u64;
+	// 82DAC484: 38750010  addi r3, r21, 0x10
+	ctx.r[3].s64 = ctx.r[21].s64 + 16;
+	// 82DAC488: 4BFFB339  bl 0x82da77c0
+	ctx.lr = 0x82DAC48C;
+	sub_82DA77C0(ctx, base);
+	// 82DAC48C: 817D0018  lwz r11, 0x18(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAC490: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAC494: 80BD0050  lwz r5, 0x50(r29)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAC498: 809D004C  lwz r4, 0x4c(r29)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAC49C: 806B006C  lwz r3, 0x6c(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DAC4A0: 4BFF8A89  bl 0x82da4f28
+	ctx.lr = 0x82DAC4A4;
+	sub_82DA4F28(ctx, base);
+	// 82DAC4A4: 2F1C0005  cmpwi cr6, r28, 5
+	ctx.cr[6].compare_i32(ctx.r[28].s32, 5, &mut ctx.xer);
+	// 82DAC4A8: 48000078  b 0x82dac520
+	pc = 0x82DAC520; continue 'dispatch;
+            }
+            0x82DAC4AC => {
+    //   block [0x82DAC4AC..0x82DAC4C0)
+	// 82DAC4AC: 817D0050  lwz r11, 0x50(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DAC4B0: 815D001C  lwz r10, 0x1c(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAC4B4: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAC4B8: 40990008  ble cr6, 0x82dac4c0
+	if !ctx.cr[6].gt {
+	pc = 0x82DAC4C0; continue 'dispatch;
+	}
+	// 82DAC4BC: 7D4B5378  mr r11, r10
+	ctx.r[11].u64 = ctx.r[10].u64;
+	pc = 0x82DAC4C0; continue 'dispatch;
+            }
+            0x82DAC4C0 => {
+    //   block [0x82DAC4C0..0x82DAC500)
+	// 82DAC4C0: 81530004  lwz r10, 4(r19)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC4C4: 814A00F8  lwz r10, 0xf8(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(248 as u32) ) } as u64;
+	// 82DAC4C8: 7F0B5040  cmplw cr6, r11, r10
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[10].u32, &mut ctx.xer);
+	// 82DAC4CC: 7D54902E  lwzx r10, r20, r18
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[20].u32.wrapping_add(ctx.r[18].u32)) } as u64;
+	// 82DAC4D0: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC4D4: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC4D8: 409800D0  bge cr6, 0x82dac5a8
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC5A8; continue 'dispatch;
+	}
+	// 82DAC4DC: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC4E0: 40980020  bge cr6, 0x82dac500
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC500; continue 'dispatch;
+	}
+	// 82DAC4E4: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAC4E8: 3929FEFC  addi r9, r9, -0x104
+	ctx.r[9].s64 = ctx.r[9].s64 + -260;
+	// 82DAC4EC: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAC4F0: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAC4F4: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAC4F8: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAC4FC: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAC500; continue 'dispatch;
+            }
+            0x82DAC500 => {
+    //   block [0x82DAC500..0x82DAC520)
+	// 82DAC500: 7F28CB78  mr r8, r25
+	ctx.r[8].u64 = ctx.r[25].u64;
+	// 82DAC504: 7F07C378  mr r7, r24
+	ctx.r[7].u64 = ctx.r[24].u64;
+	// 82DAC508: 7FA6EB78  mr r6, r29
+	ctx.r[6].u64 = ctx.r[29].u64;
+	// 82DAC50C: 38B30080  addi r5, r19, 0x80
+	ctx.r[5].s64 = ctx.r[19].s64 + 128;
+	// 82DAC510: 38950010  addi r4, r21, 0x10
+	ctx.r[4].s64 = ctx.r[21].s64 + 16;
+	// 82DAC514: 7EA3AB78  mr r3, r21
+	ctx.r[3].u64 = ctx.r[21].u64;
+	// 82DAC518: 4BFFA3C1  bl 0x82da68d8
+	ctx.lr = 0x82DAC51C;
+	sub_82DA68D8(ctx, base);
+	// 82DAC51C: 2F030005  cmpwi cr6, r3, 5
+	ctx.cr[6].compare_i32(ctx.r[3].s32, 5, &mut ctx.xer);
+	pc = 0x82DAC520; continue 'dispatch;
+            }
+            0x82DAC520 => {
+    //   block [0x82DAC520..0x82DAC528)
+	// 82DAC520: 41990008  bgt cr6, 0x82dac528
+	if ctx.cr[6].gt {
+	pc = 0x82DAC528; continue 'dispatch;
+	}
+	// 82DAC524: 93DF0008  stw r30, 8(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(8 as u32), ctx.r[30].u32 ) };
+	pc = 0x82DAC528; continue 'dispatch;
+            }
+            0x82DAC528 => {
+    //   block [0x82DAC528..0x82DAC53C)
+	// 82DAC528: 2F170000  cmpwi cr6, r23, 0
+	ctx.cr[6].compare_i32(ctx.r[23].s32, 0, &mut ctx.xer);
+	// 82DAC52C: 419A0010  beq cr6, 0x82dac53c
+	if ctx.cr[6].eq {
+	pc = 0x82DAC53C; continue 'dispatch;
+	}
+	// 82DAC530: 389F005C  addi r4, r31, 0x5c
+	ctx.r[4].s64 = ctx.r[31].s64 + 92;
+	// 82DAC534: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DAC538: 4BFFDD29  bl 0x82daa260
+	ctx.lr = 0x82DAC53C;
+	sub_82DAA260(ctx, base);
+	pc = 0x82DAC53C; continue 'dispatch;
+            }
+            0x82DAC53C => {
+    //   block [0x82DAC53C..0x82DAC56C)
+	// 82DAC53C: 7D54902E  lwzx r10, r20, r18
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[20].u32.wrapping_add(ctx.r[18].u32)) } as u64;
+	// 82DAC540: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC544: 812A000C  lwz r9, 0xc(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC548: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC54C: 40980020  bge cr6, 0x82dac56c
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC56C; continue 'dispatch;
+	}
+	// 82DAC550: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAC554: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAC558: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAC55C: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAC560: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAC564: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAC568: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAC56C; continue 'dispatch;
+            }
+            0x82DAC56C => {
+    //   block [0x82DAC56C..0x82DAC5A8)
+	// 82DAC56C: 3960000C  li r11, 0xc
+	ctx.r[11].s64 = 12;
+	// 82DAC570: 9ADF001C  stb r22, 0x1c(r31)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[31].u32.wrapping_add(28 as u32), ctx.r[22].u8 ) };
+	// 82DAC574: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAC578: 93FB0008  stw r31, 8(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(8 as u32), ctx.r[31].u32 ) };
+	// 82DAC57C: 7F67DB78  mr r7, r27
+	ctx.r[7].u64 = ctx.r[27].u64;
+	// 82DAC580: B2DB0010  sth r22, 0x10(r27)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[27].u32.wrapping_add(16 as u32), ctx.r[22].u16 ) };
+	// 82DAC584: 38A00000  li r5, 0
+	ctx.r[5].s64 = 0;
+	// 82DAC588: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DAC58C: 7E238B78  mr r3, r17
+	ctx.r[3].u64 = ctx.r[17].u64;
+	// 82DAC590: B17B0000  sth r11, 0(r27)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[27].u32.wrapping_add(0 as u32), ctx.r[11].u16 ) };
+	// 82DAC594: 80D30008  lwz r6, 8(r19)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAC598: 4831FB61  bl 0x830cc0f8
+	ctx.lr = 0x82DAC59C;
+	sub_830CC0F8(ctx, base);
+	// 82DAC59C: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAC5A0: 38210110  addi r1, r1, 0x110
+	ctx.r[1].s64 = ctx.r[1].s64 + 272;
+	// 82DAC5A4: 4BEFCE88  b 0x82ca942c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            0x82DAC5A8 => {
+    //   block [0x82DAC5A8..0x82DAC5CC)
+	// 82DAC5A8: 7F0B4840  cmplw cr6, r11, r9
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC5AC: 40980020  bge cr6, 0x82dac5cc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC5CC; continue 'dispatch;
+	}
+	// 82DAC5B0: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DAC5B4: 3929FEF0  addi r9, r9, -0x110
+	ctx.r[9].s64 = ctx.r[9].s64 + -272;
+	// 82DAC5B8: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAC5BC: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAC5C0: 390B000C  addi r8, r11, 0xc
+	ctx.r[8].s64 = ctx.r[11].s64 + 12;
+	// 82DAC5C4: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAC5C8: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DAC5CC; continue 'dispatch;
+            }
+            0x82DAC5CC => {
+    //   block [0x82DAC5CC..0x82DAC6D4)
+	// 82DAC5CC: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DAC5D0: 4BFFA261  bl 0x82da6830
+	ctx.lr = 0x82DAC5D4;
+	sub_82DA6830(ctx, base);
+	// 82DAC5D4: 3D608333  lis r11, -0x7ccd
+	ctx.r[11].s64 = -2093809664;
+	// 82DAC5D8: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAC5DC: 38A0002B  li r5, 0x2b
+	ctx.r[5].s64 = 43;
+	// 82DAC5E0: 7F84E378  mr r4, r28
+	ctx.r[4].u64 = ctx.r[28].u64;
+	// 82DAC5E4: 816B7414  lwz r11, 0x7414(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(29716 as u32) ) } as u64;
+	// 82DAC5E8: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DAC5EC: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC5F0: 816A0014  lwz r11, 0x14(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAC5F4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAC5F8: 4E800421  bctrl
+	ctx.lr = 0x82DAC5FC;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAC5FC: 7C641B78  mr r4, r3
+	ctx.r[4].u64 = ctx.r[3].u64;
+	// 82DAC600: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DAC604: 7F85E378  mr r5, r28
+	ctx.r[5].u64 = ctx.r[28].u64;
+	// 82DAC608: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DAC60C: 4BFF9AE5  bl 0x82da60f0
+	ctx.lr = 0x82DAC610;
+	sub_82DA60F0(ctx, base);
+	// 82DAC610: 815D0010  lwz r10, 0x10(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAC614: 3979FFFF  addi r11, r25, -1
+	ctx.r[11].s64 = ctx.r[25].s64 + -1;
+	// 82DAC618: 39330080  addi r9, r19, 0x80
+	ctx.r[9].s64 = ctx.r[19].s64 + 128;
+	// 82DAC61C: 556BC9FE  srwi r11, r11, 7
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shr(7);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAC620: 38C00000  li r6, 0
+	ctx.r[6].s64 = 0;
+	// 82DAC624: 915F0044  stw r10, 0x44(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(68 as u32), ctx.r[10].u32 ) };
+	// 82DAC628: 38A00000  li r5, 0
+	ctx.r[5].s64 = 0;
+	// 82DAC62C: 815D0014  lwz r10, 0x14(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAC630: 7F64DB78  mr r4, r27
+	ctx.r[4].u64 = ctx.r[27].u64;
+	// 82DAC634: 913F004C  stw r9, 0x4c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(76 as u32), ctx.r[9].u32 ) };
+	// 82DAC638: 7E238B78  mr r3, r17
+	ctx.r[3].u64 = ctx.r[17].u64;
+	// 82DAC63C: 9BDF001C  stb r30, 0x1c(r31)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[31].u32.wrapping_add(28 as u32), ctx.r[30].u8 ) };
+	// 82DAC640: 9AFF001D  stb r23, 0x1d(r31)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[31].u32.wrapping_add(29 as u32), ctx.r[23].u8 ) };
+	// 82DAC644: 915F0048  stw r10, 0x48(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(72 as u32), ctx.r[10].u32 ) };
+	// 82DAC648: 7D4BBA14  add r10, r11, r23
+	ctx.r[10].u64 = ctx.r[11].u64 + ctx.r[23].u64;
+	// 82DAC64C: 396B0002  addi r11, r11, 2
+	ctx.r[11].s64 = ctx.r[11].s64 + 2;
+	// 82DAC650: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DAC654: 915F0004  stw r10, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC658: B2DB0000  sth r22, 0(r27)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[27].u32.wrapping_add(0 as u32), ctx.r[22].u16 ) };
+	// 82DAC65C: 93FB0008  stw r31, 8(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(8 as u32), ctx.r[31].u32 ) };
+	// 82DAC660: 931B0010  stw r24, 0x10(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(16 as u32), ctx.r[24].u32 ) };
+	// 82DAC664: B3DB0014  sth r30, 0x14(r27)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[27].u32.wrapping_add(20 as u32), ctx.r[30].u16 ) };
+	// 82DAC668: B35B0016  sth r26, 0x16(r27)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[27].u32.wrapping_add(22 as u32), ctx.r[26].u16 ) };
+	// 82DAC66C: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAC670: 4831F651  bl 0x830cbcc0
+	ctx.lr = 0x82DAC674;
+	sub_830CBCC0(ctx, base);
+	// 82DAC674: 38E10050  addi r7, r1, 0x50
+	ctx.r[7].s64 = ctx.r[1].s64 + 80;
+	// 82DAC678: 88950134  lbz r4, 0x134(r21)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[21].u32.wrapping_add(308 as u32) ) } as u64;
+	// 82DAC67C: 38C10060  addi r6, r1, 0x60
+	ctx.r[6].s64 = ctx.r[1].s64 + 96;
+	// 82DAC680: 93C10060  stw r30, 0x60(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(96 as u32), ctx.r[30].u32 ) };
+	// 82DAC684: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DAC688: 93C10064  stw r30, 0x64(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(100 as u32), ctx.r[30].u32 ) };
+	// 82DAC68C: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DAC690: 93C10068  stw r30, 0x68(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(104 as u32), ctx.r[30].u32 ) };
+	// 82DAC694: 93C1006C  stw r30, 0x6c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(108 as u32), ctx.r[30].u32 ) };
+	// 82DAC698: 93C10050  stw r30, 0x50(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[30].u32 ) };
+	// 82DAC69C: B3C10054  sth r30, 0x54(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[30].u16 ) };
+	// 82DAC6A0: 4BFFECB9  bl 0x82dab358
+	ctx.lr = 0x82DAC6A4;
+	sub_82DAB358(ctx, base);
+	// 82DAC6A4: 7D74902E  lwzx r11, r20, r18
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[20].u32.wrapping_add(ctx.r[18].u32)) } as u64;
+	// 82DAC6A8: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC6AC: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC6B0: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC6B4: 40980020  bge cr6, 0x82dac6d4
+	if !ctx.cr[6].lt {
+	pc = 0x82DAC6D4; continue 'dispatch;
+	}
+	// 82DAC6B8: 3D208202  lis r9, -0x7dfe
+	ctx.r[9].s64 = -2113798144;
+	// 82DAC6BC: 39296468  addi r9, r9, 0x6468
+	ctx.r[9].s64 = ctx.r[9].s64 + 25704;
+	// 82DAC6C0: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAC6C4: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DAC6C8: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DAC6CC: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAC6D0: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+            }
+            0x82DAC6D4 => {
+    //   block [0x82DAC6D4..0x82DAC740)
+	// 82DAC6D4: E9410050  ld r10, 0x50(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) };
+	// 82DAC6D8: 39610060  addi r11, r1, 0x60
+	ctx.r[11].s64 = ctx.r[1].s64 + 96;
+	// 82DAC6DC: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAC6E0: 7E679B78  mr r7, r19
+	ctx.r[7].u64 = ctx.r[19].u64;
+	// 82DAC6E4: 7F66DB78  mr r6, r27
+	ctx.r[6].u64 = ctx.r[27].u64;
+	// 82DAC6E8: 38A10070  addi r5, r1, 0x70
+	ctx.r[5].s64 = ctx.r[1].s64 + 112;
+	// 82DAC6EC: F95F0078  std r10, 0x78(r31)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[31].u32.wrapping_add(120 as u32), ctx.r[10].u64 ) };
+	// 82DAC6F0: 7E238B78  mr r3, r17
+	ctx.r[3].u64 = ctx.r[17].u64;
+	// 82DAC6F4: 808B0008  lwz r4, 8(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAC6F8: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC6FC: 812B0004  lwz r9, 4(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC700: 816B000C  lwz r11, 0xc(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAC704: 909F0070  stw r4, 0x70(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(112 as u32), ctx.r[4].u32 ) };
+	// 82DAC708: 915F0068  stw r10, 0x68(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(104 as u32), ctx.r[10].u32 ) };
+	// 82DAC70C: 913F006C  stw r9, 0x6c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(108 as u32), ctx.r[9].u32 ) };
+	// 82DAC710: 917F0074  stw r11, 0x74(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(116 as u32), ctx.r[11].u32 ) };
+	// 82DAC714: 39600002  li r11, 2
+	ctx.r[11].s64 = 2;
+	// 82DAC718: 80930008  lwz r4, 8(r19)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[19].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAC71C: 93E10078  stw r31, 0x78(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(120 as u32), ctx.r[31].u32 ) };
+	// 82DAC720: B1610070  sth r11, 0x70(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(112 as u32), ctx.r[11].u16 ) };
+	// 82DAC724: A17B0002  lhz r11, 2(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[27].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC728: B1610072  sth r11, 0x72(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(114 as u32), ctx.r[11].u16 ) };
+	// 82DAC72C: 817B0004  lwz r11, 4(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAC730: 91610074  stw r11, 0x74(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(116 as u32), ctx.r[11].u32 ) };
+	// 82DAC734: 4831F625  bl 0x830cbd58
+	ctx.lr = 0x82DAC738;
+	sub_830CBD58(ctx, base);
+	// 82DAC738: 38210110  addi r1, r1, 0x110
+	ctx.r[1].s64 = ctx.r[1].s64 + 272;
+	// 82DAC73C: 4BEFCCF0  b 0x82ca942c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAC740(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAC740 size=4
+    let mut pc: u32 = 0x82DAC740;
+    'dispatch: loop {
+        match pc {
+            0x82DAC740 => {
+    //   block [0x82DAC740..0x82DAC744)
+	// 82DAC740: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAC748(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAC748 size=796
+    let mut pc: u32 = 0x82DAC748;
+    'dispatch: loop {
+        match pc {
+            0x82DAC748 => {
+    //   block [0x82DAC748..0x82DAC760)
+	// 82DAC748: 7CAB2B78  mr r11, r5
+	ctx.r[11].u64 = ctx.r[5].u64;
+	// 82DAC74C: 39400008  li r10, 8
+	ctx.r[10].s64 = 8;
+	// 82DAC750: 7D4903A6  mtctr r10
+	ctx.ctr.u64 = ctx.r[10].u64;
+	// 82DAC754: 392B000C  addi r9, r11, 0xc
+	ctx.r[9].s64 = ctx.r[11].s64 + 12;
+	// 82DAC758: 39460008  addi r10, r6, 8
+	ctx.r[10].s64 = ctx.r[6].s64 + 8;
+	// 82DAC75C: 7D065850  subf r8, r6, r11
+	ctx.r[8].s64 = ctx.r[11].s64 - ctx.r[6].s64;
+	pc = 0x82DAC760; continue 'dispatch;
+            }
+            0x82DAC760 => {
+    //   block [0x82DAC760..0x82DAC7F4)
+	// 82DAC760: 80E9FFF4  lwz r7, -0xc(r9)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(-12 as u32) ) } as u64;
+	// 82DAC764: 90EAFFF8  stw r7, -8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(-8 as u32), ctx.r[7].u32 ) };
+	// 82DAC768: 80E9FFF8  lwz r7, -8(r9)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAC76C: 90EAFFFC  stw r7, -4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(-4 as u32), ctx.r[7].u32 ) };
+	// 82DAC770: 7CE8502E  lwzx r7, r8, r10
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[8].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DAC774: 90EA0000  stw r7, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[7].u32 ) };
+	// 82DAC778: 80E90000  lwz r7, 0(r9)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC77C: 39290010  addi r9, r9, 0x10
+	ctx.r[9].s64 = ctx.r[9].s64 + 16;
+	// 82DAC780: 90EA0004  stw r7, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[7].u32 ) };
+	// 82DAC784: 394A0010  addi r10, r10, 0x10
+	ctx.r[10].s64 = ctx.r[10].s64 + 16;
+	// 82DAC788: 4200FFD8  bdnz 0x82dac760
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAC760; continue 'dispatch;
+	}
+	// 82DAC78C: A14B0000  lhz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC790: 8123004C  lwz r9, 0x4c(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAC794: 2B0A000E  cmplwi cr6, r10, 0xe
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 14 as u32, &mut ctx.xer);
+	// 82DAC798: 38890028  addi r4, r9, 0x28
+	ctx.r[4].s64 = ctx.r[9].s64 + 40;
+	// 82DAC79C: 41990268  bgt cr6, 0x82daca04
+	if ctx.cr[6].gt {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC7A0: 3D8082DB  lis r12, -0x7d25
+	ctx.r[12].s64 = -2099576832;
+	// 82DAC7A4: 398CC7B8  addi r12, r12, -0x3848
+	ctx.r[12].s64 = ctx.r[12].s64 + -14408;
+	// 82DAC7A8: 5540103A  slwi r0, r10, 2
+	ctx.r[0].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[0].u64 = ctx.r[0].u32 as u64;
+	// 82DAC7AC: 7C0C002E  lwzx r0, r12, r0
+	ctx.r[0].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[12].u32.wrapping_add(ctx.r[0].u32)) } as u64;
+	// 82DAC7B0: 7C0903A6  mtctr r0
+	ctx.ctr.u64 = ctx.r[0].u64;
+	// 82DAC7B4: 4E800420  bctr
+	match ctx.r[10].u64 {
+		0 => {
+	pc = 0x82DAC7F4; continue 'dispatch;
+		},
+		1 => {
+	pc = 0x82DAC834; continue 'dispatch;
+		},
+		2 => {
+	pc = 0x82DACA04; continue 'dispatch;
+		},
+		3 => {
+	pc = 0x82DAC9CC; continue 'dispatch;
+		},
+		4 => {
+	pc = 0x82DAC87C; continue 'dispatch;
+		},
+		5 => {
+	pc = 0x82DAC9F0; continue 'dispatch;
+		},
+		6 => {
+	pc = 0x82DAC9CC; continue 'dispatch;
+		},
+		7 => {
+	pc = 0x82DAC920; continue 'dispatch;
+		},
+		8 => {
+	pc = 0x82DAC958; continue 'dispatch;
+		},
+		9 => {
+	pc = 0x82DAC98C; continue 'dispatch;
+		},
+		10 => {
+	pc = 0x82DAC87C; continue 'dispatch;
+		},
+		11 => {
+	pc = 0x82DAC8BC; continue 'dispatch;
+		},
+		12 => {
+	pc = 0x82DAC8B0; continue 'dispatch;
+		},
+		13 => {
+	pc = 0x82DACA0C; continue 'dispatch;
+		},
+		14 => {
+	pc = 0x82DAC9CC; continue 'dispatch;
+		},
+		_ => unsafe { core::hint::unreachable_unchecked() },
+	}
+	// 82DAC7B8: 82DAC7F4  lwz r22, -0x380c(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-14348 as u32) ) } as u64;
+	// 82DAC7BC: 82DAC834  lwz r22, -0x37cc(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-14284 as u32) ) } as u64;
+	// 82DAC7C0: 82DACA04  lwz r22, -0x35fc(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13820 as u32) ) } as u64;
+	// 82DAC7C4: 82DAC9CC  lwz r22, -0x3634(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13876 as u32) ) } as u64;
+	// 82DAC7C8: 82DAC87C  lwz r22, -0x3784(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-14212 as u32) ) } as u64;
+	// 82DAC7CC: 82DAC9F0  lwz r22, -0x3610(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13840 as u32) ) } as u64;
+	// 82DAC7D0: 82DAC9CC  lwz r22, -0x3634(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13876 as u32) ) } as u64;
+	// 82DAC7D4: 82DAC920  lwz r22, -0x36e0(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-14048 as u32) ) } as u64;
+	// 82DAC7D8: 82DAC958  lwz r22, -0x36a8(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13992 as u32) ) } as u64;
+	// 82DAC7DC: 82DAC98C  lwz r22, -0x3674(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13940 as u32) ) } as u64;
+	// 82DAC7E0: 82DAC87C  lwz r22, -0x3784(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-14212 as u32) ) } as u64;
+	// 82DAC7E4: 82DAC8BC  lwz r22, -0x3744(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-14148 as u32) ) } as u64;
+	// 82DAC7E8: 82DAC8B0  lwz r22, -0x3750(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-14160 as u32) ) } as u64;
+	// 82DAC7EC: 82DACA0C  lwz r22, -0x35f4(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13812 as u32) ) } as u64;
+	// 82DAC7F0: 82DAC9CC  lwz r22, -0x3634(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-13876 as u32) ) } as u64;
+            }
+            0x82DAC7F4 => {
+    //   block [0x82DAC7F4..0x82DAC834)
+	// 82DAC7F4: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC7F8: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC7FC: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAC800: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DAC804: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC808: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAC80C: 2F0A0001  cmpwi cr6, r10, 1
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 1, &mut ctx.xer);
+	// 82DAC810: 409901F4  ble cr6, 0x82daca04
+	if !ctx.cr[6].gt {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC814: A12B0002  lhz r9, 2(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC818: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DAC81C: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC820: 39290001  addi r9, r9, 1
+	ctx.r[9].s64 = ctx.r[9].s64 + 1;
+	// 82DAC824: 914B0010  stw r10, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DAC828: B12B0002  sth r9, 2(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(2 as u32), ctx.r[9].u16 ) };
+	// 82DAC82C: 90660010  stw r3, 0x10(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(16 as u32), ctx.r[3].u32 ) };
+	// 82DAC830: 4E800020  blr
+	return;
+            }
+            0x82DAC834 => {
+    //   block [0x82DAC834..0x82DAC87C)
+	// 82DAC834: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC838: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC83C: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAC840: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DAC844: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC848: A14B0016  lhz r10, 0x16(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(22 as u32) ) } as u64;
+	// 82DAC84C: 2B0A0080  cmplwi cr6, r10, 0x80
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 128 as u32, &mut ctx.xer);
+	// 82DAC850: 409901B4  ble cr6, 0x82daca04
+	if !ctx.cr[6].gt {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC854: A12B0014  lhz r9, 0x14(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAC858: 3D4A0001  addis r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 65536;
+	// 82DAC85C: 39000080  li r8, 0x80
+	ctx.r[8].s64 = 128;
+	// 82DAC860: 39290080  addi r9, r9, 0x80
+	ctx.r[9].s64 = ctx.r[9].s64 + 128;
+	// 82DAC864: 394AFF80  addi r10, r10, -0x80
+	ctx.r[10].s64 = ctx.r[10].s64 + -128;
+	// 82DAC868: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC86C: B12B0014  sth r9, 0x14(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[9].u16 ) };
+	// 82DAC870: B14B0016  sth r10, 0x16(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(22 as u32), ctx.r[10].u16 ) };
+	// 82DAC874: B1060016  sth r8, 0x16(r6)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[6].u32.wrapping_add(22 as u32), ctx.r[8].u16 ) };
+	// 82DAC878: 4E800020  blr
+	return;
+            }
+            0x82DAC87C => {
+    //   block [0x82DAC87C..0x82DAC8B0)
+	// 82DAC87C: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC880: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC884: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAC888: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DAC88C: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC890: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAC894: 812A0000  lwz r9, 0(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC898: 2B090000  cmplwi cr6, r9, 0
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC89C: 419A0168  beq cr6, 0x82daca04
+	if ctx.cr[6].eq {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC8A0: 552A003E  slwi r10, r9, 0
+	ctx.r[10].u32 = ctx.r[9].u32.wrapping_shl(0);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAC8A4: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC8A8: 914B0010  stw r10, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DAC8AC: 4E800020  blr
+	return;
+            }
+            0x82DAC8B0 => {
+    //   block [0x82DAC8B0..0x82DAC8BC)
+	// 82DAC8B0: 7CC53378  mr r5, r6
+	ctx.r[5].u64 = ctx.r[6].u64;
+	// 82DAC8B4: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DAC8B8: 48002668  b 0x82daef20
+	sub_82DAEF20(ctx, base);
+	return;
+            }
+            0x82DAC8BC => {
+    //   block [0x82DAC8BC..0x82DAC904)
+	// 82DAC8BC: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC8C0: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC8C4: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAC8C8: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DAC8CC: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC8D0: A14B0024  lhz r10, 0x24(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAC8D4: 2B0A0080  cmplwi cr6, r10, 0x80
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 128 as u32, &mut ctx.xer);
+	// 82DAC8D8: 4099002C  ble cr6, 0x82dac904
+	if !ctx.cr[6].gt {
+	pc = 0x82DAC904; continue 'dispatch;
+	}
+	// 82DAC8DC: A12B0026  lhz r9, 0x26(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(38 as u32) ) } as u64;
+	// 82DAC8E0: 3D4A0001  addis r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 65536;
+	// 82DAC8E4: 39000080  li r8, 0x80
+	ctx.r[8].s64 = 128;
+	// 82DAC8E8: 39290080  addi r9, r9, 0x80
+	ctx.r[9].s64 = ctx.r[9].s64 + 128;
+	// 82DAC8EC: 394AFF80  addi r10, r10, -0x80
+	ctx.r[10].s64 = ctx.r[10].s64 + -128;
+	// 82DAC8F0: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC8F4: B12B0026  sth r9, 0x26(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(38 as u32), ctx.r[9].u16 ) };
+	// 82DAC8F8: B14B0024  sth r10, 0x24(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(36 as u32), ctx.r[10].u16 ) };
+	// 82DAC8FC: B1060024  sth r8, 0x24(r6)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[6].u32.wrapping_add(36 as u32), ctx.r[8].u16 ) };
+	// 82DAC900: 4E800020  blr
+	return;
+            }
+            0x82DAC904 => {
+    //   block [0x82DAC904..0x82DAC920)
+	// 82DAC904: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAC908: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC90C: 419A00F8  beq cr6, 0x82daca04
+	if ctx.cr[6].eq {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC910: 3940000A  li r10, 0xa
+	ctx.r[10].s64 = 10;
+	// 82DAC914: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC918: B14B0000  sth r10, 0(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[10].u16 ) };
+	// 82DAC91C: 4E800020  blr
+	return;
+            }
+            0x82DAC920 => {
+    //   block [0x82DAC920..0x82DAC958)
+	// 82DAC920: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC924: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC928: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAC92C: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DAC930: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC934: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAC938: 812B0014  lwz r9, 0x14(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAC93C: 394A4000  addi r10, r10, 0x4000
+	ctx.r[10].s64 = ctx.r[10].s64 + 16384;
+	// 82DAC940: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC944: 409800C0  bge cr6, 0x82daca04
+	if !ctx.cr[6].lt {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC948: 914B0010  stw r10, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DAC94C: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC950: 91460014  stw r10, 0x14(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DAC954: 4E800020  blr
+	return;
+            }
+            0x82DAC958 => {
+    //   block [0x82DAC958..0x82DAC98C)
+	// 82DAC958: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC95C: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC960: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAC964: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DAC968: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC96C: 814B001C  lwz r10, 0x1c(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAC970: 892A001C  lbz r9, 0x1c(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[10].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAC974: 2B090000  cmplwi cr6, r9, 0
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 0 as u32, &mut ctx.xer);
+	// 82DAC978: 409A008C  bne cr6, 0x82daca04
+	if !ctx.cr[6].eq {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC97C: 814A0000  lwz r10, 0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC980: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC984: 914B001C  stw r10, 0x1c(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(28 as u32), ctx.r[10].u32 ) };
+	// 82DAC988: 4E800020  blr
+	return;
+            }
+            0x82DAC98C => {
+    //   block [0x82DAC98C..0x82DAC9CC)
+	// 82DAC98C: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC990: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC994: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAC998: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DAC99C: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAC9A0: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAC9A4: 812B0014  lwz r9, 0x14(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAC9A8: 394A4000  addi r10, r10, 0x4000
+	ctx.r[10].s64 = ctx.r[10].s64 + 16384;
+	// 82DAC9AC: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DAC9B0: 40980054  bge cr6, 0x82daca04
+	if !ctx.cr[6].lt {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DAC9B4: 814B0010  lwz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAC9B8: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAC9BC: 394A4000  addi r10, r10, 0x4000
+	ctx.r[10].s64 = ctx.r[10].s64 + 16384;
+	// 82DAC9C0: 914B0010  stw r10, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DAC9C4: 91460014  stw r10, 0x14(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DAC9C8: 4E800020  blr
+	return;
+            }
+            0x82DAC9CC => {
+    //   block [0x82DAC9CC..0x82DAC9DC)
+	// 82DAC9CC: 7D6A5B78  mr r10, r11
+	ctx.r[10].u64 = ctx.r[11].u64;
+	// 82DAC9D0: 7CC93378  mr r9, r6
+	ctx.r[9].u64 = ctx.r[6].u64;
+	// 82DAC9D4: 39000010  li r8, 0x10
+	ctx.r[8].s64 = 16;
+	// 82DAC9D8: 7D0903A6  mtctr r8
+	ctx.ctr.u64 = ctx.r[8].u64;
+	pc = 0x82DAC9DC; continue 'dispatch;
+            }
+            0x82DAC9DC => {
+    //   block [0x82DAC9DC..0x82DAC9F0)
+	// 82DAC9DC: E90A0000  ld r8, 0(r10)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	// 82DAC9E0: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DAC9E4: F9090000  std r8, 0(r9)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[8].u64 ) };
+	// 82DAC9E8: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DAC9EC: 4200FFF0  bdnz 0x82dac9dc
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAC9DC; continue 'dispatch;
+	}
+	pc = 0x82DAC9F0; continue 'dispatch;
+            }
+            0x82DAC9F0 => {
+    //   block [0x82DAC9F0..0x82DACA04)
+	// 82DAC9F0: A16B0002  lhz r11, 2(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAC9F4: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAC9F8: 556B103E  rotlwi r11, r11, 2
+	ctx.r[11].u64 = ((ctx.r[11].u32).rotate_left(2)) as u64;
+	// 82DAC9FC: 7D6B502E  lwzx r11, r11, r10
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DACA00: 91660004  stw r11, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DACA04; continue 'dispatch;
+            }
+            0x82DACA04 => {
+    //   block [0x82DACA04..0x82DACA0C)
+	// 82DACA04: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DACA08: 4E800020  blr
+	return;
+            }
+            0x82DACA0C => {
+    //   block [0x82DACA0C..0x82DACA64)
+	// 82DACA0C: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DACA10: 81240000  lwz r9, 0(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACA14: 554A103E  rotlwi r10, r10, 2
+	ctx.r[10].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DACA18: 7D4A482E  lwzx r10, r10, r9
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DACA1C: 91460004  stw r10, 4(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DACA20: 814B0018  lwz r10, 0x18(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DACA24: 2F0A0004  cmpwi cr6, r10, 4
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 4, &mut ctx.xer);
+	// 82DACA28: 4099FFDC  ble cr6, 0x82daca04
+	if !ctx.cr[6].gt {
+	pc = 0x82DACA04; continue 'dispatch;
+	}
+	// 82DACA2C: 810B0010  lwz r8, 0x10(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DACA30: 394AFFFC  addi r10, r10, -4
+	ctx.r[10].s64 = ctx.r[10].s64 + -4;
+	// 82DACA34: 812B0014  lwz r9, 0x14(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DACA38: 38E00004  li r7, 4
+	ctx.r[7].s64 = 4;
+	// 82DACA3C: 39080001  addi r8, r8, 1
+	ctx.r[8].s64 = ctx.r[8].s64 + 1;
+	// 82DACA40: 39290004  addi r9, r9, 4
+	ctx.r[9].s64 = ctx.r[9].s64 + 4;
+	// 82DACA44: 38A00200  li r5, 0x200
+	ctx.r[5].s64 = 512;
+	// 82DACA48: 914B0018  stw r10, 0x18(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[10].u32 ) };
+	// 82DACA4C: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DACA50: 910B0010  stw r8, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[8].u32 ) };
+	// 82DACA54: 912B0014  stw r9, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[9].u32 ) };
+	// 82DACA58: 90E60018  stw r7, 0x18(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(24 as u32), ctx.r[7].u32 ) };
+	// 82DACA5C: 90A60020  stw r5, 0x20(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(32 as u32), ctx.r[5].u32 ) };
+	// 82DACA60: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DACA68(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DACA68 size=92
+    let mut pc: u32 = 0x82DACA68;
+    'dispatch: loop {
+        match pc {
+            0x82DACA68 => {
+    //   block [0x82DACA68..0x82DACAAC)
+	// 82DACA68: 39670010  addi r11, r7, 0x10
+	ctx.r[11].s64 = ctx.r[7].s64 + 16;
+	// 82DACA6C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DACA70: 419A003C  beq cr6, 0x82dacaac
+	if ctx.cr[6].eq {
+	pc = 0x82DACAAC; continue 'dispatch;
+	}
+	// 82DACA74: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DACA78: 81440068  lwz r10, 0x68(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(104 as u32) ) } as u64;
+	// 82DACA7C: B12B0000  sth r9, 0(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u16 ) };
+	// 82DACA80: A1230002  lhz r9, 2(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DACA84: B12B0002  sth r9, 2(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(2 as u32), ctx.r[9].u16 ) };
+	// 82DACA88: 81230004  lwz r9, 4(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DACA8C: 912B0004  stw r9, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DACA90: 81230008  lwz r9, 8(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DACA94: 912B0008  stw r9, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[9].u32 ) };
+	// 82DACA98: 8124004C  lwz r9, 0x4c(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DACA9C: 912B0014  stw r9, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[9].u32 ) };
+	// 82DACAA0: 89240058  lbz r9, 0x58(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DACAA4: 914B0010  stw r10, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DACAA8: 992B0018  stb r9, 0x18(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[9].u8 ) };
+	pc = 0x82DACAAC; continue 'dispatch;
+            }
+            0x82DACAAC => {
+    //   block [0x82DACAAC..0x82DACAC4)
+	// 82DACAAC: 8144006C  lwz r10, 0x6c(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DACAB0: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DACAB4: 91440000  stw r10, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DACAB8: 91670004  stw r11, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DACABC: 91670000  stw r11, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DACAC0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DACAC8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DACAC8 size=312
+    let mut pc: u32 = 0x82DACAC8;
+    'dispatch: loop {
+        match pc {
+            0x82DACAC8 => {
+    //   block [0x82DACAC8..0x82DACB24)
+	// 82DACAC8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DACACC: 4BEFC92D  bl 0x82ca93f8
+	ctx.lr = 0x82DACAD0;
+	sub_82CA93D0(ctx, base);
+	// 82DACAD0: 9421FF60  stwu r1, -0xa0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-160 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DACAD4: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DACAD8: 836D0000  lwz r27, 0(r13)
+	ctx.r[27].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACADC: 3B800004  li r28, 4
+	ctx.r[28].s64 = 4;
+	// 82DACAE0: 7FEB0734  extsh r11, r31
+	ctx.r[11].s64 = ctx.r[31].s16 as i64;
+	// 82DACAE4: 38A00004  li r5, 4
+	ctx.r[5].s64 = 4;
+	// 82DACAE8: 396B0002  addi r11, r11, 2
+	ctx.r[11].s64 = ctx.r[11].s64 + 2;
+	// 82DACAEC: 5564103A  slwi r4, r11, 2
+	ctx.r[4].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DACAF0: 7C7CD82E  lwzx r3, r28, r27
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DACAF4: 4BFA8755  bl 0x82d55248
+	ctx.lr = 0x82DACAF8;
+	sub_82D55248(ctx, base);
+	// 82DACAF8: 7C781B78  mr r24, r3
+	ctx.r[24].u64 = ctx.r[3].u64;
+	// 82DACAFC: 2F1F0004  cmpwi cr6, r31, 4
+	ctx.cr[6].compare_i32(ctx.r[31].s32, 4, &mut ctx.xer);
+	// 82DACB00: 3BD80008  addi r30, r24, 8
+	ctx.r[30].s64 = ctx.r[24].s64 + 8;
+	// 82DACB04: 93F80004  stw r31, 4(r24)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[24].u32.wrapping_add(4 as u32), ctx.r[31].u32 ) };
+	// 82DACB08: 93F80000  stw r31, 0(r24)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[24].u32.wrapping_add(0 as u32), ctx.r[31].u32 ) };
+	// 82DACB0C: 40980088  bge cr6, 0x82dacb94
+	if !ctx.cr[6].lt {
+	pc = 0x82DACB94; continue 'dispatch;
+	}
+	// 82DACB10: 2F1F0000  cmpwi cr6, r31, 0
+	ctx.cr[6].compare_i32(ctx.r[31].s32, 0, &mut ctx.xer);
+	// 82DACB14: 409900E0  ble cr6, 0x82dacbf4
+	if !ctx.cr[6].gt {
+	pc = 0x82DACBF4; continue 'dispatch;
+	}
+	// 82DACB18: 3B200010  li r25, 0x10
+	ctx.r[25].s64 = 16;
+	// 82DACB1C: 3BA00000  li r29, 0
+	ctx.r[29].s64 = 0;
+	// 82DACB20: 3B400100  li r26, 0x100
+	ctx.r[26].s64 = 256;
+	pc = 0x82DACB24; continue 'dispatch;
+            }
+            0x82DACB24 => {
+    //   block [0x82DACB24..0x82DACB4C)
+	// 82DACB24: 7C7CD82E  lwzx r3, r28, r27
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[27].u32)) } as u64;
+	// 82DACB28: 81630090  lwz r11, 0x90(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(144 as u32) ) } as u64;
+	// 82DACB2C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DACB30: 419A001C  beq cr6, 0x82dacb4c
+	if ctx.cr[6].eq {
+	pc = 0x82DACB4C; continue 'dispatch;
+	}
+	// 82DACB34: 81430094  lwz r10, 0x94(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(148 as u32) ) } as u64;
+	// 82DACB38: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DACB3C: 91430094  stw r10, 0x94(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(148 as u32), ctx.r[10].u32 ) };
+	// 82DACB40: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACB44: 91430090  stw r10, 0x90(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(144 as u32), ctx.r[10].u32 ) };
+	// 82DACB48: 48000010  b 0x82dacb58
+	pc = 0x82DACB58; continue 'dispatch;
+            }
+            0x82DACB4C => {
+    //   block [0x82DACB4C..0x82DACB58)
+	// 82DACB4C: 3880000B  li r4, 0xb
+	ctx.r[4].s64 = 11;
+	// 82DACB50: 4BFA8501  bl 0x82d55050
+	ctx.lr = 0x82DACB54;
+	sub_82D55050(ctx, base);
+	// 82DACB54: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	pc = 0x82DACB58; continue 'dispatch;
+            }
+            0x82DACB58 => {
+    //   block [0x82DACB58..0x82DACB70)
+	// 82DACB58: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DACB5C: 419A0014  beq cr6, 0x82dacb70
+	if ctx.cr[6].eq {
+	pc = 0x82DACB70; continue 'dispatch;
+	}
+	// 82DACB60: 932B0010  stw r25, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[25].u32 ) };
+	// 82DACB64: 93AB0014  stw r29, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[29].u32 ) };
+	// 82DACB68: 934B0018  stw r26, 0x18(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[26].u32 ) };
+	// 82DACB6C: 48000008  b 0x82dacb74
+	pc = 0x82DACB74; continue 'dispatch;
+            }
+            0x82DACB70 => {
+    //   block [0x82DACB70..0x82DACB74)
+	// 82DACB70: 7FABEB78  mr r11, r29
+	ctx.r[11].u64 = ctx.r[29].u64;
+	pc = 0x82DACB74; continue 'dispatch;
+            }
+            0x82DACB74 => {
+    //   block [0x82DACB74..0x82DACB94)
+	// 82DACB74: 3BFFFFFF  addi r31, r31, -1
+	ctx.r[31].s64 = ctx.r[31].s64 + -1;
+	// 82DACB78: 917E0000  stw r11, 0(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DACB7C: 3BDE0004  addi r30, r30, 4
+	ctx.r[30].s64 = ctx.r[30].s64 + 4;
+	// 82DACB80: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DACB84: 409AFFA0  bne cr6, 0x82dacb24
+	if !ctx.cr[6].eq {
+	pc = 0x82DACB24; continue 'dispatch;
+	}
+	// 82DACB88: 7F03C378  mr r3, r24
+	ctx.r[3].u64 = ctx.r[24].u64;
+	// 82DACB8C: 382100A0  addi r1, r1, 0xa0
+	ctx.r[1].s64 = ctx.r[1].s64 + 160;
+	// 82DACB90: 4BEFC8B8  b 0x82ca9448
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            0x82DACB94 => {
+    //   block [0x82DACB94..0x82DACBCC)
+	// 82DACB94: 3D608333  lis r11, -0x7ccd
+	ctx.r[11].s64 = -2093809664;
+	// 82DACB98: 38C00120  li r6, 0x120
+	ctx.r[6].s64 = 288;
+	// 82DACB9C: 7FE5FB78  mr r5, r31
+	ctx.r[5].u64 = ctx.r[31].u64;
+	// 82DACBA0: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DACBA4: 806B7414  lwz r3, 0x7414(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(29716 as u32) ) } as u64;
+	// 82DACBA8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACBAC: 816B0004  lwz r11, 4(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DACBB0: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DACBB4: 4E800421  bctrl
+	ctx.lr = 0x82DACBB8;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DACBB8: 2F1F0000  cmpwi cr6, r31, 0
+	ctx.cr[6].compare_i32(ctx.r[31].s32, 0, &mut ctx.xer);
+	// 82DACBBC: 40990038  ble cr6, 0x82dacbf4
+	if !ctx.cr[6].gt {
+	pc = 0x82DACBF4; continue 'dispatch;
+	}
+	// 82DACBC0: 3B200010  li r25, 0x10
+	ctx.r[25].s64 = 16;
+	// 82DACBC4: 3BA00000  li r29, 0
+	ctx.r[29].s64 = 0;
+	// 82DACBC8: 3B400100  li r26, 0x100
+	ctx.r[26].s64 = 256;
+            }
+            0x82DACBCC => {
+    //   block [0x82DACBCC..0x82DACBE4)
+	// 82DACBCC: 817E0000  lwz r11, 0(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACBD0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DACBD4: 419A0010  beq cr6, 0x82dacbe4
+	if ctx.cr[6].eq {
+	pc = 0x82DACBE4; continue 'dispatch;
+	}
+	// 82DACBD8: 932B0010  stw r25, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[25].u32 ) };
+	// 82DACBDC: 93AB0014  stw r29, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[29].u32 ) };
+	// 82DACBE0: 934B0018  stw r26, 0x18(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[26].u32 ) };
+	pc = 0x82DACBE4; continue 'dispatch;
+            }
+            0x82DACBE4 => {
+    //   block [0x82DACBE4..0x82DACBF4)
+	// 82DACBE4: 3BFFFFFF  addi r31, r31, -1
+	ctx.r[31].s64 = ctx.r[31].s64 + -1;
+	// 82DACBE8: 3BDE0004  addi r30, r30, 4
+	ctx.r[30].s64 = ctx.r[30].s64 + 4;
+	// 82DACBEC: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DACBF0: 409AFFDC  bne cr6, 0x82dacbcc
+	if !ctx.cr[6].eq {
+	pc = 0x82DACBCC; continue 'dispatch;
+	}
+	pc = 0x82DACBF4; continue 'dispatch;
+            }
+            0x82DACBF4 => {
+    //   block [0x82DACBF4..0x82DACC00)
+	// 82DACBF4: 7F03C378  mr r3, r24
+	ctx.r[3].u64 = ctx.r[24].u64;
+	// 82DACBF8: 382100A0  addi r1, r1, 0xa0
+	ctx.r[1].s64 = ctx.r[1].s64 + 160;
+	// 82DACBFC: 4BEFC84C  b 0x82ca9448
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DACC00(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DACC00 size=300
+    let mut pc: u32 = 0x82DACC00;
+    'dispatch: loop {
+        match pc {
+            0x82DACC00 => {
+    //   block [0x82DACC00..0x82DACD2C)
+	// 82DACC00: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DACC04: 4BEFC809  bl 0x82ca940c
+	ctx.lr = 0x82DACC08;
+	sub_82CA93D0(ctx, base);
+	// 82DACC08: 90A30004  stw r5, 4(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(4 as u32), ctx.r[5].u32 ) };
+	// 82DACC0C: 39430010  addi r10, r3, 0x10
+	ctx.r[10].s64 = ctx.r[3].s64 + 16;
+	// 82DACC10: 90C30008  stw r6, 8(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[6].u32 ) };
+	// 82DACC14: 3BC00010  li r30, 0x10
+	ctx.r[30].s64 = 16;
+	// 82DACC18: 90830000  stw r4, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[4].u32 ) };
+	// 82DACC1C: 390A0020  addi r8, r10, 0x20
+	ctx.r[8].s64 = ctx.r[10].s64 + 32;
+	// 82DACC20: 8124006C  lwz r9, 0x6c(r4)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DACC24: 3BE00020  li r31, 0x20
+	ctx.r[31].s64 = 32;
+	// 82DACC28: 38CA0050  addi r6, r10, 0x50
+	ctx.r[6].s64 = ctx.r[10].s64 + 80;
+	// 82DACC2C: 38E90020  addi r7, r9, 0x20
+	ctx.r[7].s64 = ctx.r[9].s64 + 32;
+	// 82DACC30: 38A90050  addi r5, r9, 0x50
+	ctx.r[5].s64 = ctx.r[9].s64 + 80;
+	// 82DACC34: 396401A0  addi r11, r4, 0x1a0
+	ctx.r[11].s64 = ctx.r[4].s64 + 416;
+	// 82DACC38: 83A90000  lwz r29, 0(r9)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACC3C: 93AA0000  stw r29, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[29].u32 ) };
+	// 82DACC40: 83A90004  lwz r29, 4(r9)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DACC44: 93AA0004  stw r29, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[29].u32 ) };
+	// 82DACC48: 83A90008  lwz r29, 8(r9)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DACC4C: 93AA0008  stw r29, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[29].u32 ) };
+	// 82DACC50: 83A9000C  lwz r29, 0xc(r9)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DACC54: 93AA000C  stw r29, 0xc(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(12 as u32), ctx.r[29].u32 ) };
+	// 82DACC58: 83A90010  lwz r29, 0x10(r9)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DACC5C: 93AA0010  stw r29, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[29].u32 ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DACD30(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DACD30 size=224
+    let mut pc: u32 = 0x82DACD30;
+    'dispatch: loop {
+        match pc {
+            0x82DACD30 => {
+    //   block [0x82DACD30..0x82DACD60)
+	// 82DACD30: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DACD34: 4BEFC6D9  bl 0x82ca940c
+	ctx.lr = 0x82DACD38;
+	sub_82CA93D0(ctx, base);
+	// 82DACD38: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DACD3C: 7C7D1B78  mr r29, r3
+	ctx.r[29].u64 = ctx.r[3].u64;
+	// 82DACD40: 389D0008  addi r4, r29, 8
+	ctx.r[4].s64 = ctx.r[29].s64 + 8;
+	// 82DACD44: 80BD0000  lwz r5, 0(r29)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACD48: 2F050004  cmpwi cr6, r5, 4
+	ctx.cr[6].compare_i32(ctx.r[5].s32, 4, &mut ctx.xer);
+	// 82DACD4C: 40980078  bge cr6, 0x82dacdc4
+	if !ctx.cr[6].lt {
+	pc = 0x82DACDC4; continue 'dispatch;
+	}
+	// 82DACD50: 3BC00000  li r30, 0
+	ctx.r[30].s64 = 0;
+	// 82DACD54: 2F050000  cmpwi cr6, r5, 0
+	ctx.cr[6].compare_i32(ctx.r[5].s32, 0, &mut ctx.xer);
+	// 82DACD58: 40990088  ble cr6, 0x82dacde0
+	if !ctx.cr[6].gt {
+	pc = 0x82DACDE0; continue 'dispatch;
+	}
+	// 82DACD5C: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	pc = 0x82DACD60; continue 'dispatch;
+            }
+            0x82DACD60 => {
+    //   block [0x82DACD60..0x82DACD94)
+	// 82DACD60: 80BF0000  lwz r5, 0(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACD64: 2B050000  cmplwi cr6, r5, 0
+	ctx.cr[6].compare_u32(ctx.r[5].u32, 0 as u32, &mut ctx.xer);
+	// 82DACD68: 419A0044  beq cr6, 0x82dacdac
+	if ctx.cr[6].eq {
+	pc = 0x82DACDAC; continue 'dispatch;
+	}
+	// 82DACD6C: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACD70: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DACD74: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DACD78: 81630094  lwz r11, 0x94(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(148 as u32) ) } as u64;
+	// 82DACD7C: 81430034  lwz r10, 0x34(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(52 as u32) ) } as u64;
+	// 82DACD80: 7F0B5000  cmpw cr6, r11, r10
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[10].s32, &mut ctx.xer);
+	// 82DACD84: 41980010  blt cr6, 0x82dacd94
+	if ctx.cr[6].lt {
+	pc = 0x82DACD94; continue 'dispatch;
+	}
+	// 82DACD88: 3880000B  li r4, 0xb
+	ctx.r[4].s64 = 11;
+	// 82DACD8C: 4BFA839D  bl 0x82d55128
+	ctx.lr = 0x82DACD90;
+	sub_82D55128(ctx, base);
+	// 82DACD90: 4800001C  b 0x82dacdac
+	pc = 0x82DACDAC; continue 'dispatch;
+            }
+            0x82DACD94 => {
+    //   block [0x82DACD94..0x82DACDAC)
+	// 82DACD94: 81630094  lwz r11, 0x94(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(148 as u32) ) } as u64;
+	// 82DACD98: 81430090  lwz r10, 0x90(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(144 as u32) ) } as u64;
+	// 82DACD9C: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DACDA0: 91630094  stw r11, 0x94(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(148 as u32), ctx.r[11].u32 ) };
+	// 82DACDA4: 91450000  stw r10, 0(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DACDA8: 90A30090  stw r5, 0x90(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(144 as u32), ctx.r[5].u32 ) };
+	pc = 0x82DACDAC; continue 'dispatch;
+            }
+            0x82DACDAC => {
+    //   block [0x82DACDAC..0x82DACDC4)
+	// 82DACDAC: 817D0000  lwz r11, 0(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACDB0: 3BDE0001  addi r30, r30, 1
+	ctx.r[30].s64 = ctx.r[30].s64 + 1;
+	// 82DACDB4: 3BFF0004  addi r31, r31, 4
+	ctx.r[31].s64 = ctx.r[31].s64 + 4;
+	// 82DACDB8: 7F1E5800  cmpw cr6, r30, r11
+	ctx.cr[6].compare_i32(ctx.r[30].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DACDBC: 4198FFA4  blt cr6, 0x82dacd60
+	if ctx.cr[6].lt {
+	pc = 0x82DACD60; continue 'dispatch;
+	}
+	// 82DACDC0: 48000020  b 0x82dacde0
+	pc = 0x82DACDE0; continue 'dispatch;
+            }
+            0x82DACDC4 => {
+    //   block [0x82DACDC4..0x82DACDE0)
+	// 82DACDC4: 3D608333  lis r11, -0x7ccd
+	ctx.r[11].s64 = -2093809664;
+	// 82DACDC8: 38C00120  li r6, 0x120
+	ctx.r[6].s64 = 288;
+	// 82DACDCC: 806B7414  lwz r3, 0x7414(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(29716 as u32) ) } as u64;
+	// 82DACDD0: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACDD4: 816B0008  lwz r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DACDD8: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DACDDC: 4E800421  bctrl
+	ctx.lr = 0x82DACDE0;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DACDE0 => {
+    //   block [0x82DACDE0..0x82DACE10)
+	// 82DACDE0: 817D0000  lwz r11, 0(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACDE4: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DACDE8: 812D0000  lwz r9, 0(r13)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACDEC: 38C00004  li r6, 4
+	ctx.r[6].s64 = 4;
+	// 82DACDF0: 7D6B0734  extsh r11, r11
+	ctx.r[11].s64 = ctx.r[11].s16 as i64;
+	// 82DACDF4: 7FA4EB78  mr r4, r29
+	ctx.r[4].u64 = ctx.r[29].u64;
+	// 82DACDF8: 396B0002  addi r11, r11, 2
+	ctx.r[11].s64 = ctx.r[11].s64 + 2;
+	// 82DACDFC: 5565103A  slwi r5, r11, 2
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DACE00: 7C6A482E  lwzx r3, r10, r9
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[9].u32)) } as u64;
+	// 82DACE04: 4BFA84C5  bl 0x82d552c8
+	ctx.lr = 0x82DACE08;
+	sub_82D552C8(ctx, base);
+	// 82DACE08: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DACE0C: 4BEFC650  b 0x82ca945c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DACE10(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DACE10 size=88
+    let mut pc: u32 = 0x82DACE10;
+    'dispatch: loop {
+        match pc {
+            0x82DACE10 => {
+    //   block [0x82DACE10..0x82DACE58)
+	// 82DACE10: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DACE14: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DACE18: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DACE1C: 8944001D  lbz r10, 0x1d(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(29 as u32) ) } as u64;
+	// 82DACE20: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	// 82DACE24: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DACE28: 419A0030  beq cr6, 0x82dace58
+	if ctx.cr[6].eq {
+	pc = 0x82DACE58; continue 'dispatch;
+	}
+	// 82DACE2C: A14B0002  lhz r10, 2(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DACE30: 38810050  addi r4, r1, 0x50
+	ctx.r[4].s64 = ctx.r[1].s64 + 80;
+	// 82DACE34: 3866000C  addi r3, r6, 0xc
+	ctx.r[3].s64 = ctx.r[6].s64 + 12;
+	// 82DACE38: B1410052  sth r10, 0x52(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(82 as u32), ctx.r[10].u16 ) };
+	// 82DACE3C: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DACE40: 816B0008  lwz r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DACE44: 91410054  stw r10, 0x54(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[10].u32 ) };
+	// 82DACE48: 39400005  li r10, 5
+	ctx.r[10].s64 = 5;
+	// 82DACE4C: 91610058  stw r11, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[11].u32 ) };
+	// 82DACE50: B1410050  sth r10, 0x50(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[10].u16 ) };
+	// 82DACE54: 4800082D  bl 0x82dad680
+	ctx.lr = 0x82DACE58;
+	sub_82DAD680(ctx, base);
+	pc = 0x82DACE58; continue 'dispatch;
+            }
+            0x82DACE58 => {
+    //   block [0x82DACE58..0x82DACE68)
+	// 82DACE58: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DACE5C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DACE60: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DACE64: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DACE68(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DACE68 size=1832
+    let mut pc: u32 = 0x82DACE68;
+    'dispatch: loop {
+        match pc {
+            0x82DACE68 => {
+    //   block [0x82DACE68..0x82DACEF0)
+	// 82DACE68: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DACE6C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DACE70: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DACE74: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DACE78: 7CAB2B78  mr r11, r5
+	ctx.r[11].u64 = ctx.r[5].u64;
+	// 82DACE7C: 7CC73378  mr r7, r6
+	ctx.r[7].u64 = ctx.r[6].u64;
+	// 82DACE80: 38C00001  li r6, 1
+	ctx.r[6].s64 = 1;
+	// 82DACE84: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	// 82DACE88: 7CC83378  mr r8, r6
+	ctx.r[8].u64 = ctx.r[6].u64;
+	// 82DACE8C: A14B0000  lhz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACE90: 808B0008  lwz r4, 8(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DACE94: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DACE98: 2B0A000C  cmplwi cr6, r10, 0xc
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 12 as u32, &mut ctx.xer);
+	// 82DACE9C: 419905D4  bgt cr6, 0x82dad470
+	if ctx.cr[6].gt {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DACEA0: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DACEA4: 3D8082DB  lis r12, -0x7d25
+	ctx.r[12].s64 = -2099576832;
+	// 82DACEA8: 398CCEBC  addi r12, r12, -0x3144
+	ctx.r[12].s64 = ctx.r[12].s64 + -12612;
+	// 82DACEAC: 5540103A  slwi r0, r10, 2
+	ctx.r[0].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[0].u64 = ctx.r[0].u32 as u64;
+	// 82DACEB0: 7C0C002E  lwzx r0, r12, r0
+	ctx.r[0].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[12].u32.wrapping_add(ctx.r[0].u32)) } as u64;
+	// 82DACEB4: 7C0903A6  mtctr r0
+	ctx.ctr.u64 = ctx.r[0].u64;
+	// 82DACEB8: 4E800420  bctr
+	match ctx.r[10].u64 {
+		0 => {
+	pc = 0x82DACEF0; continue 'dispatch;
+		},
+		1 => {
+	pc = 0x82DACEF0; continue 'dispatch;
+		},
+		2 => {
+	pc = 0x82DACF84; continue 'dispatch;
+		},
+		3 => {
+	pc = 0x82DACFAC; continue 'dispatch;
+		},
+		4 => {
+	pc = 0x82DAD4A8; continue 'dispatch;
+		},
+		5 => {
+	pc = 0x82DAD46C; continue 'dispatch;
+		},
+		6 => {
+	pc = 0x82DAD100; continue 'dispatch;
+		},
+		7 => {
+	pc = 0x82DAD178; continue 'dispatch;
+		},
+		8 => {
+	pc = 0x82DAD33C; continue 'dispatch;
+		},
+		9 => {
+	pc = 0x82DAD434; continue 'dispatch;
+		},
+		10 => {
+	pc = 0x82DAD488; continue 'dispatch;
+		},
+		11 => {
+	pc = 0x82DAD470; continue 'dispatch;
+		},
+		12 => {
+	pc = 0x82DAD510; continue 'dispatch;
+		},
+		_ => unsafe { core::hint::unreachable_unchecked() },
+	}
+	// 82DACEBC: 82DACEF0  lwz r22, -0x3110(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-12560 as u32) ) } as u64;
+	// 82DACEC0: 82DACEF0  lwz r22, -0x3110(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-12560 as u32) ) } as u64;
+	// 82DACEC4: 82DACF84  lwz r22, -0x307c(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-12412 as u32) ) } as u64;
+	// 82DACEC8: 82DACFAC  lwz r22, -0x3054(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-12372 as u32) ) } as u64;
+	// 82DACECC: 82DAD4A8  lwz r22, -0x2b58(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-11096 as u32) ) } as u64;
+	// 82DACED0: 82DAD46C  lwz r22, -0x2b94(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-11156 as u32) ) } as u64;
+	// 82DACED4: 82DAD100  lwz r22, -0x2f00(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-12032 as u32) ) } as u64;
+	// 82DACED8: 82DAD178  lwz r22, -0x2e88(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-11912 as u32) ) } as u64;
+	// 82DACEDC: 82DAD33C  lwz r22, -0x2cc4(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-11460 as u32) ) } as u64;
+	// 82DACEE0: 82DAD434  lwz r22, -0x2bcc(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-11212 as u32) ) } as u64;
+	// 82DACEE4: 82DAD488  lwz r22, -0x2b78(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-11128 as u32) ) } as u64;
+	// 82DACEE8: 82DAD470  lwz r22, -0x2b90(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-11152 as u32) ) } as u64;
+	// 82DACEEC: 82DAD510  lwz r22, -0x2af0(r26)
+	ctx.r[22].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(-10992 as u32) ) } as u64;
+            }
+            0x82DACEF0 => {
+    //   block [0x82DACEF0..0x82DACF38)
+	// 82DACEF0: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACEF4: 354AFFFF  addic. r10, r10, -1
+	ctx.xer.ca = (ctx.r[10].u32 > (!(-1 as u32)));
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	ctx.cr[0].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DACEF8: 91440000  stw r10, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DACEFC: 40820574  bne 0x82dad470
+	if !ctx.cr[0].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DACF00: 81440074  lwz r10, 0x74(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DACF04: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DACF08: 40990054  ble cr6, 0x82dacf5c
+	if !ctx.cr[6].gt {
+	pc = 0x82DACF5C; continue 'dispatch;
+	}
+	// 82DACF0C: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DACF10: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DACF14: 419A0024  beq cr6, 0x82dacf38
+	if ctx.cr[6].eq {
+	pc = 0x82DACF38; continue 'dispatch;
+	}
+	// 82DACF18: 39200003  li r9, 3
+	ctx.r[9].s64 = 3;
+	// 82DACF1C: B12A0000  sth r9, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u16 ) };
+	// 82DACF20: A12B0002  lhz r9, 2(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DACF24: B12A0002  sth r9, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[9].u16 ) };
+	// 82DACF28: 812B0004  lwz r9, 4(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DACF2C: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DACF30: 816B0008  lwz r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DACF34: 916A0008  stw r11, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DACF38; continue 'dispatch;
+            }
+            0x82DACF38 => {
+    //   block [0x82DACF38..0x82DACF5C)
+	// 82DACF38: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DACF3C: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DACF40: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DACF44: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DACF48: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DACF4C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DACF50: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DACF54: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DACF58: 4E800020  blr
+	return;
+            }
+            0x82DACF5C => {
+    //   block [0x82DACF5C..0x82DACF84)
+	// 82DACF5C: 7C651B78  mr r5, r3
+	ctx.r[5].u64 = ctx.r[3].u64;
+	// 82DACF60: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DACF64: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DACF68: 4BFFFB01  bl 0x82daca68
+	ctx.lr = 0x82DACF6C;
+	sub_82DACA68(ctx, base);
+	// 82DACF6C: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DACF70: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DACF74: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DACF78: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DACF7C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DACF80: 4E800020  blr
+	return;
+            }
+            0x82DACF84 => {
+    //   block [0x82DACF84..0x82DACFAC)
+	// 82DACF84: 7C651B78  mr r5, r3
+	ctx.r[5].u64 = ctx.r[3].u64;
+	// 82DACF88: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DACF8C: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DACF90: 4BFFFAD9  bl 0x82daca68
+	ctx.lr = 0x82DACF94;
+	sub_82DACA68(ctx, base);
+	// 82DACF94: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DACF98: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DACF9C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DACFA0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DACFA4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DACFA8: 4E800020  blr
+	return;
+            }
+            0x82DACFAC => {
+    //   block [0x82DACFAC..0x82DAD050)
+	// 82DACFAC: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DACFB0: 354AFFFF  addic. r10, r10, -1
+	ctx.xer.ca = (ctx.r[10].u32 > (!(-1 as u32)));
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	ctx.cr[0].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DACFB4: 91440000  stw r10, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DACFB8: 408204B8  bne 0x82dad470
+	if !ctx.cr[0].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DACFBC: 89440058  lbz r10, 0x58(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DACFC0: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DACFC4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DACFC8: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DACFCC: 419A0094  beq cr6, 0x82dad060
+	if ctx.cr[6].eq {
+	pc = 0x82DAD060; continue 'dispatch;
+	}
+	// 82DACFD0: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DACFD4: 419A007C  beq cr6, 0x82dad050
+	if ctx.cr[6].eq {
+	pc = 0x82DAD050; continue 'dispatch;
+	}
+	// 82DACFD8: 39000006  li r8, 6
+	ctx.r[8].s64 = 6;
+	// 82DACFDC: B10A0000  sth r8, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DACFE0: A10B0002  lhz r8, 2(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DACFE4: B10A0002  sth r8, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[8].u16 ) };
+	// 82DACFE8: 810B0004  lwz r8, 4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DACFEC: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DACFF0: 816B0008  lwz r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DACFF4: 916A0008  stw r11, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DACFF8: 81640014  lwz r11, 0x14(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DACFFC: 5566003E  slwi r6, r11, 0
+	ctx.r[6].u32 = ctx.r[11].u32.wrapping_shl(0);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DAD000: 916A0010  stw r11, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DAD004: 81040030  lwz r8, 0x30(r4)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAD008: 7D6B4050  subf r11, r11, r8
+	ctx.r[11].s64 = ctx.r[8].s64 - ctx.r[11].s64;
+	// 82DAD00C: 810A0010  lwz r8, 0x10(r10)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD010: 916A0018  stw r11, 0x18(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[11].u32 ) };
+	// 82DAD014: 8164003C  lwz r11, 0x3c(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(60 as u32) ) } as u64;
+	// 82DAD018: 7D665850  subf r11, r6, r11
+	ctx.r[11].s64 = ctx.r[11].s64 - ctx.r[6].s64;
+	// 82DAD01C: 916A001C  stw r11, 0x1c(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[11].u32 ) };
+	// 82DAD020: 81640040  lwz r11, 0x40(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAD024: 7D685850  subf r11, r8, r11
+	ctx.r[11].s64 = ctx.r[11].s64 - ctx.r[8].s64;
+	// 82DAD028: 916A0020  stw r11, 0x20(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(32 as u32), ctx.r[11].u32 ) };
+	// 82DAD02C: 81640018  lwz r11, 0x18(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAD030: 916A0014  stw r11, 0x14(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(20 as u32), ctx.r[11].u32 ) };
+	// 82DAD034: 81640044  lwz r11, 0x44(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(68 as u32) ) } as u64;
+	// 82DAD038: 916A0024  stw r11, 0x24(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(36 as u32), ctx.r[11].u32 ) };
+	// 82DAD03C: 81640048  lwz r11, 0x48(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(72 as u32) ) } as u64;
+	// 82DAD040: 916A0028  stw r11, 0x28(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(40 as u32), ctx.r[11].u32 ) };
+	// 82DAD044: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD048: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD04C: 48000064  b 0x82dad0b0
+	pc = 0x82DAD0B0; continue 'dispatch;
+            }
+            0x82DAD050 => {
+    //   block [0x82DAD050..0x82DAD060)
+	// 82DAD050: 7D2A4B78  mr r10, r9
+	ctx.r[10].u64 = ctx.r[9].u64;
+	// 82DAD054: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD058: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD05C: 48000054  b 0x82dad0b0
+	pc = 0x82DAD0B0; continue 'dispatch;
+            }
+            0x82DAD060 => {
+    //   block [0x82DAD060..0x82DAD09C)
+	// 82DAD060: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD064: 419A0038  beq cr6, 0x82dad09c
+	if ctx.cr[6].eq {
+	pc = 0x82DAD09C; continue 'dispatch;
+	}
+	// 82DAD068: 39000007  li r8, 7
+	ctx.r[8].s64 = 7;
+	// 82DAD06C: B10A0000  sth r8, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DAD070: A10B0002  lhz r8, 2(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD074: B10A0002  sth r8, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[8].u16 ) };
+	// 82DAD078: 810B0004  lwz r8, 4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD07C: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DAD080: 816B0008  lwz r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD084: 916A0008  stw r11, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DAD088: 81640030  lwz r11, 0x30(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAD08C: 916A0010  stw r11, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DAD090: 81640034  lwz r11, 0x34(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(52 as u32) ) } as u64;
+	// 82DAD094: 916A0014  stw r11, 0x14(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(20 as u32), ctx.r[11].u32 ) };
+	// 82DAD098: 48000008  b 0x82dad0a0
+	pc = 0x82DAD0A0; continue 'dispatch;
+            }
+            0x82DAD09C => {
+    //   block [0x82DAD09C..0x82DAD0A0)
+	// 82DAD09C: 7D2A4B78  mr r10, r9
+	ctx.r[10].u64 = ctx.r[9].u64;
+	pc = 0x82DAD0A0; continue 'dispatch;
+            }
+            0x82DAD0A0 => {
+    //   block [0x82DAD0A0..0x82DAD0B0)
+	// 82DAD0A0: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD0A4: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD0A8: A1640038  lhz r11, 0x38(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(56 as u32) ) } as u64;
+	// 82DAD0AC: 91640000  stw r11, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD0B0; continue 'dispatch;
+            }
+            0x82DAD0B0 => {
+    //   block [0x82DAD0B0..0x82DAD100)
+	// 82DAD0B0: 8964001D  lbz r11, 0x1d(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(29 as u32) ) } as u64;
+	// 82DAD0B4: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD0B8: 419A0364  beq cr6, 0x82dad41c
+	if ctx.cr[6].eq {
+	pc = 0x82DAD41C; continue 'dispatch;
+	}
+	// 82DAD0BC: A16A0002  lhz r11, 2(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD0C0: 38810050  addi r4, r1, 0x50
+	ctx.r[4].s64 = ctx.r[1].s64 + 80;
+	// 82DAD0C4: 387F000C  addi r3, r31, 0xc
+	ctx.r[3].s64 = ctx.r[31].s64 + 12;
+	// 82DAD0C8: B1610052  sth r11, 0x52(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(82 as u32), ctx.r[11].u16 ) };
+	// 82DAD0CC: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD0D0: 91610054  stw r11, 0x54(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[11].u32 ) };
+	// 82DAD0D4: 39600005  li r11, 5
+	ctx.r[11].s64 = 5;
+	// 82DAD0D8: B1610050  sth r11, 0x50(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[11].u16 ) };
+	// 82DAD0DC: 816A0008  lwz r11, 8(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD0E0: 91610058  stw r11, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[11].u32 ) };
+	// 82DAD0E4: 4800059D  bl 0x82dad680
+	ctx.lr = 0x82DAD0E8;
+	sub_82DAD680(ctx, base);
+	// 82DAD0E8: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAD0EC: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD0F0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD0F4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD0F8: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD0FC: 4E800020  blr
+	return;
+            }
+            0x82DAD100 => {
+    //   block [0x82DAD100..0x82DAD150)
+	// 82DAD100: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD104: 354AFFFF  addic. r10, r10, -1
+	ctx.xer.ca = (ctx.r[10].u32 > (!(-1 as u32)));
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	ctx.cr[0].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAD108: 91440000  stw r10, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAD10C: 40820364  bne 0x82dad470
+	if !ctx.cr[0].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DAD110: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DAD114: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DAD118: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD11C: 419A0034  beq cr6, 0x82dad150
+	if ctx.cr[6].eq {
+	pc = 0x82DAD150; continue 'dispatch;
+	}
+	// 82DAD120: 39000008  li r8, 8
+	ctx.r[8].s64 = 8;
+	// 82DAD124: B10A0000  sth r8, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DAD128: A10B0002  lhz r8, 2(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD12C: B10A0002  sth r8, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[8].u16 ) };
+	// 82DAD130: 810B0004  lwz r8, 4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD134: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DAD138: 816B0008  lwz r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD13C: 916A0008  stw r11, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DAD140: 81640078  lwz r11, 0x78(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(120 as u32) ) } as u64;
+	// 82DAD144: 912A0010  stw r9, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[9].u32 ) };
+	// 82DAD148: 912A0018  stw r9, 0x18(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[9].u32 ) };
+	// 82DAD14C: 916A001C  stw r11, 0x1c(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD150; continue 'dispatch;
+            }
+            0x82DAD150 => {
+    //   block [0x82DAD150..0x82DAD178)
+	// 82DAD150: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD154: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAD158: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD15C: A164007C  lhz r11, 0x7c(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(124 as u32) ) } as u64;
+	// 82DAD160: 91640000  stw r11, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAD164: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD168: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD16C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD170: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD174: 4E800020  blr
+	return;
+            }
+            0x82DAD178 => {
+    //   block [0x82DAD178..0x82DAD1F8)
+	// 82DAD178: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD17C: 7CC33378  mr r3, r6
+	ctx.r[3].u64 = ctx.r[6].u64;
+	// 82DAD180: 354AFFFF  addic. r10, r10, -1
+	ctx.xer.ca = (ctx.r[10].u32 > (!(-1 as u32)));
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	ctx.cr[0].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAD184: 91440000  stw r10, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAD188: 408202EC  bne 0x82dad474
+	if !ctx.cr[0].eq {
+	pc = 0x82DAD474; continue 'dispatch;
+	}
+	// 82DAD18C: 814B001C  lwz r10, 0x1c(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAD190: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DAD194: A10A001E  lhz r8, 0x1e(r10)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(30 as u32) ) } as u64;
+	// 82DAD198: 2B080000  cmplwi cr6, r8, 0
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD19C: 419A0084  beq cr6, 0x82dad220
+	if ctx.cr[6].eq {
+	pc = 0x82DAD220; continue 'dispatch;
+	}
+	// 82DAD1A0: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DAD1A4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD1A8: 419A0050  beq cr6, 0x82dad1f8
+	if ctx.cr[6].eq {
+	pc = 0x82DAD1F8; continue 'dispatch;
+	}
+	// 82DAD1AC: 38C00008  li r6, 8
+	ctx.r[6].s64 = 8;
+	// 82DAD1B0: B0CA0000  sth r6, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[6].u16 ) };
+	// 82DAD1B4: A0CB0002  lhz r6, 2(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD1B8: B0CA0002  sth r6, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[6].u16 ) };
+	// 82DAD1BC: 80CB0004  lwz r6, 4(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD1C0: 90CA0004  stw r6, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[6].u32 ) };
+	// 82DAD1C4: 80CB0008  lwz r6, 8(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD1C8: 90CA0008  stw r6, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[6].u32 ) };
+	// 82DAD1CC: E8CB0000  ld r6, 0(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	// 82DAD1D0: F8CA0000  std r6, 0(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[6].u64 ) };
+	// 82DAD1D4: E8CB0008  ld r6, 8(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) };
+	// 82DAD1D8: F8CA0008  std r6, 8(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[6].u64 ) };
+	// 82DAD1DC: E8CB0010  ld r6, 0x10(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	// 82DAD1E0: F8CA0010  std r6, 0x10(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[6].u64 ) };
+	// 82DAD1E4: E8CB0018  ld r6, 0x18(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) };
+	// 82DAD1E8: F8CA0018  std r6, 0x18(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[6].u64 ) };
+	// 82DAD1EC: 816B001C  lwz r11, 0x1c(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAD1F0: 816B0020  lwz r11, 0x20(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAD1F4: 916A001C  stw r11, 0x1c(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD1F8; continue 'dispatch;
+            }
+            0x82DAD1F8 => {
+    //   block [0x82DAD1F8..0x82DAD220)
+	// 82DAD1F8: 7D0B4378  mr r11, r8
+	ctx.r[11].u64 = ctx.r[8].u64;
+	// 82DAD1FC: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD200: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD204: 7D234B78  mr r3, r9
+	ctx.r[3].u64 = ctx.r[9].u64;
+	// 82DAD208: 91640000  stw r11, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAD20C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD210: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD214: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD218: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD21C: 4E800020  blr
+	return;
+            }
+            0x82DAD220 => {
+    //   block [0x82DAD220..0x82DAD290)
+	// 82DAD220: 814B0018  lwz r10, 0x18(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAD224: 810B0014  lwz r8, 0x14(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAD228: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DAD22C: 7F0A4040  cmplw cr6, r10, r8
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[8].u32, &mut ctx.xer);
+	// 82DAD230: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DAD234: 4098009C  bge cr6, 0x82dad2d0
+	if !ctx.cr[6].lt {
+	pc = 0x82DAD2D0; continue 'dispatch;
+	}
+	// 82DAD238: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD23C: 419A0054  beq cr6, 0x82dad290
+	if ctx.cr[6].eq {
+	pc = 0x82DAD290; continue 'dispatch;
+	}
+	// 82DAD240: 39000008  li r8, 8
+	ctx.r[8].s64 = 8;
+	// 82DAD244: B10A0000  sth r8, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DAD248: A10B0002  lhz r8, 2(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD24C: B10A0002  sth r8, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[8].u16 ) };
+	// 82DAD250: 810B0004  lwz r8, 4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD254: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DAD258: 810B0008  lwz r8, 8(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD25C: 910A0008  stw r8, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[8].u32 ) };
+	// 82DAD260: E90B0000  ld r8, 0(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	// 82DAD264: F90A0000  std r8, 0(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u64 ) };
+	// 82DAD268: E90B0008  ld r8, 8(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) };
+	// 82DAD26C: F90A0008  std r8, 8(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[8].u64 ) };
+	// 82DAD270: E90B0010  ld r8, 0x10(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	// 82DAD274: F90A0010  std r8, 0x10(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[8].u64 ) };
+	// 82DAD278: E90B0018  ld r8, 0x18(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) };
+	// 82DAD27C: F90A0018  std r8, 0x18(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[8].u64 ) };
+	// 82DAD280: 816B001C  lwz r11, 0x1c(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAD284: 816B0020  lwz r11, 0x20(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAD288: 916A001C  stw r11, 0x1c(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[11].u32 ) };
+	// 82DAD28C: 48000008  b 0x82dad294
+	pc = 0x82DAD294; continue 'dispatch;
+            }
+            0x82DAD290 => {
+    //   block [0x82DAD290..0x82DAD294)
+	// 82DAD290: 7D2A4B78  mr r10, r9
+	ctx.r[10].u64 = ctx.r[9].u64;
+	pc = 0x82DAD294; continue 'dispatch;
+            }
+            0x82DAD294 => {
+    //   block [0x82DAD294..0x82DAD2D0)
+	// 82DAD294: 816A0018  lwz r11, 0x18(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAD298: 7D234B78  mr r3, r9
+	ctx.r[3].u64 = ctx.r[9].u64;
+	// 82DAD29C: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAD2A0: 916A0018  stw r11, 0x18(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[11].u32 ) };
+	// 82DAD2A4: 81640078  lwz r11, 0x78(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(120 as u32) ) } as u64;
+	// 82DAD2A8: 916A001C  stw r11, 0x1c(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[11].u32 ) };
+	// 82DAD2AC: A164007C  lhz r11, 0x7c(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(124 as u32) ) } as u64;
+	// 82DAD2B0: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD2B4: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD2B8: 91640000  stw r11, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAD2BC: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD2C0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD2C4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD2C8: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD2CC: 4E800020  blr
+	return;
+            }
+            0x82DAD2D0 => {
+    //   block [0x82DAD2D0..0x82DAD314)
+	// 82DAD2D0: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD2D4: 419A0040  beq cr6, 0x82dad314
+	if ctx.cr[6].eq {
+	pc = 0x82DAD314; continue 'dispatch;
+	}
+	// 82DAD2D8: 39000009  li r8, 9
+	ctx.r[8].s64 = 9;
+	// 82DAD2DC: B10A0000  sth r8, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DAD2E0: A10B0002  lhz r8, 2(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD2E4: B10A0002  sth r8, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[8].u16 ) };
+	// 82DAD2E8: 810B0004  lwz r8, 4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD2EC: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DAD2F0: 810B0008  lwz r8, 8(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD2F4: 910A0008  stw r8, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[8].u32 ) };
+	// 82DAD2F8: 81040030  lwz r8, 0x30(r4)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DAD2FC: 910A0010  stw r8, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[8].u32 ) };
+	// 82DAD300: 81040034  lwz r8, 0x34(r4)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(52 as u32) ) } as u64;
+	// 82DAD304: 910A0014  stw r8, 0x14(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(20 as u32), ctx.r[8].u32 ) };
+	// 82DAD308: 816B0010  lwz r11, 0x10(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD30C: 916A0018  stw r11, 0x18(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[11].u32 ) };
+	// 82DAD310: 992A001C  stb r9, 0x1c(r10)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[9].u8 ) };
+	pc = 0x82DAD314; continue 'dispatch;
+            }
+            0x82DAD314 => {
+    //   block [0x82DAD314..0x82DAD33C)
+	// 82DAD314: A164003A  lhz r11, 0x3a(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(58 as u32) ) } as u64;
+	// 82DAD318: 7D234B78  mr r3, r9
+	ctx.r[3].u64 = ctx.r[9].u64;
+	// 82DAD31C: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD320: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD324: 91640000  stw r11, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAD328: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD32C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD330: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD334: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD338: 4E800020  blr
+	return;
+            }
+            0x82DAD33C => {
+    //   block [0x82DAD33C..0x82DAD3A0)
+	// 82DAD33C: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD340: 354AFFFF  addic. r10, r10, -1
+	ctx.xer.ca = (ctx.r[10].u32 > (!(-1 as u32)));
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	ctx.cr[0].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAD344: 91440000  stw r10, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAD348: 40820128  bne 0x82dad470
+	if !ctx.cr[0].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DAD34C: 894B001C  lbz r10, 0x1c(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAD350: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DAD354: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD358: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DAD35C: 409A006C  bne cr6, 0x82dad3c8
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD3C8; continue 'dispatch;
+	}
+	// 82DAD360: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD364: 419A003C  beq cr6, 0x82dad3a0
+	if ctx.cr[6].eq {
+	pc = 0x82DAD3A0; continue 'dispatch;
+	}
+	// 82DAD368: 39000008  li r8, 8
+	ctx.r[8].s64 = 8;
+	// 82DAD36C: B10A0000  sth r8, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DAD370: A10B0002  lhz r8, 2(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD374: B10A0002  sth r8, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[8].u16 ) };
+	// 82DAD378: 810B0004  lwz r8, 4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD37C: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DAD380: 810B0008  lwz r8, 8(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD384: 910A0008  stw r8, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[8].u32 ) };
+	// 82DAD388: 81040078  lwz r8, 0x78(r4)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(120 as u32) ) } as u64;
+	// 82DAD38C: 910A001C  stw r8, 0x1c(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[8].u32 ) };
+	// 82DAD390: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAD394: 912A0018  stw r9, 0x18(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[9].u32 ) };
+	// 82DAD398: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAD39C: 916A0010  stw r11, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD3A0; continue 'dispatch;
+            }
+            0x82DAD3A0 => {
+    //   block [0x82DAD3A0..0x82DAD3C8)
+	// 82DAD3A0: A164007C  lhz r11, 0x7c(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(124 as u32) ) } as u64;
+	// 82DAD3A4: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAD3A8: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD3AC: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD3B0: 91640000  stw r11, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAD3B4: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD3B8: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD3BC: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD3C0: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD3C4: 4E800020  blr
+	return;
+            }
+            0x82DAD3C8 => {
+    //   block [0x82DAD3C8..0x82DAD40C)
+	// 82DAD3C8: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD3CC: 419A0040  beq cr6, 0x82dad40c
+	if ctx.cr[6].eq {
+	pc = 0x82DAD40C; continue 'dispatch;
+	}
+	// 82DAD3D0: 3900000B  li r8, 0xb
+	ctx.r[8].s64 = 11;
+	// 82DAD3D4: B10A0000  sth r8, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DAD3D8: A10B0002  lhz r8, 2(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD3DC: B10A0002  sth r8, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[8].u16 ) };
+	// 82DAD3E0: 810B0004  lwz r8, 4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD3E4: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DAD3E8: 816B0008  lwz r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD3EC: 916A0008  stw r11, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DAD3F0: 81640078  lwz r11, 0x78(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(120 as u32) ) } as u64;
+	// 82DAD3F4: B12A0026  sth r9, 0x26(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(38 as u32), ctx.r[9].u16 ) };
+	// 82DAD3F8: 916A0010  stw r11, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DAD3FC: A1640054  lhz r11, 0x54(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DAD400: B16A0024  sth r11, 0x24(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(36 as u32), ctx.r[11].u16 ) };
+	// 82DAD404: 81640014  lwz r11, 0x14(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAD408: 916A0020  stw r11, 0x20(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(32 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD40C; continue 'dispatch;
+            }
+            0x82DAD40C => {
+    //   block [0x82DAD40C..0x82DAD41C)
+	// 82DAD40C: 8164006C  lwz r11, 0x6c(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DAD410: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD414: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD418: 91640000  stw r11, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD41C; continue 'dispatch;
+            }
+            0x82DAD41C => {
+    //   block [0x82DAD41C..0x82DAD434)
+	// 82DAD41C: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAD420: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD424: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD428: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD42C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD430: 4E800020  blr
+	return;
+            }
+            0x82DAD434 => {
+    //   block [0x82DAD434..0x82DAD460)
+	// 82DAD434: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD438: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DAD43C: 91440000  stw r10, 0(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAD440: 816B0010  lwz r11, 0x10(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD444: 816B000C  lwz r11, 0xc(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAD448: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD44C: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAD450: 419A0010  beq cr6, 0x82dad460
+	if ctx.cr[6].eq {
+	pc = 0x82DAD460; continue 'dispatch;
+	}
+	// 82DAD454: 81440020  lwz r10, 0x20(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAD458: 914B0004  stw r10, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DAD45C: 91640020  stw r11, 0x20(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(32 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD460; continue 'dispatch;
+            }
+            0x82DAD460 => {
+    //   block [0x82DAD460..0x82DAD46C)
+	// 82DAD460: 81640000  lwz r11, 0(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD464: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAD468: 409A0008  bne cr6, 0x82dad470
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	pc = 0x82DAD46C; continue 'dispatch;
+            }
+            0x82DAD46C => {
+    //   block [0x82DAD46C..0x82DAD470)
+	// 82DAD46C: 98C4001C  stb r6, 0x1c(r4)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[4].u32.wrapping_add(28 as u32), ctx.r[6].u8 ) };
+	pc = 0x82DAD470; continue 'dispatch;
+            }
+            0x82DAD470 => {
+    //   block [0x82DAD470..0x82DAD474)
+	// 82DAD470: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	pc = 0x82DAD474; continue 'dispatch;
+            }
+            0x82DAD474 => {
+    //   block [0x82DAD474..0x82DAD488)
+	// 82DAD474: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD478: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD47C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD480: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD484: 4E800020  blr
+	return;
+            }
+            0x82DAD488 => {
+    //   block [0x82DAD488..0x82DAD498)
+	// 82DAD488: 814B0028  lwz r10, 0x28(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD48C: 2F0A0005  cmpwi cr6, r10, 5
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 5, &mut ctx.xer);
+	// 82DAD490: 41990008  bgt cr6, 0x82dad498
+	if ctx.cr[6].gt {
+	pc = 0x82DAD498; continue 'dispatch;
+	}
+	// 82DAD494: 91240008  stw r9, 8(r4)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(8 as u32), ctx.r[9].u32 ) };
+	pc = 0x82DAD498; continue 'dispatch;
+            }
+            0x82DAD498 => {
+    //   block [0x82DAD498..0x82DAD4A8)
+	// 82DAD498: A14B0024  lhz r10, 0x24(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAD49C: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DAD4A0: 554AC9FE  srwi r10, r10, 7
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shr(7);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAD4A4: 390A0001  addi r8, r10, 1
+	ctx.r[8].s64 = ctx.r[10].s64 + 1;
+	pc = 0x82DAD4A8; continue 'dispatch;
+            }
+            0x82DAD4A8 => {
+    //   block [0x82DAD4A8..0x82DAD4F0)
+	// 82DAD4A8: 814B0008  lwz r10, 8(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD4AC: 80AA0004  lwz r5, 4(r10)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD4B0: 7D082850  subf r8, r8, r5
+	ctx.r[8].s64 = ctx.r[5].s64 - ctx.r[8].s64;
+	// 82DAD4B4: 2F080000  cmpwi cr6, r8, 0
+	ctx.cr[6].compare_i32(ctx.r[8].s32, 0, &mut ctx.xer);
+	// 82DAD4B8: 910A0004  stw r8, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	// 82DAD4BC: 409AFFB4  bne cr6, 0x82dad470
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DAD4C0: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DAD4C4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD4C8: 419A0028  beq cr6, 0x82dad4f0
+	if ctx.cr[6].eq {
+	pc = 0x82DAD4F0; continue 'dispatch;
+	}
+	// 82DAD4CC: 38A0000C  li r5, 0xc
+	ctx.r[5].s64 = 12;
+	// 82DAD4D0: 810B0008  lwz r8, 8(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD4D4: B0AA0000  sth r5, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[5].u16 ) };
+	// 82DAD4D8: A0AB0002  lhz r5, 2(r11)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD4DC: B0AA0002  sth r5, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[5].u16 ) };
+	// 82DAD4E0: 816B0004  lwz r11, 4(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD4E4: B0CA0010  sth r6, 0x10(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[6].u16 ) };
+	// 82DAD4E8: 910A0008  stw r8, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[8].u32 ) };
+	// 82DAD4EC: 916A0004  stw r11, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD4F0; continue 'dispatch;
+            }
+            0x82DAD4F0 => {
+    //   block [0x82DAD4F0..0x82DAD510)
+	// 82DAD4F0: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAD4F4: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD4F8: 90C70000  stw r6, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[6].u32 ) };
+	// 82DAD4FC: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD500: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD504: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD508: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD50C: 4E800020  blr
+	return;
+            }
+            0x82DAD510 => {
+    //   block [0x82DAD510..0x82DAD56C)
+	// 82DAD510: 814B0028  lwz r10, 0x28(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD514: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD518: 419AFF58  beq cr6, 0x82dad470
+	if ctx.cr[6].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DAD51C: 812A0004  lwz r9, 4(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD520: 3929FFFF  addi r9, r9, -1
+	ctx.r[9].s64 = ctx.r[9].s64 + -1;
+	// 82DAD524: 2F090000  cmpwi cr6, r9, 0
+	ctx.cr[6].compare_i32(ctx.r[9].s32, 0, &mut ctx.xer);
+	// 82DAD528: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD52C: 409AFF44  bne cr6, 0x82dad470
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD470; continue 'dispatch;
+	}
+	// 82DAD530: 39470010  addi r10, r7, 0x10
+	ctx.r[10].s64 = ctx.r[7].s64 + 16;
+	// 82DAD534: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD538: 419A0034  beq cr6, 0x82dad56c
+	if ctx.cr[6].eq {
+	pc = 0x82DAD56C; continue 'dispatch;
+	}
+	// 82DAD53C: 3920000E  li r9, 0xe
+	ctx.r[9].s64 = 14;
+	// 82DAD540: B12A0000  sth r9, 0(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u16 ) };
+	// 82DAD544: A12B0002  lhz r9, 2(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD548: B12A0002  sth r9, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[9].u16 ) };
+	// 82DAD54C: 812B0004  lwz r9, 4(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD550: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD554: 812B0008  lwz r9, 8(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD558: 912A0008  stw r9, 8(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[9].u32 ) };
+	// 82DAD55C: A12B0002  lhz r9, 2(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAD560: B12A0002  sth r9, 2(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(2 as u32), ctx.r[9].u16 ) };
+	// 82DAD564: 816B0028  lwz r11, 0x28(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD568: 916A0010  stw r11, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD56C; continue 'dispatch;
+            }
+            0x82DAD56C => {
+    //   block [0x82DAD56C..0x82DAD590)
+	// 82DAD56C: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DAD570: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAD574: 91270004  stw r9, 4(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DAD578: 91270000  stw r9, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAD57C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD580: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD584: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD588: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD58C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAD590(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAD590 size=240
+    let mut pc: u32 = 0x82DAD590;
+    'dispatch: loop {
+        match pc {
+            0x82DAD590 => {
+    //   block [0x82DAD590..0x82DAD5C0)
+	// 82DAD590: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAD594: 4BEFBE69  bl 0x82ca93fc
+	ctx.lr = 0x82DAD598;
+	sub_82CA93D0(ctx, base);
+	// 82DAD598: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAD59C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAD5A0: 7C992378  mr r25, r4
+	ctx.r[25].u64 = ctx.r[4].u64;
+	// 82DAD5A4: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD5A8: 7F0BC800  cmpw cr6, r11, r25
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[25].s32, &mut ctx.xer);
+	// 82DAD5AC: 409800CC  bge cr6, 0x82dad678
+	if !ctx.cr[6].lt {
+	pc = 0x82DAD678; continue 'dispatch;
+	}
+	// 82DAD5B0: 556B083C  slwi r11, r11, 1
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAD5B4: 7F0BC800  cmpw cr6, r11, r25
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[25].s32, &mut ctx.xer);
+	// 82DAD5B8: 41980008  blt cr6, 0x82dad5c0
+	if ctx.cr[6].lt {
+	pc = 0x82DAD5C0; continue 'dispatch;
+	}
+	// 82DAD5BC: 7D795B78  mr r25, r11
+	ctx.r[25].u64 = ctx.r[11].u64;
+	pc = 0x82DAD5C0; continue 'dispatch;
+            }
+            0x82DAD5C0 => {
+    //   block [0x82DAD5C0..0x82DAD630)
+	// 82DAD5C0: 834D0000  lwz r26, 0(r13)
+	ctx.r[26].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD5C4: 3B600004  li r27, 4
+	ctx.r[27].s64 = 4;
+	// 82DAD5C8: 38A00016  li r5, 0x16
+	ctx.r[5].s64 = 22;
+	// 82DAD5CC: 57243830  slwi r4, r25, 7
+	ctx.r[4].u32 = ctx.r[25].u32.wrapping_shl(7);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DAD5D0: 7C7BD02E  lwzx r3, r27, r26
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[27].u32.wrapping_add(ctx.r[26].u32)) } as u64;
+	// 82DAD5D4: 4BFA7C75  bl 0x82d55248
+	ctx.lr = 0x82DAD5D8;
+	sub_82D55248(ctx, base);
+	// 82DAD5D8: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD5DC: 7C7D1B78  mr r29, r3
+	ctx.r[29].u64 = ctx.r[3].u64;
+	// 82DAD5E0: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD5E4: 419A006C  beq cr6, 0x82dad650
+	if ctx.cr[6].eq {
+	pc = 0x82DAD650; continue 'dispatch;
+	}
+	// 82DAD5E8: 813F0010  lwz r9, 0x10(r31)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD5EC: 2F090000  cmpwi cr6, r9, 0
+	ctx.cr[6].compare_i32(ctx.r[9].s32, 0, &mut ctx.xer);
+	// 82DAD5F0: 419A0050  beq cr6, 0x82dad640
+	if ctx.cr[6].eq {
+	pc = 0x82DAD640; continue 'dispatch;
+	}
+	// 82DAD5F4: 839F000C  lwz r28, 0xc(r31)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAD5F8: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD5FC: 7F1C5800  cmpw cr6, r28, r11
+	ctx.cr[6].compare_i32(ctx.r[28].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAD600: 41990030  bgt cr6, 0x82dad630
+	if ctx.cr[6].gt {
+	pc = 0x82DAD630; continue 'dispatch;
+	}
+	// 82DAD604: 811F0004  lwz r8, 4(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD608: 55693830  slwi r9, r11, 7
+	ctx.r[9].u32 = ctx.r[11].u32.wrapping_shl(7);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAD60C: 7D6B4050  subf r11, r11, r8
+	ctx.r[11].s64 = ctx.r[8].s64 - ctx.r[11].s64;
+	// 82DAD610: 7C895214  add r4, r9, r10
+	ctx.r[4].u64 = ctx.r[9].u64 + ctx.r[10].u64;
+	// 82DAD614: 557E3830  slwi r30, r11, 7
+	ctx.r[30].u32 = ctx.r[11].u32.wrapping_shl(7);
+	ctx.r[30].u64 = ctx.r[30].u32 as u64;
+	// 82DAD618: 7FC5F378  mr r5, r30
+	ctx.r[5].u64 = ctx.r[30].u64;
+	// 82DAD61C: 4BFAB715  bl 0x82d58d30
+	ctx.lr = 0x82DAD620;
+	sub_82D58D30(ctx, base);
+	// 82DAD620: 809F0000  lwz r4, 0(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD624: 57853830  slwi r5, r28, 7
+	ctx.r[5].u32 = ctx.r[28].u32.wrapping_shl(7);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAD628: 7C7EEA14  add r3, r30, r29
+	ctx.r[3].u64 = ctx.r[30].u64 + ctx.r[29].u64;
+	// 82DAD62C: 48000010  b 0x82dad63c
+	pc = 0x82DAD63C; continue 'dispatch;
+            }
+            0x82DAD630 => {
+    //   block [0x82DAD630..0x82DAD63C)
+	// 82DAD630: 556B3830  slwi r11, r11, 7
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(7);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAD634: 55253830  slwi r5, r9, 7
+	ctx.r[5].u32 = ctx.r[9].u32.wrapping_shl(7);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAD638: 7C8B5214  add r4, r11, r10
+	ctx.r[4].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	pc = 0x82DAD63C; continue 'dispatch;
+            }
+            0x82DAD63C => {
+    //   block [0x82DAD63C..0x82DAD640)
+	// 82DAD63C: 4BFAB6F5  bl 0x82d58d30
+	ctx.lr = 0x82DAD640;
+	sub_82D58D30(ctx, base);
+	pc = 0x82DAD640; continue 'dispatch;
+            }
+            0x82DAD640 => {
+    //   block [0x82DAD640..0x82DAD650)
+	// 82DAD640: 817F0010  lwz r11, 0x10(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD644: 39400000  li r10, 0
+	ctx.r[10].s64 = 0;
+	// 82DAD648: 915F0008  stw r10, 8(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(8 as u32), ctx.r[10].u32 ) };
+	// 82DAD64C: 917F000C  stw r11, 0xc(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(12 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD650; continue 'dispatch;
+            }
+            0x82DAD650 => {
+    //   block [0x82DAD650..0x82DAD670)
+	// 82DAD650: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD654: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAD658: 419A0018  beq cr6, 0x82dad670
+	if ctx.cr[6].eq {
+	pc = 0x82DAD670; continue 'dispatch;
+	}
+	// 82DAD65C: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DAD660: 809F0000  lwz r4, 0(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD664: 55653830  slwi r5, r11, 7
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(7);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAD668: 7C7BD02E  lwzx r3, r27, r26
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[27].u32.wrapping_add(ctx.r[26].u32)) } as u64;
+	// 82DAD66C: 4BFA7C5D  bl 0x82d552c8
+	ctx.lr = 0x82DAD670;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DAD670; continue 'dispatch;
+            }
+            0x82DAD670 => {
+    //   block [0x82DAD670..0x82DAD678)
+	// 82DAD670: 93BF0000  stw r29, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[29].u32 ) };
+	// 82DAD674: 933F0004  stw r25, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[25].u32 ) };
+	pc = 0x82DAD678; continue 'dispatch;
+            }
+            0x82DAD678 => {
+    //   block [0x82DAD678..0x82DAD680)
+	// 82DAD678: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAD67C: 4BEFBDD0  b 0x82ca944c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAD680(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAD680 size=180
+    let mut pc: u32 = 0x82DAD680;
+    'dispatch: loop {
+        match pc {
+            0x82DAD680 => {
+    //   block [0x82DAD680..0x82DAD6BC)
+	// 82DAD680: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAD684: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DAD688: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DAD68C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DAD690: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAD694: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAD698: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DAD69C: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD6A0: 815F0010  lwz r10, 0x10(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD6A4: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAD6A8: 41980018  blt cr6, 0x82dad6c0
+	if ctx.cr[6].lt {
+	pc = 0x82DAD6C0; continue 'dispatch;
+	}
+	// 82DAD6AC: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAD6B0: 38800008  li r4, 8
+	ctx.r[4].s64 = 8;
+	// 82DAD6B4: 419A0008  beq cr6, 0x82dad6bc
+	if ctx.cr[6].eq {
+	pc = 0x82DAD6BC; continue 'dispatch;
+	}
+	// 82DAD6B8: 5564083C  slwi r4, r11, 1
+	ctx.r[4].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	pc = 0x82DAD6BC; continue 'dispatch;
+            }
+            0x82DAD6BC => {
+    //   block [0x82DAD6BC..0x82DAD6C0)
+	// 82DAD6BC: 4BFFFED5  bl 0x82dad590
+	ctx.lr = 0x82DAD6C0;
+	sub_82DAD590(ctx, base);
+	pc = 0x82DAD6C0; continue 'dispatch;
+            }
+            0x82DAD6C0 => {
+    //   block [0x82DAD6C0..0x82DAD6D4)
+	// 82DAD6C0: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD6C4: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAD6C8: 409A000C  bne cr6, 0x82dad6d4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD6D4; continue 'dispatch;
+	}
+	// 82DAD6CC: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD6D0: 917F0008  stw r11, 8(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAD6D4; continue 'dispatch;
+            }
+            0x82DAD6D4 => {
+    //   block [0x82DAD6D4..0x82DAD6FC)
+	// 82DAD6D4: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD6D8: 7FCAF378  mr r10, r30
+	ctx.r[10].u64 = ctx.r[30].u64;
+	// 82DAD6DC: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD6E0: 39200010  li r9, 0x10
+	ctx.r[9].s64 = 16;
+	// 82DAD6E4: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAD6E8: 55683830  slwi r8, r11, 7
+	ctx.r[8].u32 = ctx.r[11].u32.wrapping_shl(7);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAD6EC: 7D083A14  add r8, r8, r7
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[7].u64;
+	// 82DAD6F0: 917F0008  stw r11, 8(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DAD6F4: 7D0B4378  mr r11, r8
+	ctx.r[11].u64 = ctx.r[8].u64;
+	// 82DAD6F8: 7D2903A6  mtctr r9
+	ctx.ctr.u64 = ctx.r[9].u64;
+	pc = 0x82DAD6FC; continue 'dispatch;
+            }
+            0x82DAD6FC => {
+    //   block [0x82DAD6FC..0x82DAD734)
+	// 82DAD6FC: E92A0000  ld r9, 0(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	// 82DAD700: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DAD704: F92B0000  std r9, 0(r11)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u64 ) };
+	// 82DAD708: 396B0008  addi r11, r11, 8
+	ctx.r[11].s64 = ctx.r[11].s64 + 8;
+	// 82DAD70C: 4200FFF0  bdnz 0x82dad6fc
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAD6FC; continue 'dispatch;
+	}
+	// 82DAD710: 817F0010  lwz r11, 0x10(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD714: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAD718: 917F0010  stw r11, 0x10(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DAD71C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAD720: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAD724: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAD728: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DAD72C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAD730: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAD738(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAD738 size=36
+    let mut pc: u32 = 0x82DAD738;
+    'dispatch: loop {
+        match pc {
+            0x82DAD738 => {
+    //   block [0x82DAD738..0x82DAD75C)
+	// 82DAD738: 81630010  lwz r11, 0x10(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD73C: 81430028  lwz r10, 0x28(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD740: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD744: 409A0018  bne cr6, 0x82dad75c
+	if !ctx.cr[6].eq {
+		sub_82DAD75C(ctx, base);
+		return;
+	}
+	// 82DAD748: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD74C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DAD750: 90AA000C  stw r5, 0xc(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(12 as u32), ctx.r[5].u32 ) };
+	// 82DAD754: B0CA0010  sth r6, 0x10(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[6].u16 ) };
+	// 82DAD758: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAD75C(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAD75C size=32
+    let mut pc: u32 = 0x82DAD75C;
+    'dispatch: loop {
+        match pc {
+            0x82DAD75C => {
+    //   block [0x82DAD75C..0x82DAD77C)
+	// 82DAD75C: 7F0B2040  cmplw cr6, r11, r4
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[4].u32, &mut ctx.xer);
+	// 82DAD760: 409A001C  bne cr6, 0x82dad77c
+	if !ctx.cr[6].eq {
+		sub_82DAD77C(ctx, base);
+		return;
+	}
+	// 82DAD764: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD768: 90A30010  stw r5, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[5].u32 ) };
+	// 82DAD76C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DAD770: 90AA000C  stw r5, 0xc(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(12 as u32), ctx.r[5].u32 ) };
+	// 82DAD774: B0CA0010  sth r6, 0x10(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[6].u16 ) };
+	// 82DAD778: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAD77C(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAD77C size=36
+    let mut pc: u32 = 0x82DAD77C;
+    'dispatch: loop {
+        match pc {
+            0x82DAD77C => {
+    //   block [0x82DAD77C..0x82DAD78C)
+	// 82DAD77C: 814B0014  lwz r10, 0x14(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAD780: 7F0A2040  cmplw cr6, r10, r4
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[4].u32, &mut ctx.xer);
+	// 82DAD784: 419A0010  beq cr6, 0x82dad794
+	if ctx.cr[6].eq {
+	pc = 0x82DAD794; continue 'dispatch;
+	}
+	// 82DAD788: 554A003E  slwi r10, r10, 0
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(0);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	pc = 0x82DAD78C; continue 'dispatch;
+            }
+            0x82DAD78C => {
+    //   block [0x82DAD78C..0x82DAD794)
+	// 82DAD78C: 7F0A2040  cmplw cr6, r10, r4
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[4].u32, &mut ctx.xer);
+	// 82DAD790: 409AFFFC  bne cr6, 0x82dad78c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD78C; continue 'dispatch;
+	}
+	pc = 0x82DAD794; continue 'dispatch;
+            }
+            0x82DAD794 => {
+    //   block [0x82DAD794..0x82DAD7A0)
+	// 82DAD794: 90AB0014  stw r5, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[5].u32 ) };
+	// 82DAD798: B0CB0012  sth r6, 0x12(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[6].u16 ) };
+	// 82DAD79C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAD7A0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAD7A0 size=592
+    let mut pc: u32 = 0x82DAD7A0;
+    'dispatch: loop {
+        match pc {
+            0x82DAD7A0 => {
+    //   block [0x82DAD7A0..0x82DAD830)
+	// 82DAD7A0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAD7A4: 4BEFBC5D  bl 0x82ca9400
+	ctx.lr = 0x82DAD7A8;
+	sub_82CA93D0(ctx, base);
+	// 82DAD7A8: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAD7AC: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAD7B0: 39600001  li r11, 1
+	ctx.r[11].s64 = 1;
+	// 82DAD7B4: 815C0008  lwz r10, 8(r28)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD7B8: 83FC0028  lwz r31, 0x28(r28)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD7BC: 892A0027  lbz r9, 0x27(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[10].u32.wrapping_add(39 as u32) ) } as u64;
+	// 82DAD7C0: 51693032  rlwimi r9, r11, 6, 0, 0x19
+	ctx.r[9].u64 = (((ctx.r[11].u32).rotate_left(6) as u64) & 0x00000000FFFFFFC0) | (ctx.r[9].u64 & 0xFFFFFFFF0000003F);
+	// 82DAD7C4: 992A0027  stb r9, 0x27(r10)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[10].u32.wrapping_add(39 as u32), ctx.r[9].u8 ) };
+	// 82DAD7C8: 817C0028  lwz r11, 0x28(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD7CC: A13F0014  lhz r9, 0x14(r31)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAD7D0: A11F0016  lhz r8, 0x16(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(22 as u32) ) } as u64;
+	// 82DAD7D4: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD7D8: A0FF0018  lhz r7, 0x18(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAD7DC: 419A0054  beq cr6, 0x82dad830
+	if ctx.cr[6].eq {
+	pc = 0x82DAD830; continue 'dispatch;
+	}
+	// 82DAD7E0: 817C0008  lwz r11, 8(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAD7E4: 80CB000C  lwz r6, 0xc(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAD7E8: 80AB0010  lwz r5, 0x10(r11)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD7EC: 808B0014  lwz r4, 0x14(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAD7F0: 7CC93050  subf r6, r9, r6
+	ctx.r[6].s64 = ctx.r[6].s64 - ctx.r[9].s64;
+	// 82DAD7F4: 7CA82850  subf r5, r8, r5
+	ctx.r[5].s64 = ctx.r[5].s64 - ctx.r[8].s64;
+	// 82DAD7F8: 7C872050  subf r4, r7, r4
+	ctx.r[4].s64 = ctx.r[4].s64 - ctx.r[7].s64;
+	// 82DAD7FC: 90CB000C  stw r6, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[6].u32 ) };
+	// 82DAD800: 90AB0010  stw r5, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[5].u32 ) };
+	// 82DAD804: 908B0014  stw r4, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[4].u32 ) };
+	// 82DAD808: 817C0028  lwz r11, 0x28(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD80C: A0CB0016  lhz r6, 0x16(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(22 as u32) ) } as u64;
+	// 82DAD810: A0AB0018  lhz r5, 0x18(r11)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAD814: A08B0014  lhz r4, 0x14(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAD818: 7D083050  subf r8, r8, r6
+	ctx.r[8].s64 = ctx.r[6].s64 - ctx.r[8].s64;
+	// 82DAD81C: 7CE72850  subf r7, r7, r5
+	ctx.r[7].s64 = ctx.r[5].s64 - ctx.r[7].s64;
+	// 82DAD820: 7D292050  subf r9, r9, r4
+	ctx.r[9].s64 = ctx.r[4].s64 - ctx.r[9].s64;
+	// 82DAD824: B10B0016  sth r8, 0x16(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(22 as u32), ctx.r[8].u16 ) };
+	// 82DAD828: B0EB0018  sth r7, 0x18(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), ctx.r[7].u16 ) };
+	// 82DAD82C: B12B0014  sth r9, 0x14(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[9].u16 ) };
+	pc = 0x82DAD830; continue 'dispatch;
+            }
+            0x82DAD830 => {
+    //   block [0x82DAD830..0x82DAD8DC)
+	// 82DAD830: 816A001C  lwz r11, 0x1c(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAD834: 3B600000  li r27, 0
+	ctx.r[27].s64 = 0;
+	// 82DAD838: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAD83C: 7F7ADB78  mr r26, r27
+	ctx.r[26].u64 = ctx.r[27].u64;
+	// 82DAD840: 916A001C  stw r11, 0x1c(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(28 as u32), ctx.r[11].u32 ) };
+	// 82DAD844: 937C0008  stw r27, 8(r28)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[28].u32.wrapping_add(8 as u32), ctx.r[27].u32 ) };
+	// 82DAD848: 897F001A  lbz r11, 0x1a(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAD84C: A15F0022  lhz r10, 0x22(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(34 as u32) ) } as u64;
+	// 82DAD850: 216B0002  subfic r11, r11, 2
+	ctx.xer.ca = ctx.r[11].u32 <= 2 as u32;
+	ctx.r[11].s64 = (2 as i64) - ctx.r[11].s64;
+	// 82DAD854: 5547103E  rotlwi r7, r10, 2
+	ctx.r[7].u64 = ((ctx.r[10].u32).rotate_left(2)) as u64;
+	// 82DAD858: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAD85C: 7D6BF82E  lwzx r11, r11, r31
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[31].u32)) } as u64;
+	// 82DAD860: 810B00A4  lwz r8, 0xa4(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(164 as u32) ) } as u64;
+	// 82DAD864: 812B00A0  lwz r9, 0xa0(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(160 as u32) ) } as u64;
+	// 82DAD868: 5508103A  slwi r8, r8, 2
+	ctx.r[8].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAD86C: 7D084A14  add r8, r8, r9
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[9].u64;
+	// 82DAD870: 8108FFFC  lwz r8, -4(r8)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(-4 as u32) ) } as u64;
+	// 82DAD874: 7D07492E  stwx r8, r7, r9
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[7].u32.wrapping_add(ctx.r[9].u32), ctx.r[8].u32) };
+	// 82DAD878: 812B00A4  lwz r9, 0xa4(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(164 as u32) ) } as u64;
+	// 82DAD87C: 3929FFFF  addi r9, r9, -1
+	ctx.r[9].s64 = ctx.r[9].s64 + -1;
+	// 82DAD880: 912B00A4  stw r9, 0xa4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(164 as u32), ctx.r[9].u32 ) };
+	// 82DAD884: 81680028  lwz r11, 0x28(r8)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAD888: B14B0022  sth r10, 0x22(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(34 as u32), ctx.r[10].u16 ) };
+	// 82DAD88C: 897F001A  lbz r11, 0x1a(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAD890: 807F001C  lwz r3, 0x1c(r31)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAD894: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAD898: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD89C: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAD8A0: 7FCBF82E  lwzx r30, r11, r31
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[31].u32)) } as u64;
+	// 82DAD8A4: 419A0038  beq cr6, 0x82dad8dc
+	if ctx.cr[6].eq {
+	pc = 0x82DAD8DC; continue 'dispatch;
+	}
+	// 82DAD8A8: A17F0020  lhz r11, 0x20(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAD8AC: 815E00AC  lwz r10, 0xac(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(172 as u32) ) } as u64;
+	// 82DAD8B0: 7C8B1A14  add r4, r11, r3
+	ctx.r[4].u64 = ctx.r[11].u64 + ctx.r[3].u64;
+	// 82DAD8B4: 7F4B00D0  neg r26, r11
+	ctx.r[26].s64 = -ctx.r[11].s64;
+	// 82DAD8B8: 817E00B0  lwz r11, 0xb0(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(176 as u32) ) } as u64;
+	// 82DAD8BC: 7D645850  subf r11, r4, r11
+	ctx.r[11].s64 = ctx.r[11].s64 - ctx.r[4].s64;
+	// 82DAD8C0: 7CAB5214  add r5, r11, r10
+	ctx.r[5].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DAD8C4: 4BFAB475  bl 0x82d58d38
+	ctx.lr = 0x82DAD8C8;
+	sub_82D58D38(ctx, base);
+	// 82DAD8C8: 815E00B0  lwz r10, 0xb0(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(176 as u32) ) } as u64;
+	// 82DAD8CC: A17F0020  lhz r11, 0x20(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAD8D0: 7D6B5050  subf r11, r11, r10
+	ctx.r[11].s64 = ctx.r[10].s64 - ctx.r[11].s64;
+	// 82DAD8D4: 917E00B0  stw r11, 0xb0(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(176 as u32), ctx.r[11].u32 ) };
+	// 82DAD8D8: 937F001C  stw r27, 0x1c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(28 as u32), ctx.r[27].u32 ) };
+	pc = 0x82DAD8DC; continue 'dispatch;
+            }
+            0x82DAD8DC => {
+    //   block [0x82DAD8DC..0x82DAD8E0)
+	// 82DAD8DC: 83BF000C  lwz r29, 0xc(r31)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(12 as u32) ) } as u64;
+	pc = 0x82DAD8E0; continue 'dispatch;
+            }
+            0x82DAD8E0 => {
+    //   block [0x82DAD8E0..0x82DAD910)
+	// 82DAD8E0: A17D0000  lhz r11, 0(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD8E4: 2B0B0017  cmplwi cr6, r11, 0x17
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 23 as u32, &mut ctx.xer);
+	// 82DAD8E8: 41980028  blt cr6, 0x82dad910
+	if ctx.cr[6].lt {
+	pc = 0x82DAD910; continue 'dispatch;
+	}
+	// 82DAD8EC: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD8F0: 7FA4EB78  mr r4, r29
+	ctx.r[4].u64 = ctx.r[29].u64;
+	// 82DAD8F4: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DAD8F8: 83BD0014  lwz r29, 0x14(r29)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAD8FC: 38C0002B  li r6, 0x2b
+	ctx.r[6].s64 = 43;
+	// 82DAD900: A0A40010  lhz r5, 0x10(r4)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAD904: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAD908: 4BFA79C1  bl 0x82d552c8
+	ctx.lr = 0x82DAD90C;
+	sub_82D552C8(ctx, base);
+	// 82DAD90C: 4BFFFFD4  b 0x82dad8e0
+	pc = 0x82DAD8E0; continue 'dispatch;
+            }
+            0x82DAD910 => {
+    //   block [0x82DAD910..0x82DAD948)
+	// 82DAD910: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD914: 7FEBFB78  mr r11, r31
+	ctx.r[11].u64 = ctx.r[31].u64;
+	// 82DAD918: 936A0010  stw r27, 0x10(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[27].u32 ) };
+	// 82DAD91C: 937F000C  stw r27, 0xc(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(12 as u32), ctx.r[27].u32 ) };
+	// 82DAD920: 937C0028  stw r27, 0x28(r28)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[28].u32.wrapping_add(40 as u32), ctx.r[27].u32 ) };
+	// 82DAD924: A15E009C  lhz r10, 0x9c(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[30].u32.wrapping_add(156 as u32) ) } as u64;
+	// 82DAD928: 813E0098  lwz r9, 0x98(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(152 as u32) ) } as u64;
+	// 82DAD92C: 5548083E  rotlwi r8, r10, 1
+	ctx.r[8].u64 = ((ctx.r[10].u32).rotate_left(1)) as u64;
+	// 82DAD930: 7D4A4214  add r10, r10, r8
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[8].u64;
+	// 82DAD934: 554A2036  slwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAD938: 7D4A4A14  add r10, r10, r9
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[9].u64;
+	// 82DAD93C: 38CAFFD0  addi r6, r10, -0x30
+	ctx.r[6].s64 = ctx.r[10].s64 + -48;
+	// 82DAD940: 7F1F3040  cmplw cr6, r31, r6
+	ctx.cr[6].compare_u32(ctx.r[31].u32, ctx.r[6].u32, &mut ctx.xer);
+	// 82DAD944: 40980058  bge cr6, 0x82dad99c
+	if !ctx.cr[6].lt {
+	pc = 0x82DAD99C; continue 'dispatch;
+	}
+	pc = 0x82DAD948; continue 'dispatch;
+            }
+            0x82DAD948 => {
+    //   block [0x82DAD948..0x82DAD95C)
+	// 82DAD948: 38EB001C  addi r7, r11, 0x1c
+	ctx.r[7].s64 = ctx.r[11].s64 + 28;
+	// 82DAD94C: 7D695B78  mr r9, r11
+	ctx.r[9].u64 = ctx.r[11].u64;
+	// 82DAD950: 39000006  li r8, 6
+	ctx.r[8].s64 = 6;
+	// 82DAD954: 39470014  addi r10, r7, 0x14
+	ctx.r[10].s64 = ctx.r[7].s64 + 20;
+	// 82DAD958: 7D0903A6  mtctr r8
+	ctx.ctr.u64 = ctx.r[8].u64;
+	pc = 0x82DAD95C; continue 'dispatch;
+            }
+            0x82DAD95C => {
+    //   block [0x82DAD95C..0x82DAD98C)
+	// 82DAD95C: E90A0000  ld r8, 0(r10)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	// 82DAD960: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DAD964: F9090000  std r8, 0(r9)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[8].u64 ) };
+	// 82DAD968: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DAD96C: 4200FFF0  bdnz 0x82dad95c
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAD95C; continue 'dispatch;
+	}
+	// 82DAD970: 814B0000  lwz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD974: 916A0028  stw r11, 0x28(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(40 as u32), ctx.r[11].u32 ) };
+	// 82DAD978: 81470000  lwz r10, 0(r7)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[7].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD97C: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD980: 7D4AD214  add r10, r10, r26
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[26].u64;
+	// 82DAD984: 409A0008  bne cr6, 0x82dad98c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD98C; continue 'dispatch;
+	}
+	// 82DAD988: 7F6ADB78  mr r10, r27
+	ctx.r[10].u64 = ctx.r[27].u64;
+	pc = 0x82DAD98C; continue 'dispatch;
+            }
+            0x82DAD98C => {
+    //   block [0x82DAD98C..0x82DAD99C)
+	// 82DAD98C: 396B0030  addi r11, r11, 0x30
+	ctx.r[11].s64 = ctx.r[11].s64 + 48;
+	// 82DAD990: 91470000  stw r10, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAD994: 7F0B3040  cmplw cr6, r11, r6
+	ctx.cr[6].compare_u32(ctx.r[11].u32, ctx.r[6].u32, &mut ctx.xer);
+	// 82DAD998: 4198FFB0  blt cr6, 0x82dad948
+	if ctx.cr[6].lt {
+	pc = 0x82DAD948; continue 'dispatch;
+	}
+	pc = 0x82DAD99C; continue 'dispatch;
+            }
+            0x82DAD99C => {
+    //   block [0x82DAD99C..0x82DAD9E8)
+	// 82DAD99C: A17E009C  lhz r11, 0x9c(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[30].u32.wrapping_add(156 as u32) ) } as u64;
+	// 82DAD9A0: 3D6B0001  addis r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 65536;
+	// 82DAD9A4: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAD9A8: B17E009C  sth r11, 0x9c(r30)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[30].u32.wrapping_add(156 as u32), ctx.r[11].u16 ) };
+	// 82DAD9AC: A17C0004  lhz r11, 4(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[28].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAD9B0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAD9B4: 419A0034  beq cr6, 0x82dad9e8
+	if ctx.cr[6].eq {
+	pc = 0x82DAD9E8; continue 'dispatch;
+	}
+	// 82DAD9B8: A17C0006  lhz r11, 6(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[28].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAD9BC: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAD9C0: 7D6B0734  extsh r11, r11
+	ctx.r[11].s64 = ctx.r[11].s16 as i64;
+	// 82DAD9C4: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAD9C8: B17C0006  sth r11, 6(r28)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[28].u32.wrapping_add(6 as u32), ctx.r[11].u16 ) };
+	// 82DAD9CC: 409A001C  bne cr6, 0x82dad9e8
+	if !ctx.cr[6].eq {
+	pc = 0x82DAD9E8; continue 'dispatch;
+	}
+	// 82DAD9D0: 817C0000  lwz r11, 0(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD9D4: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DAD9D8: 7F83E378  mr r3, r28
+	ctx.r[3].u64 = ctx.r[28].u64;
+	// 82DAD9DC: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAD9E0: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAD9E4: 4E800421  bctrl
+	ctx.lr = 0x82DAD9E8;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DAD9E8 => {
+    //   block [0x82DAD9E8..0x82DAD9F0)
+	// 82DAD9E8: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAD9EC: 4BEFBA64  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAD9F0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAD9F0 size=156
+    let mut pc: u32 = 0x82DAD9F0;
+    'dispatch: loop {
+        match pc {
+            0x82DAD9F0 => {
+    //   block [0x82DAD9F0..0x82DADA08)
+	// 82DAD9F0: FBE1FFF8  std r31, -8(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[31].u64 ) };
+	// 82DAD9F4: 9081FFF4  stw r4, -0xc(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-12 as u32), ctx.r[4].u32 ) };
+	// 82DAD9F8: 38C1FFF0  addi r6, r1, -0x10
+	ctx.r[6].s64 = ctx.r[1].s64 + -16;
+	// 82DAD9FC: 9061FFF0  stw r3, -0x10(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[3].u32 ) };
+	// 82DADA00: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DADA04: 38A1FFF4  addi r5, r1, -0xc
+	ctx.r[5].s64 = ctx.r[1].s64 + -12;
+	pc = 0x82DADA08; continue 'dispatch;
+            }
+            0x82DADA08 => {
+    //   block [0x82DADA08..0x82DADA28)
+	// 82DADA08: 81260000  lwz r9, 0(r6)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[6].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADA0C: 39400000  li r10, 0
+	ctx.r[10].s64 = 0;
+	// 82DADA10: 80E50000  lwz r7, 0(r5)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADA14: A109009C  lhz r8, 0x9c(r9)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(156 as u32) ) } as u64;
+	// 82DADA18: 2F080000  cmpwi cr6, r8, 0
+	ctx.cr[6].compare_i32(ctx.r[8].s32, 0, &mut ctx.xer);
+	// 82DADA1C: 40990034  ble cr6, 0x82dada50
+	if !ctx.cr[6].gt {
+	pc = 0x82DADA50; continue 'dispatch;
+	}
+	// 82DADA20: 81690098  lwz r11, 0x98(r9)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(152 as u32) ) } as u64;
+	// 82DADA24: 396B0004  addi r11, r11, 4
+	ctx.r[11].s64 = ctx.r[11].s64 + 4;
+	pc = 0x82DADA28; continue 'dispatch;
+            }
+            0x82DADA28 => {
+    //   block [0x82DADA28..0x82DADA50)
+	// 82DADA28: 806B0004  lwz r3, 4(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DADA2C: 83EB0000  lwz r31, 0(r11)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADA30: 7C63FA78  xor r3, r3, r31
+	ctx.r[3].u64 = ctx.r[3].u64 ^ ctx.r[31].u64;
+	// 82DADA34: 7C634A78  xor r3, r3, r9
+	ctx.r[3].u64 = ctx.r[3].u64 ^ ctx.r[9].u64;
+	// 82DADA38: 7F033840  cmplw cr6, r3, r7
+	ctx.cr[6].compare_u32(ctx.r[3].u32, ctx.r[7].u32, &mut ctx.xer);
+	// 82DADA3C: 419A0034  beq cr6, 0x82dada70
+	if ctx.cr[6].eq {
+	pc = 0x82DADA70; continue 'dispatch;
+	}
+	// 82DADA40: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DADA44: 396B0030  addi r11, r11, 0x30
+	ctx.r[11].s64 = ctx.r[11].s64 + 48;
+	// 82DADA48: 7F0A4000  cmpw cr6, r10, r8
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[8].s32, &mut ctx.xer);
+	// 82DADA4C: 4198FFDC  blt cr6, 0x82dada28
+	if ctx.cr[6].lt {
+	pc = 0x82DADA28; continue 'dispatch;
+	}
+	pc = 0x82DADA50; continue 'dispatch;
+            }
+            0x82DADA50 => {
+    //   block [0x82DADA50..0x82DADA70)
+	// 82DADA50: 38840001  addi r4, r4, 1
+	ctx.r[4].s64 = ctx.r[4].s64 + 1;
+	// 82DADA54: 38C60004  addi r6, r6, 4
+	ctx.r[6].s64 = ctx.r[6].s64 + 4;
+	// 82DADA58: 38A5FFFC  addi r5, r5, -4
+	ctx.r[5].s64 = ctx.r[5].s64 + -4;
+	// 82DADA5C: 2F040002  cmpwi cr6, r4, 2
+	ctx.cr[6].compare_i32(ctx.r[4].s32, 2, &mut ctx.xer);
+	// 82DADA60: 4198FFA8  blt cr6, 0x82dada08
+	if ctx.cr[6].lt {
+	pc = 0x82DADA08; continue 'dispatch;
+	}
+	// 82DADA64: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DADA68: EBE1FFF8  ld r31, -8(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) };
+	// 82DADA6C: 4E800020  blr
+	return;
+            }
+            0x82DADA70 => {
+    //   block [0x82DADA70..0x82DADA8C)
+	// 82DADA70: 554B083C  slwi r11, r10, 1
+	ctx.r[11].u32 = ctx.r[10].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DADA74: 81290098  lwz r9, 0x98(r9)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(152 as u32) ) } as u64;
+	// 82DADA78: 7D6A5A14  add r11, r10, r11
+	ctx.r[11].u64 = ctx.r[10].u64 + ctx.r[11].u64;
+	// 82DADA7C: 556B2036  slwi r11, r11, 4
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DADA80: 7C69582E  lwzx r3, r9, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DADA84: EBE1FFF8  ld r31, -8(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) };
+	// 82DADA88: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DADA90(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DADA90 size=272
+    let mut pc: u32 = 0x82DADA90;
+    'dispatch: loop {
+        match pc {
+            0x82DADA90 => {
+    //   block [0x82DADA90..0x82DADAF4)
+	// 82DADA90: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DADA94: 4BEFB971  bl 0x82ca9404
+	ctx.lr = 0x82DADA98;
+	sub_82CA93D0(ctx, base);
+	// 82DADA98: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DADA9C: 7C9B2378  mr r27, r4
+	ctx.r[27].u64 = ctx.r[4].u64;
+	// 82DADAA0: 7C7E1B78  mr r30, r3
+	ctx.r[30].u64 = ctx.r[3].u64;
+	// 82DADAA4: 7CBD2B78  mr r29, r5
+	ctx.r[29].u64 = ctx.r[5].u64;
+	// 82DADAA8: 7F63DB78  mr r3, r27
+	ctx.r[3].u64 = ctx.r[27].u64;
+	// 82DADAAC: 817B0000  lwz r11, 0(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADAB0: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DADAB4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DADAB8: 4E800421  bctrl
+	ctx.lr = 0x82DADABC;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DADABC: 83FE0010  lwz r31, 0x10(r30)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADAC0: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DADAC4: 419A00D4  beq cr6, 0x82dadb98
+	if ctx.cr[6].eq {
+	pc = 0x82DADB98; continue 'dispatch;
+	}
+	// 82DADAC8: A17F0000  lhz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADACC: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DADAD0: 839E0028  lwz r28, 0x28(r30)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DADAD4: 7F0BE800  cmpw cr6, r11, r29
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[29].s32, &mut ctx.xer);
+	// 82DADAD8: 817F0014  lwz r11, 0x14(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DADADC: 409A0034  bne cr6, 0x82dadb10
+	if !ctx.cr[6].eq {
+	pc = 0x82DADB10; continue 'dispatch;
+	}
+	// 82DADAE0: 2B1C0000  cmplwi cr6, r28, 0
+	ctx.cr[6].compare_u32(ctx.r[28].u32, 0 as u32, &mut ctx.xer);
+	// 82DADAE4: 419A0010  beq cr6, 0x82dadaf4
+	if ctx.cr[6].eq {
+	pc = 0x82DADAF4; continue 'dispatch;
+	}
+	// 82DADAE8: 917C000C  stw r11, 0xc(r28)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[28].u32.wrapping_add(12 as u32), ctx.r[11].u32 ) };
+	// 82DADAEC: A15F0012  lhz r10, 0x12(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DADAF0: B15C0010  sth r10, 0x10(r28)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[28].u32.wrapping_add(16 as u32), ctx.r[10].u16 ) };
+            }
+            0x82DADAF4 => {
+    //   block [0x82DADAF4..0x82DADB08)
+	// 82DADAF4: A14B0000  lhz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADAF8: 2B0A0017  cmplwi cr6, r10, 0x17
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 23 as u32, &mut ctx.xer);
+	// 82DADAFC: 4198000C  blt cr6, 0x82dadb08
+	if ctx.cr[6].lt {
+	pc = 0x82DADB08; continue 'dispatch;
+	}
+	// 82DADB00: 917E0010  stw r11, 0x10(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DADB04: 48000044  b 0x82dadb48
+	pc = 0x82DADB48; continue 'dispatch;
+            }
+            0x82DADB08 => {
+    //   block [0x82DADB08..0x82DADB10)
+	// 82DADB08: 911E0010  stw r8, 0x10(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(16 as u32), ctx.r[8].u32 ) };
+	// 82DADB0C: 4800003C  b 0x82dadb48
+	pc = 0x82DADB48; continue 'dispatch;
+            }
+            0x82DADB10 => {
+    //   block [0x82DADB10..0x82DADB14)
+	// 82DADB10: 7FE9FB78  mr r9, r31
+	ctx.r[9].u64 = ctx.r[31].u64;
+	pc = 0x82DADB14; continue 'dispatch;
+            }
+            0x82DADB14 => {
+    //   block [0x82DADB14..0x82DADB38)
+	// 82DADB14: A14B0000  lhz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADB18: 2B0A0017  cmplwi cr6, r10, 0x17
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 23 as u32, &mut ctx.xer);
+	// 82DADB1C: 4198007C  blt cr6, 0x82dadb98
+	if ctx.cr[6].lt {
+	pc = 0x82DADB98; continue 'dispatch;
+	}
+	// 82DADB20: 7D7F5B78  mr r31, r11
+	ctx.r[31].u64 = ctx.r[11].u64;
+	// 82DADB24: 7F0AE800  cmpw cr6, r10, r29
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[29].s32, &mut ctx.xer);
+	// 82DADB28: 419A0010  beq cr6, 0x82dadb38
+	if ctx.cr[6].eq {
+	pc = 0x82DADB38; continue 'dispatch;
+	}
+	// 82DADB2C: 7D695B78  mr r9, r11
+	ctx.r[9].u64 = ctx.r[11].u64;
+	// 82DADB30: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DADB34: 4BFFFFE0  b 0x82dadb14
+	pc = 0x82DADB14; continue 'dispatch;
+            }
+            0x82DADB38 => {
+    //   block [0x82DADB38..0x82DADB48)
+	// 82DADB38: 814B0014  lwz r10, 0x14(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DADB3C: 91490014  stw r10, 0x14(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DADB40: A16B0012  lhz r11, 0x12(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DADB44: B1690012  sth r11, 0x12(r9)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[9].u32.wrapping_add(18 as u32), ctx.r[11].u16 ) };
+	pc = 0x82DADB48; continue 'dispatch;
+            }
+            0x82DADB48 => {
+    //   block [0x82DADB48..0x82DADB7C)
+	// 82DADB48: 2B1C0000  cmplwi cr6, r28, 0
+	ctx.cr[6].compare_u32(ctx.r[28].u32, 0 as u32, &mut ctx.xer);
+	// 82DADB4C: 419A0030  beq cr6, 0x82dadb7c
+	if ctx.cr[6].eq {
+	pc = 0x82DADB7C; continue 'dispatch;
+	}
+	// 82DADB50: 38810050  addi r4, r1, 0x50
+	ctx.r[4].s64 = ctx.r[1].s64 + 80;
+	// 82DADB54: 91010050  stw r8, 0x50(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[8].u32 ) };
+	// 82DADB58: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DADB5C: 91010054  stw r8, 0x54(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[8].u32 ) };
+	// 82DADB60: 91010058  stw r8, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[8].u32 ) };
+	// 82DADB64: 9101005C  stw r8, 0x5c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(92 as u32), ctx.r[8].u32 ) };
+	// 82DADB68: 4BFF0CC9  bl 0x82d9e830
+	ctx.lr = 0x82DADB6C;
+	sub_82D9E830(ctx, base);
+	// 82DADB6C: 38A10050  addi r5, r1, 0x50
+	ctx.r[5].s64 = ctx.r[1].s64 + 80;
+	// 82DADB70: 809C0000  lwz r4, 0(r28)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADB74: 7F63DB78  mr r3, r27
+	ctx.r[3].u64 = ctx.r[27].u64;
+	// 82DADB78: 4BFE4159  bl 0x82d91cd0
+	ctx.lr = 0x82DADB7C;
+	sub_82D91CD0(ctx, base);
+	pc = 0x82DADB7C; continue 'dispatch;
+            }
+            0x82DADB7C => {
+    //   block [0x82DADB7C..0x82DADB98)
+	// 82DADB7C: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADB80: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DADB84: 38C0002B  li r6, 0x2b
+	ctx.r[6].s64 = 43;
+	// 82DADB88: A0BF0010  lhz r5, 0x10(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADB8C: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DADB90: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DADB94: 4BFA7735  bl 0x82d552c8
+	ctx.lr = 0x82DADB98;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DADB98; continue 'dispatch;
+            }
+            0x82DADB98 => {
+    //   block [0x82DADB98..0x82DADBA0)
+	// 82DADB98: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DADB9C: 4BEFB8B8  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DADBA0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DADBA0 size=56
+    let mut pc: u32 = 0x82DADBA0;
+    'dispatch: loop {
+        match pc {
+            0x82DADBA0 => {
+    //   block [0x82DADBA0..0x82DADBB8)
+	// 82DADBA0: 80630010  lwz r3, 0x10(r3)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADBA4: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DADBA8: 419A0030  beq cr6, 0x82dadbd8
+	if ctx.cr[6].eq {
+		sub_82DADBD8(ctx, base);
+		return;
+	}
+	// 82DADBAC: A1630000  lhz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADBB0: 7F0B2000  cmpw cr6, r11, r4
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[4].s32, &mut ctx.xer);
+	// 82DADBB4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	pc = 0x82DADBB8; continue 'dispatch;
+            }
+            0x82DADBB8 => {
+    //   block [0x82DADBB8..0x82DADBD8)
+	// 82DADBB8: 80630014  lwz r3, 0x14(r3)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DADBBC: A1630000  lhz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADBC0: 2B0B0017  cmplwi cr6, r11, 0x17
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 23 as u32, &mut ctx.xer);
+	// 82DADBC4: 41980014  blt cr6, 0x82dadbd8
+	if ctx.cr[6].lt {
+		sub_82DADBD8(ctx, base);
+		return;
+	}
+	// 82DADBC8: A1630000  lhz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADBCC: 7F0B2000  cmpw cr6, r11, r4
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[4].s32, &mut ctx.xer);
+	// 82DADBD0: 409AFFE8  bne cr6, 0x82dadbb8
+	if !ctx.cr[6].eq {
+	pc = 0x82DADBB8; continue 'dispatch;
+	}
+	// 82DADBD4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DADBD8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DADBD8 size=8
+    let mut pc: u32 = 0x82DADBD8;
+    'dispatch: loop {
+        match pc {
+            0x82DADBD8 => {
+    //   block [0x82DADBD8..0x82DADBE0)
+	// 82DADBD8: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DADBDC: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DADBE0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DADBE0 size=16
+    let mut pc: u32 = 0x82DADBE0;
+    'dispatch: loop {
+        match pc {
+            0x82DADBE0 => {
+    //   block [0x82DADBE0..0x82DADBF0)
+	// 82DADBE0: 80630010  lwz r3, 0x10(r3)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADBE4: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DADBE8: 409A0008  bne cr6, 0x82dadbf0
+	if !ctx.cr[6].eq {
+		crate::recompiler::externs::call(ctx, base, 0x82DADBF0);
+		return;
+	}
+	// 82DADBEC: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DADBF4(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DADBF4 size=20
+    let mut pc: u32 = 0x82DADBF4;
+    'dispatch: loop {
+        match pc {
+            0x82DADBF4 => {
+    //   block [0x82DADBF4..0x82DADC08)
+	// 82DADBF4: A14B0000  lhz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADBF8: 2B0A0017  cmplwi cr6, r10, 0x17
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 23 as u32, &mut ctx.xer);
+	// 82DADBFC: 4D980020  bltlr cr6
+	if ctx.cr[6].lt { return; }
+	// 82DADC00: 7D635B78  mr r3, r11
+	ctx.r[3].u64 = ctx.r[11].u64;
+	// 82DADC04: 4BFFFFEC  b 0x82dadbf0
+	crate::recompiler::externs::call(ctx, base, 0x82DADBF0);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DADC08(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DADC08 size=320
+    let mut pc: u32 = 0x82DADC08;
+    'dispatch: loop {
+        match pc {
+            0x82DADC08 => {
+    //   block [0x82DADC08..0x82DADC48)
+	// 82DADC08: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DADC0C: 4BEFB801  bl 0x82ca940c
+	ctx.lr = 0x82DADC10;
+	sub_82CA93D0(ctx, base);
+	// 82DADC10: 9421FF60  stwu r1, -0xa0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-160 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DADC14: 7C9D2378  mr r29, r4
+	ctx.r[29].u64 = ctx.r[4].u64;
+	// 82DADC18: 7C7E1B78  mr r30, r3
+	ctx.r[30].u64 = ctx.r[3].u64;
+	// 82DADC1C: 7CBF2B78  mr r31, r5
+	ctx.r[31].u64 = ctx.r[5].u64;
+	// 82DADC20: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DADC24: 817D0000  lwz r11, 0(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADC28: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DADC2C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DADC30: 4E800421  bctrl
+	ctx.lr = 0x82DADC34;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DADC34: 817E0010  lwz r11, 0x10(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADC38: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DADC3C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DADC40: 409A0094  bne cr6, 0x82dadcd4
+	if !ctx.cr[6].eq {
+	pc = 0x82DADCD4; continue 'dispatch;
+	}
+	// 82DADC44: 7D2B4B78  mr r11, r9
+	ctx.r[11].u64 = ctx.r[9].u64;
+            }
+            0x82DADC48 => {
+    //   block [0x82DADC48..0x82DADC7C)
+	// 82DADC48: A11F0000  lhz r8, 0(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADC4C: 815E0028  lwz r10, 0x28(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DADC50: 2B08001A  cmplwi cr6, r8, 0x1a
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 26 as u32, &mut ctx.xer);
+	// 82DADC54: 409A0098  bne cr6, 0x82dadcec
+	if !ctx.cr[6].eq {
+	pc = 0x82DADCEC; continue 'dispatch;
+	}
+	// 82DADC58: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DADC5C: 419A0090  beq cr6, 0x82dadcec
+	if ctx.cr[6].eq {
+	pc = 0x82DADCEC; continue 'dispatch;
+	}
+	// 82DADC60: 810B0014  lwz r8, 0x14(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DADC64: 911F0014  stw r8, 0x14(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(20 as u32), ctx.r[8].u32 ) };
+	// 82DADC68: A10B0012  lhz r8, 0x12(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DADC6C: B11F0012  sth r8, 0x12(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(18 as u32), ctx.r[8].u16 ) };
+	// 82DADC70: 93EB0014  stw r31, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[31].u32 ) };
+	// 82DADC74: A11F0010  lhz r8, 0x10(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADC78: B10B0012  sth r8, 0x12(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[8].u16 ) };
+	pc = 0x82DADC7C; continue 'dispatch;
+            }
+            0x82DADC7C => {
+    //   block [0x82DADC7C..0x82DADCCC)
+	// 82DADC7C: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DADC80: 419A004C  beq cr6, 0x82dadccc
+	if ctx.cr[6].eq {
+	pc = 0x82DADCCC; continue 'dispatch;
+	}
+	// 82DADC84: 38810050  addi r4, r1, 0x50
+	ctx.r[4].s64 = ctx.r[1].s64 + 80;
+	// 82DADC88: 91210050  stw r9, 0x50(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[9].u32 ) };
+	// 82DADC8C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DADC90: 91210054  stw r9, 0x54(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[9].u32 ) };
+	// 82DADC94: 91210058  stw r9, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[9].u32 ) };
+	// 82DADC98: 9121005C  stw r9, 0x5c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(92 as u32), ctx.r[9].u32 ) };
+	// 82DADC9C: 4BFF0B95  bl 0x82d9e830
+	ctx.lr = 0x82DADCA0;
+	sub_82D9E830(ctx, base);
+	// 82DADCA0: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DADCA4: 38A10050  addi r5, r1, 0x50
+	ctx.r[5].s64 = ctx.r[1].s64 + 80;
+	// 82DADCA8: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DADCAC: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DADCB0: 4BFEB899  bl 0x82d99548
+	ctx.lr = 0x82DADCB4;
+	sub_82D99548(ctx, base);
+	// 82DADCB4: 817E0028  lwz r11, 0x28(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DADCB8: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DADCBC: 419A0010  beq cr6, 0x82dadccc
+	if ctx.cr[6].eq {
+	pc = 0x82DADCCC; continue 'dispatch;
+	}
+	// 82DADCC0: 894B0012  lbz r10, 0x12(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DADCC4: 7D4AFB78  or r10, r10, r31
+	ctx.r[10].u64 = ctx.r[10].u64 | ctx.r[31].u64;
+	// 82DADCC8: 994B0012  stb r10, 0x12(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[10].u8 ) };
+	pc = 0x82DADCCC; continue 'dispatch;
+            }
+            0x82DADCCC => {
+    //   block [0x82DADCCC..0x82DADCD4)
+	// 82DADCCC: 382100A0  addi r1, r1, 0xa0
+	ctx.r[1].s64 = ctx.r[1].s64 + 160;
+	// 82DADCD0: 4BEFB78C  b 0x82ca945c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            0x82DADCD4 => {
+    //   block [0x82DADCD4..0x82DADCEC)
+	// 82DADCD4: 814B0014  lwz r10, 0x14(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DADCD8: A10A0000  lhz r8, 0(r10)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADCDC: 2B080017  cmplwi cr6, r8, 0x17
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 23 as u32, &mut ctx.xer);
+	// 82DADCE0: 4198FF68  blt cr6, 0x82dadc48
+	if ctx.cr[6].lt {
+	pc = 0x82DADC48; continue 'dispatch;
+	}
+	// 82DADCE4: 7D4B5378  mr r11, r10
+	ctx.r[11].u64 = ctx.r[10].u64;
+	// 82DADCE8: 4BFFFFEC  b 0x82dadcd4
+	pc = 0x82DADCD4; continue 'dispatch;
+            }
+            0x82DADCEC => {
+    //   block [0x82DADCEC..0x82DADD18)
+	// 82DADCEC: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DADCF0: 93FE0010  stw r31, 0x10(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(16 as u32), ctx.r[31].u32 ) };
+	// 82DADCF4: 419A0024  beq cr6, 0x82dadd18
+	if ctx.cr[6].eq {
+	pc = 0x82DADD18; continue 'dispatch;
+	}
+	// 82DADCF8: 816A000C  lwz r11, 0xc(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DADCFC: 917F0014  stw r11, 0x14(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(20 as u32), ctx.r[11].u32 ) };
+	// 82DADD00: A16A0010  lhz r11, 0x10(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[10].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADD04: B17F0012  sth r11, 0x12(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(18 as u32), ctx.r[11].u16 ) };
+	// 82DADD08: 93EA000C  stw r31, 0xc(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(12 as u32), ctx.r[31].u32 ) };
+	// 82DADD0C: A17F0010  lhz r11, 0x10(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADD10: B16A0010  sth r11, 0x10(r10)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[11].u16 ) };
+	// 82DADD14: 4BFFFF68  b 0x82dadc7c
+	pc = 0x82DADC7C; continue 'dispatch;
+            }
+            0x82DADD18 => {
+    //   block [0x82DADD18..0x82DADD48)
+	// 82DADD18: 807E000C  lwz r3, 0xc(r30)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DADD1C: 38810060  addi r4, r1, 0x60
+	ctx.r[4].s64 = ctx.r[1].s64 + 96;
+	// 82DADD20: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADD24: 816B002C  lwz r11, 0x2c(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DADD28: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DADD2C: 4E800421  bctrl
+	ctx.lr = 0x82DADD30;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DADD30: 81610070  lwz r11, 0x70(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(112 as u32) ) } as u64;
+	// 82DADD34: 81410074  lwz r10, 0x74(r1)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(116 as u32) ) } as u64;
+	// 82DADD38: 917F0014  stw r11, 0x14(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(20 as u32), ctx.r[11].u32 ) };
+	// 82DADD3C: B15F0012  sth r10, 0x12(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(18 as u32), ctx.r[10].u16 ) };
+	// 82DADD40: 382100A0  addi r1, r1, 0xa0
+	ctx.r[1].s64 = ctx.r[1].s64 + 160;
+	// 82DADD44: 4BEFB718  b 0x82ca945c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DADD48(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DADD48 size=1140
+    let mut pc: u32 = 0x82DADD48;
+    'dispatch: loop {
+        match pc {
+            0x82DADD48 => {
+    //   block [0x82DADD48..0x82DADD70)
+	// 82DADD48: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DADD4C: 4BEFB6A5  bl 0x82ca93f0
+	ctx.lr = 0x82DADD50;
+	sub_82CA93D0(ctx, base);
+	// 82DADD50: 9421FEF0  stwu r1, -0x110(r1)
+	ea = ctx.r[1].u32.wrapping_add(-272 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DADD54: 7C972378  mr r23, r4
+	ctx.r[23].u64 = ctx.r[4].u64;
+	// 82DADD58: A1770004  lhz r11, 4(r23)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[23].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DADD5C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DADD60: 419A0010  beq cr6, 0x82dadd70
+	if ctx.cr[6].eq {
+	pc = 0x82DADD70; continue 'dispatch;
+	}
+	// 82DADD64: A1770006  lhz r11, 6(r23)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[23].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DADD68: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DADD6C: B1770006  sth r11, 6(r23)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[23].u32.wrapping_add(6 as u32), ctx.r[11].u16 ) };
+	pc = 0x82DADD70; continue 'dispatch;
+            }
+            0x82DADD70 => {
+    //   block [0x82DADD70..0x82DADDB4)
+	// 82DADD70: 8077000C  lwz r3, 0xc(r23)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DADD74: 38810060  addi r4, r1, 0x60
+	ctx.r[4].s64 = ctx.r[1].s64 + 96;
+	// 82DADD78: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADD7C: 816B002C  lwz r11, 0x2c(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DADD80: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DADD84: 4E800421  bctrl
+	ctx.lr = 0x82DADD88;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DADD88: 80970014  lwz r4, 0x14(r23)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DADD8C: 80B70018  lwz r5, 0x18(r23)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DADD90: 81770010  lwz r11, 0x10(r23)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADD94: 92E10080  stw r23, 0x80(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(128 as u32), ctx.r[23].u32 ) };
+	// 82DADD98: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DADD9C: 90810084  stw r4, 0x84(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(132 as u32), ctx.r[4].u32 ) };
+	// 82DADDA0: 90A10088  stw r5, 0x88(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(136 as u32), ctx.r[5].u32 ) };
+	// 82DADDA4: 419A0010  beq cr6, 0x82daddb4
+	if ctx.cr[6].eq {
+	pc = 0x82DADDB4; continue 'dispatch;
+	}
+	// 82DADDA8: 9161008C  stw r11, 0x8c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(140 as u32), ctx.r[11].u32 ) };
+	// 82DADDAC: A16B0010  lhz r11, 0x10(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADDB0: 48000010  b 0x82daddc0
+	pc = 0x82DADDC0; continue 'dispatch;
+            }
+            0x82DADDB4 => {
+    //   block [0x82DADDB4..0x82DADDC0)
+	// 82DADDB4: 81610070  lwz r11, 0x70(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(112 as u32) ) } as u64;
+	// 82DADDB8: 9161008C  stw r11, 0x8c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(140 as u32), ctx.r[11].u32 ) };
+	// 82DADDBC: 81610074  lwz r11, 0x74(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(116 as u32) ) } as u64;
+	pc = 0x82DADDC0; continue 'dispatch;
+            }
+            0x82DADDC0 => {
+    //   block [0x82DADDC0..0x82DADE00)
+	// 82DADDC0: B1610090  sth r11, 0x90(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(144 as u32), ctx.r[11].u16 ) };
+	// 82DADDC4: 8977001C  lbz r11, 0x1c(r23)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[23].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DADDC8: 99610093  stb r11, 0x93(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(147 as u32), ctx.r[11].u8 ) };
+	// 82DADDCC: 896400D8  lbz r11, 0xd8(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(216 as u32) ) } as u64;
+	// 82DADDD0: 2B0B0007  cmplwi cr6, r11, 7
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 7 as u32, &mut ctx.xer);
+	// 82DADDD4: 419A002C  beq cr6, 0x82dade00
+	if ctx.cr[6].eq {
+	pc = 0x82DADE00; continue 'dispatch;
+	}
+	// 82DADDD8: 896500D8  lbz r11, 0xd8(r5)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[5].u32.wrapping_add(216 as u32) ) } as u64;
+	// 82DADDDC: 2B0B0007  cmplwi cr6, r11, 7
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 7 as u32, &mut ctx.xer);
+	// 82DADDE0: 419A0020  beq cr6, 0x82dade00
+	if ctx.cr[6].eq {
+	pc = 0x82DADE00; continue 'dispatch;
+	}
+	// 82DADDE4: 816400B8  lwz r11, 0xb8(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(184 as u32) ) } as u64;
+	// 82DADDE8: 814500B8  lwz r10, 0xb8(r5)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(184 as u32) ) } as u64;
+	// 82DADDEC: 7F0B5000  cmpw cr6, r11, r10
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[10].s32, &mut ctx.xer);
+	// 82DADDF0: 419A0010  beq cr6, 0x82dade00
+	if ctx.cr[6].eq {
+	pc = 0x82DADE00; continue 'dispatch;
+	}
+	// 82DADDF4: 80640008  lwz r3, 8(r4)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DADDF8: 4BFEB041  bl 0x82d98e38
+	ctx.lr = 0x82DADDFC;
+	sub_82D98E38(ctx, base);
+	// 82DADDFC: 80810084  lwz r4, 0x84(r1)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(132 as u32) ) } as u64;
+	pc = 0x82DADE00; continue 'dispatch;
+            }
+            0x82DADE00 => {
+    //   block [0x82DADE00..0x82DADE8C)
+	// 82DADE00: 896400D8  lbz r11, 0xd8(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(216 as u32) ) } as u64;
+	// 82DADE04: 39410084  addi r10, r1, 0x84
+	ctx.r[10].s64 = ctx.r[1].s64 + 132;
+	// 82DADE08: 3AC00000  li r22, 0
+	ctx.r[22].s64 = 0;
+	// 82DADE0C: 396BFFF9  addi r11, r11, -7
+	ctx.r[11].s64 = ctx.r[11].s64 + -7;
+	// 82DADE10: 7D6B0034  cntlzw r11, r11
+	ctx.r[11].u64 = if ctx.r[11].u32 == 0 { 32 } else { ctx.r[11].u32.leading_zeros() as u64 };
+	// 82DADE14: 556BDFFE  rlwinm r11, r11, 0x1b, 0x1f, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x0000001Fu64;
+	// 82DADE18: 9961009A  stb r11, 0x9a(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(154 as u32), ctx.r[11].u8 ) };
+	// 82DADE1C: 556B15BA  rlwinm r11, r11, 2, 0x16, 0x1d
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DADE20: 7FCB502E  lwzx r30, r11, r10
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DADE24: 817E00B8  lwz r11, 0xb8(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(184 as u32) ) } as u64;
+	// 82DADE28: 91770008  stw r11, 8(r23)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[23].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DADE2C: 814B001C  lwz r10, 0x1c(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DADE30: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DADE34: 914B001C  stw r10, 0x1c(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(28 as u32), ctx.r[10].u32 ) };
+	// 82DADE38: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DADE3C: 8161008C  lwz r11, 0x8c(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(140 as u32) ) } as u64;
+	// 82DADE40: A16B0000  lhz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADE44: 9941009B  stb r10, 0x9b(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(155 as u32), ctx.r[10].u8 ) };
+	// 82DADE48: 9AC10092  stb r22, 0x92(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(146 as u32), ctx.r[22].u8 ) };
+	// 82DADE4C: 2F0B0001  cmpwi cr6, r11, 1
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 1, &mut ctx.xer);
+	// 82DADE50: 409A0060  bne cr6, 0x82dadeb0
+	if !ctx.cr[6].eq {
+	pc = 0x82DADEB0; continue 'dispatch;
+	}
+	// 82DADE54: 39600002  li r11, 2
+	ctx.r[11].s64 = 2;
+	// 82DADE58: 8097000C  lwz r4, 0xc(r23)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DADE5C: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DADE60: 99610092  stb r11, 0x92(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(146 as u32), ctx.r[11].u8 ) };
+	// 82DADE64: 81640000  lwz r11, 0(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADE68: 816B0024  lwz r11, 0x24(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DADE6C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DADE70: 4E800421  bctrl
+	ctx.lr = 0x82DADE74;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DADE74: 89630000  lbz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADE78: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DADE7C: 419A0010  beq cr6, 0x82dade8c
+	if ctx.cr[6].eq {
+	pc = 0x82DADE8C; continue 'dispatch;
+	}
+	// 82DADE80: 89610092  lbz r11, 0x92(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(146 as u32) ) } as u64;
+	// 82DADE84: 616B0004  ori r11, r11, 4
+	ctx.r[11].u64 = ctx.r[11].u64 | 4;
+	// 82DADE88: 99610092  stb r11, 0x92(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(146 as u32), ctx.r[11].u8 ) };
+            }
+            0x82DADE8C => {
+    //   block [0x82DADE8C..0x82DADEB0)
+	// 82DADE8C: 81770000  lwz r11, 0(r23)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADE90: 7EE3BB78  mr r3, r23
+	ctx.r[3].u64 = ctx.r[23].u64;
+	// 82DADE94: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DADE98: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DADE9C: 4E800421  bctrl
+	ctx.lr = 0x82DADEA0;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DADEA0: 7C6B0034  cntlzw r11, r3
+	ctx.r[11].u64 = if ctx.r[3].u32 == 0 { 32 } else { ctx.r[3].u32.leading_zeros() as u64 };
+	// 82DADEA4: 556BDFFE  rlwinm r11, r11, 0x1b, 0x1f, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x0000001Fu64;
+	// 82DADEA8: 9961009B  stb r11, 0x9b(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(155 as u32), ctx.r[11].u8 ) };
+	// 82DADEAC: 48000014  b 0x82dadec0
+	pc = 0x82DADEC0; continue 'dispatch;
+            }
+            0x82DADEB0 => {
+    //   block [0x82DADEB0..0x82DADEC0)
+	// 82DADEB0: 2F0B0014  cmpwi cr6, r11, 0x14
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 20, &mut ctx.xer);
+	// 82DADEB4: 409A000C  bne cr6, 0x82dadec0
+	if !ctx.cr[6].eq {
+	pc = 0x82DADEC0; continue 'dispatch;
+	}
+	// 82DADEB8: 39600002  li r11, 2
+	ctx.r[11].s64 = 2;
+	// 82DADEBC: 99610092  stb r11, 0x92(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(146 as u32), ctx.r[11].u8 ) };
+	pc = 0x82DADEC0; continue 'dispatch;
+            }
+            0x82DADEC0 => {
+    //   block [0x82DADEC0..0x82DADEE0)
+	// 82DADEC0: 80770010  lwz r3, 0x10(r23)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DADEC4: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DADEC8: 419A0018  beq cr6, 0x82dadee0
+	if ctx.cr[6].eq {
+	pc = 0x82DADEE0; continue 'dispatch;
+	}
+	// 82DADECC: 38810060  addi r4, r1, 0x60
+	ctx.r[4].s64 = ctx.r[1].s64 + 96;
+	// 82DADED0: 4BFF09B9  bl 0x82d9e888
+	ctx.lr = 0x82DADED4;
+	sub_82D9E888(ctx, base);
+	// 82DADED4: 89610092  lbz r11, 0x92(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(146 as u32) ) } as u64;
+	// 82DADED8: 7C6B5B78  or r11, r3, r11
+	ctx.r[11].u64 = ctx.r[3].u64 | ctx.r[11].u64;
+	// 82DADEDC: 99610092  stb r11, 0x92(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(146 as u32), ctx.r[11].u8 ) };
+	pc = 0x82DADEE0; continue 'dispatch;
+            }
+            0x82DADEE0 => {
+    //   block [0x82DADEE0..0x82DADF2C)
+	// 82DADEE0: 39610080  addi r11, r1, 0x80
+	ctx.r[11].s64 = ctx.r[1].s64 + 128;
+	// 82DADEE4: 80770008  lwz r3, 8(r23)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DADEE8: 38A10060  addi r5, r1, 0x60
+	ctx.r[5].s64 = ctx.r[1].s64 + 96;
+	// 82DADEEC: B2C10096  sth r22, 0x96(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(150 as u32), ctx.r[22].u16 ) };
+	// 82DADEF0: 7EE4BB78  mr r4, r23
+	ctx.r[4].u64 = ctx.r[23].u64;
+	// 82DADEF4: B2C10098  sth r22, 0x98(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(152 as u32), ctx.r[22].u16 ) };
+	// 82DADEF8: B2C10094  sth r22, 0x94(r1)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[1].u32.wrapping_add(148 as u32), ctx.r[22].u16 ) };
+	// 82DADEFC: 91770028  stw r11, 0x28(r23)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[23].u32.wrapping_add(40 as u32), ctx.r[11].u32 ) };
+	// 82DADF00: 4BFEB649  bl 0x82d99548
+	ctx.lr = 0x82DADF04;
+	sub_82D99548(ctx, base);
+	// 82DADF04: 3B3E0098  addi r25, r30, 0x98
+	ctx.r[25].s64 = ctx.r[30].s64 + 152;
+	// 82DADF08: 7ED8B378  mr r24, r22
+	ctx.r[24].u64 = ctx.r[22].u64;
+	// 82DADF0C: A0F90004  lhz r7, 4(r25)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DADF10: 2F070000  cmpwi cr6, r7, 0
+	ctx.cr[6].compare_i32(ctx.r[7].s32, 0, &mut ctx.xer);
+	// 82DADF14: 40990064  ble cr6, 0x82dadf78
+	if !ctx.cr[6].gt {
+	pc = 0x82DADF78; continue 'dispatch;
+	}
+	// 82DADF18: 81790000  lwz r11, 0(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADF1C: 89010093  lbz r8, 0x93(r1)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(147 as u32) ) } as u64;
+	// 82DADF20: 80A10088  lwz r5, 0x88(r1)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(136 as u32) ) } as u64;
+	// 82DADF24: 396B0013  addi r11, r11, 0x13
+	ctx.r[11].s64 = ctx.r[11].s64 + 19;
+	// 82DADF28: 80C10084  lwz r6, 0x84(r1)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(132 as u32) ) } as u64;
+	pc = 0x82DADF2C; continue 'dispatch;
+            }
+            0x82DADF2C => {
+    //   block [0x82DADF2C..0x82DADF68)
+	// 82DADF2C: 894B0000  lbz r10, 0(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADF30: 7F0A4040  cmplw cr6, r10, r8
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[8].u32, &mut ctx.xer);
+	// 82DADF34: 41990044  bgt cr6, 0x82dadf78
+	if ctx.cr[6].gt {
+	pc = 0x82DADF78; continue 'dispatch;
+	}
+	// 82DADF38: 409A0030  bne cr6, 0x82dadf68
+	if !ctx.cr[6].eq {
+	pc = 0x82DADF68; continue 'dispatch;
+	}
+	// 82DADF3C: 812BFFF1  lwz r9, -0xf(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(-15 as u32) ) } as u64;
+	// 82DADF40: 814600C0  lwz r10, 0xc0(r6)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[6].u32.wrapping_add(192 as u32) ) } as u64;
+	// 82DADF44: 812900C0  lwz r9, 0xc0(r9)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(192 as u32) ) } as u64;
+	// 82DADF48: 7F095040  cmplw cr6, r9, r10
+	ctx.cr[6].compare_u32(ctx.r[9].u32, ctx.r[10].u32, &mut ctx.xer);
+	// 82DADF4C: 4199002C  bgt cr6, 0x82dadf78
+	if ctx.cr[6].gt {
+	pc = 0x82DADF78; continue 'dispatch;
+	}
+	// 82DADF50: 409A0018  bne cr6, 0x82dadf68
+	if !ctx.cr[6].eq {
+	pc = 0x82DADF68; continue 'dispatch;
+	}
+	// 82DADF54: 814BFFF5  lwz r10, -0xb(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(-11 as u32) ) } as u64;
+	// 82DADF58: 812500C0  lwz r9, 0xc0(r5)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(192 as u32) ) } as u64;
+	// 82DADF5C: 814A00C0  lwz r10, 0xc0(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(192 as u32) ) } as u64;
+	// 82DADF60: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DADF64: 41990014  bgt cr6, 0x82dadf78
+	if ctx.cr[6].gt {
+	pc = 0x82DADF78; continue 'dispatch;
+	}
+	pc = 0x82DADF68; continue 'dispatch;
+            }
+            0x82DADF68 => {
+    //   block [0x82DADF68..0x82DADF78)
+	// 82DADF68: 3B180001  addi r24, r24, 1
+	ctx.r[24].s64 = ctx.r[24].s64 + 1;
+	// 82DADF6C: 396B0030  addi r11, r11, 0x30
+	ctx.r[11].s64 = ctx.r[11].s64 + 48;
+	// 82DADF70: 7F183800  cmpw cr6, r24, r7
+	ctx.cr[6].compare_i32(ctx.r[24].s32, ctx.r[7].s32, &mut ctx.xer);
+	// 82DADF74: 4198FFB8  blt cr6, 0x82dadf2c
+	if ctx.cr[6].lt {
+	pc = 0x82DADF2C; continue 'dispatch;
+	}
+	pc = 0x82DADF78; continue 'dispatch;
+            }
+            0x82DADF78 => {
+    //   block [0x82DADF78..0x82DADF90)
+	// 82DADF78: A1790006  lhz r11, 6(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DADF7C: 7F1FC378  mr r31, r24
+	ctx.r[31].u64 = ctx.r[24].u64;
+	// 82DADF80: 556B04BE  clrlwi r11, r11, 0x12
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x00003FFFu64;
+	// 82DADF84: 7F075840  cmplw cr6, r7, r11
+	ctx.cr[6].compare_u32(ctx.r[7].u32, ctx.r[11].u32, &mut ctx.xer);
+	// 82DADF88: 41980008  blt cr6, 0x82dadf90
+	if ctx.cr[6].lt {
+	pc = 0x82DADF90; continue 'dispatch;
+	}
+	// 82DADF8C: 7EDFB378  mr r31, r22
+	ctx.r[31].u64 = ctx.r[22].u64;
+	pc = 0x82DADF90; continue 'dispatch;
+            }
+            0x82DADF90 => {
+    //   block [0x82DADF90..0x82DADFC0)
+	// 82DADF90: 38C00001  li r6, 1
+	ctx.r[6].s64 = 1;
+	// 82DADF94: 38A10080  addi r5, r1, 0x80
+	ctx.r[5].s64 = ctx.r[1].s64 + 128;
+	// 82DADF98: 7F04C378  mr r4, r24
+	ctx.r[4].u64 = ctx.r[24].u64;
+	// 82DADF9C: 7F23CB78  mr r3, r25
+	ctx.r[3].u64 = ctx.r[25].u64;
+	// 82DADFA0: 48000221  bl 0x82dae1c0
+	ctx.lr = 0x82DADFA4;
+	sub_82DAE1C0(ctx, base);
+	// 82DADFA4: A1790004  lhz r11, 4(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DADFA8: 7FEAFB78  mr r10, r31
+	ctx.r[10].u64 = ctx.r[31].u64;
+	// 82DADFAC: 7F1F5800  cmpw cr6, r31, r11
+	ctx.cr[6].compare_i32(ctx.r[31].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DADFB0: 40980034  bge cr6, 0x82dadfe4
+	if !ctx.cr[6].lt {
+	pc = 0x82DADFE4; continue 'dispatch;
+	}
+	// 82DADFB4: 57EB083C  slwi r11, r31, 1
+	ctx.r[11].u32 = ctx.r[31].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DADFB8: 7D7F5A14  add r11, r31, r11
+	ctx.r[11].u64 = ctx.r[31].u64 + ctx.r[11].u64;
+	// 82DADFBC: 556B2036  slwi r11, r11, 4
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	pc = 0x82DADFC0; continue 'dispatch;
+            }
+            0x82DADFC0 => {
+    //   block [0x82DADFC0..0x82DADFE4)
+	// 82DADFC0: 81390000  lwz r9, 0(r25)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADFC4: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DADFC8: 7D2B4A14  add r9, r11, r9
+	ctx.r[9].u64 = ctx.r[11].u64 + ctx.r[9].u64;
+	// 82DADFCC: 396B0030  addi r11, r11, 0x30
+	ctx.r[11].s64 = ctx.r[11].s64 + 48;
+	// 82DADFD0: 81090000  lwz r8, 0(r9)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADFD4: 91280028  stw r9, 0x28(r8)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[8].u32.wrapping_add(40 as u32), ctx.r[9].u32 ) };
+	// 82DADFD8: A1390004  lhz r9, 4(r25)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DADFDC: 7F0A4800  cmpw cr6, r10, r9
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[9].s32, &mut ctx.xer);
+	// 82DADFE0: 4198FFE0  blt cr6, 0x82dadfc0
+	if ctx.cr[6].lt {
+	pc = 0x82DADFC0; continue 'dispatch;
+	}
+	pc = 0x82DADFE4; continue 'dispatch;
+            }
+            0x82DADFE4 => {
+    //   block [0x82DADFE4..0x82DAE054)
+	// 82DADFE4: 83570028  lwz r26, 0x28(r23)
+	ctx.r[26].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[23].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DADFE8: 38A10058  addi r5, r1, 0x58
+	ctx.r[5].s64 = ctx.r[1].s64 + 88;
+	// 82DADFEC: 8897001D  lbz r4, 0x1d(r23)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[23].u32.wrapping_add(29 as u32) ) } as u64;
+	// 82DADFF0: 817A0000  lwz r11, 0(r26)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADFF4: 806B000C  lwz r3, 0xc(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DADFF8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DADFFC: 816B0014  lwz r11, 0x14(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE000: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAE004: 4E800421  bctrl
+	ctx.lr = 0x82DAE008;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAE008: 81610058  lwz r11, 0x58(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DAE00C: 396B000F  addi r11, r11, 0xf
+	ctx.r[11].s64 = ctx.r[11].s64 + 15;
+	// 82DAE010: 556B0036  rlwinm r11, r11, 0, 0, 0x1b
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAE014: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAE018: 91610058  stw r11, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[11].u32 ) };
+	// 82DAE01C: B17A0020  sth r11, 0x20(r26)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[26].u32.wrapping_add(32 as u32), ctx.r[11].u16 ) };
+	// 82DAE020: 419A0114  beq cr6, 0x82dae134
+	if ctx.cr[6].eq {
+	pc = 0x82DAE134; continue 'dispatch;
+	}
+	// 82DAE024: 3BDE00AC  addi r30, r30, 0xac
+	ctx.r[30].s64 = ctx.r[30].s64 + 172;
+	// 82DAE028: 83BE0004  lwz r29, 4(r30)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE02C: 815E0008  lwz r10, 8(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAE030: 7C9D5A14  add r4, r29, r11
+	ctx.r[4].u64 = ctx.r[29].u64 + ctx.r[11].u64;
+	// 82DAE034: 839E0000  lwz r28, 0(r30)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE038: 554A00BE  clrlwi r10, r10, 2
+	ctx.r[10].u64 = ctx.r[10].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DAE03C: 7F0A2000  cmpw cr6, r10, r4
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[4].s32, &mut ctx.xer);
+	// 82DAE040: 40980014  bge cr6, 0x82dae054
+	if !ctx.cr[6].lt {
+	pc = 0x82DAE054; continue 'dispatch;
+	}
+	// 82DAE044: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DAE048: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DAE04C: 4BFA8EC5  bl 0x82d56f10
+	ctx.lr = 0x82DAE050;
+	sub_82D56F10(ctx, base);
+	// 82DAE050: 81610058  lwz r11, 0x58(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(88 as u32) ) } as u64;
+            }
+            0x82DAE054 => {
+    //   block [0x82DAE054..0x82DAE07C)
+	// 82DAE054: 7D7D5A14  add r11, r29, r11
+	ctx.r[11].u64 = ctx.r[29].u64 + ctx.r[11].u64;
+	// 82DAE058: 83FE0000  lwz r31, 0(r30)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE05C: 7EDBB378  mr r27, r22
+	ctx.r[27].u64 = ctx.r[22].u64;
+	// 82DAE060: 2F180000  cmpwi cr6, r24, 0
+	ctx.cr[6].compare_i32(ctx.r[24].s32, 0, &mut ctx.xer);
+	// 82DAE064: 7FBCF850  subf r29, r28, r31
+	ctx.r[29].s64 = ctx.r[31].s64 - ctx.r[28].s64;
+	// 82DAE068: 917E0004  stw r11, 4(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DAE06C: 40990044  ble cr6, 0x82dae0b0
+	if !ctx.cr[6].gt {
+	pc = 0x82DAE0B0; continue 'dispatch;
+	}
+	// 82DAE070: 7EC8B378  mr r8, r22
+	ctx.r[8].u64 = ctx.r[22].u64;
+	// 82DAE074: 7F07C378  mr r7, r24
+	ctx.r[7].u64 = ctx.r[24].u64;
+	// 82DAE078: 7F1BC378  mr r27, r24
+	ctx.r[27].u64 = ctx.r[24].u64;
+	pc = 0x82DAE07C; continue 'dispatch;
+            }
+            0x82DAE07C => {
+    //   block [0x82DAE07C..0x82DAE0A0)
+	// 82DAE07C: 81790000  lwz r11, 0(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE080: 7D6B4214  add r11, r11, r8
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[8].u64;
+	// 82DAE084: 814B001C  lwz r10, 0x1c(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAE088: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE08C: 419A0014  beq cr6, 0x82dae0a0
+	if ctx.cr[6].eq {
+	pc = 0x82DAE0A0; continue 'dispatch;
+	}
+	// 82DAE090: 7D4AEA14  add r10, r10, r29
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[29].u64;
+	// 82DAE094: A12B0020  lhz r9, 0x20(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAE098: 7FE95214  add r31, r9, r10
+	ctx.r[31].u64 = ctx.r[9].u64 + ctx.r[10].u64;
+	// 82DAE09C: 914B001C  stw r10, 0x1c(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(28 as u32), ctx.r[10].u32 ) };
+	pc = 0x82DAE0A0; continue 'dispatch;
+            }
+            0x82DAE0A0 => {
+    //   block [0x82DAE0A0..0x82DAE0B0)
+	// 82DAE0A0: 38E7FFFF  addi r7, r7, -1
+	ctx.r[7].s64 = ctx.r[7].s64 + -1;
+	// 82DAE0A4: 39080030  addi r8, r8, 0x30
+	ctx.r[8].s64 = ctx.r[8].s64 + 48;
+	// 82DAE0A8: 2B070000  cmplwi cr6, r7, 0
+	ctx.cr[6].compare_u32(ctx.r[7].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE0AC: 409AFFD0  bne cr6, 0x82dae07c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE07C; continue 'dispatch;
+	}
+	pc = 0x82DAE0B0; continue 'dispatch;
+            }
+            0x82DAE0B0 => {
+    //   block [0x82DAE0B0..0x82DAE0FC)
+	// 82DAE0B0: A17A0020  lhz r11, 0x20(r26)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[26].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAE0B4: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DAE0B8: 813E0000  lwz r9, 0(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE0BC: 7C6BFA14  add r3, r11, r31
+	ctx.r[3].u64 = ctx.r[11].u64 + ctx.r[31].u64;
+	// 82DAE0C0: 815E0004  lwz r10, 4(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE0C4: 7D2B4850  subf r9, r11, r9
+	ctx.r[9].s64 = ctx.r[9].s64 - ctx.r[11].s64;
+	// 82DAE0C8: 7D7F4850  subf r11, r31, r9
+	ctx.r[11].s64 = ctx.r[9].s64 - ctx.r[31].s64;
+	// 82DAE0CC: 7CAB5214  add r5, r11, r10
+	ctx.r[5].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DAE0D0: 4BFAAC69  bl 0x82d58d38
+	ctx.lr = 0x82DAE0D4;
+	sub_82D58D38(ctx, base);
+	// 82DAE0D4: A15A0020  lhz r10, 0x20(r26)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[26].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAE0D8: 93FA001C  stw r31, 0x1c(r26)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[26].u32.wrapping_add(28 as u32), ctx.r[31].u32 ) };
+	// 82DAE0DC: 397B0001  addi r11, r27, 1
+	ctx.r[11].s64 = ctx.r[27].s64 + 1;
+	// 82DAE0E0: 7CEAEA14  add r7, r10, r29
+	ctx.r[7].u64 = ctx.r[10].u64 + ctx.r[29].u64;
+	// 82DAE0E4: A1590004  lhz r10, 4(r25)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE0E8: 7F0B5000  cmpw cr6, r11, r10
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[10].s32, &mut ctx.xer);
+	// 82DAE0EC: 4098004C  bge cr6, 0x82dae138
+	if !ctx.cr[6].lt {
+	pc = 0x82DAE138; continue 'dispatch;
+	}
+	// 82DAE0F0: 556A083C  slwi r10, r11, 1
+	ctx.r[10].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAE0F4: 7D4B5214  add r10, r11, r10
+	ctx.r[10].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DAE0F8: 55492036  slwi r9, r10, 4
+	ctx.r[9].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	pc = 0x82DAE0FC; continue 'dispatch;
+            }
+            0x82DAE0FC => {
+    //   block [0x82DAE0FC..0x82DAE118)
+	// 82DAE0FC: 81590000  lwz r10, 0(r25)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE100: 7D0A4A14  add r8, r10, r9
+	ctx.r[8].u64 = ctx.r[10].u64 + ctx.r[9].u64;
+	// 82DAE104: 8148001C  lwz r10, 0x1c(r8)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAE108: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE10C: 7D4A3A14  add r10, r10, r7
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[7].u64;
+	// 82DAE110: 409A0008  bne cr6, 0x82dae118
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE118; continue 'dispatch;
+	}
+	// 82DAE114: 7ECAB378  mr r10, r22
+	ctx.r[10].u64 = ctx.r[22].u64;
+	pc = 0x82DAE118; continue 'dispatch;
+            }
+            0x82DAE118 => {
+    //   block [0x82DAE118..0x82DAE134)
+	// 82DAE118: 9148001C  stw r10, 0x1c(r8)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[8].u32.wrapping_add(28 as u32), ctx.r[10].u32 ) };
+	// 82DAE11C: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAE120: A1590004  lhz r10, 4(r25)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[25].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE124: 39290030  addi r9, r9, 0x30
+	ctx.r[9].s64 = ctx.r[9].s64 + 48;
+	// 82DAE128: 7F0B5000  cmpw cr6, r11, r10
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[10].s32, &mut ctx.xer);
+	// 82DAE12C: 4198FFD0  blt cr6, 0x82dae0fc
+	if ctx.cr[6].lt {
+	pc = 0x82DAE0FC; continue 'dispatch;
+	}
+	// 82DAE130: 48000008  b 0x82dae138
+	pc = 0x82DAE138; continue 'dispatch;
+            }
+            0x82DAE134 => {
+    //   block [0x82DAE134..0x82DAE138)
+	// 82DAE134: 92DA001C  stw r22, 0x1c(r26)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[26].u32.wrapping_add(28 as u32), ctx.r[22].u32 ) };
+	pc = 0x82DAE138; continue 'dispatch;
+            }
+            0x82DAE138 => {
+    //   block [0x82DAE138..0x82DAE198)
+	// 82DAE138: 817A0000  lwz r11, 0(r26)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE13C: 7EE4BB78  mr r4, r23
+	ctx.r[4].u64 = ctx.r[23].u64;
+	// 82DAE140: A0DA0020  lhz r6, 0x20(r26)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[26].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DAE144: 80BA001C  lwz r5, 0x1c(r26)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[26].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAE148: 806B000C  lwz r3, 0xc(r11)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAE14C: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE150: 816B001C  lwz r11, 0x1c(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DAE154: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DAE158: 4E800421  bctrl
+	ctx.lr = 0x82DAE15C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DAE15C: 897A001A  lbz r11, 0x1a(r26)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[26].u32.wrapping_add(26 as u32) ) } as u64;
+	// 82DAE160: 216B0002  subfic r11, r11, 2
+	ctx.xer.ca = ctx.r[11].u32 <= 2 as u32;
+	ctx.r[11].s64 = (2 as i64) - ctx.r[11].s64;
+	// 82DAE164: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAE168: 7D6BD02E  lwzx r11, r11, r26
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[26].u32)) } as u64;
+	// 82DAE16C: 3BEB00A0  addi r31, r11, 0xa0
+	ctx.r[31].s64 = ctx.r[11].s64 + 160;
+	// 82DAE170: 816B00A4  lwz r11, 0xa4(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(164 as u32) ) } as u64;
+	// 82DAE174: B17A0022  sth r11, 0x22(r26)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[26].u32.wrapping_add(34 as u32), ctx.r[11].u16 ) };
+	// 82DAE178: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAE17C: 815F0004  lwz r10, 4(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE180: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DAE184: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAE188: 409A0010  bne cr6, 0x82dae198
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE198; continue 'dispatch;
+	}
+	// 82DAE18C: 38800004  li r4, 4
+	ctx.r[4].s64 = 4;
+	// 82DAE190: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAE194: 4BFA8E05  bl 0x82d56f98
+	ctx.lr = 0x82DAE198;
+	sub_82D56F98(ctx, base);
+            }
+            0x82DAE198 => {
+    //   block [0x82DAE198..0x82DAE1BC)
+	// 82DAE198: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE19C: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE1A0: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAE1A4: 7EEB512E  stwx r23, r11, r10
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32), ctx.r[23].u32) };
+	// 82DAE1A8: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE1AC: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAE1B0: 917F0004  stw r11, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DAE1B4: 38210110  addi r1, r1, 0x110
+	ctx.r[1].s64 = ctx.r[1].s64 + 272;
+	// 82DAE1B8: 4BEFB288  b 0x82ca9440
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE1C0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE1C0 size=316
+    let mut pc: u32 = 0x82DAE1C0;
+    'dispatch: loop {
+        match pc {
+            0x82DAE1C0 => {
+    //   block [0x82DAE1C0..0x82DAE208)
+	// 82DAE1C0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE1C4: 4BEFB23D  bl 0x82ca9400
+	ctx.lr = 0x82DAE1C8;
+	sub_82CA93D0(ctx, base);
+	// 82DAE1C8: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE1CC: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAE1D0: 7CDD3378  mr r29, r6
+	ctx.r[29].u64 = ctx.r[6].u64;
+	// 82DAE1D4: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	// 82DAE1D8: 7CBB2B78  mr r27, r5
+	ctx.r[27].u64 = ctx.r[5].u64;
+	// 82DAE1DC: A17C0004  lhz r11, 4(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[28].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE1E0: A15C0006  lhz r10, 6(r28)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[28].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE1E4: 7F4BEA14  add r26, r11, r29
+	ctx.r[26].u64 = ctx.r[11].u64 + ctx.r[29].u64;
+	// 82DAE1E8: 554A04BE  clrlwi r10, r10, 0x12
+	ctx.r[10].u64 = ctx.r[10].u32 as u64 & 0x00003FFFu64;
+	// 82DAE1EC: 7FDF5850  subf r30, r31, r11
+	ctx.r[30].s64 = ctx.r[11].s64 - ctx.r[31].s64;
+	// 82DAE1F0: 7F0AD000  cmpw cr6, r10, r26
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[26].s32, &mut ctx.xer);
+	// 82DAE1F4: 40980024  bge cr6, 0x82dae218
+	if !ctx.cr[6].lt {
+	pc = 0x82DAE218; continue 'dispatch;
+	}
+	// 82DAE1F8: 554B083C  slwi r11, r10, 1
+	ctx.r[11].u32 = ctx.r[10].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAE1FC: 7F1A5800  cmpw cr6, r26, r11
+	ctx.cr[6].compare_i32(ctx.r[26].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAE200: 41980008  blt cr6, 0x82dae208
+	if ctx.cr[6].lt {
+	pc = 0x82DAE208; continue 'dispatch;
+	}
+	// 82DAE204: 7F4BD378  mr r11, r26
+	ctx.r[11].u64 = ctx.r[26].u64;
+	pc = 0x82DAE208; continue 'dispatch;
+            }
+            0x82DAE208 => {
+    //   block [0x82DAE208..0x82DAE218)
+	// 82DAE208: 38A00030  li r5, 0x30
+	ctx.r[5].s64 = 48;
+	// 82DAE20C: 7D645B78  mr r4, r11
+	ctx.r[4].u64 = ctx.r[11].u64;
+	// 82DAE210: 7F83E378  mr r3, r28
+	ctx.r[3].u64 = ctx.r[28].u64;
+	// 82DAE214: 4BFAD17D  bl 0x82d5b390
+	ctx.lr = 0x82DAE218;
+	sub_82D5B390(ctx, base);
+	pc = 0x82DAE218; continue 'dispatch;
+            }
+            0x82DAE218 => {
+    //   block [0x82DAE218..0x82DAE260)
+	// 82DAE218: 57E8083C  slwi r8, r31, 1
+	ctx.r[8].u32 = ctx.r[31].u32.wrapping_shl(1);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAE21C: 817C0000  lwz r11, 0(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE220: 7D5FEA14  add r10, r31, r29
+	ctx.r[10].u64 = ctx.r[31].u64 + ctx.r[29].u64;
+	// 82DAE224: 7CFF4214  add r7, r31, r8
+	ctx.r[7].u64 = ctx.r[31].u64 + ctx.r[8].u64;
+	// 82DAE228: 5548083C  slwi r8, r10, 1
+	ctx.r[8].u32 = ctx.r[10].u32.wrapping_shl(1);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAE22C: 393EFFFF  addi r9, r30, -1
+	ctx.r[9].s64 = ctx.r[30].s64 + -1;
+	// 82DAE230: 7D4A4214  add r10, r10, r8
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[8].u64;
+	// 82DAE234: 54E52036  slwi r5, r7, 4
+	ctx.r[5].u32 = ctx.r[7].u32.wrapping_shl(4);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAE238: 554A2036  slwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAE23C: 2F090000  cmpwi cr6, r9, 0
+	ctx.cr[6].compare_i32(ctx.r[9].s32, 0, &mut ctx.xer);
+	// 82DAE240: 7D4A5A14  add r10, r10, r11
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[11].u64;
+	// 82DAE244: 7D6B2A14  add r11, r11, r5
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[5].u64;
+	// 82DAE248: 4198004C  blt cr6, 0x82dae294
+	if ctx.cr[6].lt {
+	pc = 0x82DAE294; continue 'dispatch;
+	}
+	// 82DAE24C: 7CCA5850  subf r6, r10, r11
+	ctx.r[6].s64 = ctx.r[11].s64 - ctx.r[10].s64;
+	// 82DAE250: 552B083C  slwi r11, r9, 1
+	ctx.r[11].u32 = ctx.r[9].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAE254: 7D695A14  add r11, r9, r11
+	ctx.r[11].u64 = ctx.r[9].u64 + ctx.r[11].u64;
+	// 82DAE258: 556B2036  slwi r11, r11, 4
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAE25C: 7D0B5214  add r8, r11, r10
+	ctx.r[8].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	pc = 0x82DAE260; continue 'dispatch;
+            }
+            0x82DAE260 => {
+    //   block [0x82DAE260..0x82DAE270)
+	// 82DAE260: 7D664214  add r11, r6, r8
+	ctx.r[11].u64 = ctx.r[6].u64 + ctx.r[8].u64;
+	// 82DAE264: 7D0A4378  mr r10, r8
+	ctx.r[10].u64 = ctx.r[8].u64;
+	// 82DAE268: 38E00006  li r7, 6
+	ctx.r[7].s64 = 6;
+	// 82DAE26C: 7CE903A6  mtctr r7
+	ctx.ctr.u64 = ctx.r[7].u64;
+	pc = 0x82DAE270; continue 'dispatch;
+            }
+            0x82DAE270 => {
+    //   block [0x82DAE270..0x82DAE294)
+	// 82DAE270: E8EB0000  ld r7, 0(r11)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	// 82DAE274: 396B0008  addi r11, r11, 8
+	ctx.r[11].s64 = ctx.r[11].s64 + 8;
+	// 82DAE278: F8EA0000  std r7, 0(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[7].u64 ) };
+	// 82DAE27C: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DAE280: 4200FFF0  bdnz 0x82dae270
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAE270; continue 'dispatch;
+	}
+	// 82DAE284: 3929FFFF  addi r9, r9, -1
+	ctx.r[9].s64 = ctx.r[9].s64 + -1;
+	// 82DAE288: 3908FFD0  addi r8, r8, -0x30
+	ctx.r[8].s64 = ctx.r[8].s64 + -48;
+	// 82DAE28C: 2F090000  cmpwi cr6, r9, 0
+	ctx.cr[6].compare_i32(ctx.r[9].s32, 0, &mut ctx.xer);
+	// 82DAE290: 4098FFD0  bge cr6, 0x82dae260
+	if !ctx.cr[6].lt {
+	pc = 0x82DAE260; continue 'dispatch;
+	}
+	pc = 0x82DAE294; continue 'dispatch;
+            }
+            0x82DAE294 => {
+    //   block [0x82DAE294..0x82DAE2BC)
+	// 82DAE294: 817C0000  lwz r11, 0(r28)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE298: 38FDFFFF  addi r7, r29, -1
+	ctx.r[7].s64 = ctx.r[29].s64 + -1;
+	// 82DAE29C: 7D655A14  add r11, r5, r11
+	ctx.r[11].u64 = ctx.r[5].u64 + ctx.r[11].u64;
+	// 82DAE2A0: 2F070000  cmpwi cr6, r7, 0
+	ctx.cr[6].compare_i32(ctx.r[7].s32, 0, &mut ctx.xer);
+	// 82DAE2A4: 4198004C  blt cr6, 0x82dae2f0
+	if ctx.cr[6].lt {
+	pc = 0x82DAE2F0; continue 'dispatch;
+	}
+	// 82DAE2A8: 54EA083C  slwi r10, r7, 1
+	ctx.r[10].u32 = ctx.r[7].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAE2AC: 7CCBD850  subf r6, r11, r27
+	ctx.r[6].s64 = ctx.r[27].s64 - ctx.r[11].s64;
+	// 82DAE2B0: 7D475214  add r10, r7, r10
+	ctx.r[10].u64 = ctx.r[7].u64 + ctx.r[10].u64;
+	// 82DAE2B4: 554A2036  slwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAE2B8: 7D2A5A14  add r9, r10, r11
+	ctx.r[9].u64 = ctx.r[10].u64 + ctx.r[11].u64;
+	pc = 0x82DAE2BC; continue 'dispatch;
+            }
+            0x82DAE2BC => {
+    //   block [0x82DAE2BC..0x82DAE2CC)
+	// 82DAE2BC: 7D664A14  add r11, r6, r9
+	ctx.r[11].u64 = ctx.r[6].u64 + ctx.r[9].u64;
+	// 82DAE2C0: 7D2A4B78  mr r10, r9
+	ctx.r[10].u64 = ctx.r[9].u64;
+	// 82DAE2C4: 39000006  li r8, 6
+	ctx.r[8].s64 = 6;
+	// 82DAE2C8: 7D0903A6  mtctr r8
+	ctx.ctr.u64 = ctx.r[8].u64;
+	pc = 0x82DAE2CC; continue 'dispatch;
+            }
+            0x82DAE2CC => {
+    //   block [0x82DAE2CC..0x82DAE2F0)
+	// 82DAE2CC: E90B0000  ld r8, 0(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	// 82DAE2D0: 396B0008  addi r11, r11, 8
+	ctx.r[11].s64 = ctx.r[11].s64 + 8;
+	// 82DAE2D4: F90A0000  std r8, 0(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[8].u64 ) };
+	// 82DAE2D8: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DAE2DC: 4200FFF0  bdnz 0x82dae2cc
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAE2CC; continue 'dispatch;
+	}
+	// 82DAE2E0: 38E7FFFF  addi r7, r7, -1
+	ctx.r[7].s64 = ctx.r[7].s64 + -1;
+	// 82DAE2E4: 3929FFD0  addi r9, r9, -0x30
+	ctx.r[9].s64 = ctx.r[9].s64 + -48;
+	// 82DAE2E8: 2F070000  cmpwi cr6, r7, 0
+	ctx.cr[6].compare_i32(ctx.r[7].s32, 0, &mut ctx.xer);
+	// 82DAE2EC: 4098FFD0  bge cr6, 0x82dae2bc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAE2BC; continue 'dispatch;
+	}
+	pc = 0x82DAE2F0; continue 'dispatch;
+            }
+            0x82DAE2F0 => {
+    //   block [0x82DAE2F0..0x82DAE2FC)
+	// 82DAE2F0: B35C0004  sth r26, 4(r28)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[28].u32.wrapping_add(4 as u32), ctx.r[26].u16 ) };
+	// 82DAE2F4: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAE2F8: 4BEFB158  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE300(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE300 size=172
+    let mut pc: u32 = 0x82DAE300;
+    'dispatch: loop {
+        match pc {
+            0x82DAE300 => {
+    //   block [0x82DAE300..0x82DAE38C)
+	// 82DAE300: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE304: 4BEFB0FD  bl 0x82ca9400
+	ctx.lr = 0x82DAE308;
+	sub_82CA93D0(ctx, base);
+	// 82DAE308: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE30C: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DAE310: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE314: 7CBD2B78  mr r29, r5
+	ctx.r[29].u64 = ctx.r[5].u64;
+	// 82DAE318: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAE31C: 7D7EEA14  add r11, r30, r29
+	ctx.r[11].u64 = ctx.r[30].u64 + ctx.r[29].u64;
+	// 82DAE320: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DAE324: 396B0005  addi r11, r11, 5
+	ctx.r[11].s64 = ctx.r[11].s64 + 5;
+	// 82DAE328: 38A00004  li r5, 4
+	ctx.r[5].s64 = 4;
+	// 82DAE32C: 557C103A  slwi r28, r11, 2
+	ctx.r[28].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[28].u64 = ctx.r[28].u32 as u64;
+	// 82DAE330: 7CDA3378  mr r26, r6
+	ctx.r[26].u64 = ctx.r[6].u64;
+	// 82DAE334: 397C0020  addi r11, r28, 0x20
+	ctx.r[11].s64 = ctx.r[28].s64 + 32;
+	// 82DAE338: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DAE33C: 7D6BF9D6  mullw r11, r11, r31
+	ctx.r[11].s32 = ((ctx.r[11].s32 as i64 * ctx.r[31].s32 as i64) as i32);
+	ctx.r[11].s64 = ctx.r[11].s32 as i64;
+	// 82DAE340: 396B003F  addi r11, r11, 0x3f
+	ctx.r[11].s64 = ctx.r[11].s64 + 63;
+	// 82DAE344: 557B0036  rlwinm r27, r11, 0, 0, 0x1b
+	ctx.r[27].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAE348: 7F64DB78  mr r4, r27
+	ctx.r[4].u64 = ctx.r[27].u64;
+	// 82DAE34C: 4BFA6EFD  bl 0x82d55248
+	ctx.lr = 0x82DAE350;
+	sub_82D55248(ctx, base);
+	// 82DAE350: 7FC6F378  mr r6, r30
+	ctx.r[6].u64 = ctx.r[30].u64;
+	// 82DAE354: 39630010  addi r11, r3, 0x10
+	ctx.r[11].s64 = ctx.r[3].s64 + 16;
+	// 82DAE358: B3630002  sth r27, 2(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(2 as u32), ctx.r[27].u16 ) };
+	// 82DAE35C: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAE360: B3E30006  sth r31, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[31].u16 ) };
+	// 82DAE364: 3BC00003  li r30, 3
+	ctx.r[30].s64 = 3;
+	// 82DAE368: 9BA30009  stb r29, 9(r3)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[3].u32.wrapping_add(9 as u32), ctx.r[29].u8 ) };
+	// 82DAE36C: B343000C  sth r26, 0xc(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[26].u16 ) };
+	// 82DAE370: 39400007  li r10, 7
+	ctx.r[10].s64 = 7;
+	// 82DAE374: 98C30008  stb r6, 8(r3)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[6].u8 ) };
+	// 82DAE378: 392B0004  addi r9, r11, 4
+	ctx.r[9].s64 = ctx.r[11].s64 + 4;
+	// 82DAE37C: 9B83000A  stb r28, 0xa(r3)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[3].u32.wrapping_add(10 as u32), ctx.r[28].u8 ) };
+	// 82DAE380: B10B0000  sth r8, 0(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[8].u16 ) };
+	// 82DAE384: B3CB0002  sth r30, 2(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(2 as u32), ctx.r[30].u16 ) };
+	// 82DAE388: 7D4903A6  mtctr r10
+	ctx.ctr.u64 = ctx.r[10].u64;
+	pc = 0x82DAE38C; continue 'dispatch;
+            }
+            0x82DAE38C => {
+    //   block [0x82DAE38C..0x82DAE3AC)
+	// 82DAE38C: 91090000  stw r8, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[8].u32 ) };
+	// 82DAE390: 39290004  addi r9, r9, 4
+	ctx.r[9].s64 = ctx.r[9].s64 + 4;
+	// 82DAE394: 4200FFF8  bdnz 0x82dae38c
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAE38C; continue 'dispatch;
+	}
+	// 82DAE398: 39600016  li r11, 0x16
+	ctx.r[11].s64 = 22;
+	// 82DAE39C: B1030004  sth r8, 4(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(4 as u32), ctx.r[8].u16 ) };
+	// 82DAE3A0: B1630000  sth r11, 0(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u16 ) };
+	// 82DAE3A4: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAE3A8: 4BEFB0A8  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE3B0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAE3B0 size=224
+    let mut pc: u32 = 0x82DAE3B0;
+    'dispatch: loop {
+        match pc {
+            0x82DAE3B0 => {
+    //   block [0x82DAE3B0..0x82DAE48C)
+	// 82DAE3B0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE3B4: 4BEFB055  bl 0x82ca9408
+	ctx.lr = 0x82DAE3B8;
+	sub_82CA93D0(ctx, base);
+	// 82DAE3B8: A1230006  lhz r9, 6(r3)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE3BC: 39640010  addi r11, r4, 0x10
+	ctx.r[11].s64 = ctx.r[4].s64 + 16;
+	// 82DAE3C0: 39430010  addi r10, r3, 0x10
+	ctx.r[10].s64 = ctx.r[3].s64 + 16;
+	// 82DAE3C4: 5529283E  rotlwi r9, r9, 5
+	ctx.r[9].u64 = ((ctx.r[9].u32).rotate_left(5)) as u64;
+	// 82DAE3C8: 39040030  addi r8, r4, 0x30
+	ctx.r[8].s64 = ctx.r[4].s64 + 48;
+	// 82DAE3CC: 7D291A14  add r9, r9, r3
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[3].u64;
+	// 82DAE3D0: 3BA00000  li r29, 0
+	ctx.r[29].s64 = 0;
+	// 82DAE3D4: 38A90030  addi r5, r9, 0x30
+	ctx.r[5].s64 = ctx.r[9].s64 + 48;
+	// 82DAE3D8: E92B0000  ld r9, 0(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	// 82DAE3DC: F92A0000  std r9, 0(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u64 ) };
+	// 82DAE3E0: E92B0008  ld r9, 8(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) };
+	// 82DAE3E4: F92A0008  std r9, 8(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(8 as u32), ctx.r[9].u64 ) };
+	// 82DAE3E8: E92B0010  ld r9, 0x10(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	// 82DAE3EC: F92A0010  std r9, 0x10(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(16 as u32), ctx.r[9].u64 ) };
+	// 82DAE3F0: E96B0018  ld r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) };
+	// 82DAE3F4: F96A0018  std r11, 0x18(r10)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[10].u32.wrapping_add(24 as u32), ctx.r[11].u64 ) };
+	// 82DAE3F8: A1640004  lhz r11, 4(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE3FC: B1630004  sth r11, 4(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(4 as u32), ctx.r[11].u16 ) };
+	// 82DAE400: A1640006  lhz r11, 6(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE404: A1440004  lhz r10, 4(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE408: 556B283E  rotlwi r11, r11, 5
+	ctx.r[11].u64 = ((ctx.r[11].u32).rotate_left(5)) as u64;
+	// 82DAE40C: 8BC4000A  lbz r30, 0xa(r4)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(10 as u32) ) } as u64;
+	// 82DAE410: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE414: 7D6B2214  add r11, r11, r4
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[4].u64;
+	// 82DAE418: 392B0030  addi r9, r11, 0x30
+	ctx.r[9].s64 = ctx.r[11].s64 + 48;
+	// 82DAE41C: 419A0070  beq cr6, 0x82dae48c
+	if ctx.cr[6].eq {
+	pc = 0x82DAE48C; continue 'dispatch;
+	}
+	// 82DAE420: 7D644050  subf r11, r4, r8
+	ctx.r[11].s64 = ctx.r[8].s64 - ctx.r[4].s64;
+	// 82DAE424: 7FDF1670  srawi r31, r30, 2
+	ctx.xer.ca = (ctx.r[30].s32 < 0) && ((ctx.r[30].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[31].s64 = (ctx.r[30].s32 >> 2) as i64;
+	// 82DAE428: 7CCB1A14  add r6, r11, r3
+	ctx.r[6].u64 = ctx.r[11].u64 + ctx.r[3].u64;
+	// 82DAE42C: 38600010  li r3, 0x10
+	ctx.r[3].s64 = 16;
+	pc = 0x82DAE48C; continue 'dispatch;
+            }
+            0x82DAE48C => {
+    //   block [0x82DAE48C..0x82DAE490)
+	// 82DAE48C: 4BEFAFCC  b 0x82ca9458
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE490(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE490 size=236
+    let mut pc: u32 = 0x82DAE490;
+    'dispatch: loop {
+        match pc {
+            0x82DAE490 => {
+    //   block [0x82DAE490..0x82DAE4C8)
+	// 82DAE490: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE494: 4BEFAF79  bl 0x82ca940c
+	ctx.lr = 0x82DAE498;
+	sub_82CA93D0(ctx, base);
+	// 82DAE498: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE49C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAE4A0: 7FFDFB78  mr r29, r31
+	ctx.r[29].u64 = ctx.r[31].u64;
+	// 82DAE4A4: 7FEBFB78  mr r11, r31
+	ctx.r[11].u64 = ctx.r[31].u64;
+	// 82DAE4A8: A3DF0004  lhz r30, 4(r31)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE4AC: A15F0006  lhz r10, 6(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE4B0: 7F1E5000  cmpw cr6, r30, r10
+	ctx.cr[6].compare_i32(ctx.r[30].s32, ctx.r[10].s32, &mut ctx.xer);
+	// 82DAE4B4: 4198005C  blt cr6, 0x82dae510
+	if ctx.cr[6].lt {
+	pc = 0x82DAE510; continue 'dispatch;
+	}
+	// 82DAE4B8: 2F1E0002  cmpwi cr6, r30, 2
+	ctx.cr[6].compare_i32(ctx.r[30].s32, 2, &mut ctx.xer);
+	// 82DAE4BC: 7FCBF378  mr r11, r30
+	ctx.r[11].u64 = ctx.r[30].u64;
+	// 82DAE4C0: 41990008  bgt cr6, 0x82dae4c8
+	if ctx.cr[6].gt {
+	pc = 0x82DAE4C8; continue 'dispatch;
+	}
+	// 82DAE4C4: 39600002  li r11, 2
+	ctx.r[11].s64 = 2;
+	pc = 0x82DAE4C8; continue 'dispatch;
+            }
+            0x82DAE4C8 => {
+    //   block [0x82DAE4C8..0x82DAE4DC)
+	// 82DAE4C8: A0DF000C  lhz r6, 0xc(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAE4CC: 5563083C  slwi r3, r11, 1
+	ctx.r[3].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[3].u64 = ctx.r[3].u32 as u64;
+	// 82DAE4D0: 7F033000  cmpw cr6, r3, r6
+	ctx.cr[6].compare_i32(ctx.r[3].s32, ctx.r[6].s32, &mut ctx.xer);
+	// 82DAE4D4: 41980008  blt cr6, 0x82dae4dc
+	if ctx.cr[6].lt {
+	pc = 0x82DAE4DC; continue 'dispatch;
+	}
+	// 82DAE4D8: 7CC33378  mr r3, r6
+	ctx.r[3].u64 = ctx.r[6].u64;
+	pc = 0x82DAE4DC; continue 'dispatch;
+            }
+            0x82DAE4DC => {
+    //   block [0x82DAE4DC..0x82DAE510)
+	// 82DAE4DC: 88BF0009  lbz r5, 9(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(9 as u32) ) } as u64;
+	// 82DAE4E0: 889F0008  lbz r4, 8(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAE4E4: 4BFFFE1D  bl 0x82dae300
+	ctx.lr = 0x82DAE4E8;
+	sub_82DAE300(ctx, base);
+	// 82DAE4E8: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DAE4EC: 7C7D1B78  mr r29, r3
+	ctx.r[29].u64 = ctx.r[3].u64;
+	// 82DAE4F0: 4BFFFEC1  bl 0x82dae3b0
+	ctx.lr = 0x82DAE4F4;
+	sub_82DAE3B0(ctx, base);
+	// 82DAE4F4: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE4F8: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DAE4FC: A0BF0002  lhz r5, 2(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAE500: 38C00004  li r6, 4
+	ctx.r[6].s64 = 4;
+	// 82DAE504: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAE508: 4BFA6DC1  bl 0x82d552c8
+	ctx.lr = 0x82DAE50C;
+	sub_82D552C8(ctx, base);
+	// 82DAE50C: 7FABEB78  mr r11, r29
+	ctx.r[11].u64 = ctx.r[29].u64;
+	pc = 0x82DAE510; continue 'dispatch;
+            }
+            0x82DAE510 => {
+    //   block [0x82DAE510..0x82DAE564)
+	// 82DAE510: 38FE0001  addi r7, r30, 1
+	ctx.r[7].s64 = ctx.r[30].s64 + 1;
+	// 82DAE514: 894B000A  lbz r10, 0xa(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(10 as u32) ) } as u64;
+	// 82DAE518: A10B0006  lhz r8, 6(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE51C: 7FC90734  extsh r9, r30
+	ctx.r[9].s64 = ctx.r[30].s16 as i64;
+	// 82DAE520: 5508283E  rotlwi r8, r8, 5
+	ctx.r[8].u64 = ((ctx.r[8].u32).rotate_left(5)) as u64;
+	// 82DAE524: B0EB0004  sth r7, 4(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[7].u16 ) };
+	// 82DAE528: 7D475378  mr r7, r10
+	ctx.r[7].u64 = ctx.r[10].u64;
+	// 82DAE52C: 7D4A1670  srawi r10, r10, 2
+	ctx.xer.ca = (ctx.r[10].s32 < 0) && ((ctx.r[10].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[10].s64 = (ctx.r[10].s32 >> 2) as i64;
+	// 82DAE530: 7CE70734  extsh r7, r7
+	ctx.r[7].s64 = ctx.r[7].s16 as i64;
+	// 82DAE534: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	// 82DAE538: 7D2749D6  mullw r9, r7, r9
+	ctx.r[9].s32 = ((ctx.r[7].s32 as i64 * ctx.r[9].s32 as i64) as i32);
+	ctx.r[9].s64 = ctx.r[9].s32 as i64;
+	// 82DAE53C: 7D294214  add r9, r9, r8
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[8].u64;
+	// 82DAE540: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAE544: 7D695A14  add r11, r9, r11
+	ctx.r[11].u64 = ctx.r[9].u64 + ctx.r[11].u64;
+	// 82DAE548: 396B0030  addi r11, r11, 0x30
+	ctx.r[11].s64 = ctx.r[11].s64 + 48;
+	// 82DAE54C: 41980024  blt cr6, 0x82dae570
+	if ctx.cr[6].lt {
+	pc = 0x82DAE570; continue 'dispatch;
+	}
+	// 82DAE550: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DAE554: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DAE558: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE55C: 419A0014  beq cr6, 0x82dae570
+	if ctx.cr[6].eq {
+	pc = 0x82DAE570; continue 'dispatch;
+	}
+	// 82DAE560: 7D4903A6  mtctr r10
+	ctx.ctr.u64 = ctx.r[10].u64;
+	pc = 0x82DAE564; continue 'dispatch;
+            }
+            0x82DAE564 => {
+    //   block [0x82DAE564..0x82DAE570)
+	// 82DAE564: 912B0000  stw r9, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DAE568: 396B0004  addi r11, r11, 4
+	ctx.r[11].s64 = ctx.r[11].s64 + 4;
+	// 82DAE56C: 4200FFF8  bdnz 0x82dae564
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAE564; continue 'dispatch;
+	}
+	pc = 0x82DAE570; continue 'dispatch;
+            }
+            0x82DAE570 => {
+    //   block [0x82DAE570..0x82DAE57C)
+	// 82DAE570: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DAE574: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAE578: 4BEFAEE4  b 0x82ca945c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE580(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE580 size=140
+    let mut pc: u32 = 0x82DAE580;
+    'dispatch: loop {
+        match pc {
+            0x82DAE580 => {
+    //   block [0x82DAE580..0x82DAE5F0)
+	// 82DAE580: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE584: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DAE588: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DAE58C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DAE590: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE594: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAE598: A15F0004  lhz r10, 4(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE59C: A17F0006  lhz r11, 6(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE5A0: 7D4A2214  add r10, r10, r4
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[4].u64;
+	// 82DAE5A4: 554A083C  slwi r10, r10, 1
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAE5A8: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAE5AC: 41990044  bgt cr6, 0x82dae5f0
+	if ctx.cr[6].gt {
+	pc = 0x82DAE5F0; continue 'dispatch;
+	}
+	// 82DAE5B0: 5563F87E  srwi r3, r11, 1
+	ctx.r[3].u32 = ctx.r[11].u32.wrapping_shr(1);
+	ctx.r[3].u64 = ctx.r[3].u32 as u64;
+	// 82DAE5B4: A0DF000C  lhz r6, 0xc(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAE5B8: 88BF0009  lbz r5, 9(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(9 as u32) ) } as u64;
+	// 82DAE5BC: 889F0008  lbz r4, 8(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAE5C0: 4BFFFD41  bl 0x82dae300
+	ctx.lr = 0x82DAE5C4;
+	sub_82DAE300(ctx, base);
+	// 82DAE5C4: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DAE5C8: 7C7E1B78  mr r30, r3
+	ctx.r[30].u64 = ctx.r[3].u64;
+	// 82DAE5CC: 4BFFFDE5  bl 0x82dae3b0
+	ctx.lr = 0x82DAE5D0;
+	sub_82DAE3B0(ctx, base);
+	// 82DAE5D0: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE5D4: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DAE5D8: A0BF0002  lhz r5, 2(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAE5DC: 38C00004  li r6, 4
+	ctx.r[6].s64 = 4;
+	// 82DAE5E0: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DAE5E4: 4BFA6CE5  bl 0x82d552c8
+	ctx.lr = 0x82DAE5E8;
+	sub_82D552C8(ctx, base);
+	// 82DAE5E8: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DAE5EC: 48000008  b 0x82dae5f4
+	pc = 0x82DAE5F4; continue 'dispatch;
+            }
+            0x82DAE5F0 => {
+    //   block [0x82DAE5F0..0x82DAE5F4)
+	// 82DAE5F0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	pc = 0x82DAE5F4; continue 'dispatch;
+            }
+            0x82DAE5F4 => {
+    //   block [0x82DAE5F4..0x82DAE60C)
+	// 82DAE5F4: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAE5F8: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAE5FC: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAE600: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DAE604: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAE608: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE610(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAE610 size=16
+    let mut pc: u32 = 0x82DAE610;
+    'dispatch: loop {
+        match pc {
+            0x82DAE610 => {
+    //   block [0x82DAE610..0x82DAE620)
+	// 82DAE610: 80630028  lwz r3, 0x28(r3)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAE614: 7C852378  mr r5, r4
+	ctx.r[5].u64 = ctx.r[4].u64;
+	// 82DAE618: A0830002  lhz r4, 2(r3)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAE61C: 4BFEDBBC  b 0x82d9c1d8
+	sub_82D9C1D8(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE620(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAE620 size=16
+    let mut pc: u32 = 0x82DAE620;
+    'dispatch: loop {
+        match pc {
+            0x82DAE620 => {
+    //   block [0x82DAE620..0x82DAE630)
+	// 82DAE620: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DAE624: 91650000  stw r11, 0(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAE628: 91650004  stw r11, 4(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DAE62C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE630(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAE630 size=8
+    let mut pc: u32 = 0x82DAE630;
+    'dispatch: loop {
+        match pc {
+            0x82DAE630 => {
+    //   block [0x82DAE630..0x82DAE638)
+	// 82DAE630: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAE634: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE638(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAE638 size=12
+    let mut pc: u32 = 0x82DAE638;
+    'dispatch: loop {
+        match pc {
+            0x82DAE638 => {
+    //   block [0x82DAE638..0x82DAE644)
+	// 82DAE638: 39600001  li r11, 1
+	ctx.r[11].s64 = 1;
+	// 82DAE63C: 99630000  stb r11, 0(r3)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u8 ) };
+	// 82DAE640: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE648(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAE648 size=8
+    let mut pc: u32 = 0x82DAE648;
+    'dispatch: loop {
+        match pc {
+            0x82DAE648 => {
+    //   block [0x82DAE648..0x82DAE650)
+	// 82DAE648: 3860000B  li r3, 0xb
+	ctx.r[3].s64 = 11;
+	// 82DAE64C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE650(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE650 size=200
+    let mut pc: u32 = 0x82DAE650;
+    'dispatch: loop {
+        match pc {
+            0x82DAE650 => {
+    //   block [0x82DAE650..0x82DAE680)
+	// 82DAE650: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE654: 4BEFADAD  bl 0x82ca9400
+	ctx.lr = 0x82DAE658;
+	sub_82CA93D0(ctx, base);
+	// 82DAE658: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE65C: 81630024  lwz r11, 0x24(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAE660: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DAE664: 7CBD2B78  mr r29, r5
+	ctx.r[29].u64 = ctx.r[5].u64;
+	// 82DAE668: 7CDC3378  mr r28, r6
+	ctx.r[28].u64 = ctx.r[6].u64;
+	// 82DAE66C: 7CFB3B78  mr r27, r7
+	ctx.r[27].u64 = ctx.r[7].u64;
+	// 82DAE670: 7D1A4378  mr r26, r8
+	ctx.r[26].u64 = ctx.r[8].u64;
+	// 82DAE674: 83EB0010  lwz r31, 0x10(r11)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAE678: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE67C: 419A0094  beq cr6, 0x82dae710
+	if ctx.cr[6].eq {
+	pc = 0x82DAE710; continue 'dispatch;
+	}
+	pc = 0x82DAE680; continue 'dispatch;
+            }
+            0x82DAE680 => {
+    //   block [0x82DAE680..0x82DAE6C8)
+	// 82DAE680: A17F0000  lhz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE684: 2B0B0017  cmplwi cr6, r11, 0x17
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 23 as u32, &mut ctx.xer);
+	// 82DAE688: 41980088  blt cr6, 0x82dae710
+	if ctx.cr[6].lt {
+	pc = 0x82DAE710; continue 'dispatch;
+	}
+	// 82DAE68C: 2F0B0017  cmpwi cr6, r11, 0x17
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 23, &mut ctx.xer);
+	// 82DAE690: 419A005C  beq cr6, 0x82dae6ec
+	if ctx.cr[6].eq {
+	pc = 0x82DAE6EC; continue 'dispatch;
+	}
+	// 82DAE694: 2F0B0018  cmpwi cr6, r11, 0x18
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 24, &mut ctx.xer);
+	// 82DAE698: 419A0030  beq cr6, 0x82dae6c8
+	if ctx.cr[6].eq {
+	pc = 0x82DAE6C8; continue 'dispatch;
+	}
+	// 82DAE69C: 2F0B001A  cmpwi cr6, r11, 0x1a
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 26, &mut ctx.xer);
+	// 82DAE6A0: 409A0068  bne cr6, 0x82dae708
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE708; continue 'dispatch;
+	}
+	// 82DAE6A4: 7F48D378  mr r8, r26
+	ctx.r[8].u64 = ctx.r[26].u64;
+	// 82DAE6A8: 7F67DB78  mr r7, r27
+	ctx.r[7].u64 = ctx.r[27].u64;
+	// 82DAE6AC: 7F86E378  mr r6, r28
+	ctx.r[6].u64 = ctx.r[28].u64;
+	// 82DAE6B0: 7FA5EB78  mr r5, r29
+	ctx.r[5].u64 = ctx.r[29].u64;
+	// 82DAE6B4: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAE6B8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAE6BC: 4BFF00E5  bl 0x82d9e7a0
+	ctx.lr = 0x82DAE6C0;
+	sub_82D9E7A0(ctx, base);
+	// 82DAE6C0: 83FF0014  lwz r31, 0x14(r31)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE6C4: 4BFFFFBC  b 0x82dae680
+	pc = 0x82DAE680; continue 'dispatch;
+            }
+            0x82DAE6C8 => {
+    //   block [0x82DAE6C8..0x82DAE6EC)
+	// 82DAE6C8: 7F48D378  mr r8, r26
+	ctx.r[8].u64 = ctx.r[26].u64;
+	// 82DAE6CC: 7F67DB78  mr r7, r27
+	ctx.r[7].u64 = ctx.r[27].u64;
+	// 82DAE6D0: 7F86E378  mr r6, r28
+	ctx.r[6].u64 = ctx.r[28].u64;
+	// 82DAE6D4: 7FA5EB78  mr r5, r29
+	ctx.r[5].u64 = ctx.r[29].u64;
+	// 82DAE6D8: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAE6DC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAE6E0: 4BFEFED9  bl 0x82d9e5b8
+	ctx.lr = 0x82DAE6E4;
+	sub_82D9E5B8(ctx, base);
+	// 82DAE6E4: 83FF0014  lwz r31, 0x14(r31)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE6E8: 4BFFFF98  b 0x82dae680
+	pc = 0x82DAE680; continue 'dispatch;
+            }
+            0x82DAE6EC => {
+    //   block [0x82DAE6EC..0x82DAE708)
+	// 82DAE6EC: 7F48D378  mr r8, r26
+	ctx.r[8].u64 = ctx.r[26].u64;
+	// 82DAE6F0: 7F67DB78  mr r7, r27
+	ctx.r[7].u64 = ctx.r[27].u64;
+	// 82DAE6F4: 7F86E378  mr r6, r28
+	ctx.r[6].u64 = ctx.r[28].u64;
+	// 82DAE6F8: 7FA5EB78  mr r5, r29
+	ctx.r[5].u64 = ctx.r[29].u64;
+	// 82DAE6FC: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAE700: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAE704: 4BFF005D  bl 0x82d9e760
+	ctx.lr = 0x82DAE708;
+	sub_82D9E760(ctx, base);
+	pc = 0x82DAE708; continue 'dispatch;
+            }
+            0x82DAE708 => {
+    //   block [0x82DAE708..0x82DAE710)
+	// 82DAE708: 83FF0014  lwz r31, 0x14(r31)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE70C: 4BFFFF74  b 0x82dae680
+	pc = 0x82DAE680; continue 'dispatch;
+            }
+            0x82DAE710 => {
+    //   block [0x82DAE710..0x82DAE718)
+	// 82DAE710: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAE714: 4BEFAD3C  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE718(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE718 size=224
+    let mut pc: u32 = 0x82DAE718;
+    'dispatch: loop {
+        match pc {
+            0x82DAE718 => {
+    //   block [0x82DAE718..0x82DAE750)
+	// 82DAE718: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE71C: 4BEFACE5  bl 0x82ca9400
+	ctx.lr = 0x82DAE720;
+	sub_82CA93D0(ctx, base);
+	// 82DAE720: DBE1FFC0  stfd f31, -0x40(r1)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-64 as u32), ctx.f[31].u64 ) };
+	// 82DAE724: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE728: 81630024  lwz r11, 0x24(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAE72C: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DAE730: FFE00890  fmr f31, f1
+	ctx.f[31].f64 = ctx.f[1].f64;
+	// 82DAE734: 7CDD3378  mr r29, r6
+	ctx.r[29].u64 = ctx.r[6].u64;
+	// 82DAE738: 7CFC3B78  mr r28, r7
+	ctx.r[28].u64 = ctx.r[7].u64;
+	// 82DAE73C: 7D1B4378  mr r27, r8
+	ctx.r[27].u64 = ctx.r[8].u64;
+	// 82DAE740: 7D3A4B78  mr r26, r9
+	ctx.r[26].u64 = ctx.r[9].u64;
+	// 82DAE744: 83EB0010  lwz r31, 0x10(r11)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAE748: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE74C: 419A00A0  beq cr6, 0x82dae7ec
+	if ctx.cr[6].eq {
+	pc = 0x82DAE7EC; continue 'dispatch;
+	}
+	pc = 0x82DAE750; continue 'dispatch;
+            }
+            0x82DAE750 => {
+    //   block [0x82DAE750..0x82DAE79C)
+	// 82DAE750: A17F0000  lhz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAE754: 2B0B0017  cmplwi cr6, r11, 0x17
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 23 as u32, &mut ctx.xer);
+	// 82DAE758: 41980094  blt cr6, 0x82dae7ec
+	if ctx.cr[6].lt {
+	pc = 0x82DAE7EC; continue 'dispatch;
+	}
+	// 82DAE75C: 2F0B0017  cmpwi cr6, r11, 0x17
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 23, &mut ctx.xer);
+	// 82DAE760: 419A0064  beq cr6, 0x82dae7c4
+	if ctx.cr[6].eq {
+	pc = 0x82DAE7C4; continue 'dispatch;
+	}
+	// 82DAE764: 2F0B0018  cmpwi cr6, r11, 0x18
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 24, &mut ctx.xer);
+	// 82DAE768: 419A0034  beq cr6, 0x82dae79c
+	if ctx.cr[6].eq {
+	pc = 0x82DAE79C; continue 'dispatch;
+	}
+	// 82DAE76C: 2F0B001A  cmpwi cr6, r11, 0x1a
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 26, &mut ctx.xer);
+	// 82DAE770: 409A0074  bne cr6, 0x82dae7e4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE7E4; continue 'dispatch;
+	}
+	// 82DAE774: 7F49D378  mr r9, r26
+	ctx.r[9].u64 = ctx.r[26].u64;
+	// 82DAE778: FC20F890  fmr f1, f31
+	ctx.f[1].f64 = ctx.f[31].f64;
+	// 82DAE77C: 7F68DB78  mr r8, r27
+	ctx.r[8].u64 = ctx.r[27].u64;
+	// 82DAE780: 7F87E378  mr r7, r28
+	ctx.r[7].u64 = ctx.r[28].u64;
+	// 82DAE784: 7FA6EB78  mr r6, r29
+	ctx.r[6].u64 = ctx.r[29].u64;
+	// 82DAE788: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAE78C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAE790: 4BFF0059  bl 0x82d9e7e8
+	ctx.lr = 0x82DAE794;
+	sub_82D9E7E8(ctx, base);
+	// 82DAE794: 83FF0014  lwz r31, 0x14(r31)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE798: 4BFFFFB8  b 0x82dae750
+	pc = 0x82DAE750; continue 'dispatch;
+            }
+            0x82DAE79C => {
+    //   block [0x82DAE79C..0x82DAE7C4)
+	// 82DAE79C: 7F49D378  mr r9, r26
+	ctx.r[9].u64 = ctx.r[26].u64;
+	// 82DAE7A0: FC20F890  fmr f1, f31
+	ctx.fpscr.disable_flush_mode_unconditional();
+	ctx.f[1].f64 = ctx.f[31].f64;
+	// 82DAE7A4: 7F68DB78  mr r8, r27
+	ctx.r[8].u64 = ctx.r[27].u64;
+	// 82DAE7A8: 7F87E378  mr r7, r28
+	ctx.r[7].u64 = ctx.r[28].u64;
+	// 82DAE7AC: 7FA6EB78  mr r6, r29
+	ctx.r[6].u64 = ctx.r[29].u64;
+	// 82DAE7B0: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAE7B4: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAE7B8: 4BFEFEA1  bl 0x82d9e658
+	ctx.lr = 0x82DAE7BC;
+	sub_82D9E658(ctx, base);
+	// 82DAE7BC: 83FF0014  lwz r31, 0x14(r31)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE7C0: 4BFFFF90  b 0x82dae750
+	pc = 0x82DAE750; continue 'dispatch;
+            }
+            0x82DAE7C4 => {
+    //   block [0x82DAE7C4..0x82DAE7E4)
+	// 82DAE7C4: 7F49D378  mr r9, r26
+	ctx.r[9].u64 = ctx.r[26].u64;
+	// 82DAE7C8: FC20F890  fmr f1, f31
+	ctx.fpscr.disable_flush_mode_unconditional();
+	ctx.f[1].f64 = ctx.f[31].f64;
+	// 82DAE7CC: 7F68DB78  mr r8, r27
+	ctx.r[8].u64 = ctx.r[27].u64;
+	// 82DAE7D0: 7F87E378  mr r7, r28
+	ctx.r[7].u64 = ctx.r[28].u64;
+	// 82DAE7D4: 7FA6EB78  mr r6, r29
+	ctx.r[6].u64 = ctx.r[29].u64;
+	// 82DAE7D8: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAE7DC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAE7E0: 4BFEFE81  bl 0x82d9e660
+	ctx.lr = 0x82DAE7E4;
+	sub_82D9E660(ctx, base);
+	pc = 0x82DAE7E4; continue 'dispatch;
+            }
+            0x82DAE7E4 => {
+    //   block [0x82DAE7E4..0x82DAE7EC)
+	// 82DAE7E4: 83FF0014  lwz r31, 0x14(r31)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE7E8: 4BFFFF68  b 0x82dae750
+	pc = 0x82DAE750; continue 'dispatch;
+            }
+            0x82DAE7EC => {
+    //   block [0x82DAE7EC..0x82DAE7F8)
+	// 82DAE7EC: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAE7F0: CBE1FFC0  lfd f31, -0x40(r1)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	ctx.f[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-64 as u32) ) };
+	// 82DAE7F4: 4BEFAC5C  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE7F8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE7F8 size=372
+    let mut pc: u32 = 0x82DAE7F8;
+    'dispatch: loop {
+        match pc {
+            0x82DAE7F8 => {
+    //   block [0x82DAE7F8..0x82DAE8AC)
+	// 82DAE7F8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE7FC: 4BEFAC01  bl 0x82ca93fc
+	ctx.lr = 0x82DAE800;
+	sub_82CA93D0(ctx, base);
+	// 82DAE800: 9421FF60  stwu r1, -0xa0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-160 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE804: 7C7D1B78  mr r29, r3
+	ctx.r[29].u64 = ctx.r[3].u64;
+	// 82DAE808: 7C992378  mr r25, r4
+	ctx.r[25].u64 = ctx.r[4].u64;
+	// 82DAE80C: 7CBC2B78  mr r28, r5
+	ctx.r[28].u64 = ctx.r[5].u64;
+	// 82DAE810: 7CDB3378  mr r27, r6
+	ctx.r[27].u64 = ctx.r[6].u64;
+	// 82DAE814: 817D0028  lwz r11, 0x28(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAE818: A14B0010  lhz r10, 0x10(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAE81C: A3CB0004  lhz r30, 4(r11)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE820: 614A0004  ori r10, r10, 4
+	ctx.r[10].u64 = ctx.r[10].u64 | 4;
+	// 82DAE824: B14B0010  sth r10, 0x10(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[10].u16 ) };
+	// 82DAE828: 807D0028  lwz r3, 0x28(r29)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAE82C: 7C7A1B78  mr r26, r3
+	ctx.r[26].u64 = ctx.r[3].u64;
+	// 82DAE830: 4BFFFC61  bl 0x82dae490
+	ctx.lr = 0x82DAE834;
+	sub_82DAE490(ctx, base);
+	// 82DAE834: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAE838: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DAE83C: 57CB283E  rotlwi r11, r30, 5
+	ctx.r[11].u64 = ((ctx.r[30].u32).rotate_left(5)) as u64;
+	// 82DAE840: 2F1E0000  cmpwi cr6, r30, 0
+	ctx.cr[6].compare_i32(ctx.r[30].s32, 0, &mut ctx.xer);
+	// 82DAE844: 7D6BFA14  add r11, r11, r31
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[31].u64;
+	// 82DAE848: 93FD0028  stw r31, 0x28(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(40 as u32), ctx.r[31].u32 ) };
+	// 82DAE84C: A13F0006  lhz r9, 6(r31)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE850: C00A0C18  lfs f0, 0xc18(r10)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(3096 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAE854: 895F000A  lbz r10, 0xa(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(10 as u32) ) } as u64;
+	// 82DAE858: 390B0030  addi r8, r11, 0x30
+	ctx.r[8].s64 = ctx.r[11].s64 + 48;
+	// 82DAE85C: 552B283E  rotlwi r11, r9, 5
+	ctx.r[11].u64 = ((ctx.r[9].u32).rotate_left(5)) as u64;
+	// 82DAE860: 7D2AF1D6  mullw r9, r10, r30
+	ctx.r[9].s32 = ((ctx.r[10].s32 as i64 * ctx.r[30].s32 as i64) as i32);
+	ctx.r[9].s64 = ctx.r[9].s32 as i64;
+	// 82DAE864: 7D6B4A14  add r11, r11, r9
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[9].u64;
+	// 82DAE868: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DAE86C: 7D6BFA14  add r11, r11, r31
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[31].u64;
+	// 82DAE870: 396B0030  addi r11, r11, 0x30
+	ctx.r[11].s64 = ctx.r[11].s64 + 48;
+	// 82DAE874: 7D4A5850  subf r10, r10, r11
+	ctx.r[10].s64 = ctx.r[11].s64 - ctx.r[10].s64;
+	// 82DAE878: D00B0000  stfs f0, 0(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), tmp.u32 ) };
+	// 82DAE87C: D00B0004  stfs f0, 4(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), tmp.u32 ) };
+	// 82DAE880: 992B000F  stb r9, 0xf(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(15 as u32), ctx.r[9].u8 ) };
+	// 82DAE884: 40990028  ble cr6, 0x82dae8ac
+	if !ctx.cr[6].gt {
+	pc = 0x82DAE8AC; continue 'dispatch;
+	}
+	// 82DAE888: 892A000F  lbz r9, 0xf(r10)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[10].u32.wrapping_add(15 as u32) ) } as u64;
+	// 82DAE88C: 552907BC  rlwinm r9, r9, 0, 0x1e, 0x1e
+	ctx.r[9].u64 = ctx.r[9].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAE890: 2B090000  cmplwi cr6, r9, 0
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE894: 409A0018  bne cr6, 0x82dae8ac
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE8AC; continue 'dispatch;
+	}
+	// 82DAE898: 894A000E  lbz r10, 0xe(r10)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[10].u32.wrapping_add(14 as u32) ) } as u64;
+	// 82DAE89C: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DAE8A0: 409A000C  bne cr6, 0x82dae8ac
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE8AC; continue 'dispatch;
+	}
+	// 82DAE8A4: 39400003  li r10, 3
+	ctx.r[10].s64 = 3;
+	// 82DAE8A8: 994B000F  stb r10, 0xf(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(15 as u32), ctx.r[10].u8 ) };
+	pc = 0x82DAE8AC; continue 'dispatch;
+            }
+            0x82DAE8AC => {
+    //   block [0x82DAE8AC..0x82DAE8FC)
+	// 82DAE8AC: 395E0001  addi r10, r30, 1
+	ctx.r[10].s64 = ctx.r[30].s64 + 1;
+	// 82DAE8B0: 911C0000  stw r8, 0(r28)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[28].u32.wrapping_add(0 as u32), ctx.r[8].u32 ) };
+	// 82DAE8B4: 917B0000  stw r11, 0(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DAE8B8: 38E00000  li r7, 0
+	ctx.r[7].s64 = 0;
+	// 82DAE8BC: 554B07FE  clrlwi r11, r10, 0x1f
+	ctx.r[11].u64 = ctx.r[10].u32 as u64 & 0x00000001u64;
+	// 82DAE8C0: 7D4A0E70  srawi r10, r10, 1
+	ctx.xer.ca = (ctx.r[10].s32 < 0) && ((ctx.r[10].u32 & ((1u32 << 1) - 1)) != 0);
+	ctx.r[10].s64 = (ctx.r[10].s32 >> 1) as i64;
+	// 82DAE8C4: 5569083C  slwi r9, r11, 1
+	ctx.r[9].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAE8C8: 1D4A0070  mulli r10, r10, 0x70
+	ctx.r[10].s32 = ((ctx.r[10].s32 as i64 * 112 as i64) as i32);
+	ctx.r[10].s64 = ctx.r[10].s32 as i64;
+	// 82DAE8CC: 7D2B4A14  add r9, r11, r9
+	ctx.r[9].u64 = ctx.r[11].u64 + ctx.r[9].u64;
+	// 82DAE8D0: 38C00000  li r6, 0
+	ctx.r[6].s64 = 0;
+	// 82DAE8D4: 38A00000  li r5, 0
+	ctx.r[5].s64 = 0;
+	// 82DAE8D8: 55292036  slwi r9, r9, 4
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(4);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAE8DC: 2F1E0001  cmpwi cr6, r30, 1
+	ctx.cr[6].compare_i32(ctx.r[30].s32, 1, &mut ctx.xer);
+	// 82DAE8E0: 7D4A4A14  add r10, r10, r9
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[9].u64;
+	// 82DAE8E4: 394A00A0  addi r10, r10, 0xa0
+	ctx.r[10].s64 = ctx.r[10].s64 + 160;
+	// 82DAE8E8: 91410050  stw r10, 0x50(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[10].u32 ) };
+	// 82DAE8EC: 409A0010  bne cr6, 0x82dae8fc
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE8FC; continue 'dispatch;
+	}
+	// 82DAE8F0: 38E00020  li r7, 0x20
+	ctx.r[7].s64 = 32;
+	// 82DAE8F4: 38C00001  li r6, 1
+	ctx.r[6].s64 = 1;
+	// 82DAE8F8: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	pc = 0x82DAE8FC; continue 'dispatch;
+            }
+            0x82DAE8FC => {
+    //   block [0x82DAE8FC..0x82DAE90C)
+	// 82DAE8FC: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DAE900: 39670030  addi r11, r7, 0x30
+	ctx.r[11].s64 = ctx.r[7].s64 + 48;
+	// 82DAE904: 409A0008  bne cr6, 0x82dae90c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAE90C; continue 'dispatch;
+	}
+	// 82DAE908: 39670040  addi r11, r7, 0x40
+	ctx.r[11].s64 = ctx.r[7].s64 + 64;
+	pc = 0x82DAE90C; continue 'dispatch;
+            }
+            0x82DAE90C => {
+    //   block [0x82DAE90C..0x82DAE954)
+	// 82DAE90C: 91610054  stw r11, 0x54(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), ctx.r[11].u32 ) };
+	// 82DAE910: 39660001  addi r11, r6, 1
+	ctx.r[11].s64 = ctx.r[6].s64 + 1;
+	// 82DAE914: 7F23CB78  mr r3, r25
+	ctx.r[3].u64 = ctx.r[25].u64;
+	// 82DAE918: 809D0024  lwz r4, 0x24(r29)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAE91C: 91610058  stw r11, 0x58(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), ctx.r[11].u32 ) };
+	// 82DAE920: 39650001  addi r11, r5, 1
+	ctx.r[11].s64 = ctx.r[5].s64 + 1;
+	// 82DAE924: 38A10050  addi r5, r1, 0x50
+	ctx.r[5].s64 = ctx.r[1].s64 + 80;
+	// 82DAE928: 9161005C  stw r11, 0x5c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(92 as u32), ctx.r[11].u32 ) };
+	// 82DAE92C: 4BFEAC1D  bl 0x82d99548
+	ctx.lr = 0x82DAE930;
+	sub_82D99548(ctx, base);
+	// 82DAE930: 80BD0028  lwz r5, 0x28(r29)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAE934: 7F1A2840  cmplw cr6, r26, r5
+	ctx.cr[6].compare_u32(ctx.r[26].u32, ctx.r[5].u32, &mut ctx.xer);
+	// 82DAE938: 419A001C  beq cr6, 0x82dae954
+	if ctx.cr[6].eq {
+	pc = 0x82DAE954; continue 'dispatch;
+	}
+	// 82DAE93C: 7F44D378  mr r4, r26
+	ctx.r[4].u64 = ctx.r[26].u64;
+	// 82DAE940: A0DF0002  lhz r6, 2(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAE944: 807D0024  lwz r3, 0x24(r29)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DAE948: 4BFFEDF1  bl 0x82dad738
+	ctx.lr = 0x82DAE94C;
+	sub_82DAD738(ctx, base);
+	// 82DAE94C: A17F0002  lhz r11, 2(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAE950: 917D002C  stw r11, 0x2c(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(44 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAE954; continue 'dispatch;
+            }
+            0x82DAE954 => {
+    //   block [0x82DAE954..0x82DAE96C)
+	// 82DAE954: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAE958: 387D000C  addi r3, r29, 0xc
+	ctx.r[3].s64 = ctx.r[29].s64 + 12;
+	// 82DAE95C: 48000455  bl 0x82daedb0
+	ctx.lr = 0x82DAE960;
+	sub_82DAEDB0(ctx, base);
+	// 82DAE960: 5463043E  clrlwi r3, r3, 0x10
+	ctx.r[3].u64 = ctx.r[3].u32 as u64 & 0x0000FFFFu64;
+	// 82DAE964: 382100A0  addi r1, r1, 0xa0
+	ctx.r[1].s64 = ctx.r[1].s64 + 160;
+	// 82DAE968: 4BEFAAE4  b 0x82ca944c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAE970(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAE970 size=868
+    let mut pc: u32 = 0x82DAE970;
+    'dispatch: loop {
+        match pc {
+            0x82DAE970 => {
+    //   block [0x82DAE970..0x82DAEC9C)
+	// 82DAE970: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAE974: 4BEFAA5D  bl 0x82ca93d0
+	ctx.lr = 0x82DAE978;
+	sub_82CA93D0(ctx, base);
+	// 82DAE978: 3981FF68  addi r12, r1, -0x98
+	ctx.r[12].s64 = ctx.r[1].s64 + -152;
+	// 82DAE97C: 4BEFF34D  bl 0x82cadcc8
+	ctx.lr = 0x82DAE980;
+	sub_82CADCA0(ctx, base);
+	// 82DAE980: 9421FE30  stwu r1, -0x1d0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-464 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAE984: 7C9C2378  mr r28, r4
+	ctx.r[28].u64 = ctx.r[4].u64;
+	// 82DAE988: A1650004  lhz r11, 4(r5)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[5].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAE98C: 7C741B78  mr r20, r3
+	ctx.r[20].u64 = ctx.r[3].u64;
+	// 82DAE990: 395C0048  addi r10, r28, 0x48
+	ctx.r[10].s64 = ctx.r[28].s64 + 72;
+	// 82DAE994: 3A4BFFFF  addi r18, r11, -1
+	ctx.r[18].s64 = ctx.r[11].s64 + -1;
+	// 82DAE998: A1650006  lhz r11, 6(r5)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[5].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAE99C: 3BC50030  addi r30, r5, 0x30
+	ctx.r[30].s64 = ctx.r[5].s64 + 48;
+	// 82DAE9A0: 81FC0048  lwz r15, 0x48(r28)
+	ctx.r[15].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(72 as u32) ) } as u64;
+	// 82DAE9A4: 556B283E  rotlwi r11, r11, 5
+	ctx.r[11].u64 = ((ctx.r[11].u32).rotate_left(5)) as u64;
+	// 82DAE9A8: 2F120000  cmpwi cr6, r18, 0
+	ctx.cr[6].compare_i32(ctx.r[18].s32, 0, &mut ctx.xer);
+	// 82DAE9AC: 91410060  stw r10, 0x60(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(96 as u32), ctx.r[10].u32 ) };
+	// 82DAE9B0: 7D6B2A14  add r11, r11, r5
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[5].u64;
+	// 82DAE9B4: 8945000A  lbz r10, 0xa(r5)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[5].u32.wrapping_add(10 as u32) ) } as u64;
+	// 82DAE9B8: 3BAB0030  addi r29, r11, 0x30
+	ctx.r[29].s64 = ctx.r[11].s64 + 48;
+	// 82DAE9BC: 83EF0014  lwz r31, 0x14(r15)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[15].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DAE9C0: 836F0018  lwz r27, 0x18(r15)
+	ctx.r[27].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[15].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAE9C4: 9141005C  stw r10, 0x5c(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(92 as u32), ctx.r[10].u32 ) };
+	// 82DAE9C8: 419802EC  blt cr6, 0x82daecb4
+	if ctx.cr[6].lt {
+	pc = 0x82DAECB4; continue 'dispatch;
+	}
+	// 82DAE9CC: 3C608203  lis r3, -0x7dfd
+	ctx.r[3].s64 = -2113732608;
+	// 82DAE9D0: 3C808210  lis r4, -0x7df0
+	ctx.r[4].s64 = -2112880640;
+	// 82DAE9D4: 3CA08200  lis r5, -0x7e00
+	ctx.r[5].s64 = -2113929216;
+	// 82DAE9D8: 3CC08200  lis r6, -0x7e00
+	ctx.r[6].s64 = -2113929216;
+	// 82DAE9DC: 3CE08200  lis r7, -0x7e00
+	ctx.r[7].s64 = -2113929216;
+	// 82DAE9E0: 3D008200  lis r8, -0x7e00
+	ctx.r[8].s64 = -2113929216;
+	// 82DAE9E4: C363FF18  lfs f27, -0xe8(r3)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(-232 as u32) ) };
+	ctx.f[27].f64 = (tmp.f32 as f64);
+	// 82DAE9E8: 3D208201  lis r9, -0x7dff
+	ctx.r[9].s64 = -2113863680;
+	// 82DAE9EC: C3841024  lfs f28, 0x1024(r4)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(4132 as u32) ) };
+	ctx.f[28].f64 = (tmp.f32 as f64);
+	// 82DAE9F0: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DAE9F4: C3E50C14  lfs f31, 0xc14(r5)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(3092 as u32) ) };
+	ctx.f[31].f64 = (tmp.f32 as f64);
+	// 82DAE9F8: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DAE9FC: C3A60C34  lfs f29, 0xc34(r6)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[6].u32.wrapping_add(3124 as u32) ) };
+	ctx.f[29].f64 = (tmp.f32 as f64);
+	// 82DAEA00: C3270C64  lfs f25, 0xc64(r7)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[7].u32.wrapping_add(3172 as u32) ) };
+	ctx.f[25].f64 = (tmp.f32 as f64);
+	// 82DAEA04: 3AA00040  li r21, 0x40
+	ctx.r[21].s64 = 64;
+	// 82DAEA08: C3080B24  lfs f24, 0xb24(r8)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(2852 as u32) ) };
+	ctx.f[24].f64 = (tmp.f32 as f64);
+	// 82DAEA0C: 3A2B4428  addi r17, r11, 0x4428
+	ctx.r[17].s64 = ctx.r[11].s64 + 17448;
+	// 82DAEA10: C3C967A0  lfs f30, 0x67a0(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(26528 as u32) ) };
+	ctx.f[30].f64 = (tmp.f32 as f64);
+	// 82DAEA14: 3AC001A0  li r22, 0x1a0
+	ctx.r[22].s64 = 416;
+	// 82DAEA18: C34A0C18  lfs f26, 0xc18(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(3096 as u32) ) };
+	ctx.f[26].f64 = (tmp.f32 as f64);
+	// 82DAEA1C: 3A600001  li r19, 1
+	ctx.r[19].s64 = 1;
+	// 82DAEA20: 3A000190  li r16, 0x190
+	ctx.r[16].s64 = 400;
+	// 82DAEA24: 897D000F  lbz r11, 0xf(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[29].u32.wrapping_add(15 as u32) ) } as u64;
+	// 82DAEA28: 39DD000F  addi r14, r29, 0xf
+	ctx.r[14].s64 = ctx.r[29].s64 + 15;
+	// 82DAEA2C: 556B07FE  clrlwi r11, r11, 0x1f
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x00000001u64;
+	// 82DAEA30: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAEA34: 419A0268  beq cr6, 0x82daec9c
+	if ctx.cr[6].eq {
+	pc = 0x82DAEC9C; continue 'dispatch;
+	}
+	// 82DAEA38: 813C0030  lwz r9, 0x30(r28)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(48 as u32) ) } as u64;
+	pc = 0x82DAEC9C; continue 'dispatch;
+            }
+            0x82DAEC9C => {
+    //   block [0x82DAEC9C..0x82DAECB4)
+	// 82DAEC9C: 8161005C  lwz r11, 0x5c(r1)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(92 as u32) ) } as u64;
+	// 82DAECA0: 3A52FFFF  addi r18, r18, -1
+	ctx.r[18].s64 = ctx.r[18].s64 + -1;
+	// 82DAECA4: 3BDE0020  addi r30, r30, 0x20
+	ctx.r[30].s64 = ctx.r[30].s64 + 32;
+	// 82DAECA8: 7FABEA14  add r29, r11, r29
+	ctx.r[29].u64 = ctx.r[11].u64 + ctx.r[29].u64;
+	// 82DAECAC: 2F120000  cmpwi cr6, r18, 0
+	ctx.cr[6].compare_i32(ctx.r[18].s32, 0, &mut ctx.xer);
+	// 82DAECB0: 4098FD74  bge cr6, 0x82daea24
+	if !ctx.cr[6].lt {
+	pc = 0x82DAEA24; continue 'dispatch;
+	}
+	pc = 0x82DAECB4; continue 'dispatch;
+            }
+            0x82DAECB4 => {
+    //   block [0x82DAECB4..0x82DAECD4)
+	// 82DAECB4: 816F0028  lwz r11, 0x28(r15)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[15].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAECB8: 894B0012  lbz r10, 0x12(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DAECBC: 554A003C  rlwinm r10, r10, 0, 0, 0x1e
+	ctx.r[10].u64 = ctx.r[10].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAECC0: 994B0012  stb r10, 0x12(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[10].u8 ) };
+	// 82DAECC4: 382101D0  addi r1, r1, 0x1d0
+	ctx.r[1].s64 = ctx.r[1].s64 + 464;
+	// 82DAECC8: 3981FF68  addi r12, r1, -0x98
+	ctx.r[12].s64 = ctx.r[1].s64 + -152;
+	// 82DAECCC: 4BEFF049  bl 0x82cadd14
+	ctx.lr = 0x82DAECD0;
+	sub_82CADCEC(ctx, base);
+	// 82DAECD0: 4BEFA750  b 0x82ca9420
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAECD8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAECD8 size=216
+    let mut pc: u32 = 0x82DAECD8;
+    'dispatch: loop {
+        match pc {
+            0x82DAECD8 => {
+    //   block [0x82DAECD8..0x82DAED7C)
+	// 82DAECD8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAECDC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DAECE0: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DAECE4: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DAECE8: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAECEC: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DAECF0: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAECF4: 394AE508  addi r10, r10, -0x1af8
+	ctx.r[10].s64 = ctx.r[10].s64 + -6904;
+	// 82DAECF8: 397F000C  addi r11, r31, 0xc
+	ctx.r[11].s64 = ctx.r[31].s64 + 12;
+	// 82DAECFC: 3D008000  lis r8, -0x8000
+	ctx.r[8].s64 = -2147483648;
+	// 82DAED00: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DAED04: 3BC00000  li r30, 0
+	ctx.r[30].s64 = 0;
+	// 82DAED08: 915F0000  stw r10, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAED0C: 394B000C  addi r10, r11, 0xc
+	ctx.r[10].s64 = ctx.r[11].s64 + 12;
+	// 82DAED10: 61080008  ori r8, r8, 8
+	ctx.r[8].u64 = ctx.r[8].u64 | 8;
+	// 82DAED14: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAED18: B13F0006  sth r9, 6(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DAED1C: 39201400  li r9, 0x1400
+	ctx.r[9].s64 = 5120;
+	// 82DAED20: 93DF0008  stw r30, 8(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(8 as u32), ctx.r[30].u32 ) };
+	// 82DAED24: 93CB0004  stw r30, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[30].u32 ) };
+	// 82DAED28: 910B0008  stw r8, 8(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), ctx.r[8].u32 ) };
+	// 82DAED2C: 914B0000  stw r10, 0(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DAED30: 909F0024  stw r4, 0x24(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(36 as u32), ctx.r[4].u32 ) };
+	// 82DAED34: 888500BD  lbz r4, 0xbd(r5)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[5].u32.wrapping_add(189 as u32) ) } as u64;
+	// 82DAED38: 88A600BD  lbz r5, 0xbd(r6)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[6].u32.wrapping_add(189 as u32) ) } as u64;
+	// 82DAED3C: 7D652214  add r11, r5, r4
+	ctx.r[11].u64 = ctx.r[5].u64 + ctx.r[4].u64;
+	// 82DAED40: 396B0005  addi r11, r11, 5
+	ctx.r[11].s64 = ctx.r[11].s64 + 5;
+	// 82DAED44: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAED48: 0CCB0000  twi 6, r11, 0
+	// 82DAED4C: 7D695BD6  divw r11, r9, r11
+	ctx.r[11].s32 = ctx.r[9].s32 / ctx.r[11].s32;
+	// 82DAED50: 5566043E  clrlwi r6, r11, 0x10
+	ctx.r[6].u64 = ctx.r[11].u32 as u64 & 0x0000FFFFu64;
+	// 82DAED54: 4BFFF5AD  bl 0x82dae300
+	ctx.lr = 0x82DAED58;
+	sub_82DAE300(ctx, base);
+	// 82DAED58: 39630010  addi r11, r3, 0x10
+	ctx.r[11].s64 = ctx.r[3].s64 + 16;
+	// 82DAED5C: 38E00003  li r7, 3
+	ctx.r[7].s64 = 3;
+	// 82DAED60: 907F0028  stw r3, 0x28(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(40 as u32), ctx.r[3].u32 ) };
+	// 82DAED64: 7FC8F378  mr r8, r30
+	ctx.r[8].u64 = ctx.r[30].u64;
+	// 82DAED68: 39400007  li r10, 7
+	ctx.r[10].s64 = 7;
+	// 82DAED6C: 392B0004  addi r9, r11, 4
+	ctx.r[9].s64 = ctx.r[11].s64 + 4;
+	// 82DAED70: B3CB0000  sth r30, 0(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), ctx.r[30].u16 ) };
+	// 82DAED74: B0EB0002  sth r7, 2(r11)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[11].u32.wrapping_add(2 as u32), ctx.r[7].u16 ) };
+	// 82DAED78: 7D4903A6  mtctr r10
+	ctx.ctr.u64 = ctx.r[10].u64;
+	pc = 0x82DAED7C; continue 'dispatch;
+            }
+            0x82DAED7C => {
+    //   block [0x82DAED7C..0x82DAEDB0)
+	// 82DAED7C: 91090000  stw r8, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[8].u32 ) };
+	// 82DAED80: 39290004  addi r9, r9, 4
+	ctx.r[9].s64 = ctx.r[9].s64 + 4;
+	// 82DAED84: 4200FFF8  bdnz 0x82daed7c
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DAED7C; continue 'dispatch;
+	}
+	// 82DAED88: 817F0028  lwz r11, 0x28(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAED8C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAED90: A16B0002  lhz r11, 2(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[11].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAED94: 917F002C  stw r11, 0x2c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(44 as u32), ctx.r[11].u32 ) };
+	// 82DAED98: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAED9C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAEDA0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAEDA4: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DAEDA8: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAEDAC: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAEDB0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAEDB0 size=160
+    let mut pc: u32 = 0x82DAEDB0;
+    'dispatch: loop {
+        match pc {
+            0x82DAEDB0 => {
+    //   block [0x82DAEDB0..0x82DAEDDC)
+	// 82DAEDB0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAEDB4: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DAEDB8: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DAEDBC: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DAEDC0: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAEDC4: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAEDC8: 815F0004  lwz r10, 4(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEDCC: 386AFFFF  addi r3, r10, -1
+	ctx.r[3].s64 = ctx.r[10].s64 + -1;
+	// 82DAEDD0: 2F030000  cmpwi cr6, r3, 0
+	ctx.cr[6].compare_i32(ctx.r[3].s32, 0, &mut ctx.xer);
+	// 82DAEDD4: 41980020  blt cr6, 0x82daedf4
+	if ctx.cr[6].lt {
+	pc = 0x82DAEDF4; continue 'dispatch;
+	}
+	// 82DAEDD8: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	pc = 0x82DAEDDC; continue 'dispatch;
+            }
+            0x82DAEDDC => {
+    //   block [0x82DAEDDC..0x82DAEDF4)
+	// 82DAEDDC: 7D2B18AE  lbzx r9, r11, r3
+	ctx.r[9].u64 = unsafe { crate::rt::load_u8(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[3].u32)) } as u64;
+	// 82DAEDE0: 2B0900FF  cmplwi cr6, r9, 0xff
+	ctx.cr[6].compare_u32(ctx.r[9].u32, 255 as u32, &mut ctx.xer);
+	// 82DAEDE4: 419A0064  beq cr6, 0x82daee48
+	if ctx.cr[6].eq {
+	pc = 0x82DAEE48; continue 'dispatch;
+	}
+	// 82DAEDE8: 3863FFFF  addi r3, r3, -1
+	ctx.r[3].s64 = ctx.r[3].s64 + -1;
+	// 82DAEDEC: 2F030000  cmpwi cr6, r3, 0
+	ctx.cr[6].compare_i32(ctx.r[3].s32, 0, &mut ctx.xer);
+	// 82DAEDF0: 4098FFEC  bge cr6, 0x82daeddc
+	if !ctx.cr[6].lt {
+	pc = 0x82DAEDDC; continue 'dispatch;
+	}
+	pc = 0x82DAEDF4; continue 'dispatch;
+            }
+            0x82DAEDF4 => {
+    //   block [0x82DAEDF4..0x82DAEE14)
+	// 82DAEDF4: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAEDF8: 549E063E  clrlwi r30, r4, 0x18
+	ctx.r[30].u64 = ctx.r[4].u32 as u64 & 0x000000FFu64;
+	// 82DAEDFC: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DAEE00: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAEE04: 409A0010  bne cr6, 0x82daee14
+	if !ctx.cr[6].eq {
+	pc = 0x82DAEE14; continue 'dispatch;
+	}
+	// 82DAEE08: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DAEE0C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAEE10: 4BFA8189  bl 0x82d56f98
+	ctx.lr = 0x82DAEE14;
+	sub_82D56F98(ctx, base);
+	pc = 0x82DAEE14; continue 'dispatch;
+            }
+            0x82DAEE14 => {
+    //   block [0x82DAEE14..0x82DAEE30)
+	// 82DAEE14: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEE18: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAEE1C: 7FCA59AE  stbx r30, r10, r11
+	unsafe { crate::rt::store_u8(base as *mut u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32), ctx.r[30].u8) };
+	// 82DAEE20: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEE24: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAEE28: 386BFFFF  addi r3, r11, -1
+	ctx.r[3].s64 = ctx.r[11].s64 + -1;
+	// 82DAEE2C: 917F0004  stw r11, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DAEE30; continue 'dispatch;
+            }
+            0x82DAEE30 => {
+    //   block [0x82DAEE30..0x82DAEE48)
+	// 82DAEE30: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAEE34: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAEE38: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAEE3C: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DAEE40: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAEE44: 4E800020  blr
+	return;
+            }
+            0x82DAEE48 => {
+    //   block [0x82DAEE48..0x82DAEE50)
+	// 82DAEE48: 7C8B19AE  stbx r4, r11, r3
+	unsafe { crate::rt::store_u8(base as *mut u8, ctx.r[11].u32.wrapping_add(ctx.r[3].u32), ctx.r[4].u8) };
+	// 82DAEE4C: 4BFFFFE4  b 0x82daee30
+	pc = 0x82DAEE30; continue 'dispatch;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAEE50(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAEE50 size=4
+    let mut pc: u32 = 0x82DAEE50;
+    'dispatch: loop {
+        match pc {
+            0x82DAEE50 => {
+    //   block [0x82DAEE50..0x82DAEE54)
+	// 82DAEE50: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAEE58(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAEE58 size=4
+    let mut pc: u32 = 0x82DAEE58;
+    'dispatch: loop {
+        match pc {
+            0x82DAEE58 => {
+    //   block [0x82DAEE58..0x82DAEE5C)
+	// 82DAEE58: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAEE60(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAEE60 size=72
+    let mut pc: u32 = 0x82DAEE60;
+    'dispatch: loop {
+        match pc {
+            0x82DAEE60 => {
+    //   block [0x82DAEE60..0x82DAEEA8)
+	// 82DAEE60: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAEE64: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DAEE68: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DAEE6C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DAEE70: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAEE74: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	// 82DAEE78: 7CBE2B78  mr r30, r5
+	ctx.r[30].u64 = ctx.r[5].u64;
+	// 82DAEE7C: 4BFE6355  bl 0x82d951d0
+	ctx.lr = 0x82DAEE80;
+	sub_82D951D0(ctx, base);
+	// 82DAEE80: 817F0028  lwz r11, 0x28(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAEE84: 894B0012  lbz r10, 0x12(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DAEE88: 7D4AF378  or r10, r10, r30
+	ctx.r[10].u64 = ctx.r[10].u64 | ctx.r[30].u64;
+	// 82DAEE8C: 994B0012  stb r10, 0x12(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[10].u8 ) };
+	// 82DAEE90: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DAEE94: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DAEE98: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DAEE9C: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DAEEA0: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DAEEA4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAEEA8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAEEA8 size=120
+    let mut pc: u32 = 0x82DAEEA8;
+    'dispatch: loop {
+        match pc {
+            0x82DAEEA8 => {
+    //   block [0x82DAEEA8..0x82DAEEC8)
+	// 82DAEEA8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAEEAC: 4BEFA559  bl 0x82ca9404
+	ctx.lr = 0x82DAEEB0;
+	sub_82CA93D0(ctx, base);
+	// 82DAEEB0: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAEEB4: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	// 82DAEEB8: 7C7C1B78  mr r28, r3
+	ctx.r[28].u64 = ctx.r[3].u64;
+	// 82DAEEBC: 7F7F2A14  add r27, r31, r5
+	ctx.r[27].u64 = ctx.r[31].u64 + ctx.r[5].u64;
+	// 82DAEEC0: 7F1FD840  cmplw cr6, r31, r27
+	ctx.cr[6].compare_u32(ctx.r[31].u32, ctx.r[27].u32, &mut ctx.xer);
+	// 82DAEEC4: 40980054  bge cr6, 0x82daef18
+	if !ctx.cr[6].lt {
+	pc = 0x82DAEF18; continue 'dispatch;
+	}
+	pc = 0x82DAEEC8; continue 'dispatch;
+            }
+            0x82DAEEC8 => {
+    //   block [0x82DAEEC8..0x82DAEEE8)
+	// 82DAEEC8: 897F0000  lbz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAEECC: 2B0B0001  cmplwi cr6, r11, 1
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 1 as u32, &mut ctx.xer);
+	// 82DAEED0: 41980018  blt cr6, 0x82daeee8
+	if ctx.cr[6].lt {
+	pc = 0x82DAEEE8; continue 'dispatch;
+	}
+	// 82DAEED4: 409A0044  bne cr6, 0x82daef18
+	if !ctx.cr[6].eq {
+	pc = 0x82DAEF18; continue 'dispatch;
+	}
+	// 82DAEED8: 7F83E378  mr r3, r28
+	ctx.r[3].u64 = ctx.r[28].u64;
+	// 82DAEEDC: 809F0004  lwz r4, 4(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEEE0: 4BFE63B1  bl 0x82d95290
+	ctx.lr = 0x82DAEEE4;
+	sub_82D95290(ctx, base);
+	// 82DAEEE4: 48000028  b 0x82daef0c
+	pc = 0x82DAEF0C; continue 'dispatch;
+            }
+            0x82DAEEE8 => {
+    //   block [0x82DAEEE8..0x82DAEF0C)
+	// 82DAEEE8: 83DF0004  lwz r30, 4(r31)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEEEC: 7F83E378  mr r3, r28
+	ctx.r[3].u64 = ctx.r[28].u64;
+	// 82DAEEF0: 83BF0008  lwz r29, 8(r31)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAEEF4: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DAEEF8: 4BFE62D9  bl 0x82d951d0
+	ctx.lr = 0x82DAEEFC;
+	sub_82D951D0(ctx, base);
+	// 82DAEEFC: 817E0028  lwz r11, 0x28(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(40 as u32) ) } as u64;
+	// 82DAEF00: 894B0012  lbz r10, 0x12(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(18 as u32) ) } as u64;
+	// 82DAEF04: 7D4AEB78  or r10, r10, r29
+	ctx.r[10].u64 = ctx.r[10].u64 | ctx.r[29].u64;
+	// 82DAEF08: 994B0012  stb r10, 0x12(r11)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[11].u32.wrapping_add(18 as u32), ctx.r[10].u8 ) };
+	pc = 0x82DAEF0C; continue 'dispatch;
+            }
+            0x82DAEF0C => {
+    //   block [0x82DAEF0C..0x82DAEF18)
+	// 82DAEF0C: 3BFF0010  addi r31, r31, 0x10
+	ctx.r[31].s64 = ctx.r[31].s64 + 16;
+	// 82DAEF10: 7F1FD840  cmplw cr6, r31, r27
+	ctx.cr[6].compare_u32(ctx.r[31].u32, ctx.r[27].u32, &mut ctx.xer);
+	// 82DAEF14: 4198FFB4  blt cr6, 0x82daeec8
+	if ctx.cr[6].lt {
+	pc = 0x82DAEEC8; continue 'dispatch;
+	}
+	pc = 0x82DAEF18; continue 'dispatch;
+            }
+            0x82DAEF18 => {
+    //   block [0x82DAEF18..0x82DAEF20)
+	// 82DAEF18: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DAEF1C: 4BEFA538  b 0x82ca9454
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAEF20(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAEF20 size=372
+    let mut pc: u32 = 0x82DAEF20;
+    'dispatch: loop {
+        match pc {
+            0x82DAEF20 => {
+    //   block [0x82DAEF20..0x82DAEFA4)
+	// 82DAEF20: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAEF24: 4BEFA4DD  bl 0x82ca9400
+	ctx.lr = 0x82DAEF28;
+	sub_82CA93D0(ctx, base);
+	// 82DAEF28: 9421FF70  stwu r1, -0x90(r1)
+	ea = ctx.r[1].u32.wrapping_add(-144 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAEF2C: 7C691B78  mr r9, r3
+	ctx.r[9].u64 = ctx.r[3].u64;
+	// 82DAEF30: 81440000  lwz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAEF34: A1690002  lhz r11, 2(r9)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAEF38: 556B103E  rotlwi r11, r11, 2
+	ctx.r[11].u64 = ((ctx.r[11].u32).rotate_left(2)) as u64;
+	// 82DAEF3C: 7D6B502E  lwzx r11, r11, r10
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DAEF40: 91650004  stw r11, 4(r5)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[5].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DAEF44: 81690008  lwz r11, 8(r9)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAEF48: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAEF4C: 419A0104  beq cr6, 0x82daf050
+	if ctx.cr[6].eq {
+	pc = 0x82DAF050; continue 'dispatch;
+	}
+	// 82DAEF50: 814B0060  lwz r10, 0x60(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(96 as u32) ) } as u64;
+	// 82DAEF54: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAEF58: 419A00F8  beq cr6, 0x82daf050
+	if ctx.cr[6].eq {
+	pc = 0x82DAF050; continue 'dispatch;
+	}
+	// 82DAEF5C: 80EB000C  lwz r7, 0xc(r11)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DAEF60: 3B6B005C  addi r27, r11, 0x5c
+	ctx.r[27].s64 = ctx.r[11].s64 + 92;
+	// 82DAEF64: 810B0010  lwz r8, 0x10(r11)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAEF68: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAEF6C: 7CEA3A14  add r7, r10, r7
+	ctx.r[7].u64 = ctx.r[10].u64 + ctx.r[7].u64;
+	// 82DAEF70: 7D0A4214  add r8, r10, r8
+	ctx.r[8].u64 = ctx.r[10].u64 + ctx.r[8].u64;
+	// 82DAEF74: 3B400000  li r26, 0
+	ctx.r[26].s64 = 0;
+	// 82DAEF78: 90EB000C  stw r7, 0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), ctx.r[7].u32 ) };
+	// 82DAEF7C: 910B0010  stw r8, 0x10(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), ctx.r[8].u32 ) };
+	// 82DAEF80: 81640004  lwz r11, 4(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEF84: B1490010  sth r10, 0x10(r9)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[9].u32.wrapping_add(16 as u32), ctx.r[10].u16 ) };
+	// 82DAEF88: B1690002  sth r11, 2(r9)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[9].u32.wrapping_add(2 as u32), ctx.r[11].u16 ) };
+	// 82DAEF8C: 81650004  lwz r11, 4(r5)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[5].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEF90: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DAEF94: 3BEB0028  addi r31, r11, 0x28
+	ctx.r[31].s64 = ctx.r[11].s64 + 40;
+	// 82DAEF98: 40990068  ble cr6, 0x82daf000
+	if !ctx.cr[6].gt {
+	pc = 0x82DAF000; continue 'dispatch;
+	}
+	// 82DAEF9C: 7F5ED378  mr r30, r26
+	ctx.r[30].u64 = ctx.r[26].u64;
+	// 82DAEFA0: 7D5D5378  mr r29, r10
+	ctx.r[29].u64 = ctx.r[10].u64;
+	pc = 0x82DAEFA4; continue 'dispatch;
+            }
+            0x82DAEFA4 => {
+    //   block [0x82DAEFA4..0x82DAEFD4)
+	// 82DAEFA4: 817B0000  lwz r11, 0(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAEFA8: 815F0004  lwz r10, 4(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEFAC: 7F8BF02E  lwzx r28, r11, r30
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[30].u32)) } as u64;
+	// 82DAEFB0: B15C0020  sth r10, 0x20(r28)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[28].u32.wrapping_add(32 as u32), ctx.r[10].u16 ) };
+	// 82DAEFB4: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAEFB8: 815F0004  lwz r10, 4(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEFBC: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DAEFC0: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAEFC4: 409A0010  bne cr6, 0x82daefd4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAEFD4; continue 'dispatch;
+	}
+	// 82DAEFC8: 38800004  li r4, 4
+	ctx.r[4].s64 = 4;
+	// 82DAEFCC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DAEFD0: 4BFA7FC9  bl 0x82d56f98
+	ctx.lr = 0x82DAEFD4;
+	sub_82D56F98(ctx, base);
+	pc = 0x82DAEFD4; continue 'dispatch;
+            }
+            0x82DAEFD4 => {
+    //   block [0x82DAEFD4..0x82DAF000)
+	// 82DAEFD4: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEFD8: 3BBDFFFF  addi r29, r29, -1
+	ctx.r[29].s64 = ctx.r[29].s64 + -1;
+	// 82DAEFDC: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAEFE0: 3BDE0004  addi r30, r30, 4
+	ctx.r[30].s64 = ctx.r[30].s64 + 4;
+	// 82DAEFE4: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAEFE8: 2B1D0000  cmplwi cr6, r29, 0
+	ctx.cr[6].compare_u32(ctx.r[29].u32, 0 as u32, &mut ctx.xer);
+	// 82DAEFEC: 7F8B512E  stwx r28, r11, r10
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32), ctx.r[28].u32) };
+	// 82DAEFF0: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAEFF4: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAEFF8: 917F0004  stw r11, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DAEFFC: 409AFFA8  bne cr6, 0x82daefa4
+	if !ctx.cr[6].eq {
+	pc = 0x82DAEFA4; continue 'dispatch;
+	}
+	pc = 0x82DAF000; continue 'dispatch;
+            }
+            0x82DAF000 => {
+    //   block [0x82DAF000..0x82DAF02C)
+	// 82DAF000: 817B0008  lwz r11, 8(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAF004: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAF008: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAF00C: 409A0020  bne cr6, 0x82daf02c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAF02C; continue 'dispatch;
+	}
+	// 82DAF010: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAF014: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DAF018: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DAF01C: 809B0000  lwz r4, 0(r27)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAF020: 5565103A  slwi r5, r11, 2
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAF024: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DAF028: 4BFA62A1  bl 0x82d552c8
+	ctx.lr = 0x82DAF02C;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DAF02C; continue 'dispatch;
+            }
+            0x82DAF02C => {
+    //   block [0x82DAF02C..0x82DAF050)
+	// 82DAF02C: 817B0008  lwz r11, 8(r27)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[27].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAF030: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DAF034: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAF038: 935B0000  stw r26, 0(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(0 as u32), ctx.r[26].u32 ) };
+	// 82DAF03C: 514BF880  rlwimi r11, r10, 0x1f, 2, 0
+	ctx.r[11].u64 = (((ctx.r[10].u32).rotate_left(31) as u64) & 0xFFFFFFFFBFFFFFFF) | (ctx.r[11].u64 & 0x0000000040000000);
+	// 82DAF040: 935B0004  stw r26, 4(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(4 as u32), ctx.r[26].u32 ) };
+	// 82DAF044: 917B0008  stw r11, 8(r27)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[27].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DAF048: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAF04C: 4BEFA404  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            0x82DAF050 => {
+    //   block [0x82DAF050..0x82DAF088)
+	// 82DAF050: A1690010  lhz r11, 0x10(r9)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DAF054: 2B0B0001  cmplwi cr6, r11, 1
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 1 as u32, &mut ctx.xer);
+	// 82DAF058: 40990030  ble cr6, 0x82daf088
+	if !ctx.cr[6].gt {
+	pc = 0x82DAF088; continue 'dispatch;
+	}
+	// 82DAF05C: A1490002  lhz r10, 2(r9)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[9].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAF060: 3D6B0001  addis r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 65536;
+	// 82DAF064: 39000001  li r8, 1
+	ctx.r[8].s64 = 1;
+	// 82DAF068: 394A0001  addi r10, r10, 1
+	ctx.r[10].s64 = ctx.r[10].s64 + 1;
+	// 82DAF06C: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DAF070: 38600001  li r3, 1
+	ctx.r[3].s64 = 1;
+	// 82DAF074: B1490002  sth r10, 2(r9)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[9].u32.wrapping_add(2 as u32), ctx.r[10].u16 ) };
+	// 82DAF078: B1690010  sth r11, 0x10(r9)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[9].u32.wrapping_add(16 as u32), ctx.r[11].u16 ) };
+	// 82DAF07C: B1050010  sth r8, 0x10(r5)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[5].u32.wrapping_add(16 as u32), ctx.r[8].u16 ) };
+	// 82DAF080: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAF084: 4BEFA3CC  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            0x82DAF088 => {
+    //   block [0x82DAF088..0x82DAF094)
+	// 82DAF088: 38600000  li r3, 0
+	ctx.r[3].s64 = 0;
+	// 82DAF08C: 38210090  addi r1, r1, 0x90
+	ctx.r[1].s64 = ctx.r[1].s64 + 144;
+	// 82DAF090: 4BEFA3C0  b 0x82ca9450
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAF098(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAF098 size=976
+    let mut pc: u32 = 0x82DAF098;
+    'dispatch: loop {
+        match pc {
+            0x82DAF098 => {
+    //   block [0x82DAF098..0x82DAF468)
+	// 82DAF098: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAF09C: 4BEFA335  bl 0x82ca93d0
+	ctx.lr = 0x82DAF0A0;
+	sub_82CA93D0(ctx, base);
+	// 82DAF0A0: 3980FF50  li r12, -0xb0
+	ctx.r[12].s64 = -176;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAF468(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAF468 size=1096
+    let mut pc: u32 = 0x82DAF468;
+    'dispatch: loop {
+        match pc {
+            0x82DAF468 => {
+    //   block [0x82DAF468..0x82DAF8B0)
+	// 82DAF468: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAF46C: 4BEF9F81  bl 0x82ca93ec
+	ctx.lr = 0x82DAF470;
+	sub_82CA93D0(ctx, base);
+	// 82DAF470: DBE1FF98  stfd f31, -0x68(r1)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-104 as u32), ctx.f[31].u64 ) };
+	// 82DAF474: 9421FC40  stwu r1, -0x3c0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-960 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAF478: 7CDF3378  mr r31, r6
+	ctx.r[31].u64 = ctx.r[6].u64;
+	// 82DAF47C: FFE00890  fmr f31, f1
+	ctx.f[31].f64 = ctx.f[1].f64;
+	// 82DAF480: 3AC000C0  li r22, 0xc0
+	ctx.r[22].s64 = 192;
+	// 82DAF484: 39610050  addi r11, r1, 0x50
+	ctx.r[11].s64 = ctx.r[1].s64 + 80;
+	// 82DAF488: 3BDF0010  addi r30, r31, 0x10
+	ctx.r[30].s64 = ctx.r[31].s64 + 16;
+	// 82DAF48C: 7D374B78  mr r23, r9
+	ctx.r[23].u64 = ctx.r[9].u64;
+	// 82DAF490: 39410050  addi r10, r1, 0x50
+	ctx.r[10].s64 = ctx.r[1].s64 + 80;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAF8B0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAF8B0 size=8
+    let mut pc: u32 = 0x82DAF8B0;
+    'dispatch: loop {
+        match pc {
+            0x82DAF8B0 => {
+    //   block [0x82DAF8B0..0x82DAF8B8)
+	// 82DAF8B0: 8063004C  lwz r3, 0x4c(r3)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAF8B4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAF8C8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAF8C8 size=8
+    let mut pc: u32 = 0x82DAF8C8;
+    'dispatch: loop {
+        match pc {
+            0x82DAF8C8 => {
+    //   block [0x82DAF8C8..0x82DAF8D0)
+	// 82DAF8C8: 38630050  addi r3, r3, 0x50
+	ctx.r[3].s64 = ctx.r[3].s64 + 80;
+	// 82DAF8CC: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAF8D0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DAF8D0 size=44
+    let mut pc: u32 = 0x82DAF8D0;
+    'dispatch: loop {
+        match pc {
+            0x82DAF8D0 => {
+    //   block [0x82DAF8D0..0x82DAF8FC)
+	// 82DAF8D0: 81630040  lwz r11, 0x40(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAF8D4: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DAF8D8: C1AB0000  lfs f13, 0(r11)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DAF8DC: D1A40000  stfs f13, 0(r4)
+	tmp.f32 = (ctx.f[13].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(0 as u32), tmp.u32 ) };
+	// 82DAF8E0: C1AB0010  lfs f13, 0x10(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DAF8E4: D1A40004  stfs f13, 4(r4)
+	tmp.f32 = (ctx.f[13].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(4 as u32), tmp.u32 ) };
+	// 82DAF8E8: C1AB0020  lfs f13, 0x20(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(32 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DAF8EC: C00A0C18  lfs f0, 0xc18(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(3096 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAF8F0: D1A40008  stfs f13, 8(r4)
+	tmp.f32 = (ctx.f[13].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(8 as u32), tmp.u32 ) };
+	// 82DAF8F4: D004000C  stfs f0, 0xc(r4)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[4].u32.wrapping_add(12 as u32), tmp.u32 ) };
+	// 82DAF8F8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAF900(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DAF900 size=448
+    let mut pc: u32 = 0x82DAF900;
+    'dispatch: loop {
+        match pc {
+            0x82DAF900 => {
+    //   block [0x82DAF900..0x82DAFA10)
+	// 82DAF900: 7C6A1B78  mr r10, r3
+	ctx.r[10].u64 = ctx.r[3].u64;
+	// 82DAF904: 7C832378  mr r3, r4
+	ctx.r[3].u64 = ctx.r[4].u64;
+	// 82DAF908: 7C691B78  mr r9, r3
+	ctx.r[9].u64 = ctx.r[3].u64;
+	// 82DAF90C: 810A004C  lwz r8, 0x4c(r10)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAF910: 816A0040  lwz r11, 0x40(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAF914: 38A8FFFF  addi r5, r8, -1
+	ctx.r[5].s64 = ctx.r[8].s64 + -1;
+	// 82DAF918: 2F050003  cmpwi cr6, r5, 3
+	ctx.cr[6].compare_i32(ctx.r[5].s32, 3, &mut ctx.xer);
+	// 82DAF91C: 419800F4  blt cr6, 0x82dafa10
+	if ctx.cr[6].lt {
+	pc = 0x82DAFA10; continue 'dispatch;
+	}
+	// 82DAF920: 39050001  addi r8, r5, 1
+	ctx.r[8].s64 = ctx.r[5].s64 + 1;
+	// 82DAF924: 5508F0BE  srwi r8, r8, 2
+	ctx.r[8].u32 = ctx.r[8].u32.wrapping_shr(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAF928: 5507103A  slwi r7, r8, 2
+	ctx.r[7].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DAF92C: 7CA72850  subf r5, r7, r5
+	ctx.r[5].s64 = ctx.r[5].s64 - ctx.r[7].s64;
+	// 82DAF930: C00B0000  lfs f0, 0(r11)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAF934: 7D274B78  mr r7, r9
+	ctx.r[7].u64 = ctx.r[9].u64;
+	// 82DAF938: D001FFC0  stfs f0, -0x40(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-64 as u32), tmp.u32 ) };
+	// 82DAF93C: 39290010  addi r9, r9, 0x10
+	ctx.r[9].s64 = ctx.r[9].s64 + 16;
+	// 82DAF940: C00B0010  lfs f0, 0x10(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAF944: 3908FFFF  addi r8, r8, -1
+	ctx.r[8].s64 = ctx.r[8].s64 + -1;
+	// 82DAF948: D001FFC4  stfs f0, -0x3c(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-60 as u32), tmp.u32 ) };
+	// 82DAF94C: 7D264B78  mr r6, r9
+	ctx.r[6].u64 = ctx.r[9].u64;
+	// 82DAF950: C00B0020  lfs f0, 0x20(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(32 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAF954: 39290010  addi r9, r9, 0x10
+	ctx.r[9].s64 = ctx.r[9].s64 + 16;
+	// 82DAF958: D001FFC8  stfs f0, -0x38(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-56 as u32), tmp.u32 ) };
+	// 82DAF95C: 2B080000  cmplwi cr6, r8, 0
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 0 as u32, &mut ctx.xer);
+	// 82DAF960: C00A0010  lfs f0, 0x10(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAF964: D001FFCC  stfs f0, -0x34(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-52 as u32), tmp.u32 ) };
+	// 82DAF968: 3881FFC0  addi r4, r1, -0x40
+	ctx.r[4].s64 = ctx.r[1].s64 + -64;
+	pc = 0x82DAFA10; continue 'dispatch;
+            }
+            0x82DAFA10 => {
+    //   block [0x82DAFA10..0x82DAFAC0)
+	// 82DAFA10: 2F050000  cmpwi cr6, r5, 0
+	ctx.cr[6].compare_i32(ctx.r[5].s32, 0, &mut ctx.xer);
+	// 82DAFA14: 41980038  blt cr6, 0x82dafa4c
+	if ctx.cr[6].lt {
+	pc = 0x82DAFA4C; continue 'dispatch;
+	}
+	// 82DAFA18: C00B0000  lfs f0, 0(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFA1C: 7D284B78  mr r8, r9
+	ctx.r[8].u64 = ctx.r[9].u64;
+	// 82DAFA20: D001FFF0  stfs f0, -0x10(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), tmp.u32 ) };
+	// 82DAFA24: 39290010  addi r9, r9, 0x10
+	ctx.r[9].s64 = ctx.r[9].s64 + 16;
+	// 82DAFA28: C00B0010  lfs f0, 0x10(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFA2C: D001FFF4  stfs f0, -0xc(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-12 as u32), tmp.u32 ) };
+	// 82DAFA30: C00B0020  lfs f0, 0x20(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(32 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFA34: D001FFF8  stfs f0, -8(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), tmp.u32 ) };
+	// 82DAFA38: C00A0010  lfs f0, 0x10(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFA3C: D001FFFC  stfs f0, -4(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-4 as u32), tmp.u32 ) };
+	// 82DAFA40: 38E1FFF0  addi r7, r1, -0x10
+	ctx.r[7].s64 = ctx.r[1].s64 + -16;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAFAC0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DAFAC0 size=432
+    let mut pc: u32 = 0x82DAFAC0;
+    'dispatch: loop {
+        match pc {
+            0x82DAFAC0 => {
+    //   block [0x82DAFAC0..0x82DAFB00)
+	// 82DAFAC0: 3D208334  lis r9, -0x7ccc
+	ctx.r[9].s64 = -2093744128;
+	// 82DAFAC4: 80C30040  lwz r6, 0x40(r3)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAFAC8: 81499B70  lwz r10, -0x6490(r9)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(-25744 as u32) ) } as u64;
+	// 82DAFACC: 554B07FE  clrlwi r11, r10, 0x1f
+	ctx.r[11].u64 = ctx.r[10].u32 as u64 & 0x00000001u64;
+	// 82DAFAD0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DAFAD4: 3D608334  lis r11, -0x7ccc
+	ctx.r[11].s64 = -2093744128;
+	// 82DAFAD8: 396B9B60  addi r11, r11, -0x64a0
+	ctx.r[11].s64 = ctx.r[11].s64 + -25760;
+	// 82DAFADC: 409A0024  bne cr6, 0x82dafb00
+	if !ctx.cr[6].eq {
+	pc = 0x82DAFB00; continue 'dispatch;
+	}
+	// 82DAFAE0: 614A0001  ori r10, r10, 1
+	ctx.r[10].u64 = ctx.r[10].u64 | 1;
+	// 82DAFAE4: 91499B70  stw r10, -0x6490(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(-25744 as u32), ctx.r[10].u32 ) };
+	// 82DAFAE8: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DAFAEC: C00A0BE4  lfs f0, 0xbe4(r10)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(3044 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFAF0: D00B0000  stfs f0, 0(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), tmp.u32 ) };
+	// 82DAFAF4: D00B0004  stfs f0, 4(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), tmp.u32 ) };
+	// 82DAFAF8: D00B0008  stfs f0, 8(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), tmp.u32 ) };
+	// 82DAFAFC: D00B000C  stfs f0, 0xc(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), tmp.u32 ) };
+	pc = 0x82DAFB00; continue 'dispatch;
+            }
+            0x82DAFB00 => {
+    //   block [0x82DAFB00..0x82DAFC70)
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAFC70(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DAFC70 size=520
+    let mut pc: u32 = 0x82DAFC70;
+    'dispatch: loop {
+        match pc {
+            0x82DAFC70 => {
+    //   block [0x82DAFC70..0x82DAFC9C)
+	// 82DAFC70: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAFC74: 4BEF9795  bl 0x82ca9408
+	ctx.lr = 0x82DAFC78;
+	sub_82CA93D0(ctx, base);
+	// 82DAFC78: 3965FFFF  addi r11, r5, -1
+	ctx.r[11].s64 = ctx.r[5].s64 + -1;
+	// 82DAFC7C: 394B0001  addi r10, r11, 1
+	ctx.r[10].s64 = ctx.r[11].s64 + 1;
+	// 82DAFC80: 7D7E5B78  mr r30, r11
+	ctx.r[30].u64 = ctx.r[11].u64;
+	// 82DAFC84: 2F0A0004  cmpwi cr6, r10, 4
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 4, &mut ctx.xer);
+	// 82DAFC88: 4198017C  blt cr6, 0x82dafe04
+	if ctx.cr[6].lt {
+	pc = 0x82DAFE04; continue 'dispatch;
+	}
+	// 82DAFC8C: 5547F0BE  srwi r7, r10, 2
+	ctx.r[7].u32 = ctx.r[10].u32.wrapping_shr(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DAFC90: 39660018  addi r11, r6, 0x18
+	ctx.r[11].s64 = ctx.r[6].s64 + 24;
+	// 82DAFC94: 54EA103A  slwi r10, r7, 2
+	ctx.r[10].u32 = ctx.r[7].u32.wrapping_shl(2);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFC98: 7FCAF050  subf r30, r10, r30
+	ctx.r[30].s64 = ctx.r[30].s64 - ctx.r[10].s64;
+	pc = 0x82DAFC9C; continue 'dispatch;
+            }
+            0x82DAFC9C => {
+    //   block [0x82DAFC9C..0x82DAFE04)
+	// 82DAFC9C: A1440000  lhz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAFCA0: 38E7FFFF  addi r7, r7, -1
+	ctx.r[7].s64 = ctx.r[7].s64 + -1;
+	// 82DAFCA4: 80A30040  lwz r5, 0x40(r3)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAFCA8: 7D481670  srawi r8, r10, 2
+	ctx.xer.ca = (ctx.r[10].s32 < 0) && ((ctx.r[10].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[8].s64 = (ctx.r[10].s32 >> 2) as i64;
+	// 82DAFCAC: 554907BE  clrlwi r9, r10, 0x1e
+	ctx.r[9].u64 = ctx.r[10].u32 as u64 & 0x00000003u64;
+	// 82DAFCB0: 655F3F00  oris r31, r10, 0x3f00
+	ctx.r[31].u64 = ctx.r[10].u64 | 1056964608;
+	// 82DAFCB4: 550A083C  slwi r10, r8, 1
+	ctx.r[10].u32 = ctx.r[8].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFCB8: 3BA90004  addi r29, r9, 4
+	ctx.r[29].s64 = ctx.r[9].s64 + 4;
+	// 82DAFCBC: 7D485214  add r10, r8, r10
+	ctx.r[10].u64 = ctx.r[8].u64 + ctx.r[10].u64;
+	// 82DAFCC0: 553C103A  slwi r28, r9, 2
+	ctx.r[28].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[28].u64 = ctx.r[28].u32 as u64;
+	// 82DAFCC4: 554A2036  slwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFCC8: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DAFCCC: 7D4A2A14  add r10, r10, r5
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[5].u64;
+	// 82DAFCD0: 57A8103A  slwi r8, r29, 2
+	ctx.r[8].u32 = ctx.r[29].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAFCD4: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAFCD8: 7C1C542E  lfsx f0, r28, r10
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFCDC: D0060000  stfs f0, 0(r6)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(0 as u32), tmp.u32 ) };
+	// 82DAFCE0: 7C08542E  lfsx f0, r8, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[8].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFCE4: D00BFFEC  stfs f0, -0x14(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-20 as u32), tmp.u32 ) };
+	// 82DAFCE8: 7C09542E  lfsx f0, r9, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFCEC: D00BFFF0  stfs f0, -0x10(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-16 as u32), tmp.u32 ) };
+	// 82DAFCF0: 93EBFFF4  stw r31, -0xc(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-12 as u32), ctx.r[31].u32 ) };
+	// 82DAFCF4: A1440002  lhz r10, 2(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(2 as u32) ) } as u64;
+	// 82DAFCF8: 80A30040  lwz r5, 0x40(r3)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAFCFC: 7D481670  srawi r8, r10, 2
+	ctx.xer.ca = (ctx.r[10].s32 < 0) && ((ctx.r[10].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[8].s64 = (ctx.r[10].s32 >> 2) as i64;
+	// 82DAFD00: 554907BE  clrlwi r9, r10, 0x1e
+	ctx.r[9].u64 = ctx.r[10].u32 as u64 & 0x00000003u64;
+	// 82DAFD04: 655F3F00  oris r31, r10, 0x3f00
+	ctx.r[31].u64 = ctx.r[10].u64 | 1056964608;
+	// 82DAFD08: 550A083C  slwi r10, r8, 1
+	ctx.r[10].u32 = ctx.r[8].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFD0C: 3BA90004  addi r29, r9, 4
+	ctx.r[29].s64 = ctx.r[9].s64 + 4;
+	// 82DAFD10: 7D485214  add r10, r8, r10
+	ctx.r[10].u64 = ctx.r[8].u64 + ctx.r[10].u64;
+	// 82DAFD14: 553C103A  slwi r28, r9, 2
+	ctx.r[28].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[28].u64 = ctx.r[28].u32 as u64;
+	// 82DAFD18: 554A2036  slwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFD1C: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DAFD20: 7D4A2A14  add r10, r10, r5
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[5].u64;
+	// 82DAFD24: 57A8103A  slwi r8, r29, 2
+	ctx.r[8].u32 = ctx.r[29].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAFD28: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAFD2C: 7C1C542E  lfsx f0, r28, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFD30: D00BFFF8  stfs f0, -8(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-8 as u32), tmp.u32 ) };
+	// 82DAFD34: 7C08542E  lfsx f0, r8, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[8].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFD38: D00BFFFC  stfs f0, -4(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(-4 as u32), tmp.u32 ) };
+	// 82DAFD3C: 7C09542E  lfsx f0, r9, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFD40: D00B0000  stfs f0, 0(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(0 as u32), tmp.u32 ) };
+	// 82DAFD44: 93EB0004  stw r31, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[31].u32 ) };
+	// 82DAFD48: A1440004  lhz r10, 4(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DAFD4C: 80A30040  lwz r5, 0x40(r3)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAFD50: 7D481670  srawi r8, r10, 2
+	ctx.xer.ca = (ctx.r[10].s32 < 0) && ((ctx.r[10].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[8].s64 = (ctx.r[10].s32 >> 2) as i64;
+	// 82DAFD54: 554907BE  clrlwi r9, r10, 0x1e
+	ctx.r[9].u64 = ctx.r[10].u32 as u64 & 0x00000003u64;
+	// 82DAFD58: 655F3F00  oris r31, r10, 0x3f00
+	ctx.r[31].u64 = ctx.r[10].u64 | 1056964608;
+	// 82DAFD5C: 550A083C  slwi r10, r8, 1
+	ctx.r[10].u32 = ctx.r[8].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFD60: 3BA90004  addi r29, r9, 4
+	ctx.r[29].s64 = ctx.r[9].s64 + 4;
+	// 82DAFD64: 7D485214  add r10, r8, r10
+	ctx.r[10].u64 = ctx.r[8].u64 + ctx.r[10].u64;
+	// 82DAFD68: 553C103A  slwi r28, r9, 2
+	ctx.r[28].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[28].u64 = ctx.r[28].u32 as u64;
+	// 82DAFD6C: 554A2036  slwi r10, r10, 4
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFD70: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DAFD74: 7D4A2A14  add r10, r10, r5
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[5].u64;
+	// 82DAFD78: 57A8103A  slwi r8, r29, 2
+	ctx.r[8].u32 = ctx.r[29].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAFD7C: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAFD80: 7C1C542E  lfsx f0, r28, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[28].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFD84: D00B0008  stfs f0, 8(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(8 as u32), tmp.u32 ) };
+	// 82DAFD88: 7C08542E  lfsx f0, r8, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[8].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFD8C: D00B000C  stfs f0, 0xc(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(12 as u32), tmp.u32 ) };
+	// 82DAFD90: 7C09542E  lfsx f0, r9, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFD94: D00B0010  stfs f0, 0x10(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(16 as u32), tmp.u32 ) };
+	// 82DAFD98: 93EB0014  stw r31, 0x14(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(20 as u32), ctx.r[31].u32 ) };
+	// 82DAFD9C: A1440006  lhz r10, 6(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DAFDA0: 38840008  addi r4, r4, 8
+	ctx.r[4].s64 = ctx.r[4].s64 + 8;
+	// 82DAFDA4: 80A30040  lwz r5, 0x40(r3)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAFDA8: 7D481670  srawi r8, r10, 2
+	ctx.xer.ca = (ctx.r[10].s32 < 0) && ((ctx.r[10].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[8].s64 = (ctx.r[10].s32 >> 2) as i64;
+	// 82DAFDAC: 554907BE  clrlwi r9, r10, 0x1e
+	ctx.r[9].u64 = ctx.r[10].u32 as u64 & 0x00000003u64;
+	// 82DAFDB0: 551F083C  slwi r31, r8, 1
+	ctx.r[31].u32 = ctx.r[8].u32.wrapping_shl(1);
+	ctx.r[31].u64 = ctx.r[31].u32 as u64;
+	// 82DAFDB4: 553D103A  slwi r29, r9, 2
+	ctx.r[29].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[29].u64 = ctx.r[29].u32 as u64;
+	// 82DAFDB8: 7D08FA14  add r8, r8, r31
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[31].u64;
+	// 82DAFDBC: 654A3F00  oris r10, r10, 0x3f00
+	ctx.r[10].u64 = ctx.r[10].u64 | 1056964608;
+	// 82DAFDC0: 55082036  slwi r8, r8, 4
+	ctx.r[8].u32 = ctx.r[8].u32.wrapping_shl(4);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DAFDC4: 7D082A14  add r8, r8, r5
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[5].u64;
+	// 82DAFDC8: 38A90004  addi r5, r9, 4
+	ctx.r[5].s64 = ctx.r[9].s64 + 4;
+	// 82DAFDCC: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DAFDD0: 54A5103A  slwi r5, r5, 2
+	ctx.r[5].u32 = ctx.r[5].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DAFDD4: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAFDD8: 7C1D442E  lfsx f0, r29, r8
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[29].u32.wrapping_add(ctx.r[8].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFDDC: D00B0018  stfs f0, 0x18(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(24 as u32), tmp.u32 ) };
+	// 82DAFDE0: 7C05442E  lfsx f0, r5, r8
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[5].u32.wrapping_add(ctx.r[8].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFDE4: 38C60040  addi r6, r6, 0x40
+	ctx.r[6].s64 = ctx.r[6].s64 + 64;
+	// 82DAFDE8: D00B001C  stfs f0, 0x1c(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(28 as u32), tmp.u32 ) };
+	// 82DAFDEC: 2B070000  cmplwi cr6, r7, 0
+	ctx.cr[6].compare_u32(ctx.r[7].u32, 0 as u32, &mut ctx.xer);
+	// 82DAFDF0: 7C09442E  lfsx f0, r9, r8
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[8].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFDF4: D00B0020  stfs f0, 0x20(r11)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(32 as u32), tmp.u32 ) };
+	// 82DAFDF8: 914B0024  stw r10, 0x24(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(36 as u32), ctx.r[10].u32 ) };
+	// 82DAFDFC: 396B0040  addi r11, r11, 0x40
+	ctx.r[11].s64 = ctx.r[11].s64 + 64;
+	// 82DAFE00: 409AFE9C  bne cr6, 0x82dafc9c
+	if !ctx.cr[6].eq {
+	pc = 0x82DAFC9C; continue 'dispatch;
+	}
+	pc = 0x82DAFE04; continue 'dispatch;
+            }
+            0x82DAFE04 => {
+    //   block [0x82DAFE04..0x82DAFE0C)
+	// 82DAFE04: 2F1E0000  cmpwi cr6, r30, 0
+	ctx.cr[6].compare_i32(ctx.r[30].s32, 0, &mut ctx.xer);
+	// 82DAFE08: 4198006C  blt cr6, 0x82dafe74
+	if ctx.cr[6].lt {
+	pc = 0x82DAFE74; continue 'dispatch;
+	}
+	pc = 0x82DAFE0C; continue 'dispatch;
+            }
+            0x82DAFE0C => {
+    //   block [0x82DAFE0C..0x82DAFE74)
+	// 82DAFE0C: A1640000  lhz r11, 0(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAFE10: 3BDEFFFF  addi r30, r30, -1
+	ctx.r[30].s64 = ctx.r[30].s64 + -1;
+	// 82DAFE14: 81030040  lwz r8, 0x40(r3)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAFE18: 38840002  addi r4, r4, 2
+	ctx.r[4].s64 = ctx.r[4].s64 + 2;
+	// 82DAFE1C: 7D691670  srawi r9, r11, 2
+	ctx.xer.ca = (ctx.r[11].s32 < 0) && ((ctx.r[11].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[9].s64 = (ctx.r[11].s32 >> 2) as i64;
+	// 82DAFE20: 556A07BE  clrlwi r10, r11, 0x1e
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0x00000003u64;
+	// 82DAFE24: 65673F00  oris r7, r11, 0x3f00
+	ctx.r[7].u64 = ctx.r[11].u64 | 1056964608;
+	// 82DAFE28: 552B083C  slwi r11, r9, 1
+	ctx.r[11].u32 = ctx.r[9].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAFE2C: 38AA0004  addi r5, r10, 4
+	ctx.r[5].s64 = ctx.r[10].s64 + 4;
+	// 82DAFE30: 7D695A14  add r11, r9, r11
+	ctx.r[11].u64 = ctx.r[9].u64 + ctx.r[11].u64;
+	// 82DAFE34: 555F103A  slwi r31, r10, 2
+	ctx.r[31].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[31].u64 = ctx.r[31].u32 as u64;
+	// 82DAFE38: 556B2036  slwi r11, r11, 4
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAFE3C: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DAFE40: 7D6B4214  add r11, r11, r8
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[8].u64;
+	// 82DAFE44: 54A9103A  slwi r9, r5, 2
+	ctx.r[9].u32 = ctx.r[5].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAFE48: 554A103A  slwi r10, r10, 2
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DAFE4C: 2F1E0000  cmpwi cr6, r30, 0
+	ctx.cr[6].compare_i32(ctx.r[30].s32, 0, &mut ctx.xer);
+	// 82DAFE50: 7C1F5C2E  lfsx f0, r31, r11
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[31].u32.wrapping_add(ctx.r[11].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFE54: D0060000  stfs f0, 0(r6)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(0 as u32), tmp.u32 ) };
+	// 82DAFE58: 7C095C2E  lfsx f0, r9, r11
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[11].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFE5C: D0060004  stfs f0, 4(r6)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(4 as u32), tmp.u32 ) };
+	// 82DAFE60: 7C0A5C2E  lfsx f0, r10, r11
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFE64: D0060008  stfs f0, 8(r6)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(8 as u32), tmp.u32 ) };
+	// 82DAFE68: 90E6000C  stw r7, 0xc(r6)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(12 as u32), ctx.r[7].u32 ) };
+	// 82DAFE6C: 38C60010  addi r6, r6, 0x10
+	ctx.r[6].s64 = ctx.r[6].s64 + 16;
+	// 82DAFE70: 4098FF9C  bge cr6, 0x82dafe0c
+	if !ctx.cr[6].lt {
+	pc = 0x82DAFE0C; continue 'dispatch;
+	}
+	pc = 0x82DAFE74; continue 'dispatch;
+            }
+            0x82DAFE74 => {
+    //   block [0x82DAFE74..0x82DAFE78)
+	// 82DAFE74: 4BEF95E4  b 0x82ca9458
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAFE78(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DAFE78 size=16
+    let mut pc: u32 = 0x82DAFE78;
+    'dispatch: loop {
+        match pc {
+            0x82DAFE78 => {
+    //   block [0x82DAFE78..0x82DAFE88)
+	// 82DAFE78: 39600030  li r11, 0x30
+	ctx.r[11].s64 = 48;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAFE88(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DAFE88 size=208
+    let mut pc: u32 = 0x82DAFE88;
+    'dispatch: loop {
+        match pc {
+            0x82DAFE88 => {
+    //   block [0x82DAFE88..0x82DAFF58)
+	// 82DAFE88: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAFE8C: 4BEF9575  bl 0x82ca9400
+	ctx.lr = 0x82DAFE90;
+	sub_82CA93D0(ctx, base);
+	// 82DAFE90: 39250003  addi r9, r5, 3
+	ctx.r[9].s64 = ctx.r[5].s64 + 3;
+	// 82DAFE94: D0230010  stfs f1, 0x10(r3)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.f32 = (ctx.f[1].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), tmp.u32 ) };
+	// 82DAFE98: 3FC08200  lis r30, -0x7e00
+	ctx.r[30].s64 = -2113929216;
+	// 82DAFE9C: 5529003A  rlwinm r9, r9, 0, 0, 0x1d
+	ctx.r[9].u64 = ctx.r[9].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DAFEA0: 3BDE4DF4  addi r30, r30, 0x4df4
+	ctx.r[30].s64 = ctx.r[30].s64 + 19956;
+	// 82DAFEA4: 3B800001  li r28, 1
+	ctx.r[28].s64 = 1;
+	// 82DAFEA8: 3B600000  li r27, 0
+	ctx.r[27].s64 = 0;
+	// 82DAFEAC: 3B400008  li r26, 8
+	ctx.r[26].s64 = 8;
+	// 82DAFEB0: 7D291670  srawi r9, r9, 2
+	ctx.xer.ca = (ctx.r[9].s32 < 0) && ((ctx.r[9].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[9].s64 = (ctx.r[9].s32 >> 2) as i64;
+	// 82DAFEB4: 3FA08000  lis r29, -0x8000
+	ctx.r[29].s64 = -2147483648;
+	// 82DAFEB8: 93C30000  stw r30, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[30].u32 ) };
+	// 82DAFEBC: 7D290194  addze r9, r9
+	tmp.s64 = ctx.r[9].s64 + ctx.xer.ca as i64;
+	ctx.xer.ca = (tmp.u32 < ctx.r[9].u32);
+	ctx.r[9].s64 = tmp.s64;
+	// 82DAFEC0: B3830006  sth r28, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[28].u16 ) };
+	// 82DAFEC4: 93630008  stw r27, 8(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[27].u32 ) };
+	// 82DAFEC8: 7CFEEB78  or r30, r7, r29
+	ctx.r[30].u64 = ctx.r[7].u64 | ctx.r[29].u64;
+	// 82DAFECC: 9343000C  stw r26, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[26].u32 ) };
+	// 82DAFED0: 3BE80010  addi r31, r8, 0x10
+	ctx.r[31].s64 = ctx.r[8].s64 + 16;
+	// 82DAFED4: 90830040  stw r4, 0x40(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(64 as u32), ctx.r[4].u32 ) };
+	// 82DAFED8: 7D24EB78  or r4, r9, r29
+	ctx.r[4].u64 = ctx.r[9].u64 | ctx.r[29].u64;
+	// 82DAFEDC: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DAFEE0: 91230044  stw r9, 0x44(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(68 as u32), ctx.r[9].u32 ) };
+	// 82DAFEE4: 3B81FFC0  addi r28, r1, -0x40
+	ctx.r[28].s64 = ctx.r[1].s64 + -64;
+	// 82DAFEE8: 39630020  addi r11, r3, 0x20
+	ctx.r[11].s64 = ctx.r[3].s64 + 32;
+	// 82DAFEEC: 3B61FFC4  addi r27, r1, -0x3c
+	ctx.r[27].s64 = ctx.r[1].s64 + -60;
+	// 82DAFEF0: 90830048  stw r4, 0x48(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(72 as u32), ctx.r[4].u32 ) };
+	// 82DAFEF4: 90A3004C  stw r5, 0x4c(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(76 as u32), ctx.r[5].u32 ) };
+	// 82DAFEF8: C00A0BFC  lfs f0, 0xbfc(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(3068 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFEFC: 90C30050  stw r6, 0x50(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(80 as u32), ctx.r[6].u32 ) };
+	// 82DAFF00: D001FFC0  stfs f0, -0x40(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-64 as u32), tmp.u32 ) };
+	// 82DAFF04: 90E30054  stw r7, 0x54(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(84 as u32), ctx.r[7].u32 ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DAFF58(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DAFF58 size=228
+    let mut pc: u32 = 0x82DAFF58;
+    'dispatch: loop {
+        match pc {
+            0x82DAFF58 => {
+    //   block [0x82DAFF58..0x82DAFF90)
+	// 82DAFF58: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DAFF5C: 4BEF94B1  bl 0x82ca940c
+	ctx.lr = 0x82DAFF60;
+	sub_82CA93D0(ctx, base);
+	// 82DAFF60: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DAFF64: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DAFF68: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DAFF6C: 817E0008  lwz r11, 8(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DAFF70: 83BF004C  lwz r29, 0x4c(r31)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAFF74: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DAFF78: 7F0BE800  cmpw cr6, r11, r29
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[29].s32, &mut ctx.xer);
+	// 82DAFF7C: 40980024  bge cr6, 0x82daffa0
+	if !ctx.cr[6].lt {
+	pc = 0x82DAFFA0; continue 'dispatch;
+	}
+	// 82DAFF80: 556B083C  slwi r11, r11, 1
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DAFF84: 7F1D5800  cmpw cr6, r29, r11
+	ctx.cr[6].compare_i32(ctx.r[29].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DAFF88: 41980008  blt cr6, 0x82daff90
+	if ctx.cr[6].lt {
+	pc = 0x82DAFF90; continue 'dispatch;
+	}
+	// 82DAFF8C: 7FABEB78  mr r11, r29
+	ctx.r[11].u64 = ctx.r[29].u64;
+	pc = 0x82DAFF90; continue 'dispatch;
+            }
+            0x82DAFF90 => {
+    //   block [0x82DAFF90..0x82DAFFA0)
+	// 82DAFF90: 38A00010  li r5, 0x10
+	ctx.r[5].s64 = 16;
+	// 82DAFF94: 7D645B78  mr r4, r11
+	ctx.r[4].u64 = ctx.r[11].u64;
+	// 82DAFF98: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DAFF9C: 4BFA6F75  bl 0x82d56f10
+	ctx.lr = 0x82DAFFA0;
+	sub_82D56F10(ctx, base);
+	pc = 0x82DAFFA0; continue 'dispatch;
+            }
+            0x82DAFFA0 => {
+    //   block [0x82DAFFA0..0x82DB0034)
+	// 82DAFFA0: 93BE0004  stw r29, 4(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(4 as u32), ctx.r[29].u32 ) };
+	// 82DAFFA4: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DAFFA8: 815F004C  lwz r10, 0x4c(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(76 as u32) ) } as u64;
+	// 82DAFFAC: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DAFFB0: 40990084  ble cr6, 0x82db0034
+	if !ctx.cr[6].gt {
+	pc = 0x82DB0034; continue 'dispatch;
+	}
+	// 82DAFFB4: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DAFFB8: 39000000  li r8, 0
+	ctx.r[8].s64 = 0;
+	// 82DAFFBC: C00A0C18  lfs f0, 0xc18(r10)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(3096 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DAFFC0: D001005C  stfs f0, 0x5c(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(92 as u32), tmp.u32 ) };
+	// 82DAFFC4: 7D691670  srawi r9, r11, 2
+	ctx.xer.ca = (ctx.r[11].s32 < 0) && ((ctx.r[11].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[9].s64 = (ctx.r[11].s32 >> 2) as i64;
+	// 82DAFFC8: 815F0040  lwz r10, 0x40(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DAFFCC: 556707BE  clrlwi r7, r11, 0x1e
+	ctx.r[7].u64 = ctx.r[11].u32 as u64 & 0x00000003u64;
+	// 82DAFFD0: 80BE0000  lwz r5, 0(r30)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DAFFD4: 7D290194  addze r9, r9
+	tmp.s64 = ctx.r[9].s64 + ctx.xer.ca as i64;
+	ctx.xer.ca = (tmp.u32 < ctx.r[9].u32);
+	ctx.r[9].s64 = tmp.s64;
+	// 82DAFFD8: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DAFFDC: 5526083C  slwi r6, r9, 1
+	ctx.r[6].u32 = ctx.r[9].u32.wrapping_shl(1);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DAFFE0: 7D293214  add r9, r9, r6
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[6].u64;
+	// 82DAFFE4: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAFFE8: 7D293A14  add r9, r9, r7
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[7].u64;
+	// 82DAFFEC: 38E90004  addi r7, r9, 4
+	ctx.r[7].s64 = ctx.r[9].s64 + 4;
+	// 82DAFFF0: 38C90008  addi r6, r9, 8
+	ctx.r[6].s64 = ctx.r[9].s64 + 8;
+	// 82DAFFF4: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DAFFF8: 54E7103A  slwi r7, r7, 2
+	ctx.r[7].u32 = ctx.r[7].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DAFFFC: 54C6103A  slwi r6, r6, 2
+	ctx.r[6].u32 = ctx.r[6].u32.wrapping_shl(2);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB0000: 7C09542E  lfsx f0, r9, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0004: D0010050  stfs f0, 0x50(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), tmp.u32 ) };
+	// 82DB0008: 7C07542E  lfsx f0, r7, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[7].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB000C: D0010054  stfs f0, 0x54(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(84 as u32), tmp.u32 ) };
+	// 82DB0010: 7C06542E  lfsx f0, r6, r10
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[6].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0014: D0010058  stfs f0, 0x58(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(88 as u32), tmp.u32 ) };
+	// 82DB0018: 39410050  addi r10, r1, 0x50
+	ctx.r[10].s64 = ctx.r[1].s64 + 80;
+	pc = 0x82DB0034; continue 'dispatch;
+            }
+            0x82DB0034 => {
+    //   block [0x82DB0034..0x82DB003C)
+	// 82DB0034: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DB0038: 4BEF9424  b 0x82ca945c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0040(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB0040 size=1200
+    let mut pc: u32 = 0x82DB0040;
+    'dispatch: loop {
+        match pc {
+            0x82DB0040 => {
+    //   block [0x82DB0040..0x82DB0094)
+	// 82DB0040: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB0044: 4BEF93A5  bl 0x82ca93e8
+	ctx.lr = 0x82DB0048;
+	sub_82CA93D0(ctx, base);
+	// 82DB0048: 9421FF10  stwu r1, -0xf0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-240 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB004C: 7CDC3378  mr r28, r6
+	ctx.r[28].u64 = ctx.r[6].u64;
+	// 82DB0050: 7C7A1B78  mr r26, r3
+	ctx.r[26].u64 = ctx.r[3].u64;
+	// 82DB0054: 397C0003  addi r11, r28, 3
+	ctx.r[11].s64 = ctx.r[28].s64 + 3;
+	// 82DB0058: 3BFA0040  addi r31, r26, 0x40
+	ctx.r[31].s64 = ctx.r[26].s64 + 64;
+	// 82DB005C: 557B003A  rlwinm r27, r11, 0, 0, 0x1d
+	ctx.r[27].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB0060: 7C992378  mr r25, r4
+	ctx.r[25].u64 = ctx.r[4].u64;
+	// 82DB0064: 7F6B1670  srawi r11, r27, 2
+	ctx.xer.ca = (ctx.r[27].s32 < 0) && ((ctx.r[27].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[11].s64 = (ctx.r[27].s32 >> 2) as i64;
+	// 82DB0068: 939A004C  stw r28, 0x4c(r26)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[26].u32.wrapping_add(76 as u32), ctx.r[28].u32 ) };
+	// 82DB006C: 7CBE2B78  mr r30, r5
+	ctx.r[30].u64 = ctx.r[5].u64;
+	// 82DB0070: 7FAB0194  addze r29, r11
+	tmp.s64 = ctx.r[11].s64 + ctx.xer.ca as i64;
+	ctx.xer.ca = (tmp.u32 < ctx.r[11].u32);
+	ctx.r[29].s64 = tmp.s64;
+	// 82DB0074: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DB0078: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB007C: 7F0BE800  cmpw cr6, r11, r29
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[29].s32, &mut ctx.xer);
+	// 82DB0080: 40980024  bge cr6, 0x82db00a4
+	if !ctx.cr[6].lt {
+	pc = 0x82DB00A4; continue 'dispatch;
+	}
+	// 82DB0084: 556B083C  slwi r11, r11, 1
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0088: 7F1D5800  cmpw cr6, r29, r11
+	ctx.cr[6].compare_i32(ctx.r[29].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DB008C: 41980008  blt cr6, 0x82db0094
+	if ctx.cr[6].lt {
+	pc = 0x82DB0094; continue 'dispatch;
+	}
+	// 82DB0090: 7FABEB78  mr r11, r29
+	ctx.r[11].u64 = ctx.r[29].u64;
+	pc = 0x82DB0094; continue 'dispatch;
+            }
+            0x82DB0094 => {
+    //   block [0x82DB0094..0x82DB00A4)
+	// 82DB0094: 38A00030  li r5, 0x30
+	ctx.r[5].s64 = 48;
+	// 82DB0098: 7D645B78  mr r4, r11
+	ctx.r[4].u64 = ctx.r[11].u64;
+	// 82DB009C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB00A0: 4BFA6E71  bl 0x82d56f10
+	ctx.lr = 0x82DB00A4;
+	sub_82D56F10(ctx, base);
+	pc = 0x82DB00A4; continue 'dispatch;
+            }
+            0x82DB00A4 => {
+    //   block [0x82DB00A4..0x82DB00C0)
+	// 82DB00A4: 7F29CB78  mr r9, r25
+	ctx.r[9].u64 = ctx.r[25].u64;
+	// 82DB00A8: 93BF0004  stw r29, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[29].u32 ) };
+	// 82DB00AC: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DB00B0: 2F1C0004  cmpwi cr6, r28, 4
+	ctx.cr[6].compare_i32(ctx.r[28].s32, 4, &mut ctx.xer);
+	// 82DB00B4: 4198017C  blt cr6, 0x82db0230
+	if ctx.cr[6].lt {
+	pc = 0x82DB0230; continue 'dispatch;
+	}
+	// 82DB00B8: 387CFFFD  addi r3, r28, -3
+	ctx.r[3].s64 = ctx.r[28].s64 + -3;
+	// 82DB00BC: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	pc = 0x82DB00C0; continue 'dispatch;
+            }
+            0x82DB00C0 => {
+    //   block [0x82DB00C0..0x82DB0230)
+	// 82DB00C0: 5568F0BE  srwi r8, r11, 2
+	ctx.r[8].u32 = ctx.r[11].u32.wrapping_shr(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB00C4: 83BF0000  lwz r29, 0(r31)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB00C8: 388A0001  addi r4, r10, 1
+	ctx.r[4].s64 = ctx.r[10].s64 + 1;
+	// 82DB00CC: C0090000  lfs f0, 0(r9)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB00D0: 5506083C  slwi r6, r8, 1
+	ctx.r[6].u32 = ctx.r[8].u32.wrapping_shl(1);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB00D4: 5547F0BE  srwi r7, r10, 2
+	ctx.r[7].u32 = ctx.r[10].u32.wrapping_shr(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB00D8: 7D083214  add r8, r8, r6
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[6].u64;
+	// 82DB00DC: 5486F0BE  srwi r6, r4, 2
+	ctx.r[6].u32 = ctx.r[4].u32.wrapping_shr(2);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB00E0: 5508103A  slwi r8, r8, 2
+	ctx.r[8].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB00E4: 556507BE  clrlwi r5, r11, 0x1e
+	ctx.r[5].u64 = ctx.r[11].u32 as u64 & 0x00000003u64;
+	// 82DB00E8: 54E4083C  slwi r4, r7, 1
+	ctx.r[4].u32 = ctx.r[7].u32.wrapping_shl(1);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB00EC: 3AEA0002  addi r23, r10, 2
+	ctx.r[23].s64 = ctx.r[10].s64 + 2;
+	// 82DB00F0: 7D082A14  add r8, r8, r5
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[5].u64;
+	// 82DB00F4: 7C872214  add r4, r7, r4
+	ctx.r[4].u64 = ctx.r[7].u64 + ctx.r[4].u64;
+	// 82DB00F8: 56E7F0BE  srwi r7, r23, 2
+	ctx.r[7].u32 = ctx.r[23].u32.wrapping_shr(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB00FC: 5517103A  slwi r23, r8, 2
+	ctx.r[23].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[23].u64 = ctx.r[23].u32 as u64;
+	// 82DB0100: 3AA80004  addi r21, r8, 4
+	ctx.r[21].s64 = ctx.r[8].s64 + 4;
+	// 82DB0104: 5484103A  slwi r4, r4, 2
+	ctx.r[4].u32 = ctx.r[4].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0108: 56B5103A  slwi r21, r21, 2
+	ctx.r[21].u32 = ctx.r[21].u32.wrapping_shl(2);
+	ctx.r[21].u64 = ctx.r[21].u32 as u64;
+	// 82DB010C: 554507BE  clrlwi r5, r10, 0x1e
+	ctx.r[5].u64 = ctx.r[10].u32 as u64 & 0x00000003u64;
+	// 82DB0110: 7C17ED2E  stfsx f0, r23, r29
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[23].u32.wrapping_add(ctx.r[29].u32), tmp.u32) };
+	// 82DB0114: 83BF0000  lwz r29, 0(r31)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0118: 3A880008  addi r20, r8, 8
+	ctx.r[20].s64 = ctx.r[8].s64 + 8;
+	// 82DB011C: C0090004  lfs f0, 4(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0120: 7D042A14  add r8, r4, r5
+	ctx.r[8].u64 = ctx.r[4].u64 + ctx.r[5].u64;
+	// 82DB0124: 5684103A  slwi r4, r20, 2
+	ctx.r[4].u32 = ctx.r[20].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0128: 3B0A0001  addi r24, r10, 1
+	ctx.r[24].s64 = ctx.r[10].s64 + 1;
+	// 82DB012C: 7C15ED2E  stfsx f0, r21, r29
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[21].u32.wrapping_add(ctx.r[29].u32), tmp.u32) };
+	// 82DB0130: 83BF0000  lwz r29, 0(r31)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0134: C0090008  lfs f0, 8(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0138: 7D29F214  add r9, r9, r30
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[30].u64;
+	// 82DB013C: 570507BE  clrlwi r5, r24, 0x1e
+	ctx.r[5].u64 = ctx.r[24].u32 as u64 & 0x00000003u64;
+	// 82DB0140: 3B080004  addi r24, r8, 4
+	ctx.r[24].s64 = ctx.r[8].s64 + 4;
+	// 82DB0144: 3AE80008  addi r23, r8, 8
+	ctx.r[23].s64 = ctx.r[8].s64 + 8;
+	// 82DB0148: 7C04ED2E  stfsx f0, r4, r29
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[4].u32.wrapping_add(ctx.r[29].u32), tmp.u32) };
+	// 82DB014C: 54C4083C  slwi r4, r6, 1
+	ctx.r[4].u32 = ctx.r[6].u32.wrapping_shl(1);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0150: 83BF0000  lwz r29, 0(r31)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0154: C0090000  lfs f0, 0(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0158: 7CC62214  add r6, r6, r4
+	ctx.r[6].u64 = ctx.r[6].u64 + ctx.r[4].u64;
+	// 82DB015C: 5504103A  slwi r4, r8, 2
+	ctx.r[4].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0160: 54C6103A  slwi r6, r6, 2
+	ctx.r[6].u32 = ctx.r[6].u32.wrapping_shl(2);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB0164: 5718103A  slwi r24, r24, 2
+	ctx.r[24].u32 = ctx.r[24].u32.wrapping_shl(2);
+	ctx.r[24].u64 = ctx.r[24].u32 as u64;
+	// 82DB0168: 7D062A14  add r8, r6, r5
+	ctx.r[8].u64 = ctx.r[6].u64 + ctx.r[5].u64;
+	// 82DB016C: 3ACAFFFE  addi r22, r10, -2
+	ctx.r[22].s64 = ctx.r[10].s64 + -2;
+	// 82DB0170: 7C04ED2E  stfsx f0, r4, r29
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[4].u32.wrapping_add(ctx.r[29].u32), tmp.u32) };
+	// 82DB0174: 80BF0000  lwz r5, 0(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0178: C0090004  lfs f0, 4(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB017C: 56E4103A  slwi r4, r23, 2
+	ctx.r[4].u32 = ctx.r[23].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0180: 3BA80004  addi r29, r8, 4
+	ctx.r[29].s64 = ctx.r[8].s64 + 4;
+	// 82DB0184: 56C607BE  clrlwi r6, r22, 0x1e
+	ctx.r[6].u64 = ctx.r[22].u32 as u64 & 0x00000003u64;
+	// 82DB0188: 57BD103A  slwi r29, r29, 2
+	ctx.r[29].u32 = ctx.r[29].u32.wrapping_shl(2);
+	ctx.r[29].u64 = ctx.r[29].u32 as u64;
+	// 82DB018C: 7C182D2E  stfsx f0, r24, r5
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[24].u32.wrapping_add(ctx.r[5].u32), tmp.u32) };
+	// 82DB0190: 80BF0000  lwz r5, 0(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0194: C0090008  lfs f0, 8(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0198: 7D29F214  add r9, r9, r30
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[30].u64;
+	// 82DB019C: 396B0004  addi r11, r11, 4
+	ctx.r[11].s64 = ctx.r[11].s64 + 4;
+	// 82DB01A0: 7C042D2E  stfsx f0, r4, r5
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[4].u32.wrapping_add(ctx.r[5].u32), tmp.u32) };
+	// 82DB01A4: 54E5083C  slwi r5, r7, 1
+	ctx.r[5].u32 = ctx.r[7].u32.wrapping_shl(1);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB01A8: 809F0000  lwz r4, 0(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB01AC: C0090000  lfs f0, 0(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB01B0: 7CE72A14  add r7, r7, r5
+	ctx.r[7].u64 = ctx.r[7].u64 + ctx.r[5].u64;
+	// 82DB01B4: 5505103A  slwi r5, r8, 2
+	ctx.r[5].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB01B8: 39080008  addi r8, r8, 8
+	ctx.r[8].s64 = ctx.r[8].s64 + 8;
+	// 82DB01BC: 54E7103A  slwi r7, r7, 2
+	ctx.r[7].u32 = ctx.r[7].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB01C0: 5518103A  slwi r24, r8, 2
+	ctx.r[24].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[24].u64 = ctx.r[24].u32 as u64;
+	// 82DB01C4: 7D073214  add r8, r7, r6
+	ctx.r[8].u64 = ctx.r[7].u64 + ctx.r[6].u64;
+	// 82DB01C8: 7C05252E  stfsx f0, r5, r4
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[5].u32.wrapping_add(ctx.r[4].u32), tmp.u32) };
+	// 82DB01CC: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB01D0: C0090004  lfs f0, 4(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB01D4: 38A80004  addi r5, r8, 4
+	ctx.r[5].s64 = ctx.r[8].s64 + 4;
+	// 82DB01D8: 5506103A  slwi r6, r8, 2
+	ctx.r[6].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB01DC: 39080008  addi r8, r8, 8
+	ctx.r[8].s64 = ctx.r[8].s64 + 8;
+	// 82DB01E0: 54A5103A  slwi r5, r5, 2
+	ctx.r[5].u32 = ctx.r[5].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB01E4: 7C1D3D2E  stfsx f0, r29, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[29].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB01E8: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB01EC: C0090008  lfs f0, 8(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB01F0: 7D29F214  add r9, r9, r30
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[30].u64;
+	// 82DB01F4: 5508103A  slwi r8, r8, 2
+	ctx.r[8].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB01F8: 7C183D2E  stfsx f0, r24, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[24].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB01FC: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0200: C0090000  lfs f0, 0(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0204: 7C063D2E  stfsx f0, r6, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[6].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB0208: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB020C: C0090004  lfs f0, 4(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0210: 394A0004  addi r10, r10, 4
+	ctx.r[10].s64 = ctx.r[10].s64 + 4;
+	// 82DB0214: 7F0B1800  cmpw cr6, r11, r3
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[3].s32, &mut ctx.xer);
+	// 82DB0218: 7C053D2E  stfsx f0, r5, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[5].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB021C: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0220: C0090008  lfs f0, 8(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0224: 7D29F214  add r9, r9, r30
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[30].u64;
+	// 82DB0228: 7C083D2E  stfsx f0, r8, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[8].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB022C: 4198FE94  blt cr6, 0x82db00c0
+	if ctx.cr[6].lt {
+	pc = 0x82DB00C0; continue 'dispatch;
+	}
+	pc = 0x82DB0230; continue 'dispatch;
+            }
+            0x82DB0230 => {
+    //   block [0x82DB0230..0x82DB0238)
+	// 82DB0230: 7F0BE000  cmpw cr6, r11, r28
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[28].s32, &mut ctx.xer);
+	// 82DB0234: 40980064  bge cr6, 0x82db0298
+	if !ctx.cr[6].lt {
+	pc = 0x82DB0298; continue 'dispatch;
+	}
+	pc = 0x82DB0238; continue 'dispatch;
+            }
+            0x82DB0238 => {
+    //   block [0x82DB0238..0x82DB0298)
+	// 82DB0238: 556AF0BE  srwi r10, r11, 2
+	ctx.r[10].u32 = ctx.r[11].u32.wrapping_shr(2);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DB023C: 80DF0000  lwz r6, 0(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0240: 556807BE  clrlwi r8, r11, 0x1e
+	ctx.r[8].u64 = ctx.r[11].u32 as u64 & 0x00000003u64;
+	// 82DB0244: C0090000  lfs f0, 0(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0248: 5547083C  slwi r7, r10, 1
+	ctx.r[7].u32 = ctx.r[10].u32.wrapping_shl(1);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB024C: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DB0250: 7D4A3A14  add r10, r10, r7
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[7].u64;
+	// 82DB0254: 7F0BE000  cmpw cr6, r11, r28
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[28].s32, &mut ctx.xer);
+	// 82DB0258: 554A103A  slwi r10, r10, 2
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DB025C: 7D4A4214  add r10, r10, r8
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[8].u64;
+	// 82DB0260: 5548103A  slwi r8, r10, 2
+	ctx.r[8].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB0264: 38EA0004  addi r7, r10, 4
+	ctx.r[7].s64 = ctx.r[10].s64 + 4;
+	// 82DB0268: 394A0008  addi r10, r10, 8
+	ctx.r[10].s64 = ctx.r[10].s64 + 8;
+	// 82DB026C: 54E7103A  slwi r7, r7, 2
+	ctx.r[7].u32 = ctx.r[7].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB0270: 554A103A  slwi r10, r10, 2
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(2);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DB0274: 7C08352E  stfsx f0, r8, r6
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[8].u32.wrapping_add(ctx.r[6].u32), tmp.u32) };
+	// 82DB0278: 811F0000  lwz r8, 0(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB027C: C0090004  lfs f0, 4(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0280: 7C07452E  stfsx f0, r7, r8
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[7].u32.wrapping_add(ctx.r[8].u32), tmp.u32) };
+	// 82DB0284: 811F0000  lwz r8, 0(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0288: C0090008  lfs f0, 8(r9)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB028C: 7D29F214  add r9, r9, r30
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[30].u64;
+	// 82DB0290: 7C0A452E  stfsx f0, r10, r8
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[10].u32.wrapping_add(ctx.r[8].u32), tmp.u32) };
+	// 82DB0294: 4198FFA4  blt cr6, 0x82db0238
+	if ctx.cr[6].lt {
+	pc = 0x82DB0238; continue 'dispatch;
+	}
+	pc = 0x82DB0298; continue 'dispatch;
+            }
+            0x82DB0298 => {
+    //   block [0x82DB0298..0x82DB02B0)
+	// 82DB0298: 7D0BD850  subf r8, r11, r27
+	ctx.r[8].s64 = ctx.r[27].s64 - ctx.r[11].s64;
+	// 82DB029C: 7D5E4850  subf r10, r30, r9
+	ctx.r[10].s64 = ctx.r[9].s64 - ctx.r[30].s64;
+	// 82DB02A0: 2F080004  cmpwi cr6, r8, 4
+	ctx.cr[6].compare_i32(ctx.r[8].s32, 4, &mut ctx.xer);
+	// 82DB02A4: 4198016C  blt cr6, 0x82db0410
+	if ctx.cr[6].lt {
+	pc = 0x82DB0410; continue 'dispatch;
+	}
+	// 82DB02A8: 3BBBFFFD  addi r29, r27, -3
+	ctx.r[29].s64 = ctx.r[27].s64 + -3;
+	// 82DB02AC: 392B0001  addi r9, r11, 1
+	ctx.r[9].s64 = ctx.r[11].s64 + 1;
+	pc = 0x82DB02B0; continue 'dispatch;
+            }
+            0x82DB02B0 => {
+    //   block [0x82DB02B0..0x82DB0410)
+	// 82DB02B0: 7D681670  srawi r8, r11, 2
+	ctx.xer.ca = (ctx.r[11].s32 < 0) && ((ctx.r[11].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[8].s64 = (ctx.r[11].s32 >> 2) as i64;
+	// 82DB02B4: 831F0000  lwz r24, 0(r31)
+	ctx.r[24].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB02B8: 7D271670  srawi r7, r9, 2
+	ctx.xer.ca = (ctx.r[9].s32 < 0) && ((ctx.r[9].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[7].s64 = (ctx.r[9].s32 >> 2) as i64;
+	// 82DB02BC: C00A0000  lfs f0, 0(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB02C0: 5504083C  slwi r4, r8, 1
+	ctx.r[4].u32 = ctx.r[8].u32.wrapping_shl(1);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB02C4: 556507BE  clrlwi r5, r11, 0x1e
+	ctx.r[5].u64 = ctx.r[11].u32 as u64 & 0x00000003u64;
+	// 82DB02C8: 7D082214  add r8, r8, r4
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[4].u64;
+	// 82DB02CC: 54E3083C  slwi r3, r7, 1
+	ctx.r[3].u32 = ctx.r[7].u32.wrapping_shl(1);
+	ctx.r[3].u64 = ctx.r[3].u32 as u64;
+	// 82DB02D0: 5508103A  slwi r8, r8, 2
+	ctx.r[8].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB02D4: 7CE71A14  add r7, r7, r3
+	ctx.r[7].u64 = ctx.r[7].u64 + ctx.r[3].u64;
+	// 82DB02D8: 7D082A14  add r8, r8, r5
+	ctx.r[8].u64 = ctx.r[8].u64 + ctx.r[5].u64;
+	// 82DB02DC: 38C90001  addi r6, r9, 1
+	ctx.r[6].s64 = ctx.r[9].s64 + 1;
+	// 82DB02E0: 5503103A  slwi r3, r8, 2
+	ctx.r[3].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[3].u64 = ctx.r[3].u32 as u64;
+	// 82DB02E4: 3AE90002  addi r23, r9, 2
+	ctx.r[23].s64 = ctx.r[9].s64 + 2;
+	// 82DB02E8: 7CC61670  srawi r6, r6, 2
+	ctx.xer.ca = (ctx.r[6].s32 < 0) && ((ctx.r[6].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[6].s64 = (ctx.r[6].s32 >> 2) as i64;
+	// 82DB02EC: 54E7103A  slwi r7, r7, 2
+	ctx.r[7].u32 = ctx.r[7].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB02F0: 7EE51670  srawi r5, r23, 2
+	ctx.xer.ca = (ctx.r[23].s32 < 0) && ((ctx.r[23].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[5].s64 = (ctx.r[23].s32 >> 2) as i64;
+	// 82DB02F4: 552407BE  clrlwi r4, r9, 0x1e
+	ctx.r[4].u64 = ctx.r[9].u32 as u64 & 0x00000003u64;
+	// 82DB02F8: 7C03C52E  stfsx f0, r3, r24
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[3].u32.wrapping_add(ctx.r[24].u32), tmp.u32) };
+	// 82DB02FC: 3AE80004  addi r23, r8, 4
+	ctx.r[23].s64 = ctx.r[8].s64 + 4;
+	// 82DB0300: C00A0004  lfs f0, 4(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0304: 3A880008  addi r20, r8, 8
+	ctx.r[20].s64 = ctx.r[8].s64 + 8;
+	// 82DB0308: 7D072214  add r8, r7, r4
+	ctx.r[8].u64 = ctx.r[7].u64 + ctx.r[4].u64;
+	// 82DB030C: 809F0000  lwz r4, 0(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0310: 56E3103A  slwi r3, r23, 2
+	ctx.r[3].u32 = ctx.r[23].u32.wrapping_shl(2);
+	ctx.r[3].u64 = ctx.r[3].u32 as u64;
+	// 82DB0314: 5698103A  slwi r24, r20, 2
+	ctx.r[24].u32 = ctx.r[20].u32.wrapping_shl(2);
+	ctx.r[24].u64 = ctx.r[24].u32 as u64;
+	// 82DB0318: 3AC90001  addi r22, r9, 1
+	ctx.r[22].s64 = ctx.r[9].s64 + 1;
+	// 82DB031C: 3AE80008  addi r23, r8, 8
+	ctx.r[23].s64 = ctx.r[8].s64 + 8;
+	// 82DB0320: 56C707BE  clrlwi r7, r22, 0x1e
+	ctx.r[7].u64 = ctx.r[22].u32 as u64 & 0x00000003u64;
+	// 82DB0324: 7C03252E  stfsx f0, r3, r4
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[3].u32.wrapping_add(ctx.r[4].u32), tmp.u32) };
+	// 82DB0328: 809F0000  lwz r4, 0(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB032C: C00A0008  lfs f0, 8(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0330: 3AA9FFFE  addi r21, r9, -2
+	ctx.r[21].s64 = ctx.r[9].s64 + -2;
+	// 82DB0334: 396B0004  addi r11, r11, 4
+	ctx.r[11].s64 = ctx.r[11].s64 + 4;
+	// 82DB0338: 7C18252E  stfsx f0, r24, r4
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[24].u32.wrapping_add(ctx.r[4].u32), tmp.u32) };
+	// 82DB033C: 54C4083C  slwi r4, r6, 1
+	ctx.r[4].u32 = ctx.r[6].u32.wrapping_shl(1);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0340: 807F0000  lwz r3, 0(r31)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0344: 3B080004  addi r24, r8, 4
+	ctx.r[24].s64 = ctx.r[8].s64 + 4;
+	// 82DB0348: 7CC62214  add r6, r6, r4
+	ctx.r[6].u64 = ctx.r[6].u64 + ctx.r[4].u64;
+	// 82DB034C: C00A0000  lfs f0, 0(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0350: 5504103A  slwi r4, r8, 2
+	ctx.r[4].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0354: 54C6103A  slwi r6, r6, 2
+	ctx.r[6].u32 = ctx.r[6].u32.wrapping_shl(2);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB0358: 7D063A14  add r8, r6, r7
+	ctx.r[8].u64 = ctx.r[6].u64 + ctx.r[7].u64;
+	// 82DB035C: 56A707BE  clrlwi r7, r21, 0x1e
+	ctx.r[7].u64 = ctx.r[21].u32 as u64 & 0x00000003u64;
+	// 82DB0360: 7C041D2E  stfsx f0, r4, r3
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[4].u32.wrapping_add(ctx.r[3].u32), tmp.u32) };
+	// 82DB0364: 80DF0000  lwz r6, 0(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0368: 5704103A  slwi r4, r24, 2
+	ctx.r[4].u32 = ctx.r[24].u32.wrapping_shl(2);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB036C: C00A0004  lfs f0, 4(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0370: 56E3103A  slwi r3, r23, 2
+	ctx.r[3].u32 = ctx.r[23].u32.wrapping_shl(2);
+	ctx.r[3].u64 = ctx.r[3].u32 as u64;
+	// 82DB0374: 3B080008  addi r24, r8, 8
+	ctx.r[24].s64 = ctx.r[8].s64 + 8;
+	// 82DB0378: 7C04352E  stfsx f0, r4, r6
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[4].u32.wrapping_add(ctx.r[6].u32), tmp.u32) };
+	// 82DB037C: 80DF0000  lwz r6, 0(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0380: C00A0008  lfs f0, 8(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0384: 7C03352E  stfsx f0, r3, r6
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[3].u32.wrapping_add(ctx.r[6].u32), tmp.u32) };
+	// 82DB0388: 54A6083C  slwi r6, r5, 1
+	ctx.r[6].u32 = ctx.r[5].u32.wrapping_shl(1);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB038C: 809F0000  lwz r4, 0(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0390: 38680004  addi r3, r8, 4
+	ctx.r[3].s64 = ctx.r[8].s64 + 4;
+	// 82DB0394: 7CC53214  add r6, r5, r6
+	ctx.r[6].u64 = ctx.r[5].u64 + ctx.r[6].u64;
+	// 82DB0398: C00A0000  lfs f0, 0(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB039C: 5505103A  slwi r5, r8, 2
+	ctx.r[5].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB03A0: 54C6103A  slwi r6, r6, 2
+	ctx.r[6].u32 = ctx.r[6].u32.wrapping_shl(2);
+	ctx.r[6].u64 = ctx.r[6].u32 as u64;
+	// 82DB03A4: 7D063A14  add r8, r6, r7
+	ctx.r[8].u64 = ctx.r[6].u64 + ctx.r[7].u64;
+	// 82DB03A8: 5467103A  slwi r7, r3, 2
+	ctx.r[7].u32 = ctx.r[3].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB03AC: 7C05252E  stfsx f0, r5, r4
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[5].u32.wrapping_add(ctx.r[4].u32), tmp.u32) };
+	// 82DB03B0: 80DF0000  lwz r6, 0(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB03B4: C00A0004  lfs f0, 4(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB03B8: 5705103A  slwi r5, r24, 2
+	ctx.r[5].u32 = ctx.r[24].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB03BC: 7C07352E  stfsx f0, r7, r6
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[7].u32.wrapping_add(ctx.r[6].u32), tmp.u32) };
+	// 82DB03C0: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB03C4: C00A0008  lfs f0, 8(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB03C8: 7C053D2E  stfsx f0, r5, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[5].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB03CC: 80DF0000  lwz r6, 0(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB03D0: 5507103A  slwi r7, r8, 2
+	ctx.r[7].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB03D4: C00A0000  lfs f0, 0(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB03D8: 38A80004  addi r5, r8, 4
+	ctx.r[5].s64 = ctx.r[8].s64 + 4;
+	// 82DB03DC: 39080008  addi r8, r8, 8
+	ctx.r[8].s64 = ctx.r[8].s64 + 8;
+	// 82DB03E0: 54A5103A  slwi r5, r5, 2
+	ctx.r[5].u32 = ctx.r[5].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB03E4: 5508103A  slwi r8, r8, 2
+	ctx.r[8].u32 = ctx.r[8].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB03E8: 7C07352E  stfsx f0, r7, r6
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[7].u32.wrapping_add(ctx.r[6].u32), tmp.u32) };
+	// 82DB03EC: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB03F0: C00A0004  lfs f0, 4(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB03F4: 7C053D2E  stfsx f0, r5, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[5].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB03F8: 80FF0000  lwz r7, 0(r31)
+	ctx.r[7].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB03FC: C00A0008  lfs f0, 8(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0400: 39290004  addi r9, r9, 4
+	ctx.r[9].s64 = ctx.r[9].s64 + 4;
+	// 82DB0404: 7F0BE800  cmpw cr6, r11, r29
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[29].s32, &mut ctx.xer);
+	// 82DB0408: 7C083D2E  stfsx f0, r8, r7
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[8].u32.wrapping_add(ctx.r[7].u32), tmp.u32) };
+	// 82DB040C: 4198FEA4  blt cr6, 0x82db02b0
+	if ctx.cr[6].lt {
+	pc = 0x82DB02B0; continue 'dispatch;
+	}
+	pc = 0x82DB0410; continue 'dispatch;
+            }
+            0x82DB0410 => {
+    //   block [0x82DB0410..0x82DB0418)
+	// 82DB0410: 7F0BD800  cmpw cr6, r11, r27
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[27].s32, &mut ctx.xer);
+	// 82DB0414: 40980060  bge cr6, 0x82db0474
+	if !ctx.cr[6].lt {
+	pc = 0x82DB0474; continue 'dispatch;
+	}
+	pc = 0x82DB0418; continue 'dispatch;
+            }
+            0x82DB0418 => {
+    //   block [0x82DB0418..0x82DB0474)
+	// 82DB0418: 7D691670  srawi r9, r11, 2
+	ctx.xer.ca = (ctx.r[11].s32 < 0) && ((ctx.r[11].u32 & ((1u32 << 2) - 1)) != 0);
+	ctx.r[9].s64 = (ctx.r[11].s32 >> 2) as i64;
+	// 82DB041C: 80DF0000  lwz r6, 0(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0420: 556807BE  clrlwi r8, r11, 0x1e
+	ctx.r[8].u64 = ctx.r[11].u32 as u64 & 0x00000003u64;
+	// 82DB0424: C00A0000  lfs f0, 0(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0428: 5527083C  slwi r7, r9, 1
+	ctx.r[7].u32 = ctx.r[9].u32.wrapping_shl(1);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB042C: 396B0001  addi r11, r11, 1
+	ctx.r[11].s64 = ctx.r[11].s64 + 1;
+	// 82DB0430: 7D293A14  add r9, r9, r7
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[7].u64;
+	// 82DB0434: 7F0BD800  cmpw cr6, r11, r27
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[27].s32, &mut ctx.xer);
+	// 82DB0438: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DB043C: 7D294214  add r9, r9, r8
+	ctx.r[9].u64 = ctx.r[9].u64 + ctx.r[8].u64;
+	// 82DB0440: 5528103A  slwi r8, r9, 2
+	ctx.r[8].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB0444: 38E90004  addi r7, r9, 4
+	ctx.r[7].s64 = ctx.r[9].s64 + 4;
+	// 82DB0448: 39290008  addi r9, r9, 8
+	ctx.r[9].s64 = ctx.r[9].s64 + 8;
+	// 82DB044C: 54E7103A  slwi r7, r7, 2
+	ctx.r[7].u32 = ctx.r[7].u32.wrapping_shl(2);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB0450: 5529103A  slwi r9, r9, 2
+	ctx.r[9].u32 = ctx.r[9].u32.wrapping_shl(2);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DB0454: 7C08352E  stfsx f0, r8, r6
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[8].u32.wrapping_add(ctx.r[6].u32), tmp.u32) };
+	// 82DB0458: 811F0000  lwz r8, 0(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB045C: C00A0004  lfs f0, 4(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0460: 7C07452E  stfsx f0, r7, r8
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[7].u32.wrapping_add(ctx.r[8].u32), tmp.u32) };
+	// 82DB0464: 811F0000  lwz r8, 0(r31)
+	ctx.r[8].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0468: C00A0008  lfs f0, 8(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB046C: 7C09452E  stfsx f0, r9, r8
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ctx.r[9].u32.wrapping_add(ctx.r[8].u32), tmp.u32) };
+	// 82DB0470: 4198FFA8  blt cr6, 0x82db0418
+	if ctx.cr[6].lt {
+	pc = 0x82DB0418; continue 'dispatch;
+	}
+	pc = 0x82DB0474; continue 'dispatch;
+            }
+            0x82DB0474 => {
+    //   block [0x82DB0474..0x82DB04F0)
+	// 82DB0474: 38C10060  addi r6, r1, 0x60
+	ctx.r[6].s64 = ctx.r[1].s64 + 96;
+	// 82DB0478: 7FC5F378  mr r5, r30
+	ctx.r[5].u64 = ctx.r[30].u64;
+	// 82DB047C: 7F84E378  mr r4, r28
+	ctx.r[4].u64 = ctx.r[28].u64;
+	// 82DB0480: 7F23CB78  mr r3, r25
+	ctx.r[3].u64 = ctx.r[25].u64;
+	// 82DB0484: 48011C45  bl 0x82dc20c8
+	ctx.lr = 0x82DB0488;
+	sub_82DC20C8(ctx, base);
+	// 82DB0488: 39210070  addi r9, r1, 0x70
+	ctx.r[9].s64 = ctx.r[1].s64 + 112;
+	// 82DB048C: 39010050  addi r8, r1, 0x50
+	ctx.r[8].s64 = ctx.r[1].s64 + 80;
+	// 82DB0490: 397A0030  addi r11, r26, 0x30
+	ctx.r[11].s64 = ctx.r[26].s64 + 48;
+	// 82DB0494: 395A0020  addi r10, r26, 0x20
+	ctx.r[10].s64 = ctx.r[26].s64 + 32;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB04F0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB04F0 size=32
+    let mut pc: u32 = 0x82DB04F0;
+    'dispatch: loop {
+        match pc {
+            0x82DB04F0 => {
+    //   block [0x82DB04F0..0x82DB0510)
+	// 82DB04F0: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	// 82DB04F4: 7C832378  mr r3, r4
+	ctx.r[3].u64 = ctx.r[4].u64;
+	// 82DB04F8: 7CC73378  mr r7, r6
+	ctx.r[7].u64 = ctx.r[6].u64;
+	// 82DB04FC: 38AB0030  addi r5, r11, 0x30
+	ctx.r[5].s64 = ctx.r[11].s64 + 48;
+	// 82DB0500: 388B0020  addi r4, r11, 0x20
+	ctx.r[4].s64 = ctx.r[11].s64 + 32;
+	// 82DB0504: C00B0010  lfs f0, 0x10(r11)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0508: EC20082A  fadds f1, f0, f1
+	ctx.f[1].f64 = ((ctx.f[0].f64 + ctx.f[1].f64) as f32) as f64;
+	// 82DB050C: 4B4E98E4  b 0x82299df0
+	sub_82299DF0(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0510(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB0510 size=444
+    let mut pc: u32 = 0x82DB0510;
+    'dispatch: loop {
+        match pc {
+            0x82DB0510 => {
+    //   block [0x82DB0510..0x82DB0550)
+	// 82DB0510: FBE1FFF8  std r31, -8(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[31].u64 ) };
+	// 82DB0514: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0518: 39600008  li r11, 8
+	ctx.r[11].s64 = 8;
+	// 82DB051C: 7D0B5214  add r8, r11, r10
+	ctx.r[8].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DB0520: 81680000  lwz r11, 0(r8)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0524: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0528: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DB052C: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DB0530: 40980020  bge cr6, 0x82db0550
+	if !ctx.cr[6].lt {
+	pc = 0x82DB0550; continue 'dispatch;
+	}
+	// 82DB0534: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DB0538: 3929004C  addi r9, r9, 0x4c
+	ctx.r[9].s64 = ctx.r[9].s64 + 76;
+	// 82DB053C: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DB0540: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DB0544: 38EA000C  addi r7, r10, 0xc
+	ctx.r[7].s64 = ctx.r[10].s64 + 12;
+	// 82DB0548: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DB054C: 90EB0004  stw r7, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[7].u32 ) };
+	pc = 0x82DB0550; continue 'dispatch;
+            }
+            0x82DB0550 => {
+    //   block [0x82DB0550..0x82DB06CC)
+	// 82DB0550: 3941FFE0  addi r10, r1, -0x20
+	ctx.r[10].s64 = ctx.r[1].s64 + -32;
+	// 82DB0554: 81640054  lwz r11, 0x54(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DB0558: C1860010  lfs f12, 0x10(r6)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[6].u32.wrapping_add(16 as u32) ) };
+	ctx.f[12].f64 = (tmp.f32 as f64);
+	// 82DB055C: 38E60010  addi r7, r6, 0x10
+	ctx.r[7].s64 = ctx.r[6].s64 + 16;
+	// 82DB0560: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DB0564: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB06D0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB06D0 size=232
+    let mut pc: u32 = 0x82DB06D0;
+    'dispatch: loop {
+        match pc {
+            0x82DB06D0 => {
+    //   block [0x82DB06D0..0x82DB0760)
+	// 82DB06D0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB06D4: 4BEF8D35  bl 0x82ca9408
+	ctx.lr = 0x82DB06D8;
+	sub_82CA93D0(ctx, base);
+	// 82DB06D8: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB06DC: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB06E0: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB06E4: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB06E8: 388B0064  addi r4, r11, 0x64
+	ctx.r[4].s64 = ctx.r[11].s64 + 100;
+	// 82DB06EC: 7FE6FB78  mr r6, r31
+	ctx.r[6].u64 = ctx.r[31].u64;
+	// 82DB06F0: 815E0000  lwz r10, 0(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB06F4: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DB06F8: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DB06FC: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0700: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB0704: 4E800421  bctrl
+	ctx.lr = 0x82DB0708;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DB0708: 815F0048  lwz r10, 0x48(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(72 as u32) ) } as u64;
+	// 82DB070C: 554B0000  rlwinm r11, r10, 0, 0, 0
+	ctx.r[11].u64 = ctx.r[10].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB0710: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB0714: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB0718: 3BAB005C  addi r29, r11, 0x5c
+	ctx.r[29].s64 = ctx.r[11].s64 + 92;
+	// 82DB071C: 409A0044  bne cr6, 0x82db0760
+	if !ctx.cr[6].eq {
+	pc = 0x82DB0760; continue 'dispatch;
+	}
+	// 82DB0720: 813E0000  lwz r9, 0(r30)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0724: 554A00BE  clrlwi r10, r10, 2
+	ctx.r[10].u64 = ctx.r[10].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB0728: 817F0044  lwz r11, 0x44(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(68 as u32) ) } as u64;
+	// 82DB072C: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DB0730: 5548083C  slwi r8, r10, 1
+	ctx.r[8].u32 = ctx.r[10].u32.wrapping_shl(1);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB0734: 80DF0040  lwz r6, 0x40(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DB0738: 7FA4EB78  mr r4, r29
+	ctx.r[4].u64 = ctx.r[29].u64;
+	// 82DB073C: 7D4A4214  add r10, r10, r8
+	ctx.r[10].u64 = ctx.r[10].u64 + ctx.r[8].u64;
+	// 82DB0740: 83890008  lwz r28, 8(r9)
+	ctx.r[28].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DB0744: 5569083C  slwi r9, r11, 1
+	ctx.r[9].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DB0748: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DB074C: 7D6B4A14  add r11, r11, r9
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[9].u64;
+	// 82DB0750: 55482036  slwi r8, r10, 4
+	ctx.r[8].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB0754: 55672036  slwi r7, r11, 4
+	ctx.r[7].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB0758: 7F8903A6  mtctr r28
+	ctx.ctr.u64 = ctx.r[28].u64;
+	// 82DB075C: 4E800421  bctrl
+	ctx.lr = 0x82DB0760;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DB0760 => {
+    //   block [0x82DB0760..0x82DB079C)
+	// 82DB0760: 817F0058  lwz r11, 0x58(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DB0764: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB0768: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB076C: 409A0030  bne cr6, 0x82db079c
+	if !ctx.cr[6].eq {
+	pc = 0x82DB079C; continue 'dispatch;
+	}
+	// 82DB0770: 815E0000  lwz r10, 0(r30)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0774: 55682036  slwi r8, r11, 4
+	ctx.r[8].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB0778: 813F0054  lwz r9, 0x54(r31)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(84 as u32) ) } as u64;
+	// 82DB077C: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DB0780: 80DF0050  lwz r6, 0x50(r31)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB0784: 7FA4EB78  mr r4, r29
+	ctx.r[4].u64 = ctx.r[29].u64;
+	// 82DB0788: 55272036  slwi r7, r9, 4
+	ctx.r[7].u32 = ctx.r[9].u32.wrapping_shl(4);
+	ctx.r[7].u64 = ctx.r[7].u32 as u64;
+	// 82DB078C: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DB0790: 816A0008  lwz r11, 8(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DB0794: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB0798: 4E800421  bctrl
+	ctx.lr = 0x82DB079C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DB079C => {
+    //   block [0x82DB079C..0x82DB07B8)
+	// 82DB079C: 817E0000  lwz r11, 0(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB07A0: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DB07A4: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB07A8: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB07AC: 4E800421  bctrl
+	ctx.lr = 0x82DB07B0;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DB07B0: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DB07B4: 4BEF8CA4  b 0x82ca9458
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB07B8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB07B8 size=292
+    let mut pc: u32 = 0x82DB07B8;
+    'dispatch: loop {
+        match pc {
+            0x82DB07B8 => {
+    //   block [0x82DB07B8..0x82DB0854)
+	// 82DB07B8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB07BC: 4BEF8C4D  bl 0x82ca9408
+	ctx.lr = 0x82DB07C0;
+	sub_82CA93D0(ctx, base);
+	// 82DB07C0: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB07C4: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB07C8: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DB07CC: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB07D0: 39000008  li r8, 8
+	ctx.r[8].s64 = 8;
+	// 82DB07D4: 394B4DF4  addi r10, r11, 0x4df4
+	ctx.r[10].s64 = ctx.r[11].s64 + 19956;
+	// 82DB07D8: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DB07DC: D03F0010  stfs f1, 0x10(r31)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.f32 = (ctx.f[1].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(16 as u32), tmp.u32 ) };
+	// 82DB07E0: B13F0006  sth r9, 6(r31)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[31].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DB07E4: 3D208000  lis r9, -0x8000
+	ctx.r[9].s64 = -2147483648;
+	// 82DB07E8: 3BDF0050  addi r30, r31, 0x50
+	ctx.r[30].s64 = ctx.r[31].s64 + 80;
+	// 82DB07EC: 911F000C  stw r8, 0xc(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DB07F0: 7CBD2B78  mr r29, r5
+	ctx.r[29].u64 = ctx.r[5].u64;
+	// 82DB07F4: 915F0000  stw r10, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB07F8: 7C9C2378  mr r28, r4
+	ctx.r[28].u64 = ctx.r[4].u64;
+	// 82DB07FC: 917F0008  stw r11, 8(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DB0800: 917F0040  stw r11, 0x40(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(64 as u32), ctx.r[11].u32 ) };
+	// 82DB0804: 917F0044  stw r11, 0x44(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(68 as u32), ctx.r[11].u32 ) };
+	// 82DB0808: 913F0048  stw r9, 0x48(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(72 as u32), ctx.r[9].u32 ) };
+	// 82DB080C: 917E0000  stw r11, 0(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB0810: 917E0004  stw r11, 4(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DB0814: 552B003E  slwi r11, r9, 0
+	ctx.r[11].u32 = ctx.r[9].u32.wrapping_shl(0);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0818: 913E0008  stw r9, 8(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(8 as u32), ctx.r[9].u32 ) };
+	// 82DB081C: 813D0004  lwz r9, 4(r29)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0820: 556A00BE  clrlwi r10, r11, 2
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB0824: 7F0A4800  cmpw cr6, r10, r9
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[9].s32, &mut ctx.xer);
+	// 82DB0828: 40980060  bge cr6, 0x82db0888
+	if !ctx.cr[6].lt {
+	pc = 0x82DB0888; continue 'dispatch;
+	}
+	// 82DB082C: 556B0000  rlwinm r11, r11, 0, 0, 0
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB0830: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB0834: 409A0020  bne cr6, 0x82db0854
+	if !ctx.cr[6].eq {
+	pc = 0x82DB0854; continue 'dispatch;
+	}
+	// 82DB0838: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB083C: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB0840: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB0844: 809E0000  lwz r4, 0(r30)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0848: 55452036  slwi r5, r10, 4
+	ctx.r[5].u32 = ctx.r[10].u32.wrapping_shl(4);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB084C: 7C69582E  lwzx r3, r9, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB0850: 4BFA4A79  bl 0x82d552c8
+	ctx.lr = 0x82DB0854;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB0854; continue 'dispatch;
+            }
+            0x82DB0854 => {
+    //   block [0x82DB0854..0x82DB0888)
+	// 82DB0854: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0858: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB085C: 813D0004  lwz r9, 4(r29)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0860: 38A00016  li r5, 0x16
+	ctx.r[5].s64 = 22;
+	// 82DB0864: 55242036  slwi r4, r9, 4
+	ctx.r[4].u32 = ctx.r[9].u32.wrapping_shl(4);
+	ctx.r[4].u64 = ctx.r[4].u32 as u64;
+	// 82DB0868: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB086C: 4BFA49DD  bl 0x82d55248
+	ctx.lr = 0x82DB0870;
+	sub_82D55248(ctx, base);
+	// 82DB0870: 817E0008  lwz r11, 8(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DB0874: 907E0000  stw r3, 0(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(0 as u32), ctx.r[3].u32 ) };
+	// 82DB0878: 815D0004  lwz r10, 4(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB087C: 556B0042  rlwinm r11, r11, 0, 1, 1
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB0880: 7D6B5378  or r11, r11, r10
+	ctx.r[11].u64 = ctx.r[11].u64 | ctx.r[10].u64;
+	// 82DB0884: 917E0008  stw r11, 8(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	pc = 0x82DB0888; continue 'dispatch;
+            }
+            0x82DB0888 => {
+    //   block [0x82DB0888..0x82DB08BC)
+	// 82DB0888: 815D0004  lwz r10, 4(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB088C: 817E0000  lwz r11, 0(r30)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[30].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0890: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB0894: 915E0004  stw r10, 4(r30)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[30].u32.wrapping_add(4 as u32), ctx.r[10].u32 ) };
+	// 82DB0898: 813D0000  lwz r9, 0(r29)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB089C: 40990020  ble cr6, 0x82db08bc
+	if !ctx.cr[6].gt {
+	pc = 0x82DB08BC; continue 'dispatch;
+	}
+	// 82DB08A0: 7D2B4850  subf r9, r11, r9
+	ctx.r[9].s64 = ctx.r[9].s64 - ctx.r[11].s64;
+	// 82DB08A4: 394AFFFF  addi r10, r10, -1
+	ctx.r[10].s64 = ctx.r[10].s64 + -1;
+	pc = 0x82DB08BC; continue 'dispatch;
+            }
+            0x82DB08BC => {
+    //   block [0x82DB08BC..0x82DB08DC)
+	// 82DB08BC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB08C0: 80DC0004  lwz r6, 4(r28)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB08C4: 80BC0008  lwz r5, 8(r28)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DB08C8: 809C0000  lwz r4, 0(r28)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[28].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB08CC: 4BFFF775  bl 0x82db0040
+	ctx.lr = 0x82DB08D0;
+	sub_82DB0040(ctx, base);
+	// 82DB08D0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB08D4: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DB08D8: 4BEF8B80  b 0x82ca9458
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB08E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB08E0 size=152
+    let mut pc: u32 = 0x82DB08E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB08E0 => {
+    //   block [0x82DB08E0..0x82DB0920)
+	// 82DB08E0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB08E4: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB08E8: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB08EC: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB08F0: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB08F4: 817F0058  lwz r11, 0x58(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(88 as u32) ) } as u64;
+	// 82DB08F8: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB08FC: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB0900: 409A0020  bne cr6, 0x82db0920
+	if !ctx.cr[6].eq {
+	pc = 0x82DB0920; continue 'dispatch;
+	}
+	// 82DB0904: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0908: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB090C: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB0910: 809F0050  lwz r4, 0x50(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB0914: 55652036  slwi r5, r11, 4
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB0918: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB091C: 4BFA49AD  bl 0x82d552c8
+	ctx.lr = 0x82DB0920;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB0920; continue 'dispatch;
+            }
+            0x82DB0920 => {
+    //   block [0x82DB0920..0x82DB0958)
+	// 82DB0920: 817F0048  lwz r11, 0x48(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(72 as u32) ) } as u64;
+	// 82DB0924: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB0928: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB092C: 409A002C  bne cr6, 0x82db0958
+	if !ctx.cr[6].eq {
+	pc = 0x82DB0958; continue 'dispatch;
+	}
+	// 82DB0930: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0934: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB0938: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB093C: 809F0040  lwz r4, 0x40(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DB0940: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB0944: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB0948: 556A083C  slwi r10, r11, 1
+	ctx.r[10].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DB094C: 7D6B5214  add r11, r11, r10
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DB0950: 55652036  slwi r5, r11, 4
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB0954: 4BFA4975  bl 0x82d552c8
+	ctx.lr = 0x82DB0958;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB0958; continue 'dispatch;
+            }
+            0x82DB0958 => {
+    //   block [0x82DB0958..0x82DB0978)
+	// 82DB0958: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DB095C: 396B39E0  addi r11, r11, 0x39e0
+	ctx.r[11].s64 = ctx.r[11].s64 + 14816;
+	// 82DB0960: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB0964: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB0968: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB096C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB0970: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB0974: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0978(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB0978 size=100
+    let mut pc: u32 = 0x82DB0978;
+    'dispatch: loop {
+        match pc {
+            0x82DB0978 => {
+    //   block [0x82DB0978..0x82DB09C0)
+	// 82DB0978: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB097C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB0980: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB0984: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB0988: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB098C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB0990: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB0994: 4BFFFF4D  bl 0x82db08e0
+	ctx.lr = 0x82DB0998;
+	sub_82DB08E0(ctx, base);
+	// 82DB0998: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB099C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB09A0: 419A0020  beq cr6, 0x82db09c0
+	if ctx.cr[6].eq {
+	pc = 0x82DB09C0; continue 'dispatch;
+	}
+	// 82DB09A4: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB09A8: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB09AC: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB09B0: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB09B4: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB09B8: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB09BC: 4BFA490D  bl 0x82d552c8
+	ctx.lr = 0x82DB09C0;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB09C0; continue 'dispatch;
+            }
+            0x82DB09C0 => {
+    //   block [0x82DB09C0..0x82DB09DC)
+	// 82DB09C0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB09C4: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB09C8: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB09CC: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB09D0: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB09D4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB09D8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB09E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB09E0 size=148
+    let mut pc: u32 = 0x82DB09E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB09E0 => {
+    //   block [0x82DB09E0..0x82DB0A6C)
+	// 82DB09E0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB09E4: 4BEF8A29  bl 0x82ca940c
+	ctx.lr = 0x82DB09E8;
+	sub_82CA93D0(ctx, base);
+	// 82DB09E8: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB09EC: 7C7D1B78  mr r29, r3
+	ctx.r[29].u64 = ctx.r[3].u64;
+	// 82DB09F0: 7CBF2B78  mr r31, r5
+	ctx.r[31].u64 = ctx.r[5].u64;
+	// 82DB09F4: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB09F8: C1BD0020  lfs f13, 0x20(r29)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(32 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DB09FC: C01F0010  lfs f0, 0x10(r31)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0A00: FF006800  fcmpu cr6, f0, f13
+	ctx.cr[6].compare_f64(ctx.f[0].f64, ctx.f[13].f64);
+	// 82DB0A04: 40980068  bge cr6, 0x82db0a6c
+	if !ctx.cr[6].lt {
+	pc = 0x82DB0A6C; continue 'dispatch;
+	}
+	// 82DB0A08: 397D0010  addi r11, r29, 0x10
+	ctx.r[11].s64 = ctx.r[29].s64 + 16;
+	pc = 0x82DB0A6C; continue 'dispatch;
+            }
+            0x82DB0A6C => {
+    //   block [0x82DB0A6C..0x82DB0A74)
+	// 82DB0A6C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB0A70: 4BEF89EC  b 0x82ca945c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0A78(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB0A78 size=196
+    let mut pc: u32 = 0x82DB0A78;
+    'dispatch: loop {
+        match pc {
+            0x82DB0A78 => {
+    //   block [0x82DB0A78..0x82DB0AB0)
+	// 82DB0A78: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB0A7C: 4BEF898D  bl 0x82ca9408
+	ctx.lr = 0x82DB0A80;
+	sub_82CA93D0(ctx, base);
+	// 82DB0A80: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB0A84: 3BA30010  addi r29, r3, 0x10
+	ctx.r[29].s64 = ctx.r[3].s64 + 16;
+	// 82DB0A88: 7C9C2378  mr r28, r4
+	ctx.r[28].u64 = ctx.r[4].u64;
+	// 82DB0A8C: 7CBE2B78  mr r30, r5
+	ctx.r[30].u64 = ctx.r[5].u64;
+	// 82DB0A90: 817D0008  lwz r11, 8(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DB0A94: 815D0004  lwz r10, 4(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0A98: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB0A9C: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DB0AA0: 409A0010  bne cr6, 0x82db0ab0
+	if !ctx.cr[6].eq {
+	pc = 0x82DB0AB0; continue 'dispatch;
+	}
+	// 82DB0AA4: 38800060  li r4, 0x60
+	ctx.r[4].s64 = 96;
+	// 82DB0AA8: 7FA3EB78  mr r3, r29
+	ctx.r[3].u64 = ctx.r[29].u64;
+	// 82DB0AAC: 4BFA64ED  bl 0x82d56f98
+	ctx.lr = 0x82DB0AB0;
+	sub_82D56F98(ctx, base);
+	pc = 0x82DB0AB0; continue 'dispatch;
+            }
+            0x82DB0AB0 => {
+    //   block [0x82DB0AB0..0x82DB0B3C)
+	// 82DB0AB0: 817D0004  lwz r11, 4(r29)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0AB4: 7F85E378  mr r5, r28
+	ctx.r[5].u64 = ctx.r[28].u64;
+	// 82DB0AB8: 815D0000  lwz r10, 0(r29)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[29].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0ABC: 38800008  li r4, 8
+	ctx.r[4].s64 = 8;
+	// 82DB0AC0: 5569083C  slwi r9, r11, 1
+	ctx.r[9].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DB0AC4: 390B0001  addi r8, r11, 1
+	ctx.r[8].s64 = ctx.r[11].s64 + 1;
+	// 82DB0AC8: 7D6B4A14  add r11, r11, r9
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[9].u64;
+	// 82DB0ACC: 556B2834  slwi r11, r11, 5
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(5);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0AD0: 7FEB5214  add r31, r11, r10
+	ctx.r[31].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DB0AD4: 911D0004  stw r8, 4(r29)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[29].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0B40(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB0B40 size=72
+    let mut pc: u32 = 0x82DB0B40;
+    'dispatch: loop {
+        match pc {
+            0x82DB0B40 => {
+    //   block [0x82DB0B40..0x82DB0B78)
+	// 82DB0B40: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB0B44: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB0B48: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB0B4C: 39410050  addi r10, r1, 0x50
+	ctx.r[10].s64 = ctx.r[1].s64 + 80;
+	// 82DB0B50: 81630014  lwz r11, 0x14(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DB0B54: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DB0B58: 2F0B0001  cmpwi cr6, r11, 1
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 1, &mut ctx.xer);
+	// 82DB0B5C: 992A0000  stb r9, 0(r10)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u8 ) };
+	// 82DB0B60: 88C10050  lbz r6, 0x50(r1)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB0B64: 40990014  ble cr6, 0x82db0b78
+	if !ctx.cr[6].gt {
+	pc = 0x82DB0B78; continue 'dispatch;
+	}
+	// 82DB0B68: 38ABFFFF  addi r5, r11, -1
+	ctx.r[5].s64 = ctx.r[11].s64 + -1;
+	// 82DB0B6C: 80630010  lwz r3, 0x10(r3)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB0B70: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB0B74: 48000015  bl 0x82db0b88
+	ctx.lr = 0x82DB0B78;
+	sub_82DB0B88(ctx, base);
+	pc = 0x82DB0B78; continue 'dispatch;
+            }
+            0x82DB0B78 => {
+    //   block [0x82DB0B78..0x82DB0B88)
+	// 82DB0B78: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB0B7C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB0B80: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB0B84: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0B88(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB0B88 size=704
+    let mut pc: u32 = 0x82DB0B88;
+    'dispatch: loop {
+        match pc {
+            0x82DB0B88 => {
+    //   block [0x82DB0B88..0x82DB0BF0)
+	// 82DB0B88: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB0B8C: 4BEF8851  bl 0x82ca93dc
+	ctx.lr = 0x82DB0B90;
+	sub_82CA93D0(ctx, base);
+	// 82DB0B90: 9421FE70  stwu r1, -0x190(r1)
+	ea = ctx.r[1].u32.wrapping_add(-400 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB0B94: 7C7E1B78  mr r30, r3
+	ctx.r[30].u64 = ctx.r[3].u64;
+	// 82DB0B98: 7CBC2B78  mr r28, r5
+	ctx.r[28].u64 = ctx.r[5].u64;
+	// 82DB0B9C: 7CDB3378  mr r27, r6
+	ctx.r[27].u64 = ctx.r[6].u64;
+	// 82DB0BA0: 3BA0FFFF  li r29, -1
+	ctx.r[29].s64 = -1;
+	// 82DB0BA4: 7D64E214  add r11, r4, r28
+	ctx.r[11].u64 = ctx.r[4].u64 + ctx.r[28].u64;
+	// 82DB0BA8: 394100C8  addi r10, r1, 0xc8
+	ctx.r[10].s64 = ctx.r[1].s64 + 200;
+	// 82DB0BAC: 7D6B0E70  srawi r11, r11, 1
+	ctx.xer.ca = (ctx.r[11].s32 < 0) && ((ctx.r[11].u32 & ((1u32 << 1) - 1)) != 0);
+	ctx.r[11].s64 = (ctx.r[11].s32 >> 1) as i64;
+	// 82DB0BB0: 7F85E378  mr r5, r28
+	ctx.r[5].u64 = ctx.r[28].u64;
+	// 82DB0BB4: 5568083C  slwi r8, r11, 1
+	ctx.r[8].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[8].u64 = ctx.r[8].u32 as u64;
+	// 82DB0BB8: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	// 82DB0BBC: 7D6B4214  add r11, r11, r8
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[8].u64;
+	// 82DB0BC0: 38E100D0  addi r7, r1, 0xd0
+	ctx.r[7].s64 = ctx.r[1].s64 + 208;
+	// 82DB0BC4: 556B2834  slwi r11, r11, 5
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(5);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0BC8: 39200008  li r9, 8
+	ctx.r[9].s64 = 8;
+	// 82DB0BCC: 7D6BF214  add r11, r11, r30
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[30].u64;
+	// 82DB0BD0: 390B0020  addi r8, r11, 0x20
+	ctx.r[8].s64 = ctx.r[11].s64 + 32;
+	// 82DB0BD4: C00B0010  lfs f0, 0x10(r11)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0BD8: 80CB0018  lwz r6, 0x18(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB0BDC: 816B001C  lwz r11, 0x1c(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DB0BE0: D00100C0  stfs f0, 0xc0(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(192 as u32), tmp.u32 ) };
+	// 82DB0BE4: 90CA0000  stw r6, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[6].u32 ) };
+	// 82DB0BE8: 916A0004  stw r11, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[11].u32 ) };
+	// 82DB0BEC: 7D2903A6  mtctr r9
+	ctx.ctr.u64 = ctx.r[9].u64;
+	pc = 0x82DB0BF0; continue 'dispatch;
+            }
+            0x82DB0BF0 => {
+    //   block [0x82DB0BF0..0x82DB0C1C)
+	// 82DB0BF0: 81680000  lwz r11, 0(r8)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[8].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0BF4: 39080004  addi r8, r8, 4
+	ctx.r[8].s64 = ctx.r[8].s64 + 4;
+	// 82DB0BF8: 91670000  stw r11, 0(r7)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[7].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB0BFC: 38E70004  addi r7, r7, 4
+	ctx.r[7].s64 = ctx.r[7].s64 + 4;
+	// 82DB0C00: 4200FFF0  bdnz 0x82db0bf0
+	ctx.ctr.u64 = ctx.ctr.u64.wrapping_sub(1);
+	if ctx.ctr.u32 != 0 {
+			pc = 0x82DB0BF0; continue 'dispatch;
+	}
+	// 82DB0C04: C00100C0  lfs f0, 0xc0(r1)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(192 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0C08: 57EB083C  slwi r11, r31, 1
+	ctx.r[11].u32 = ctx.r[31].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0C0C: 7D7F5A14  add r11, r31, r11
+	ctx.r[11].u64 = ctx.r[31].u64 + ctx.r[11].u64;
+	// 82DB0C10: 556B2834  slwi r11, r11, 5
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(5);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0C14: 7D6BF214  add r11, r11, r30
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[30].u64;
+	// 82DB0C18: 394B0010  addi r10, r11, 0x10
+	ctx.r[10].s64 = ctx.r[11].s64 + 16;
+	pc = 0x82DB0C1C; continue 'dispatch;
+            }
+            0x82DB0C1C => {
+    //   block [0x82DB0C1C..0x82DB0C30)
+	// 82DB0C1C: C1AA0000  lfs f13, 0(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DB0C20: 39600001  li r11, 1
+	ctx.r[11].s64 = 1;
+	// 82DB0C24: FF0D0000  fcmpu cr6, f13, f0
+	ctx.cr[6].compare_f64(ctx.f[13].f64, ctx.f[0].f64);
+	// 82DB0C28: 41980008  blt cr6, 0x82db0c30
+	if ctx.cr[6].lt {
+	pc = 0x82DB0C30; continue 'dispatch;
+	}
+	// 82DB0C2C: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	pc = 0x82DB0C30; continue 'dispatch;
+            }
+            0x82DB0C30 => {
+    //   block [0x82DB0C30..0x82DB0C48)
+	// 82DB0C30: 7D6B0774  extsb r11, r11
+	ctx.r[11].s64 = ctx.r[11].s8 as i64;
+	// 82DB0C34: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB0C38: 419A0010  beq cr6, 0x82db0c48
+	if ctx.cr[6].eq {
+	pc = 0x82DB0C48; continue 'dispatch;
+	}
+	// 82DB0C3C: 3BFF0001  addi r31, r31, 1
+	ctx.r[31].s64 = ctx.r[31].s64 + 1;
+	// 82DB0C40: 394A0060  addi r10, r10, 0x60
+	ctx.r[10].s64 = ctx.r[10].s64 + 96;
+	// 82DB0C44: 4BFFFFD8  b 0x82db0c1c
+	pc = 0x82DB0C1C; continue 'dispatch;
+            }
+            0x82DB0C48 => {
+    //   block [0x82DB0C48..0x82DB0C5C)
+	// 82DB0C48: 54AB083C  slwi r11, r5, 1
+	ctx.r[11].u32 = ctx.r[5].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0C4C: 7D655A14  add r11, r5, r11
+	ctx.r[11].u64 = ctx.r[5].u64 + ctx.r[11].u64;
+	// 82DB0C50: 556B2834  slwi r11, r11, 5
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(5);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0C54: 7D6BF214  add r11, r11, r30
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[30].u64;
+	// 82DB0C58: 394B0010  addi r10, r11, 0x10
+	ctx.r[10].s64 = ctx.r[11].s64 + 16;
+	pc = 0x82DB0C5C; continue 'dispatch;
+            }
+            0x82DB0C5C => {
+    //   block [0x82DB0C5C..0x82DB0C70)
+	// 82DB0C5C: C1AA0000  lfs f13, 0(r10)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(0 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DB0C60: 39600001  li r11, 1
+	ctx.r[11].s64 = 1;
+	// 82DB0C64: FF006800  fcmpu cr6, f0, f13
+	ctx.cr[6].compare_f64(ctx.f[0].f64, ctx.f[13].f64);
+	// 82DB0C68: 41980008  blt cr6, 0x82db0c70
+	if ctx.cr[6].lt {
+	pc = 0x82DB0C70; continue 'dispatch;
+	}
+	// 82DB0C6C: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	pc = 0x82DB0C70; continue 'dispatch;
+            }
+            0x82DB0C70 => {
+    //   block [0x82DB0C70..0x82DB0C88)
+	// 82DB0C70: 7D6B0774  extsb r11, r11
+	ctx.r[11].s64 = ctx.r[11].s8 as i64;
+	// 82DB0C74: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB0C78: 419A0010  beq cr6, 0x82db0c88
+	if ctx.cr[6].eq {
+	pc = 0x82DB0C88; continue 'dispatch;
+	}
+	// 82DB0C7C: 38A5FFFF  addi r5, r5, -1
+	ctx.r[5].s64 = ctx.r[5].s64 + -1;
+	// 82DB0C80: 394AFFA0  addi r10, r10, -0x60
+	ctx.r[10].s64 = ctx.r[10].s64 + -96;
+	// 82DB0C84: 4BFFFFD8  b 0x82db0c5c
+	pc = 0x82DB0C5C; continue 'dispatch;
+            }
+            0x82DB0C88 => {
+    //   block [0x82DB0C88..0x82DB0E0C)
+	// 82DB0C88: 7F05F800  cmpw cr6, r5, r31
+	ctx.cr[6].compare_i32(ctx.r[5].s32, ctx.r[31].s32, &mut ctx.xer);
+	// 82DB0C8C: 41980190  blt cr6, 0x82db0e1c
+	if ctx.cr[6].lt {
+	pc = 0x82DB0E1C; continue 'dispatch;
+	}
+	// 82DB0C90: 419A017C  beq cr6, 0x82db0e0c
+	if ctx.cr[6].eq {
+	pc = 0x82DB0E0C; continue 'dispatch;
+	}
+	// 82DB0C94: 54AB083C  slwi r11, r5, 1
+	ctx.r[11].u32 = ctx.r[5].u32.wrapping_shl(1);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0C98: 93A10070  stw r29, 0x70(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(112 as u32), ctx.r[29].u32 ) };
+	// 82DB0C9C: 57EA083C  slwi r10, r31, 1
+	ctx.r[10].u32 = ctx.r[31].u32.wrapping_shl(1);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DB0CA0: 7D655A14  add r11, r5, r11
+	ctx.r[11].u64 = ctx.r[5].u64 + ctx.r[11].u64;
+	// 82DB0CA4: 39210068  addi r9, r1, 0x68
+	ctx.r[9].s64 = ctx.r[1].s64 + 104;
+	// 82DB0CA8: 556B2834  slwi r11, r11, 5
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(5);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0CAC: 7D5F5214  add r10, r31, r10
+	ctx.r[10].u64 = ctx.r[31].u64 + ctx.r[10].u64;
+	// 82DB0CB0: 7D6BF214  add r11, r11, r30
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[30].u64;
+	// 82DB0CB4: 554A2834  slwi r10, r10, 5
+	ctx.r[10].u32 = ctx.r[10].u32.wrapping_shl(5);
+	ctx.r[10].u64 = ctx.r[10].u32 as u64;
+	// 82DB0CB8: 390B0020  addi r8, r11, 0x20
+	ctx.r[8].s64 = ctx.r[11].s64 + 32;
+	// 82DB0CBC: 38610070  addi r3, r1, 0x70
+	ctx.r[3].s64 = ctx.r[1].s64 + 112;
+	// 82DB0CC0: 38E00008  li r7, 8
+	ctx.r[7].s64 = 8;
+	// 82DB0CC4: 80CB0014  lwz r6, 0x14(r11)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DB0CC8: C1AB0010  lfs f13, 0x10(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DB0CCC: 834B0018  lwz r26, 0x18(r11)
+	ctx.r[26].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	pc = 0x82DB0E0C; continue 'dispatch;
+            }
+            0x82DB0E0C => {
+    //   block [0x82DB0E0C..0x82DB0E1C)
+	// 82DB0E0C: 38A5FFFF  addi r5, r5, -1
+	ctx.r[5].s64 = ctx.r[5].s64 + -1;
+	// 82DB0E10: 3BFF0001  addi r31, r31, 1
+	ctx.r[31].s64 = ctx.r[31].s64 + 1;
+	// 82DB0E14: 7F1F2800  cmpw cr6, r31, r5
+	ctx.cr[6].compare_i32(ctx.r[31].s32, ctx.r[5].s32, &mut ctx.xer);
+	// 82DB0E18: 4099FDF0  ble cr6, 0x82db0c08
+	if !ctx.cr[6].gt {
+	pc = 0x82DB0C08; continue 'dispatch;
+	}
+	pc = 0x82DB0E1C; continue 'dispatch;
+            }
+            0x82DB0E1C => {
+    //   block [0x82DB0E1C..0x82DB0E48)
+	// 82DB0E1C: 7F042800  cmpw cr6, r4, r5
+	ctx.cr[6].compare_i32(ctx.r[4].s32, ctx.r[5].s32, &mut ctx.xer);
+	// 82DB0E20: 40980010  bge cr6, 0x82db0e30
+	if !ctx.cr[6].lt {
+	pc = 0x82DB0E30; continue 'dispatch;
+	}
+	// 82DB0E24: 7F66DB78  mr r6, r27
+	ctx.r[6].u64 = ctx.r[27].u64;
+	// 82DB0E28: 7FC3F378  mr r3, r30
+	ctx.r[3].u64 = ctx.r[30].u64;
+	// 82DB0E2C: 4BFFFD5D  bl 0x82db0b88
+	ctx.lr = 0x82DB0E30;
+	sub_82DB0B88(ctx, base);
+	// 82DB0E30: 7F1FE000  cmpw cr6, r31, r28
+	ctx.cr[6].compare_i32(ctx.r[31].s32, ctx.r[28].s32, &mut ctx.xer);
+	// 82DB0E34: 4098000C  bge cr6, 0x82db0e40
+	if !ctx.cr[6].lt {
+	pc = 0x82DB0E40; continue 'dispatch;
+	}
+	// 82DB0E38: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB0E3C: 4BFFFD68  b 0x82db0ba4
+	pc = 0x82DB0BA4; continue 'dispatch;
+	// 82DB0E40: 38210190  addi r1, r1, 0x190
+	ctx.r[1].s64 = ctx.r[1].s64 + 400;
+	// 82DB0E44: 4BEF85E8  b 0x82ca942c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0E48(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB0E48 size=232
+    let mut pc: u32 = 0x82DB0E48;
+    'dispatch: loop {
+        match pc {
+            0x82DB0E48 => {
+    //   block [0x82DB0E48..0x82DB0E84)
+	// 82DB0E48: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB0E4C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB0E50: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB0E54: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB0E58: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB0E5C: 3BE30010  addi r31, r3, 0x10
+	ctx.r[31].s64 = ctx.r[3].s64 + 16;
+	// 82DB0E60: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB0E64: 817F0008  lwz r11, 8(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(8 as u32) ) } as u64;
+	// 82DB0E68: 815F0004  lwz r10, 4(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0E6C: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB0E70: 7F0A5800  cmpw cr6, r10, r11
+	ctx.cr[6].compare_i32(ctx.r[10].s32, ctx.r[11].s32, &mut ctx.xer);
+	// 82DB0E74: 409A0010  bne cr6, 0x82db0e84
+	if !ctx.cr[6].eq {
+	pc = 0x82DB0E84; continue 'dispatch;
+	}
+	// 82DB0E78: 38800030  li r4, 0x30
+	ctx.r[4].s64 = 48;
+	// 82DB0E7C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB0E80: 4BFA6119  bl 0x82d56f98
+	ctx.lr = 0x82DB0E84;
+	sub_82D56F98(ctx, base);
+	pc = 0x82DB0E84; continue 'dispatch;
+            }
+            0x82DB0E84 => {
+    //   block [0x82DB0E84..0x82DB0F30)
+	// 82DB0E84: 817F0004  lwz r11, 4(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB0E88: 39000010  li r8, 0x10
+	ctx.r[8].s64 = 16;
+	// 82DB0E8C: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB0E90: 5569083C  slwi r9, r11, 1
+	ctx.r[9].u32 = ctx.r[11].u32.wrapping_shl(1);
+	ctx.r[9].u64 = ctx.r[9].u32 as u64;
+	// 82DB0E94: 38EB0001  addi r7, r11, 1
+	ctx.r[7].s64 = ctx.r[11].s64 + 1;
+	// 82DB0E98: 7D6B4A14  add r11, r11, r9
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[9].u64;
+	// 82DB0E9C: 556B2036  slwi r11, r11, 4
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB0EA0: 7D6B5214  add r11, r11, r10
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DB0EA4: 90FF0004  stw r7, 4(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(4 as u32), ctx.r[7].u32 ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0F30(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB0F30 size=72
+    let mut pc: u32 = 0x82DB0F30;
+    'dispatch: loop {
+        match pc {
+            0x82DB0F30 => {
+    //   block [0x82DB0F30..0x82DB0F68)
+	// 82DB0F30: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB0F34: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB0F38: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB0F3C: 39410050  addi r10, r1, 0x50
+	ctx.r[10].s64 = ctx.r[1].s64 + 80;
+	// 82DB0F40: 81630014  lwz r11, 0x14(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DB0F44: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DB0F48: 2F0B0001  cmpwi cr6, r11, 1
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 1, &mut ctx.xer);
+	// 82DB0F4C: 992A0000  stb r9, 0(r10)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u8 ) };
+	// 82DB0F50: 88C10050  lbz r6, 0x50(r1)
+	ctx.r[6].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB0F54: 40990014  ble cr6, 0x82db0f68
+	if !ctx.cr[6].gt {
+	pc = 0x82DB0F68; continue 'dispatch;
+	}
+	// 82DB0F58: 38ABFFFF  addi r5, r11, -1
+	ctx.r[5].s64 = ctx.r[11].s64 + -1;
+	// 82DB0F5C: 80630010  lwz r3, 0x10(r3)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB0F60: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB0F64: 4B51B52D  bl 0x822cc490
+	ctx.lr = 0x82DB0F68;
+	sub_822CC490(ctx, base);
+	pc = 0x82DB0F68; continue 'dispatch;
+            }
+            0x82DB0F68 => {
+    //   block [0x82DB0F68..0x82DB0F78)
+	// 82DB0F68: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB0F6C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB0F70: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB0F74: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB0F78(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB0F78 size=160
+    let mut pc: u32 = 0x82DB0F78;
+    'dispatch: loop {
+        match pc {
+            0x82DB0F78 => {
+    //   block [0x82DB0F78..0x82DB0F94)
+	// 82DB0F78: 81630030  lwz r11, 0x30(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DB0F7C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB0F80: 419A0014  beq cr6, 0x82db0f94
+	if ctx.cr[6].eq {
+	pc = 0x82DB0F94; continue 'dispatch;
+	}
+	// 82DB0F84: C004001C  lfs f0, 0x1c(r4)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(28 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB0F88: C1A3002C  lfs f13, 0x2c(r3)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(44 as u32) ) };
+	ctx.f[13].f64 = (tmp.f32 as f64);
+	// 82DB0F8C: FF006800  fcmpu cr6, f0, f13
+	ctx.cr[6].compare_f64(ctx.f[0].f64, ctx.f[13].f64);
+	// 82DB0F90: 4C980020  bgelr cr6
+	if !ctx.cr[6].lt { return; }
+	pc = 0x82DB0F94; continue 'dispatch;
+            }
+            0x82DB0F94 => {
+    //   block [0x82DB0F94..0x82DB1018)
+	// 82DB0F94: 39630010  addi r11, r3, 0x10
+	ctx.r[11].s64 = ctx.r[3].s64 + 16;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1018(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1018 size=8
+    let mut pc: u32 = 0x82DB1018;
+    'dispatch: loop {
+        match pc {
+            0x82DB1018 => {
+    //   block [0x82DB1018..0x82DB1020)
+	// 82DB1018: 38600002  li r3, 2
+	ctx.r[3].s64 = 2;
+	// 82DB101C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1020(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1020 size=96
+    let mut pc: u32 = 0x82DB1020;
+    'dispatch: loop {
+        match pc {
+            0x82DB1020 => {
+    //   block [0x82DB1020..0x82DB1080)
+	// 82DB1020: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1024: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1028: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB102C: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1030: 7C9F2378  mr r31, r4
+	ctx.r[31].u64 = ctx.r[4].u64;
+	// 82DB1034: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1038: 7C661B78  mr r6, r3
+	ctx.r[6].u64 = ctx.r[3].u64;
+	// 82DB103C: 388B0080  addi r4, r11, 0x80
+	ctx.r[4].s64 = ctx.r[11].s64 + 128;
+	// 82DB1040: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DB1044: 815F0000  lwz r10, 0(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1048: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB104C: 816A0004  lwz r11, 4(r10)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[10].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB1050: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB1054: 4E800421  bctrl
+	ctx.lr = 0x82DB1058;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DB1058: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB105C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB1060: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB1064: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB1068: 4E800421  bctrl
+	ctx.lr = 0x82DB106C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DB106C: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB1070: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1074: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1078: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB107C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1080(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1080 size=76
+    let mut pc: u32 = 0x82DB1080;
+    'dispatch: loop {
+        match pc {
+            0x82DB1080 => {
+    //   block [0x82DB1080..0x82DB10CC)
+	// 82DB1080: 39600020  li r11, 0x20
+	ctx.r[11].s64 = 32;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB10CC(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB10CC size=20
+    let mut pc: u32 = 0x82DB10CC;
+    'dispatch: loop {
+        match pc {
+            0x82DB10CC => {
+    //   block [0x82DB10CC..0x82DB10E0)
+	// 82DB10CC: 39600010  li r11, 0x10
+	ctx.r[11].s64 = 16;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB10E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB10E0 size=60
+    let mut pc: u32 = 0x82DB10E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB10E0 => {
+    //   block [0x82DB10E0..0x82DB111C)
+	// 82DB10E0: 3965FFFF  addi r11, r5, -1
+	ctx.r[11].s64 = ctx.r[5].s64 + -1;
+	// 82DB10E4: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB10E8: 4D980020  bltlr cr6
+	if ctx.cr[6].lt { return; }
+	// 82DB10EC: 39230020  addi r9, r3, 0x20
+	ctx.r[9].s64 = ctx.r[3].s64 + 32;
+	// 82DB10F0: A1440000  lhz r10, 0(r4)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB10F4: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DB10F8: 38840002  addi r4, r4, 2
+	ctx.r[4].s64 = ctx.r[4].s64 + 2;
+	// 82DB10FC: 65483F00  oris r8, r10, 0x3f00
+	ctx.r[8].u64 = ctx.r[10].u64 | 1056964608;
+	// 82DB1100: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1120(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB1120 size=56
+    let mut pc: u32 = 0x82DB1120;
+    'dispatch: loop {
+        match pc {
+            0x82DB1120 => {
+    //   block [0x82DB1120..0x82DB1158)
+	// 82DB1120: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB1124: 39400030  li r10, 0x30
+	ctx.r[10].s64 = 48;
+	// 82DB1128: 3921FFF0  addi r9, r1, -0x10
+	ctx.r[9].s64 = ctx.r[1].s64 + -16;
+	// 82DB112C: C00B0BFC  lfs f0, 0xbfc(r11)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(3068 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB1130: 39600020  li r11, 0x20
+	ctx.r[11].s64 = 32;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1158(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1158 size=16
+    let mut pc: u32 = 0x82DB1158;
+    'dispatch: loop {
+        match pc {
+            0x82DB1158 => {
+    //   block [0x82DB1158..0x82DB1168)
+	// 82DB1158: 39600030  li r11, 0x30
+	ctx.r[11].s64 = 48;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1168(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1168 size=40
+    let mut pc: u32 = 0x82DB1168;
+    'dispatch: loop {
+        match pc {
+            0x82DB1168 => {
+    //   block [0x82DB1168..0x82DB1190)
+	// 82DB1168: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	// 82DB116C: 39400020  li r10, 0x20
+	ctx.r[10].s64 = 32;
+	// 82DB1170: 39200030  li r9, 0x30
+	ctx.r[9].s64 = 48;
+	// 82DB1174: 39000010  li r8, 0x10
+	ctx.r[8].s64 = 16;
+	// 82DB1178: 7C832378  mr r3, r4
+	ctx.r[3].u64 = ctx.r[4].u64;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1190(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1190 size=272
+    let mut pc: u32 = 0x82DB1190;
+    'dispatch: loop {
+        match pc {
+            0x82DB1190 => {
+    //   block [0x82DB1190..0x82DB12A0)
+	// 82DB1190: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1194: 4BEF8275  bl 0x82ca9408
+	ctx.lr = 0x82DB1198;
+	sub_82CA93D0(ctx, base);
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB12A0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB12A0 size=76
+    let mut pc: u32 = 0x82DB12A0;
+    'dispatch: loop {
+        match pc {
+            0x82DB12A0 => {
+    //   block [0x82DB12A0..0x82DB12EC)
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1320(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB1320 size=76
+    let mut pc: u32 = 0x82DB1320;
+    'dispatch: loop {
+        match pc {
+            0x82DB1320 => {
+    //   block [0x82DB1320..0x82DB136C)
+	// 82DB1320: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB1324: D0230010  stfs f1, 0x10(r3)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.f32 = (ctx.f[1].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), tmp.u32 ) };
+	// 82DB1328: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB132C: 396B4AC4  addi r11, r11, 0x4ac4
+	ctx.r[11].s64 = ctx.r[11].s64 + 19140;
+	// 82DB1330: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	// 82DB1334: 39000007  li r8, 7
+	ctx.r[8].s64 = 7;
+	// 82DB1338: 38E00020  li r7, 0x20
+	ctx.r[7].s64 = 32;
+	// 82DB133C: 38C00030  li r6, 0x30
+	ctx.r[6].s64 = 48;
+	// 82DB1340: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB1344: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1348: 91230008  stw r9, 8(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[9].u32 ) };
+	// 82DB134C: 9103000C  stw r8, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1370(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB1370 size=276
+    let mut pc: u32 = 0x82DB1370;
+    'dispatch: loop {
+        match pc {
+            0x82DB1370 => {
+    //   block [0x82DB1370..0x82DB1484)
+	// 82DB1370: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1374: 4BEF8089  bl 0x82ca93fc
+	ctx.lr = 0x82DB1378;
+	sub_82CA93D0(ctx, base);
+	// 82DB1378: C0030010  lfs f0, 0x10(r3)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB137C: 39640010  addi r11, r4, 0x10
+	ctx.r[11].s64 = ctx.r[4].s64 + 16;
+	// 82DB1380: EC00082A  fadds f0, f0, f1
+	ctx.f[0].f64 = ((ctx.f[0].f64 + ctx.f[1].f64) as f32) as f64;
+	// 82DB1384: D001FF60  stfs f0, -0xa0(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-160 as u32), tmp.u32 ) };
+	// 82DB1388: 3B81FF60  addi r28, r1, -0xa0
+	ctx.r[28].s64 = ctx.r[1].s64 + -160;
+	// 82DB138C: 39440020  addi r10, r4, 0x20
+	ctx.r[10].s64 = ctx.r[4].s64 + 32;
+	// 82DB1390: 39240030  addi r9, r4, 0x30
+	ctx.r[9].s64 = ctx.r[4].s64 + 48;
+	// 82DB1394: EB6B0000  ld r27, 0(r11)
+	ctx.r[27].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) };
+	// 82DB1398: 3901FF70  addi r8, r1, -0x90
+	ctx.r[8].s64 = ctx.r[1].s64 + -144;
+	// 82DB139C: 38E1FF80  addi r7, r1, -0x80
+	ctx.r[7].s64 = ctx.r[1].s64 + -128;
+	// 82DB13A0: E96B0008  ld r11, 8(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[11].u32.wrapping_add(8 as u32) ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1488(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1488 size=1204
+    let mut pc: u32 = 0x82DB1488;
+    'dispatch: loop {
+        match pc {
+            0x82DB1488 => {
+    //   block [0x82DB1488..0x82DB14E0)
+	// 82DB1488: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB148C: 4BEF7F6D  bl 0x82ca93f8
+	ctx.lr = 0x82DB1490;
+	sub_82CA93D0(ctx, base);
+	// 82DB1490: 9421FED0  stwu r1, -0x130(r1)
+	ea = ctx.r[1].u32.wrapping_add(-304 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1494: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1498: 39600008  li r11, 8
+	ctx.r[11].s64 = 8;
+	// 82DB149C: 7C781B78  mr r24, r3
+	ctx.r[24].u64 = ctx.r[3].u64;
+	// 82DB14A0: 7F2B5214  add r25, r11, r10
+	ctx.r[25].u64 = ctx.r[11].u64 + ctx.r[10].u64;
+	// 82DB14A4: 7C9A2378  mr r26, r4
+	ctx.r[26].u64 = ctx.r[4].u64;
+	// 82DB14A8: 7CA32B78  mr r3, r5
+	ctx.r[3].u64 = ctx.r[5].u64;
+	// 82DB14AC: 7CDF3378  mr r31, r6
+	ctx.r[31].u64 = ctx.r[6].u64;
+	// 82DB14B0: 81790000  lwz r11, 0(r25)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[25].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB14B4: 814B0004  lwz r10, 4(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB14B8: 812B000C  lwz r9, 0xc(r11)
+	ctx.r[9].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DB14BC: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DB14C0: 40980020  bge cr6, 0x82db14e0
+	if !ctx.cr[6].lt {
+	pc = 0x82DB14E0; continue 'dispatch;
+	}
+	// 82DB14C4: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DB14C8: 39290090  addi r9, r9, 0x90
+	ctx.r[9].s64 = ctx.r[9].s64 + 144;
+	// 82DB14CC: 912A0000  stw r9, 0(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(0 as u32), ctx.r[9].u32 ) };
+	// 82DB14D0: 7D2C42E6  mftb r9, 0x10c
+	ctx.r[9].u64 = crate::rt::rdtsc_u64();
+	// 82DB14D4: 390A000C  addi r8, r10, 0xc
+	ctx.r[8].s64 = ctx.r[10].s64 + 12;
+	// 82DB14D8: 912A0004  stw r9, 4(r10)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[10].u32.wrapping_add(4 as u32), ctx.r[9].u32 ) };
+	// 82DB14DC: 910B0004  stw r8, 4(r11)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[11].u32.wrapping_add(4 as u32), ctx.r[8].u32 ) };
+	pc = 0x82DB14E0; continue 'dispatch;
+            }
+            0x82DB14E0 => {
+    //   block [0x82DB14E0..0x82DB193C)
+	// 82DB14E0: 3BBA0030  addi r29, r26, 0x30
+	ctx.r[29].s64 = ctx.r[26].s64 + 48;
+	// 82DB14E4: 3BDA0020  addi r30, r26, 0x20
+	ctx.r[30].s64 = ctx.r[26].s64 + 32;
+	// 82DB14E8: 38C10070  addi r6, r1, 0x70
+	ctx.r[6].s64 = ctx.r[1].s64 + 112;
+	// 82DB14EC: 7FA5EB78  mr r5, r29
+	ctx.r[5].u64 = ctx.r[29].u64;
+	// 82DB14F0: 7FC4F378  mr r4, r30
+	ctx.r[4].u64 = ctx.r[30].u64;
+	// 82DB14F4: 4BFFFDAD  bl 0x82db12a0
+	ctx.lr = 0x82DB14F8;
+	sub_82DB12A0(ctx, base);
+	// 82DB14F8: 39410070  addi r10, r1, 0x70
+	ctx.r[10].s64 = ctx.r[1].s64 + 112;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1940(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1940 size=256
+    let mut pc: u32 = 0x82DB1940;
+    'dispatch: loop {
+        match pc {
+            0x82DB1940 => {
+    //   block [0x82DB1940..0x82DB1A40)
+	// 82DB1940: 39650010  addi r11, r5, 0x10
+	ctx.r[11].s64 = ctx.r[5].s64 + 16;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1A40(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB1A40 size=120
+    let mut pc: u32 = 0x82DB1A40;
+    'dispatch: loop {
+        match pc {
+            0x82DB1A40 => {
+    //   block [0x82DB1A40..0x82DB1AB8)
+	// 82DB1A40: 3921FFF0  addi r9, r1, -0x10
+	ctx.r[9].s64 = ctx.r[1].s64 + -16;
+	// 82DB1A44: EC0D0024  fdivs f0, f13, f0
+	ctx.fpscr.disable_flush_mode_unconditional();
+	ctx.f[0].f64 = ((ctx.f[13].f64 / ctx.f[0].f64) as f32) as f64;
+	// 82DB1A48: D001FFF0  stfs f0, -0x10(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), tmp.u32 ) };
+	// 82DB1A4C: 39000001  li r8, 1
+	ctx.r[8].s64 = 1;
+	// 82DB1A50: D0060010  stfs f0, 0x10(r6)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[6].u32.wrapping_add(16 as u32), tmp.u32 ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1AB8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1AB8 size=72
+    let mut pc: u32 = 0x82DB1AB8;
+    'dispatch: loop {
+        match pc {
+            0x82DB1AB8 => {
+    //   block [0x82DB1AB8..0x82DB1AEC)
+	// 82DB1AB8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1ABC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1AC0: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB1AC4: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1AC8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1ACC: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB1AD0: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB1AD4: 548A07FE  clrlwi r10, r4, 0x1f
+	ctx.r[10].u64 = ctx.r[4].u32 as u64 & 0x00000001u64;
+	// 82DB1AD8: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1ADC: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1AE0: 419A000C  beq cr6, 0x82db1aec
+	if ctx.cr[6].eq {
+	pc = 0x82DB1AEC; continue 'dispatch;
+	}
+	// 82DB1AE4: 4BA93CCD  bl 0x828457b0
+	ctx.lr = 0x82DB1AE8;
+	sub_828457B0(ctx, base);
+	// 82DB1AE8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	pc = 0x82DB1AEC; continue 'dispatch;
+            }
+            0x82DB1AEC => {
+    //   block [0x82DB1AEC..0x82DB1B00)
+	// 82DB1AEC: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB1AF0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1AF4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1AF8: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB1AFC: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1B00(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1B00 size=20
+    let mut pc: u32 = 0x82DB1B00;
+    'dispatch: loop {
+        match pc {
+            0x82DB1B00 => {
+    //   block [0x82DB1B00..0x82DB1B14)
+	// 82DB1B00: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1B04: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB1B08: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1B0C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB1B10: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1B18(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1B18 size=24
+    let mut pc: u32 = 0x82DB1B18;
+    'dispatch: loop {
+        match pc {
+            0x82DB1B18 => {
+    //   block [0x82DB1B18..0x82DB1B30)
+	// 82DB1B18: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1B1C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB1B20: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1B24: 396B00E8  addi r11, r11, 0xe8
+	ctx.r[11].s64 = ctx.r[11].s64 + 232;
+	// 82DB1B28: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1B2C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1B30(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1B30 size=12
+    let mut pc: u32 = 0x82DB1B30;
+    'dispatch: loop {
+        match pc {
+            0x82DB1B30 => {
+    //   block [0x82DB1B30..0x82DB1B3C)
+	// 82DB1B30: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1B34: 386B00E8  addi r3, r11, 0xe8
+	ctx.r[3].s64 = ctx.r[11].s64 + 232;
+	// 82DB1B38: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1B40(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1B40 size=124
+    let mut pc: u32 = 0x82DB1B40;
+    'dispatch: loop {
+        match pc {
+            0x82DB1B40 => {
+    //   block [0x82DB1B40..0x82DB1B9C)
+	// 82DB1B40: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1B44: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1B48: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB1B4C: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1B50: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB1B54: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1B58: 396B00E8  addi r11, r11, 0xe8
+	ctx.r[11].s64 = ctx.r[11].s64 + 232;
+	// 82DB1B5C: 807F0004  lwz r3, 4(r31)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB1B60: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1B64: A1630004  lhz r11, 4(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB1B68: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1B6C: 419A0030  beq cr6, 0x82db1b9c
+	if ctx.cr[6].eq {
+	pc = 0x82DB1B9C; continue 'dispatch;
+	}
+	// 82DB1B70: A1630006  lhz r11, 6(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DB1B74: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DB1B78: 7D6B0734  extsh r11, r11
+	ctx.r[11].s64 = ctx.r[11].s16 as i64;
+	// 82DB1B7C: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB1B80: B1630006  sth r11, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[11].u16 ) };
+	// 82DB1B84: 409A0018  bne cr6, 0x82db1b9c
+	if !ctx.cr[6].eq {
+	pc = 0x82DB1B9C; continue 'dispatch;
+	}
+	// 82DB1B88: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1B8C: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DB1B90: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1B94: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB1B98: 4E800421  bctrl
+	ctx.lr = 0x82DB1B9C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DB1B9C => {
+    //   block [0x82DB1B9C..0x82DB1BBC)
+	// 82DB1B9C: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1BA0: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB1BA4: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1BA8: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB1BAC: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1BB0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1BB4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB1BB8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1BC0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1BC0 size=8
+    let mut pc: u32 = 0x82DB1BC0;
+    'dispatch: loop {
+        match pc {
+            0x82DB1BC0 => {
+    //   block [0x82DB1BC0..0x82DB1BC8)
+	// 82DB1BC0: 3860FFFF  li r3, -1
+	ctx.r[3].s64 = -1;
+	// 82DB1BC4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1BC8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1BC8 size=48
+    let mut pc: u32 = 0x82DB1BC8;
+    'dispatch: loop {
+        match pc {
+            0x82DB1BC8 => {
+    //   block [0x82DB1BC8..0x82DB1BF8)
+	// 82DB1BC8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1BCC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1BD0: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB1BD4: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1BD8: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB1BDC: 4BFFFF65  bl 0x82db1b40
+	ctx.lr = 0x82DB1BE0;
+	sub_82DB1B40(ctx, base);
+	// 82DB1BE0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB1BE4: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB1BE8: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1BEC: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1BF0: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB1BF4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1BF8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1BF8 size=4
+    let mut pc: u32 = 0x82DB1BF8;
+    'dispatch: loop {
+        match pc {
+            0x82DB1BF8 => {
+    //   block [0x82DB1BF8..0x82DB1BFC)
+	// 82DB1BF8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1C00(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1C00 size=20
+    let mut pc: u32 = 0x82DB1C00;
+    'dispatch: loop {
+        match pc {
+            0x82DB1C00 => {
+    //   block [0x82DB1C00..0x82DB1C14)
+	// 82DB1C00: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1C04: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB1C08: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1C0C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB1C10: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1C18(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1C18 size=64
+    let mut pc: u32 = 0x82DB1C18;
+    'dispatch: loop {
+        match pc {
+            0x82DB1C18 => {
+    //   block [0x82DB1C18..0x82DB1C58)
+	// 82DB1C18: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1C1C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB1C20: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1C24: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DB1C28: 3D208200  lis r9, -0x7e00
+	ctx.r[9].s64 = -2113929216;
+	// 82DB1C2C: 39000001  li r8, 1
+	ctx.r[8].s64 = 1;
+	// 82DB1C30: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB1C34: 394A236C  addi r10, r10, 0x236c
+	ctx.r[10].s64 = ctx.r[10].s64 + 9068;
+	// 82DB1C38: 39291EF4  addi r9, r9, 0x1ef4
+	ctx.r[9].s64 = ctx.r[9].s64 + 7924;
+	// 82DB1C3C: 38E00014  li r7, 0x14
+	ctx.r[7].s64 = 20;
+	// 82DB1C40: B1030006  sth r8, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[8].u16 ) };
+	// 82DB1C44: 91630010  stw r11, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DB1C48: 91430000  stw r10, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB1C4C: 91230010  stw r9, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[9].u32 ) };
+	// 82DB1C50: 90E3000C  stw r7, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[7].u32 ) };
+	// 82DB1C54: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1C58(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1C58 size=12
+    let mut pc: u32 = 0x82DB1C58;
+    'dispatch: loop {
+        match pc {
+            0x82DB1C58 => {
+    //   block [0x82DB1C58..0x82DB1C64)
+	// 82DB1C58: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB1C5C: 386B236C  addi r3, r11, 0x236c
+	ctx.r[3].s64 = ctx.r[11].s64 + 9068;
+	// 82DB1C60: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1C68(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1C68 size=8
+    let mut pc: u32 = 0x82DB1C68;
+    'dispatch: loop {
+        match pc {
+            0x82DB1C68 => {
+    //   block [0x82DB1C68..0x82DB1C70)
+	// 82DB1C68: 3863FFF0  addi r3, r3, -0x10
+	ctx.r[3].s64 = ctx.r[3].s64 + -16;
+	// 82DB1C6C: 48000004  b 0x82db1c70
+	sub_82DB1C70(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1C70(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1C70 size=124
+    let mut pc: u32 = 0x82DB1C70;
+    'dispatch: loop {
+        match pc {
+            0x82DB1C70 => {
+    //   block [0x82DB1C70..0x82DB1C94)
+	// 82DB1C70: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1C74: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1C78: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB1C7C: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1C80: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB1C84: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1C88: 393F0010  addi r9, r31, 0x10
+	ctx.r[9].s64 = ctx.r[31].s64 + 16;
+	// 82DB1C8C: 409A0008  bne cr6, 0x82db1c94
+	if !ctx.cr[6].eq {
+	pc = 0x82DB1C94; continue 'dispatch;
+	}
+	// 82DB1C90: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	pc = 0x82DB1C94; continue 'dispatch;
+            }
+            0x82DB1C94 => {
+    //   block [0x82DB1C94..0x82DB1CD4)
+	// 82DB1C94: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1C98: 3D408202  lis r10, -0x7dfe
+	ctx.r[10].s64 = -2113798144;
+	// 82DB1C9C: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB1CA0: 394A39E0  addi r10, r10, 0x39e0
+	ctx.r[10].s64 = ctx.r[10].s64 + 14816;
+	// 82DB1CA4: 548807FE  clrlwi r8, r4, 0x1f
+	ctx.r[8].u64 = ctx.r[4].u32 as u64 & 0x00000001u64;
+	// 82DB1CA8: 2B080000  cmplwi cr6, r8, 0
+	ctx.cr[6].compare_u32(ctx.r[8].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1CAC: 91690000  stw r11, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1CB0: 915F0000  stw r10, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB1CB4: 419A0020  beq cr6, 0x82db1cd4
+	if ctx.cr[6].eq {
+	pc = 0x82DB1CD4; continue 'dispatch;
+	}
+	// 82DB1CB8: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1CBC: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB1CC0: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB1CC4: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB1CC8: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB1CCC: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB1CD0: 4BFA35F9  bl 0x82d552c8
+	ctx.lr = 0x82DB1CD4;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB1CD4; continue 'dispatch;
+            }
+            0x82DB1CD4 => {
+    //   block [0x82DB1CD4..0x82DB1CEC)
+	// 82DB1CD4: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB1CD8: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB1CDC: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1CE0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1CE4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB1CE8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1CF8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1CF8 size=212
+    let mut pc: u32 = 0x82DB1CF8;
+    'dispatch: loop {
+        match pc {
+            0x82DB1CF8 => {
+    //   block [0x82DB1CF8..0x82DB1D38)
+	// 82DB1CF8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1CFC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1D00: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB1D04: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1D08: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB1D0C: 817F0038  lwz r11, 0x38(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(56 as u32) ) } as u64;
+	// 82DB1D10: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB1D14: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB1D18: 409A0020  bne cr6, 0x82db1d38
+	if !ctx.cr[6].eq {
+	pc = 0x82DB1D38; continue 'dispatch;
+	}
+	// 82DB1D1C: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1D20: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB1D24: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB1D28: 809F0030  lwz r4, 0x30(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(48 as u32) ) } as u64;
+	// 82DB1D2C: 556500BE  clrlwi r5, r11, 2
+	ctx.r[5].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB1D30: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB1D34: 4BFA3595  bl 0x82d552c8
+	ctx.lr = 0x82DB1D38;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB1D38; continue 'dispatch;
+            }
+            0x82DB1D38 => {
+    //   block [0x82DB1D38..0x82DB1D64)
+	// 82DB1D38: 817F002C  lwz r11, 0x2c(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(44 as u32) ) } as u64;
+	// 82DB1D3C: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB1D40: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB1D44: 409A0020  bne cr6, 0x82db1d64
+	if !ctx.cr[6].eq {
+	pc = 0x82DB1D64; continue 'dispatch;
+	}
+	// 82DB1D48: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1D4C: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB1D50: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB1D54: 809F0024  lwz r4, 0x24(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(36 as u32) ) } as u64;
+	// 82DB1D58: 55652036  slwi r5, r11, 4
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB1D5C: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB1D60: 4BFA3569  bl 0x82d552c8
+	ctx.lr = 0x82DB1D64;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB1D64; continue 'dispatch;
+            }
+            0x82DB1D64 => {
+    //   block [0x82DB1D64..0x82DB1D90)
+	// 82DB1D64: 817F0020  lwz r11, 0x20(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(32 as u32) ) } as u64;
+	// 82DB1D68: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB1D6C: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB1D70: 409A0020  bne cr6, 0x82db1d90
+	if !ctx.cr[6].eq {
+	pc = 0x82DB1D90; continue 'dispatch;
+	}
+	// 82DB1D74: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1D78: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB1D7C: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB1D80: 809F0018  lwz r4, 0x18(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB1D84: 55652036  slwi r5, r11, 4
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB1D88: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB1D8C: 4BFA353D  bl 0x82d552c8
+	ctx.lr = 0x82DB1D90;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB1D90; continue 'dispatch;
+            }
+            0x82DB1D90 => {
+    //   block [0x82DB1D90..0x82DB1DA0)
+	// 82DB1D90: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1D94: 393F0010  addi r9, r31, 0x10
+	ctx.r[9].s64 = ctx.r[31].s64 + 16;
+	// 82DB1D98: 409A0008  bne cr6, 0x82db1da0
+	if !ctx.cr[6].eq {
+	pc = 0x82DB1DA0; continue 'dispatch;
+	}
+	// 82DB1D9C: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	pc = 0x82DB1DA0; continue 'dispatch;
+            }
+            0x82DB1DA0 => {
+    //   block [0x82DB1DA0..0x82DB1DCC)
+	// 82DB1DA0: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB1DA4: 3D408202  lis r10, -0x7dfe
+	ctx.r[10].s64 = -2113798144;
+	// 82DB1DA8: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB1DAC: 394A39E0  addi r10, r10, 0x39e0
+	ctx.r[10].s64 = ctx.r[10].s64 + 14816;
+	// 82DB1DB0: 91690000  stw r11, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1DB4: 915F0000  stw r10, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB1DB8: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB1DBC: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1DC0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1DC4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB1DC8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1DD0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1DD0 size=100
+    let mut pc: u32 = 0x82DB1DD0;
+    'dispatch: loop {
+        match pc {
+            0x82DB1DD0 => {
+    //   block [0x82DB1DD0..0x82DB1E18)
+	// 82DB1DD0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1DD4: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1DD8: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB1DDC: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB1DE0: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1DE4: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB1DE8: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB1DEC: 4BFFFF0D  bl 0x82db1cf8
+	ctx.lr = 0x82DB1DF0;
+	sub_82DB1CF8(ctx, base);
+	// 82DB1DF0: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB1DF4: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1DF8: 419A0020  beq cr6, 0x82db1e18
+	if ctx.cr[6].eq {
+	pc = 0x82DB1E18; continue 'dispatch;
+	}
+	// 82DB1DFC: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1E00: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB1E04: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB1E08: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB1E0C: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB1E10: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB1E14: 4BFA34B5  bl 0x82d552c8
+	ctx.lr = 0x82DB1E18;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB1E18; continue 'dispatch;
+            }
+            0x82DB1E18 => {
+    //   block [0x82DB1E18..0x82DB1E34)
+	// 82DB1E18: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB1E1C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB1E20: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1E24: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1E28: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB1E2C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB1E30: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1E38(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1E38 size=20
+    let mut pc: u32 = 0x82DB1E38;
+    'dispatch: loop {
+        match pc {
+            0x82DB1E38 => {
+    //   block [0x82DB1E38..0x82DB1E4C)
+	// 82DB1E38: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1E3C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB1E40: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1E44: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB1E48: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1E50(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1E50 size=40
+    let mut pc: u32 = 0x82DB1E50;
+    'dispatch: loop {
+        match pc {
+            0x82DB1E50 => {
+    //   block [0x82DB1E50..0x82DB1E78)
+	// 82DB1E50: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1E54: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB1E58: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB1E5C: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB1E60: 396B503C  addi r11, r11, 0x503c
+	ctx.r[11].s64 = ctx.r[11].s64 + 20540;
+	// 82DB1E64: 39200003  li r9, 3
+	ctx.r[9].s64 = 3;
+	// 82DB1E68: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB1E6C: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB1E70: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB1E74: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1E78(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1E78 size=12
+    let mut pc: u32 = 0x82DB1E78;
+    'dispatch: loop {
+        match pc {
+            0x82DB1E78 => {
+    //   block [0x82DB1E78..0x82DB1E84)
+	// 82DB1E78: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB1E7C: 386B503C  addi r3, r11, 0x503c
+	ctx.r[3].s64 = ctx.r[11].s64 + 20540;
+	// 82DB1E80: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1E88(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1E88 size=4
+    let mut pc: u32 = 0x82DB1E88;
+    'dispatch: loop {
+        match pc {
+            0x82DB1E88 => {
+    //   block [0x82DB1E88..0x82DB1E8C)
+	// 82DB1E88: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1E90(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1E90 size=16
+    let mut pc: u32 = 0x82DB1E90;
+    'dispatch: loop {
+        match pc {
+            0x82DB1E90 => {
+    //   block [0x82DB1E90..0x82DB1EA0)
+	// 82DB1E90: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DB1E94: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1E98: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB1E9C: 480111E4  b 0x82dc3080
+	sub_82DC3080(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1EA0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1EA0 size=4
+    let mut pc: u32 = 0x82DB1EA0;
+    'dispatch: loop {
+        match pc {
+            0x82DB1EA0 => {
+    //   block [0x82DB1EA0..0x82DB1EA4)
+	// 82DB1EA0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1EA8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1EA8 size=20
+    let mut pc: u32 = 0x82DB1EA8;
+    'dispatch: loop {
+        match pc {
+            0x82DB1EA8 => {
+    //   block [0x82DB1EA8..0x82DB1EBC)
+	// 82DB1EA8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1EAC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB1EB0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1EB4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB1EB8: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1EC0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1EC0 size=44
+    let mut pc: u32 = 0x82DB1EC0;
+    'dispatch: loop {
+        match pc {
+            0x82DB1EC0 => {
+    //   block [0x82DB1EC0..0x82DB1EEC)
+	// 82DB1EC0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1EC4: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1EC8: 9421FF50  stwu r1, -0xb0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-176 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1ECC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB1ED0: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB1ED4: 480111AD  bl 0x82dc3080
+	ctx.lr = 0x82DB1ED8;
+	sub_82DC3080(ctx, base);
+	// 82DB1ED8: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB1EDC: 382100B0  addi r1, r1, 0xb0
+	ctx.r[1].s64 = ctx.r[1].s64 + 176;
+	// 82DB1EE0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1EE4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1EE8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1F20(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1F20 size=44
+    let mut pc: u32 = 0x82DB1F20;
+    'dispatch: loop {
+        match pc {
+            0x82DB1F20 => {
+    //   block [0x82DB1F20..0x82DB1F4C)
+	// 82DB1F20: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1F24: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1F28: 9421FF60  stwu r1, -0xa0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-160 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1F2C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB1F30: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB1F34: 48010D35  bl 0x82dc2c68
+	ctx.lr = 0x82DB1F38;
+	sub_82DC2C68(ctx, base);
+	// 82DB1F38: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB1F3C: 382100A0  addi r1, r1, 0xa0
+	ctx.r[1].s64 = ctx.r[1].s64 + 160;
+	// 82DB1F40: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1F44: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1F48: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1F80(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1F80 size=44
+    let mut pc: u32 = 0x82DB1F80;
+    'dispatch: loop {
+        match pc {
+            0x82DB1F80 => {
+    //   block [0x82DB1F80..0x82DB1FAC)
+	// 82DB1F80: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1F84: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1F88: 9421FE70  stwu r1, -0x190(r1)
+	ea = ctx.r[1].u32.wrapping_add(-400 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1F8C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB1F90: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB1F94: 48010CED  bl 0x82dc2c80
+	ctx.lr = 0x82DB1F98;
+	sub_82DC2C80(ctx, base);
+	// 82DB1F98: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB1F9C: 38210190  addi r1, r1, 0x190
+	ctx.r[1].s64 = ctx.r[1].s64 + 400;
+	// 82DB1FA0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB1FA4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB1FA8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1FB0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1FB0 size=4
+    let mut pc: u32 = 0x82DB1FB0;
+    'dispatch: loop {
+        match pc {
+            0x82DB1FB0 => {
+    //   block [0x82DB1FB0..0x82DB1FB4)
+	// 82DB1FB0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1FB8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB1FB8 size=28
+    let mut pc: u32 = 0x82DB1FB8;
+    'dispatch: loop {
+        match pc {
+            0x82DB1FB8 => {
+    //   block [0x82DB1FB8..0x82DB1FD4)
+	// 82DB1FB8: 39600000  li r11, 0
+	ctx.r[11].s64 = 0;
+	// 82DB1FBC: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB1FC0: B1630020  sth r11, 0x20(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[11].u16 ) };
+	// 82DB1FC4: 91630024  stw r11, 0x24(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(36 as u32), ctx.r[11].u32 ) };
+	// 82DB1FC8: 91430000  stw r10, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB1FCC: 91630010  stw r11, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DB1FD0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB1FD8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB1FD8 size=120
+    let mut pc: u32 = 0x82DB1FD8;
+    'dispatch: loop {
+        match pc {
+            0x82DB1FD8 => {
+    //   block [0x82DB1FD8..0x82DB2018)
+	// 82DB1FD8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB1FDC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB1FE0: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB1FE4: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB1FE8: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB1FEC: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB1FF0: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB1FF4: 419A0048  beq cr6, 0x82db203c
+	if ctx.cr[6].eq {
+	pc = 0x82DB203C; continue 'dispatch;
+	}
+	// 82DB1FF8: 814B000C  lwz r10, 0xc(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DB1FFC: 2F0A000A  cmpwi cr6, r10, 0xa
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 10, &mut ctx.xer);
+	// 82DB2000: 409A0018  bne cr6, 0x82db2018
+	if !ctx.cr[6].eq {
+	pc = 0x82DB2018; continue 'dispatch;
+	}
+	// 82DB2004: 386B0010  addi r3, r11, 0x10
+	ctx.r[3].s64 = ctx.r[11].s64 + 16;
+	// 82DB2008: 816B0010  lwz r11, 0x10(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB200C: 816B0004  lwz r11, 4(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2010: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2014: 4E800421  bctrl
+	ctx.lr = 0x82DB2018;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DB2018 => {
+    //   block [0x82DB2018..0x82DB203C)
+	// 82DB2018: 817F0000  lwz r11, 0(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB201C: 814B000C  lwz r10, 0xc(r11)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(12 as u32) ) } as u64;
+	// 82DB2020: 2F0A0002  cmpwi cr6, r10, 2
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 2, &mut ctx.xer);
+	// 82DB2024: 409A0018  bne cr6, 0x82db203c
+	if !ctx.cr[6].eq {
+	pc = 0x82DB203C; continue 'dispatch;
+	}
+	// 82DB2028: 386B0010  addi r3, r11, 0x10
+	ctx.r[3].s64 = ctx.r[11].s64 + 16;
+	// 82DB202C: 816B0010  lwz r11, 0x10(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB2030: 816B0004  lwz r11, 4(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2034: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2038: 4E800421  bctrl
+	ctx.lr = 0x82DB203C;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DB203C => {
+    //   block [0x82DB203C..0x82DB2050)
+	// 82DB203C: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB2040: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2044: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2048: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB204C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2080(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2080 size=44
+    let mut pc: u32 = 0x82DB2080;
+    'dispatch: loop {
+        match pc {
+            0x82DB2080 => {
+    //   block [0x82DB2080..0x82DB20AC)
+	// 82DB2080: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2084: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2088: 9421FF50  stwu r1, -0xb0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-176 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB208C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2090: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB2094: 48012C45  bl 0x82dc4cd8
+	ctx.lr = 0x82DB2098;
+	sub_82DC4CD8(ctx, base);
+	// 82DB2098: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB209C: 382100B0  addi r1, r1, 0xb0
+	ctx.r[1].s64 = ctx.r[1].s64 + 176;
+	// 82DB20A0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB20A4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB20A8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB20E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB20E0 size=44
+    let mut pc: u32 = 0x82DB20E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB20E0 => {
+    //   block [0x82DB20E0..0x82DB210C)
+	// 82DB20E0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB20E4: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB20E8: 9421FF30  stwu r1, -0xd0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-208 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB20EC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB20F0: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB20F4: 48012C15  bl 0x82dc4d08
+	ctx.lr = 0x82DB20F8;
+	sub_82DC4D08(ctx, base);
+	// 82DB20F8: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB20FC: 382100D0  addi r1, r1, 0xd0
+	ctx.r[1].s64 = ctx.r[1].s64 + 208;
+	// 82DB2100: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2104: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2108: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2110(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2110 size=20
+    let mut pc: u32 = 0x82DB2110;
+    'dispatch: loop {
+        match pc {
+            0x82DB2110 => {
+    //   block [0x82DB2110..0x82DB2124)
+	// 82DB2110: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2114: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2118: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB211C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2120: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2128(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2128 size=40
+    let mut pc: u32 = 0x82DB2128;
+    'dispatch: loop {
+        match pc {
+            0x82DB2128 => {
+    //   block [0x82DB2128..0x82DB2150)
+	// 82DB2128: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB212C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2130: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2134: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB2138: 396B082C  addi r11, r11, 0x82c
+	ctx.r[11].s64 = ctx.r[11].s64 + 2092;
+	// 82DB213C: 39200018  li r9, 0x18
+	ctx.r[9].s64 = 24;
+	// 82DB2140: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB2144: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2148: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB214C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2150(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2150 size=12
+    let mut pc: u32 = 0x82DB2150;
+    'dispatch: loop {
+        match pc {
+            0x82DB2150 => {
+    //   block [0x82DB2150..0x82DB215C)
+	// 82DB2150: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2154: 386B082C  addi r3, r11, 0x82c
+	ctx.r[3].s64 = ctx.r[11].s64 + 2092;
+	// 82DB2158: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2160(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2160 size=12
+    let mut pc: u32 = 0x82DB2160;
+    'dispatch: loop {
+        match pc {
+            0x82DB2160 => {
+    //   block [0x82DB2160..0x82DB216C)
+	// 82DB2160: 8964006C  lbz r11, 0x6c(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[4].u32.wrapping_add(108 as u32) ) } as u64;
+	// 82DB2164: 99630000  stb r11, 0(r3)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u8 ) };
+	// 82DB2168: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2170(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB2170 size=28
+    let mut pc: u32 = 0x82DB2170;
+    'dispatch: loop {
+        match pc {
+            0x82DB2170 => {
+    //   block [0x82DB2170..0x82DB218C)
+	// 82DB2170: 81630010  lwz r11, 0x10(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB2174: 81430060  lwz r10, 0x60(r3)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(96 as u32) ) } as u64;
+	// 82DB2178: 7D6B29D6  mullw r11, r11, r5
+	ctx.r[11].s32 = ((ctx.r[11].s32 as i64 * ctx.r[5].s32 as i64) as i32);
+	ctx.r[11].s64 = ctx.r[11].s32 as i64;
+	// 82DB217C: 7D6B2214  add r11, r11, r4
+	ctx.r[11].u64 = ctx.r[11].u64 + ctx.r[4].u64;
+	// 82DB2180: 556B103A  slwi r11, r11, 2
+	ctx.r[11].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[11].u64 = ctx.r[11].u32 as u64;
+	// 82DB2184: 7C2B542E  lfsx f1, r11, r10
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[11].u32.wrapping_add(ctx.r[10].u32)) };
+	ctx.f[1].f64 = (tmp.f32 as f64);
+	// 82DB2188: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2190(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut tmp: PPCRegister = Default::default();
+    // ---- function 0x82DB2190 size=844
+    let mut pc: u32 = 0x82DB2190;
+    'dispatch: loop {
+        match pc {
+            0x82DB2190 => {
+    //   block [0x82DB2190..0x82DB24D8)
+	// 82DB2190: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2194: 4BEF7265  bl 0x82ca93f8
+	ctx.lr = 0x82DB2198;
+	sub_82CA93D0(ctx, base);
+	// 82DB2198: 81640004  lwz r11, 4(r4)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB219C: 3D208200  lis r9, -0x7e00
+	ctx.r[9].s64 = -2113929216;
+	// 82DB21A0: 83A40000  lwz r29, 0(r4)
+	ctx.r[29].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[4].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB21A4: 7CAA2B78  mr r10, r5
+	ctx.r[10].u64 = ctx.r[5].u64;
+	// 82DB21A8: 3B2BFFFF  addi r25, r11, -1
+	ctx.r[25].s64 = ctx.r[11].s64 + -1;
+	// 82DB21AC: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB21B0: 2F190000  cmpwi cr6, r25, 0
+	ctx.cr[6].compare_i32(ctx.r[25].s32, 0, &mut ctx.xer);
+	// 82DB21B4: C0A90C18  lfs f5, 0xc18(r9)
+	ctx.fpscr.disable_flush_mode_unconditional();
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[9].u32.wrapping_add(3096 as u32) ) };
+	ctx.f[5].f64 = (tmp.f32 as f64);
+	// 82DB21B8: D0A1FF50  stfs f5, -0xb0(r1)
+	tmp.f32 = (ctx.f[5].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-176 as u32), tmp.u32 ) };
+	// 82DB21BC: D0A1FF58  stfs f5, -0xa8(r1)
+	tmp.f32 = (ctx.f[5].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-168 as u32), tmp.u32 ) };
+	// 82DB21C0: C0EB0C14  lfs f7, 0xc14(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(3092 as u32) ) };
+	ctx.f[7].f64 = (tmp.f32 as f64);
+	// 82DB21C4: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB21C8: D0E1FF54  stfs f7, -0xac(r1)
+	tmp.f32 = (ctx.f[7].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-172 as u32), tmp.u32 ) };
+	// 82DB21CC: C00B0C64  lfs f0, 0xc64(r11)
+	tmp.u32 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(3172 as u32) ) };
+	ctx.f[0].f64 = (tmp.f32 as f64);
+	// 82DB21D0: D001FF5C  stfs f0, -0xa4(r1)
+	tmp.f32 = (ctx.f[0].f64 as f32);
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-164 as u32), tmp.u32 ) };
+	// 82DB21D4: 41980304  blt cr6, 0x82db24d8
+	if ctx.cr[6].lt {
+	pc = 0x82DB24D8; continue 'dispatch;
+	}
+	// 82DB21D8: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB21DC: 3B430040  addi r26, r3, 0x40
+	ctx.r[26].s64 = ctx.r[3].s64 + 64;
+	// 82DB21E0: 3B6B1430  addi r27, r11, 0x1430
+	ctx.r[27].s64 = ctx.r[11].s64 + 5168;
+	// 82DB21E4: 3961FF50  addi r11, r1, -0xb0
+	ctx.r[11].s64 = ctx.r[1].s64 + -176;
+	// 82DB21E8: 3BC30010  addi r30, r3, 0x10
+	ctx.r[30].s64 = ctx.r[3].s64 + 16;
+	// 82DB21EC: 3B830030  addi r28, r3, 0x30
+	ctx.r[28].s64 = ctx.r[3].s64 + 48;
+	// 82DB21F0: 3B000020  li r24, 0x20
+	ctx.r[24].s64 = 32;
+	pc = 0x82DB24D8; continue 'dispatch;
+            }
+            0x82DB24D8 => {
+    //   block [0x82DB24D8..0x82DB24DC)
+	// 82DB24D8: 4BEF6F70  b 0x82ca9448
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB24E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB24E0 size=152
+    let mut pc: u32 = 0x82DB24E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB24E0 => {
+    //   block [0x82DB24E0..0x82DB2528)
+	// 82DB24E0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB24E4: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB24E8: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB24EC: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB24F0: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB24F4: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB24F8: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB24FC: 817F0068  lwz r11, 0x68(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(104 as u32) ) } as u64;
+	// 82DB2500: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB2504: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB2508: 409A0020  bne cr6, 0x82db2528
+	if !ctx.cr[6].eq {
+	pc = 0x82DB2528; continue 'dispatch;
+	}
+	// 82DB250C: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2510: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB2514: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB2518: 809F0060  lwz r4, 0x60(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(96 as u32) ) } as u64;
+	// 82DB251C: 5565103A  slwi r5, r11, 2
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(2);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB2520: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB2524: 4BFA2DA5  bl 0x82d552c8
+	ctx.lr = 0x82DB2528;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2528; continue 'dispatch;
+            }
+            0x82DB2528 => {
+    //   block [0x82DB2528..0x82DB255C)
+	// 82DB2528: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DB252C: 57CA07FE  clrlwi r10, r30, 0x1f
+	ctx.r[10].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2530: 396B39E0  addi r11, r11, 0x39e0
+	ctx.r[11].s64 = ctx.r[11].s64 + 14816;
+	// 82DB2534: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2538: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB253C: 419A0020  beq cr6, 0x82db255c
+	if ctx.cr[6].eq {
+	pc = 0x82DB255C; continue 'dispatch;
+	}
+	// 82DB2540: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2544: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB2548: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB254C: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2550: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2554: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB2558: 4BFA2D71  bl 0x82d552c8
+	ctx.lr = 0x82DB255C;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB255C; continue 'dispatch;
+            }
+            0x82DB255C => {
+    //   block [0x82DB255C..0x82DB2578)
+	// 82DB255C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB2560: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2564: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2568: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB256C: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB2570: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2574: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2578(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2578 size=20
+    let mut pc: u32 = 0x82DB2578;
+    'dispatch: loop {
+        match pc {
+            0x82DB2578 => {
+    //   block [0x82DB2578..0x82DB258C)
+	// 82DB2578: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB257C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2580: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2584: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2588: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2590(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2590 size=52
+    let mut pc: u32 = 0x82DB2590;
+    'dispatch: loop {
+        match pc {
+            0x82DB2590 => {
+    //   block [0x82DB2590..0x82DB25C4)
+	// 82DB2590: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2594: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2598: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB259C: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB25A0: 396B08DC  addi r11, r11, 0x8dc
+	ctx.r[11].s64 = ctx.r[11].s64 + 2268;
+	// 82DB25A4: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DB25A8: 394A00E8  addi r10, r10, 0xe8
+	ctx.r[10].s64 = ctx.r[10].s64 + 232;
+	// 82DB25AC: 3900001C  li r8, 0x1c
+	ctx.r[8].s64 = 28;
+	// 82DB25B0: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB25B4: B1230006  sth r9, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DB25B8: 91430010  stw r10, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DB25BC: 9103000C  stw r8, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DB25C0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB25C8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB25C8 size=12
+    let mut pc: u32 = 0x82DB25C8;
+    'dispatch: loop {
+        match pc {
+            0x82DB25C8 => {
+    //   block [0x82DB25C8..0x82DB25D4)
+	// 82DB25C8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB25CC: 386B08DC  addi r3, r11, 0x8dc
+	ctx.r[3].s64 = ctx.r[11].s64 + 2268;
+	// 82DB25D0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB25D8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB25D8 size=20
+    let mut pc: u32 = 0x82DB25D8;
+    'dispatch: loop {
+        match pc {
+            0x82DB25D8 => {
+    //   block [0x82DB25D8..0x82DB25EC)
+	// 82DB25D8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB25DC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB25E0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB25E4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB25E8: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB25F0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB25F0 size=52
+    let mut pc: u32 = 0x82DB25F0;
+    'dispatch: loop {
+        match pc {
+            0x82DB25F0 => {
+    //   block [0x82DB25F0..0x82DB2624)
+	// 82DB25F0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB25F4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB25F8: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB25FC: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB2600: 396B27DC  addi r11, r11, 0x27dc
+	ctx.r[11].s64 = ctx.r[11].s64 + 10204;
+	// 82DB2604: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DB2608: 394A00E8  addi r10, r10, 0xe8
+	ctx.r[10].s64 = ctx.r[10].s64 + 232;
+	// 82DB260C: 39000015  li r8, 0x15
+	ctx.r[8].s64 = 21;
+	// 82DB2610: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2614: B1230006  sth r9, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DB2618: 91430010  stw r10, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DB261C: 9103000C  stw r8, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DB2620: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2628(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2628 size=12
+    let mut pc: u32 = 0x82DB2628;
+    'dispatch: loop {
+        match pc {
+            0x82DB2628 => {
+    //   block [0x82DB2628..0x82DB2634)
+	// 82DB2628: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB262C: 386B27DC  addi r3, r11, 0x27dc
+	ctx.r[3].s64 = ctx.r[11].s64 + 10204;
+	// 82DB2630: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2638(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2638 size=116
+    let mut pc: u32 = 0x82DB2638;
+    'dispatch: loop {
+        match pc {
+            0x82DB2638 => {
+    //   block [0x82DB2638..0x82DB2690)
+	// 82DB2638: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB263C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2640: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB2644: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2648: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB264C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2650: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB2654: 387F0010  addi r3, r31, 0x10
+	ctx.r[3].s64 = ctx.r[31].s64 + 16;
+	// 82DB2658: 4BFFF4E9  bl 0x82db1b40
+	ctx.lr = 0x82DB265C;
+	sub_82DB1B40(ctx, base);
+	// 82DB265C: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DB2660: 57CA07FE  clrlwi r10, r30, 0x1f
+	ctx.r[10].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2664: 396B39E0  addi r11, r11, 0x39e0
+	ctx.r[11].s64 = ctx.r[11].s64 + 14816;
+	// 82DB2668: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DB266C: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2670: 419A0020  beq cr6, 0x82db2690
+	if ctx.cr[6].eq {
+	pc = 0x82DB2690; continue 'dispatch;
+	}
+	// 82DB2674: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2678: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB267C: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2680: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2684: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2688: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB268C: 4BFA2C3D  bl 0x82d552c8
+	ctx.lr = 0x82DB2690;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2690; continue 'dispatch;
+            }
+            0x82DB2690 => {
+    //   block [0x82DB2690..0x82DB26AC)
+	// 82DB2690: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB2694: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2698: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB269C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB26A0: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB26A4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB26A8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB26B0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB26B0 size=20
+    let mut pc: u32 = 0x82DB26B0;
+    'dispatch: loop {
+        match pc {
+            0x82DB26B0 => {
+    //   block [0x82DB26B0..0x82DB26C4)
+	// 82DB26B0: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB26B4: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB26B8: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB26BC: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB26C0: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB26C8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB26C8 size=64
+    let mut pc: u32 = 0x82DB26C8;
+    'dispatch: loop {
+        match pc {
+            0x82DB26C8 => {
+    //   block [0x82DB26C8..0x82DB2708)
+	// 82DB26C8: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB26CC: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB26D0: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB26D4: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB26D8: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DB26DC: 39000001  li r8, 1
+	ctx.r[8].s64 = 1;
+	// 82DB26E0: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB26E4: 394A09D8  addi r10, r10, 0x9d8
+	ctx.r[10].s64 = ctx.r[10].s64 + 2520;
+	// 82DB26E8: 392909B4  addi r9, r9, 0x9b4
+	ctx.r[9].s64 = ctx.r[9].s64 + 2484;
+	// 82DB26EC: 38E00002  li r7, 2
+	ctx.r[7].s64 = 2;
+	// 82DB26F0: B1030006  sth r8, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[8].u16 ) };
+	// 82DB26F4: 91630010  stw r11, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DB26F8: 91430000  stw r10, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB26FC: 91230010  stw r9, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[9].u32 ) };
+	// 82DB2700: 90E3000C  stw r7, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[7].u32 ) };
+	// 82DB2704: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2708(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2708 size=12
+    let mut pc: u32 = 0x82DB2708;
+    'dispatch: loop {
+        match pc {
+            0x82DB2708 => {
+    //   block [0x82DB2708..0x82DB2714)
+	// 82DB2708: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB270C: 386B09D8  addi r3, r11, 0x9d8
+	ctx.r[3].s64 = ctx.r[11].s64 + 2520;
+	// 82DB2710: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2718(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2718 size=8
+    let mut pc: u32 = 0x82DB2718;
+    'dispatch: loop {
+        match pc {
+            0x82DB2718 => {
+    //   block [0x82DB2718..0x82DB2720)
+	// 82DB2718: 3863FFF0  addi r3, r3, -0x10
+	ctx.r[3].s64 = ctx.r[3].s64 + -16;
+	// 82DB271C: 48000004  b 0x82db2720
+	sub_82DB2720(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2720(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2720 size=100
+    let mut pc: u32 = 0x82DB2720;
+    'dispatch: loop {
+        match pc {
+            0x82DB2720 => {
+    //   block [0x82DB2720..0x82DB2768)
+	// 82DB2720: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2724: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2728: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB272C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2730: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2734: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2738: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB273C: 480064C5  bl 0x82db8c00
+	ctx.lr = 0x82DB2740;
+	sub_82DB8C00(ctx, base);
+	// 82DB2740: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2744: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2748: 419A0020  beq cr6, 0x82db2768
+	if ctx.cr[6].eq {
+	pc = 0x82DB2768; continue 'dispatch;
+	}
+	// 82DB274C: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2750: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB2754: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2758: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB275C: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2760: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB2764: 4BFA2B65  bl 0x82d552c8
+	ctx.lr = 0x82DB2768;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2768; continue 'dispatch;
+            }
+            0x82DB2768 => {
+    //   block [0x82DB2768..0x82DB2784)
+	// 82DB2768: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB276C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2770: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2774: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2778: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB277C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2780: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2788(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2788 size=20
+    let mut pc: u32 = 0x82DB2788;
+    'dispatch: loop {
+        match pc {
+            0x82DB2788 => {
+    //   block [0x82DB2788..0x82DB279C)
+	// 82DB2788: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB278C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2790: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2794: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2798: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB27A0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB27A0 size=40
+    let mut pc: u32 = 0x82DB27A0;
+    'dispatch: loop {
+        match pc {
+            0x82DB27A0 => {
+    //   block [0x82DB27A0..0x82DB27C8)
+	// 82DB27A0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB27A4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB27A8: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB27AC: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB27B0: 396B4CA4  addi r11, r11, 0x4ca4
+	ctx.r[11].s64 = ctx.r[11].s64 + 19620;
+	// 82DB27B4: 39200005  li r9, 5
+	ctx.r[9].s64 = 5;
+	// 82DB27B8: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB27BC: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB27C0: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB27C4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB27C8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB27C8 size=12
+    let mut pc: u32 = 0x82DB27C8;
+    'dispatch: loop {
+        match pc {
+            0x82DB27C8 => {
+    //   block [0x82DB27C8..0x82DB27D4)
+	// 82DB27C8: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB27CC: 386B4CA4  addi r3, r11, 0x4ca4
+	ctx.r[3].s64 = ctx.r[11].s64 + 19620;
+	// 82DB27D0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB27D8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB27D8 size=4
+    let mut pc: u32 = 0x82DB27D8;
+    'dispatch: loop {
+        match pc {
+            0x82DB27D8 => {
+    //   block [0x82DB27D8..0x82DB27DC)
+	// 82DB27D8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB27E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB27E0 size=4
+    let mut pc: u32 = 0x82DB27E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB27E0 => {
+    //   block [0x82DB27E0..0x82DB27E4)
+	// 82DB27E0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB27E8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB27E8 size=4
+    let mut pc: u32 = 0x82DB27E8;
+    'dispatch: loop {
+        match pc {
+            0x82DB27E8 => {
+    //   block [0x82DB27E8..0x82DB27EC)
+	// 82DB27E8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB27F0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB27F0 size=20
+    let mut pc: u32 = 0x82DB27F0;
+    'dispatch: loop {
+        match pc {
+            0x82DB27F0 => {
+    //   block [0x82DB27F0..0x82DB2804)
+	// 82DB27F0: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB27F4: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB27F8: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB27FC: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2800: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2808(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2808 size=40
+    let mut pc: u32 = 0x82DB2808;
+    'dispatch: loop {
+        match pc {
+            0x82DB2808 => {
+    //   block [0x82DB2808..0x82DB2830)
+	// 82DB2808: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB280C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2810: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB2814: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB2818: 396B4D6C  addi r11, r11, 0x4d6c
+	ctx.r[11].s64 = ctx.r[11].s64 + 19820;
+	// 82DB281C: 39200006  li r9, 6
+	ctx.r[9].s64 = 6;
+	// 82DB2820: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB2824: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2828: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB282C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2830(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2830 size=12
+    let mut pc: u32 = 0x82DB2830;
+    'dispatch: loop {
+        match pc {
+            0x82DB2830 => {
+    //   block [0x82DB2830..0x82DB283C)
+	// 82DB2830: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB2834: 386B4D6C  addi r3, r11, 0x4d6c
+	ctx.r[3].s64 = ctx.r[11].s64 + 19820;
+	// 82DB2838: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2840(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2840 size=100
+    let mut pc: u32 = 0x82DB2840;
+    'dispatch: loop {
+        match pc {
+            0x82DB2840 => {
+    //   block [0x82DB2840..0x82DB2888)
+	// 82DB2840: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2844: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2848: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB284C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2850: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2854: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2858: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB285C: 4800B8AD  bl 0x82dbe108
+	ctx.lr = 0x82DB2860;
+	sub_82DBE108(ctx, base);
+	// 82DB2860: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2864: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2868: 419A0020  beq cr6, 0x82db2888
+	if ctx.cr[6].eq {
+	pc = 0x82DB2888; continue 'dispatch;
+	}
+	// 82DB286C: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2870: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB2874: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2878: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB287C: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2880: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB2884: 4BFA2A45  bl 0x82d552c8
+	ctx.lr = 0x82DB2888;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2888; continue 'dispatch;
+            }
+            0x82DB2888 => {
+    //   block [0x82DB2888..0x82DB28A4)
+	// 82DB2888: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB288C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2890: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2894: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2898: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB289C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB28A0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB28A8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB28A8 size=20
+    let mut pc: u32 = 0x82DB28A8;
+    'dispatch: loop {
+        match pc {
+            0x82DB28A8 => {
+    //   block [0x82DB28A8..0x82DB28BC)
+	// 82DB28A8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB28AC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB28B0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB28B4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB28B8: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB28C0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB28C0 size=52
+    let mut pc: u32 = 0x82DB28C0;
+    'dispatch: loop {
+        match pc {
+            0x82DB28C0 => {
+    //   block [0x82DB28C0..0x82DB28F4)
+	// 82DB28C0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB28C4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB28C8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB28CC: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB28D0: 396B0E48  addi r11, r11, 0xe48
+	ctx.r[11].s64 = ctx.r[11].s64 + 3656;
+	// 82DB28D4: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DB28D8: 394A00E8  addi r10, r10, 0xe8
+	ctx.r[10].s64 = ctx.r[10].s64 + 232;
+	// 82DB28DC: 3900001A  li r8, 0x1a
+	ctx.r[8].s64 = 26;
+	// 82DB28E0: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB28E4: B1230006  sth r9, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DB28E8: 91430014  stw r10, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DB28EC: 9103000C  stw r8, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DB28F0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB28F8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB28F8 size=12
+    let mut pc: u32 = 0x82DB28F8;
+    'dispatch: loop {
+        match pc {
+            0x82DB28F8 => {
+    //   block [0x82DB28F8..0x82DB2904)
+	// 82DB28F8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB28FC: 386B0E48  addi r3, r11, 0xe48
+	ctx.r[3].s64 = ctx.r[11].s64 + 3656;
+	// 82DB2900: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2908(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2908 size=100
+    let mut pc: u32 = 0x82DB2908;
+    'dispatch: loop {
+        match pc {
+            0x82DB2908 => {
+    //   block [0x82DB2908..0x82DB2950)
+	// 82DB2908: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB290C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2910: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB2914: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2918: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB291C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2920: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB2924: 48013645  bl 0x82dc5f68
+	ctx.lr = 0x82DB2928;
+	sub_82DC5F68(ctx, base);
+	// 82DB2928: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB292C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2930: 419A0020  beq cr6, 0x82db2950
+	if ctx.cr[6].eq {
+	pc = 0x82DB2950; continue 'dispatch;
+	}
+	// 82DB2934: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2938: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB293C: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2940: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2944: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2948: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB294C: 4BFA297D  bl 0x82d552c8
+	ctx.lr = 0x82DB2950;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2950; continue 'dispatch;
+            }
+            0x82DB2950 => {
+    //   block [0x82DB2950..0x82DB296C)
+	// 82DB2950: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB2954: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2958: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB295C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2960: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB2964: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2968: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2970(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2970 size=4
+    let mut pc: u32 = 0x82DB2970;
+    'dispatch: loop {
+        match pc {
+            0x82DB2970 => {
+    //   block [0x82DB2970..0x82DB2974)
+	// 82DB2970: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2978(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2978 size=20
+    let mut pc: u32 = 0x82DB2978;
+    'dispatch: loop {
+        match pc {
+            0x82DB2978 => {
+    //   block [0x82DB2978..0x82DB298C)
+	// 82DB2978: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB297C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2980: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2984: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2988: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2990(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2990 size=40
+    let mut pc: u32 = 0x82DB2990;
+    'dispatch: loop {
+        match pc {
+            0x82DB2990 => {
+    //   block [0x82DB2990..0x82DB29B8)
+	// 82DB2990: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2994: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2998: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB299C: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB29A0: 396B4DF4  addi r11, r11, 0x4df4
+	ctx.r[11].s64 = ctx.r[11].s64 + 19956;
+	// 82DB29A4: 39200008  li r9, 8
+	ctx.r[9].s64 = 8;
+	// 82DB29A8: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB29AC: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB29B0: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB29B4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB29B8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB29B8 size=12
+    let mut pc: u32 = 0x82DB29B8;
+    'dispatch: loop {
+        match pc {
+            0x82DB29B8 => {
+    //   block [0x82DB29B8..0x82DB29C4)
+	// 82DB29B8: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB29BC: 386B4DF4  addi r3, r11, 0x4df4
+	ctx.r[3].s64 = ctx.r[11].s64 + 19956;
+	// 82DB29C0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB29C8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB29C8 size=20
+    let mut pc: u32 = 0x82DB29C8;
+    'dispatch: loop {
+        match pc {
+            0x82DB29C8 => {
+    //   block [0x82DB29C8..0x82DB29DC)
+	// 82DB29C8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB29CC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB29D0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB29D4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB29D8: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB29E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB29E0 size=40
+    let mut pc: u32 = 0x82DB29E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB29E0 => {
+    //   block [0x82DB29E0..0x82DB2A08)
+	// 82DB29E0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB29E4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB29E8: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB29EC: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB29F0: 396B4AC4  addi r11, r11, 0x4ac4
+	ctx.r[11].s64 = ctx.r[11].s64 + 19140;
+	// 82DB29F4: 39200007  li r9, 7
+	ctx.r[9].s64 = 7;
+	// 82DB29F8: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB29FC: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2A00: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB2A04: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A08(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A08 size=12
+    let mut pc: u32 = 0x82DB2A08;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A08 => {
+    //   block [0x82DB2A08..0x82DB2A14)
+	// 82DB2A08: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB2A0C: 386B4AC4  addi r3, r11, 0x4ac4
+	ctx.r[3].s64 = ctx.r[11].s64 + 19140;
+	// 82DB2A10: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A18(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A18 size=4
+    let mut pc: u32 = 0x82DB2A18;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A18 => {
+    //   block [0x82DB2A18..0x82DB2A1C)
+	// 82DB2A18: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A20(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A20 size=4
+    let mut pc: u32 = 0x82DB2A20;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A20 => {
+    //   block [0x82DB2A20..0x82DB2A24)
+	// 82DB2A20: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A28(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A28 size=16
+    let mut pc: u32 = 0x82DB2A28;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A28 => {
+    //   block [0x82DB2A28..0x82DB2A38)
+	// 82DB2A28: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DB2A2C: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2A30: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2A34: 480024A4  b 0x82db4ed8
+	sub_82DB4ED8(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A38(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A38 size=4
+    let mut pc: u32 = 0x82DB2A38;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A38 => {
+    //   block [0x82DB2A38..0x82DB2A3C)
+	// 82DB2A38: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A40(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A40 size=20
+    let mut pc: u32 = 0x82DB2A40;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A40 => {
+    //   block [0x82DB2A40..0x82DB2A54)
+	// 82DB2A40: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2A44: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2A48: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2A4C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2A50: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A58(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2A58 size=44
+    let mut pc: u32 = 0x82DB2A58;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A58 => {
+    //   block [0x82DB2A58..0x82DB2A84)
+	// 82DB2A58: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2A5C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2A60: 9421FEA0  stwu r1, -0x160(r1)
+	ea = ctx.r[1].u32.wrapping_add(-352 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2A64: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2A68: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB2A6C: 4800246D  bl 0x82db4ed8
+	ctx.lr = 0x82DB2A70;
+	sub_82DB4ED8(ctx, base);
+	// 82DB2A70: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB2A74: 38210160  addi r1, r1, 0x160
+	ctx.r[1].s64 = ctx.r[1].s64 + 352;
+	// 82DB2A78: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2A7C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2A80: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A88(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A88 size=4
+    let mut pc: u32 = 0x82DB2A88;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A88 => {
+    //   block [0x82DB2A88..0x82DB2A8C)
+	// 82DB2A88: 48001DB8  b 0x82db4840
+	sub_82DB4840(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2A90(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2A90 size=20
+    let mut pc: u32 = 0x82DB2A90;
+    'dispatch: loop {
+        match pc {
+            0x82DB2A90 => {
+    //   block [0x82DB2A90..0x82DB2AA4)
+	// 82DB2A90: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2A94: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2A98: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2A9C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2AA0: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2AA8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2AA8 size=136
+    let mut pc: u32 = 0x82DB2AA8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2AA8 => {
+    //   block [0x82DB2AA8..0x82DB2B30)
+	// 82DB2AA8: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2AAC: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2AB0: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2AB4: 38C00001  li r6, 1
+	ctx.r[6].s64 = 1;
+	// 82DB2AB8: 396B85E8  addi r11, r11, -0x7a18
+	ctx.r[11].s64 = ctx.r[11].s64 + -31256;
+	// 82DB2ABC: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB2AC0: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DB2AC4: 394A8610  addi r10, r10, -0x79f0
+	ctx.r[10].s64 = ctx.r[10].s64 + -31216;
+	// 82DB2AC8: B0C30006  sth r6, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[6].u16 ) };
+	// 82DB2ACC: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DB2AD0: 91630008  stw r11, 8(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DB2AD4: 3CE08203  lis r7, -0x7dfd
+	ctx.r[7].s64 = -2113732608;
+	// 82DB2AD8: 3CC08203  lis r6, -0x7dfd
+	ctx.r[6].s64 = -2113732608;
+	// 82DB2ADC: 3CA08203  lis r5, -0x7dfd
+	ctx.r[5].s64 = -2113732608;
+	// 82DB2AE0: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2AE4: 9143000C  stw r10, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[10].u32 ) };
+	// 82DB2AE8: 3C808203  lis r4, -0x7dfd
+	ctx.r[4].s64 = -2113732608;
+	// 82DB2AEC: 39298624  addi r9, r9, -0x79dc
+	ctx.r[9].s64 = ctx.r[9].s64 + -31196;
+	// 82DB2AF0: 39088604  addi r8, r8, -0x79fc
+	ctx.r[8].s64 = ctx.r[8].s64 + -31228;
+	// 82DB2AF4: 38E71544  addi r7, r7, 0x1544
+	ctx.r[7].s64 = ctx.r[7].s64 + 5444;
+	// 82DB2AF8: 38C61538  addi r6, r6, 0x1538
+	ctx.r[6].s64 = ctx.r[6].s64 + 5432;
+	// 82DB2AFC: 38A51524  addi r5, r5, 0x1524
+	ctx.r[5].s64 = ctx.r[5].s64 + 5412;
+	// 82DB2B00: 396B1518  addi r11, r11, 0x1518
+	ctx.r[11].s64 = ctx.r[11].s64 + 5400;
+	// 82DB2B04: 91230010  stw r9, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[9].u32 ) };
+	// 82DB2B08: 3884150C  addi r4, r4, 0x150c
+	ctx.r[4].s64 = ctx.r[4].s64 + 5388;
+	// 82DB2B0C: 91030014  stw r8, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[8].u32 ) };
+	// 82DB2B10: 39400003  li r10, 3
+	ctx.r[10].s64 = 3;
+	// 82DB2B14: 90E30000  stw r7, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[7].u32 ) };
+	// 82DB2B18: 90C30008  stw r6, 8(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[6].u32 ) };
+	// 82DB2B1C: 90A3000C  stw r5, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[5].u32 ) };
+	// 82DB2B20: 91630010  stw r11, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DB2B24: 90830014  stw r4, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[4].u32 ) };
+	// 82DB2B28: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DB2B2C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2B30(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2B30 size=12
+    let mut pc: u32 = 0x82DB2B30;
+    'dispatch: loop {
+        match pc {
+            0x82DB2B30 => {
+    //   block [0x82DB2B30..0x82DB2B3C)
+	// 82DB2B30: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2B34: 386B1544  addi r3, r11, 0x1544
+	ctx.r[3].s64 = ctx.r[11].s64 + 5444;
+	// 82DB2B38: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2B40(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2B40 size=100
+    let mut pc: u32 = 0x82DB2B40;
+    'dispatch: loop {
+        match pc {
+            0x82DB2B40 => {
+    //   block [0x82DB2B40..0x82DB2B88)
+	// 82DB2B40: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2B44: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2B48: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB2B4C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2B50: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2B54: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2B58: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB2B5C: 48013C6D  bl 0x82dc67c8
+	ctx.lr = 0x82DB2B60;
+	sub_82DC67C8(ctx, base);
+	// 82DB2B60: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2B64: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2B68: 419A0020  beq cr6, 0x82db2b88
+	if ctx.cr[6].eq {
+	pc = 0x82DB2B88; continue 'dispatch;
+	}
+	// 82DB2B6C: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2B70: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB2B74: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2B78: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2B7C: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2B80: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB2B84: 4BFA2745  bl 0x82d552c8
+	ctx.lr = 0x82DB2B88;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2B88; continue 'dispatch;
+            }
+            0x82DB2B88 => {
+    //   block [0x82DB2B88..0x82DB2BA4)
+	// 82DB2B88: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB2B8C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2B90: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2B94: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2B98: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB2B9C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2BA0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2BA8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2BA8 size=8
+    let mut pc: u32 = 0x82DB2BA8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2BA8 => {
+    //   block [0x82DB2BA8..0x82DB2BB0)
+	// 82DB2BA8: 3863FFF8  addi r3, r3, -8
+	ctx.r[3].s64 = ctx.r[3].s64 + -8;
+	// 82DB2BAC: 4BFFFF94  b 0x82db2b40
+	sub_82DB2B40(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2BB0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2BB0 size=8
+    let mut pc: u32 = 0x82DB2BB0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2BB0 => {
+    //   block [0x82DB2BB0..0x82DB2BB8)
+	// 82DB2BB0: 3863FFF4  addi r3, r3, -0xc
+	ctx.r[3].s64 = ctx.r[3].s64 + -12;
+	// 82DB2BB4: 4BFFFF8C  b 0x82db2b40
+	sub_82DB2B40(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2BB8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2BB8 size=8
+    let mut pc: u32 = 0x82DB2BB8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2BB8 => {
+    //   block [0x82DB2BB8..0x82DB2BC0)
+	// 82DB2BB8: 3863FFF0  addi r3, r3, -0x10
+	ctx.r[3].s64 = ctx.r[3].s64 + -16;
+	// 82DB2BBC: 4BFFFF84  b 0x82db2b40
+	sub_82DB2B40(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2BC0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2BC0 size=8
+    let mut pc: u32 = 0x82DB2BC0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2BC0 => {
+    //   block [0x82DB2BC0..0x82DB2BC8)
+	// 82DB2BC0: 3863FFEC  addi r3, r3, -0x14
+	ctx.r[3].s64 = ctx.r[3].s64 + -20;
+	// 82DB2BC4: 4BFFFF7C  b 0x82db2b40
+	sub_82DB2B40(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2BC8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2BC8 size=20
+    let mut pc: u32 = 0x82DB2BC8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2BC8 => {
+    //   block [0x82DB2BC8..0x82DB2BDC)
+	// 82DB2BC8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2BCC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2BD0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2BD4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2BD8: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2BE0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2BE0 size=64
+    let mut pc: u32 = 0x82DB2BE0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2BE0 => {
+    //   block [0x82DB2BE0..0x82DB2C20)
+	// 82DB2BE0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2BE4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2BE8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2BEC: 3D408200  lis r10, -0x7e00
+	ctx.r[10].s64 = -2113929216;
+	// 82DB2BF0: 3D208200  lis r9, -0x7e00
+	ctx.r[9].s64 = -2113929216;
+	// 82DB2BF4: 39000001  li r8, 1
+	ctx.r[8].s64 = 1;
+	// 82DB2BF8: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB2BFC: 394A3734  addi r10, r10, 0x3734
+	ctx.r[10].s64 = ctx.r[10].s64 + 14132;
+	// 82DB2C00: 392924EC  addi r9, r9, 0x24ec
+	ctx.r[9].s64 = ctx.r[9].s64 + 9452;
+	// 82DB2C04: 38E00013  li r7, 0x13
+	ctx.r[7].s64 = 19;
+	// 82DB2C08: B1030006  sth r8, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[8].u16 ) };
+	// 82DB2C0C: 91630014  stw r11, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[11].u32 ) };
+	// 82DB2C10: 91430000  stw r10, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB2C14: 91230014  stw r9, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[9].u32 ) };
+	// 82DB2C18: 90E3000C  stw r7, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[7].u32 ) };
+	// 82DB2C1C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2C20(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2C20 size=12
+    let mut pc: u32 = 0x82DB2C20;
+    'dispatch: loop {
+        match pc {
+            0x82DB2C20 => {
+    //   block [0x82DB2C20..0x82DB2C2C)
+	// 82DB2C20: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB2C24: 386B3734  addi r3, r11, 0x3734
+	ctx.r[3].s64 = ctx.r[11].s64 + 14132;
+	// 82DB2C28: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2C30(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2C30 size=8
+    let mut pc: u32 = 0x82DB2C30;
+    'dispatch: loop {
+        match pc {
+            0x82DB2C30 => {
+    //   block [0x82DB2C30..0x82DB2C38)
+	// 82DB2C30: 3863FFEC  addi r3, r3, -0x14
+	ctx.r[3].s64 = ctx.r[3].s64 + -20;
+	// 82DB2C34: 48000004  b 0x82db2c38
+	sub_82DB2C38(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2C38(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2C38 size=100
+    let mut pc: u32 = 0x82DB2C38;
+    'dispatch: loop {
+        match pc {
+            0x82DB2C38 => {
+    //   block [0x82DB2C38..0x82DB2C80)
+	// 82DB2C38: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2C3C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2C40: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB2C44: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2C48: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2C4C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2C50: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB2C54: 4800858D  bl 0x82dbb1e0
+	ctx.lr = 0x82DB2C58;
+	sub_82DBB1E0(ctx, base);
+	// 82DB2C58: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2C5C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2C60: 419A0020  beq cr6, 0x82db2c80
+	if ctx.cr[6].eq {
+	pc = 0x82DB2C80; continue 'dispatch;
+	}
+	// 82DB2C64: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2C68: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB2C6C: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2C70: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2C74: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2C78: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB2C7C: 4BFA264D  bl 0x82d552c8
+	ctx.lr = 0x82DB2C80;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2C80; continue 'dispatch;
+            }
+            0x82DB2C80 => {
+    //   block [0x82DB2C80..0x82DB2C9C)
+	// 82DB2C80: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB2C84: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2C88: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2C8C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2C90: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB2C94: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2C98: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2CA0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2CA0 size=20
+    let mut pc: u32 = 0x82DB2CA0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2CA0 => {
+    //   block [0x82DB2CA0..0x82DB2CB4)
+	// 82DB2CA0: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2CA4: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2CA8: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2CAC: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2CB0: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2CB8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2CB8 size=64
+    let mut pc: u32 = 0x82DB2CB8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2CB8 => {
+    //   block [0x82DB2CB8..0x82DB2CF8)
+	// 82DB2CB8: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2CBC: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2CC0: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2CC4: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB2CC8: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DB2CCC: 39000001  li r8, 1
+	ctx.r[8].s64 = 1;
+	// 82DB2CD0: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB2CD4: 394A16C8  addi r10, r10, 0x16c8
+	ctx.r[10].s64 = ctx.r[10].s64 + 5832;
+	// 82DB2CD8: 392916A4  addi r9, r9, 0x16a4
+	ctx.r[9].s64 = ctx.r[9].s64 + 5796;
+	// 82DB2CDC: 38E00002  li r7, 2
+	ctx.r[7].s64 = 2;
+	// 82DB2CE0: B1030006  sth r8, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[8].u16 ) };
+	// 82DB2CE4: 91630010  stw r11, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DB2CE8: 91430000  stw r10, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB2CEC: 91230010  stw r9, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[9].u32 ) };
+	// 82DB2CF0: 90E3000C  stw r7, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[7].u32 ) };
+	// 82DB2CF4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2CF8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2CF8 size=12
+    let mut pc: u32 = 0x82DB2CF8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2CF8 => {
+    //   block [0x82DB2CF8..0x82DB2D04)
+	// 82DB2CF8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2CFC: 386B16C8  addi r3, r11, 0x16c8
+	ctx.r[3].s64 = ctx.r[11].s64 + 5832;
+	// 82DB2D00: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2D08(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2D08 size=100
+    let mut pc: u32 = 0x82DB2D08;
+    'dispatch: loop {
+        match pc {
+            0x82DB2D08 => {
+    //   block [0x82DB2D08..0x82DB2D50)
+	// 82DB2D08: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2D0C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2D10: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB2D14: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2D18: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2D1C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2D20: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB2D24: 48013DED  bl 0x82dc6b10
+	ctx.lr = 0x82DB2D28;
+	sub_82DC6B10(ctx, base);
+	// 82DB2D28: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2D2C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2D30: 419A0020  beq cr6, 0x82db2d50
+	if ctx.cr[6].eq {
+	pc = 0x82DB2D50; continue 'dispatch;
+	}
+	// 82DB2D34: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2D38: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB2D3C: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2D40: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2D44: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2D48: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB2D4C: 4BFA257D  bl 0x82d552c8
+	ctx.lr = 0x82DB2D50;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2D50; continue 'dispatch;
+            }
+            0x82DB2D50 => {
+    //   block [0x82DB2D50..0x82DB2D6C)
+	// 82DB2D50: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB2D54: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2D58: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2D5C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2D60: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB2D64: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2D68: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2D70(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2D70 size=8
+    let mut pc: u32 = 0x82DB2D70;
+    'dispatch: loop {
+        match pc {
+            0x82DB2D70 => {
+    //   block [0x82DB2D70..0x82DB2D78)
+	// 82DB2D70: 3863FFF0  addi r3, r3, -0x10
+	ctx.r[3].s64 = ctx.r[3].s64 + -16;
+	// 82DB2D74: 4BFFFF94  b 0x82db2d08
+	sub_82DB2D08(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2D78(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2D78 size=4
+    let mut pc: u32 = 0x82DB2D78;
+    'dispatch: loop {
+        match pc {
+            0x82DB2D78 => {
+    //   block [0x82DB2D78..0x82DB2D7C)
+	// 82DB2D78: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2D80(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2D80 size=20
+    let mut pc: u32 = 0x82DB2D80;
+    'dispatch: loop {
+        match pc {
+            0x82DB2D80 => {
+    //   block [0x82DB2D80..0x82DB2D94)
+	// 82DB2D80: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2D84: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2D88: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2D8C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2D90: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2D98(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2D98 size=16
+    let mut pc: u32 = 0x82DB2D98;
+    'dispatch: loop {
+        match pc {
+            0x82DB2D98 => {
+    //   block [0x82DB2D98..0x82DB2DA8)
+	// 82DB2D98: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DB2D9C: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2DA0: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2DA4: 4801470C  b 0x82dc74b0
+	sub_82DC74B0(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2DA8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2DA8 size=4
+    let mut pc: u32 = 0x82DB2DA8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2DA8 => {
+    //   block [0x82DB2DA8..0x82DB2DAC)
+	// 82DB2DA8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2DB0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2DB0 size=44
+    let mut pc: u32 = 0x82DB2DB0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2DB0 => {
+    //   block [0x82DB2DB0..0x82DB2DDC)
+	// 82DB2DB0: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2DB4: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2DB8: 9421FF30  stwu r1, -0xd0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-208 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2DBC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2DC0: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB2DC4: 480146ED  bl 0x82dc74b0
+	ctx.lr = 0x82DB2DC8;
+	sub_82DC74B0(ctx, base);
+	// 82DB2DC8: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB2DCC: 382100D0  addi r1, r1, 0xd0
+	ctx.r[1].s64 = ctx.r[1].s64 + 208;
+	// 82DB2DD0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2DD4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2DD8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2DE0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2DE0 size=20
+    let mut pc: u32 = 0x82DB2DE0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2DE0 => {
+    //   block [0x82DB2DE0..0x82DB2DF4)
+	// 82DB2DE0: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2DE4: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2DE8: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2DEC: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2DF0: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2DF8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2DF8 size=52
+    let mut pc: u32 = 0x82DB2DF8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2DF8 => {
+    //   block [0x82DB2DF8..0x82DB2E2C)
+	// 82DB2DF8: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2DFC: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2E00: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB2E04: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB2E08: 396B346C  addi r11, r11, 0x346c
+	ctx.r[11].s64 = ctx.r[11].s64 + 13420;
+	// 82DB2E0C: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DB2E10: 394A00E8  addi r10, r10, 0xe8
+	ctx.r[10].s64 = ctx.r[10].s64 + 232;
+	// 82DB2E14: 3900000E  li r8, 0xe
+	ctx.r[8].s64 = 14;
+	// 82DB2E18: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2E1C: B1230006  sth r9, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DB2E20: 91430014  stw r10, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DB2E24: 9103000C  stw r8, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DB2E28: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2E30(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2E30 size=12
+    let mut pc: u32 = 0x82DB2E30;
+    'dispatch: loop {
+        match pc {
+            0x82DB2E30 => {
+    //   block [0x82DB2E30..0x82DB2E3C)
+	// 82DB2E30: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB2E34: 386B346C  addi r3, r11, 0x346c
+	ctx.r[3].s64 = ctx.r[11].s64 + 13420;
+	// 82DB2E38: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2E40(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2E40 size=144
+    let mut pc: u32 = 0x82DB2E40;
+    'dispatch: loop {
+        match pc {
+            0x82DB2E40 => {
+    //   block [0x82DB2E40..0x82DB2EA8)
+	// 82DB2E40: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2E44: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2E48: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB2E4C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2E50: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2E54: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2E58: 3BC5FFA0  addi r30, r5, -0x60
+	ctx.r[30].s64 = ctx.r[5].s64 + -96;
+	// 82DB2E5C: 7FC5F378  mr r5, r30
+	ctx.r[5].u64 = ctx.r[30].u64;
+	// 82DB2E60: 807F0018  lwz r3, 0x18(r31)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB2E64: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2E68: 816B0018  lwz r11, 0x18(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB2E6C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2E70: 4E800421  bctrl
+	ctx.lr = 0x82DB2E74;
+	crate::rt::call_indirect(ctx.ctr.u32);
+	// 82DB2E74: 7C6B1B78  mr r11, r3
+	ctx.r[11].u64 = ctx.r[3].u64;
+	// 82DB2E78: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB2E7C: 41980038  blt cr6, 0x82db2eb4
+	if ctx.cr[6].lt {
+	pc = 0x82DB2EB4; continue 'dispatch;
+	}
+	// 82DB2E80: 7F0BF000  cmpw cr6, r11, r30
+	ctx.cr[6].compare_i32(ctx.r[11].s32, ctx.r[30].s32, &mut ctx.xer);
+	// 82DB2E84: 41990030  bgt cr6, 0x82db2eb4
+	if ctx.cr[6].gt {
+	pc = 0x82DB2EB4; continue 'dispatch;
+	}
+	// 82DB2E88: 815F0018  lwz r10, 0x18(r31)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB2E8C: 393F0060  addi r9, r31, 0x60
+	ctx.r[9].s64 = ctx.r[31].s64 + 96;
+	// 82DB2E90: 7F0A4840  cmplw cr6, r10, r9
+	ctx.cr[6].compare_u32(ctx.r[10].u32, ctx.r[9].u32, &mut ctx.xer);
+	// 82DB2E94: 409A0014  bne cr6, 0x82db2ea8
+	if !ctx.cr[6].eq {
+	pc = 0x82DB2EA8; continue 'dispatch;
+	}
+	// 82DB2E98: 39400000  li r10, 0
+	ctx.r[10].s64 = 0;
+	// 82DB2E9C: 386B0060  addi r3, r11, 0x60
+	ctx.r[3].s64 = ctx.r[11].s64 + 96;
+	// 82DB2EA0: 915F001C  stw r10, 0x1c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(28 as u32), ctx.r[10].u32 ) };
+	// 82DB2EA4: 48000014  b 0x82db2eb8
+	pc = 0x82DB2EB8; continue 'dispatch;
+            }
+            0x82DB2EA8 => {
+    //   block [0x82DB2EA8..0x82DB2EB4)
+	// 82DB2EA8: 38600060  li r3, 0x60
+	ctx.r[3].s64 = 96;
+	// 82DB2EAC: 917F001C  stw r11, 0x1c(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(28 as u32), ctx.r[11].u32 ) };
+	// 82DB2EB0: 48000008  b 0x82db2eb8
+	pc = 0x82DB2EB8; continue 'dispatch;
+            }
+            0x82DB2EB4 => {
+    //   block [0x82DB2EB4..0x82DB2EB8)
+	// 82DB2EB4: 3860FFFF  li r3, -1
+	ctx.r[3].s64 = -1;
+	pc = 0x82DB2EB8; continue 'dispatch;
+            }
+            0x82DB2EB8 => {
+    //   block [0x82DB2EB8..0x82DB2ED0)
+	// 82DB2EB8: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2EBC: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2EC0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2EC4: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB2EC8: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2ECC: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2ED0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2ED0 size=4
+    let mut pc: u32 = 0x82DB2ED0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2ED0 => {
+    //   block [0x82DB2ED0..0x82DB2ED4)
+	// 82DB2ED0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2ED8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2ED8 size=20
+    let mut pc: u32 = 0x82DB2ED8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2ED8 => {
+    //   block [0x82DB2ED8..0x82DB2EEC)
+	// 82DB2ED8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2EDC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2EE0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2EE4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB2EE8: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2EF0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2EF0 size=52
+    let mut pc: u32 = 0x82DB2EF0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2EF0 => {
+    //   block [0x82DB2EF0..0x82DB2F24)
+	// 82DB2EF0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2EF4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB2EF8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2EFC: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB2F00: 396B191C  addi r11, r11, 0x191c
+	ctx.r[11].s64 = ctx.r[11].s64 + 6428;
+	// 82DB2F04: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DB2F08: 394A00E8  addi r10, r10, 0xe8
+	ctx.r[10].s64 = ctx.r[10].s64 + 232;
+	// 82DB2F0C: 3900000D  li r8, 0xd
+	ctx.r[8].s64 = 13;
+	// 82DB2F10: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2F14: B1230006  sth r9, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DB2F18: 91430014  stw r10, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[10].u32 ) };
+	// 82DB2F1C: 9103000C  stw r8, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+	// 82DB2F20: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2F28(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2F28 size=12
+    let mut pc: u32 = 0x82DB2F28;
+    'dispatch: loop {
+        match pc {
+            0x82DB2F28 => {
+    //   block [0x82DB2F28..0x82DB2F34)
+	// 82DB2F28: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB2F2C: 386B191C  addi r3, r11, 0x191c
+	ctx.r[3].s64 = ctx.r[11].s64 + 6428;
+	// 82DB2F30: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2F38(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2F38 size=116
+    let mut pc: u32 = 0x82DB2F38;
+    'dispatch: loop {
+        match pc {
+            0x82DB2F38 => {
+    //   block [0x82DB2F38..0x82DB2F90)
+	// 82DB2F38: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2F3C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2F40: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB2F44: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB2F48: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2F4C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB2F50: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB2F54: 387F0014  addi r3, r31, 0x14
+	ctx.r[3].s64 = ctx.r[31].s64 + 20;
+	// 82DB2F58: 4BFFEBE9  bl 0x82db1b40
+	ctx.lr = 0x82DB2F5C;
+	sub_82DB1B40(ctx, base);
+	// 82DB2F5C: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DB2F60: 57CA07FE  clrlwi r10, r30, 0x1f
+	ctx.r[10].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB2F64: 396B39E0  addi r11, r11, 0x39e0
+	ctx.r[11].s64 = ctx.r[11].s64 + 14816;
+	// 82DB2F68: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DB2F6C: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB2F70: 419A0020  beq cr6, 0x82db2f90
+	if ctx.cr[6].eq {
+	pc = 0x82DB2F90; continue 'dispatch;
+	}
+	// 82DB2F74: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB2F78: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB2F7C: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB2F80: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB2F84: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB2F88: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB2F8C: 4BFA233D  bl 0x82d552c8
+	ctx.lr = 0x82DB2F90;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB2F90; continue 'dispatch;
+            }
+            0x82DB2F90 => {
+    //   block [0x82DB2F90..0x82DB2FAC)
+	// 82DB2F90: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB2F94: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB2F98: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB2F9C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB2FA0: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB2FA4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB2FA8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2FB0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB2FB0 size=4
+    let mut pc: u32 = 0x82DB2FB0;
+    'dispatch: loop {
+        match pc {
+            0x82DB2FB0 => {
+    //   block [0x82DB2FB0..0x82DB2FB4)
+	// 82DB2FB0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB2FE8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB2FE8 size=44
+    let mut pc: u32 = 0x82DB2FE8;
+    'dispatch: loop {
+        match pc {
+            0x82DB2FE8 => {
+    //   block [0x82DB2FE8..0x82DB3014)
+	// 82DB2FE8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB2FEC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB2FF0: 9421FF40  stwu r1, -0xc0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-192 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB2FF4: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB2FF8: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB2FFC: 480099F5  bl 0x82dbc9f0
+	ctx.lr = 0x82DB3000;
+	sub_82DBC9F0(ctx, base);
+	// 82DB3000: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB3004: 382100C0  addi r1, r1, 0xc0
+	ctx.r[1].s64 = ctx.r[1].s64 + 192;
+	// 82DB3008: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB300C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB3010: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3018(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3018 size=4
+    let mut pc: u32 = 0x82DB3018;
+    'dispatch: loop {
+        match pc {
+            0x82DB3018 => {
+    //   block [0x82DB3018..0x82DB301C)
+	// 82DB3018: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3020(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3020 size=20
+    let mut pc: u32 = 0x82DB3020;
+    'dispatch: loop {
+        match pc {
+            0x82DB3020 => {
+    //   block [0x82DB3020..0x82DB3034)
+	// 82DB3020: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3024: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3028: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB302C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB3030: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3038(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3038 size=40
+    let mut pc: u32 = 0x82DB3038;
+    'dispatch: loop {
+        match pc {
+            0x82DB3038 => {
+    //   block [0x82DB3038..0x82DB3060)
+	// 82DB3038: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB303C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB3040: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3044: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB3048: 396B1B08  addi r11, r11, 0x1b08
+	ctx.r[11].s64 = ctx.r[11].s64 + 6920;
+	// 82DB304C: 39200016  li r9, 0x16
+	ctx.r[9].s64 = 22;
+	// 82DB3050: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB3054: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB3058: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB305C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3060(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3060 size=12
+    let mut pc: u32 = 0x82DB3060;
+    'dispatch: loop {
+        match pc {
+            0x82DB3060 => {
+    //   block [0x82DB3060..0x82DB306C)
+	// 82DB3060: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3064: 386B1B08  addi r3, r11, 0x1b08
+	ctx.r[3].s64 = ctx.r[11].s64 + 6920;
+	// 82DB3068: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3070(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3070 size=152
+    let mut pc: u32 = 0x82DB3070;
+    'dispatch: loop {
+        match pc {
+            0x82DB3070 => {
+    //   block [0x82DB3070..0x82DB30B8)
+	// 82DB3070: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB3074: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3078: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB307C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB3080: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3084: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3088: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB308C: 817F0018  lwz r11, 0x18(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(24 as u32) ) } as u64;
+	// 82DB3090: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB3094: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB3098: 409A0020  bne cr6, 0x82db30b8
+	if !ctx.cr[6].eq {
+	pc = 0x82DB30B8; continue 'dispatch;
+	}
+	// 82DB309C: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB30A0: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB30A4: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB30A8: 809F0010  lwz r4, 0x10(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB30AC: 55652834  slwi r5, r11, 5
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(5);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB30B0: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB30B4: 4BFA2215  bl 0x82d552c8
+	ctx.lr = 0x82DB30B8;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB30B8; continue 'dispatch;
+            }
+            0x82DB30B8 => {
+    //   block [0x82DB30B8..0x82DB30EC)
+	// 82DB30B8: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DB30BC: 57CA07FE  clrlwi r10, r30, 0x1f
+	ctx.r[10].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB30C0: 396B39E0  addi r11, r11, 0x39e0
+	ctx.r[11].s64 = ctx.r[11].s64 + 14816;
+	// 82DB30C4: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DB30C8: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB30CC: 419A0020  beq cr6, 0x82db30ec
+	if ctx.cr[6].eq {
+	pc = 0x82DB30EC; continue 'dispatch;
+	}
+	// 82DB30D0: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB30D4: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB30D8: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB30DC: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB30E0: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB30E4: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB30E8: 4BFA21E1  bl 0x82d552c8
+	ctx.lr = 0x82DB30EC;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB30EC; continue 'dispatch;
+            }
+            0x82DB30EC => {
+    //   block [0x82DB30EC..0x82DB3108)
+	// 82DB30EC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB30F0: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB30F4: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB30F8: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB30FC: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB3100: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB3104: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3138(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3138 size=44
+    let mut pc: u32 = 0x82DB3138;
+    'dispatch: loop {
+        match pc {
+            0x82DB3138 => {
+    //   block [0x82DB3138..0x82DB3164)
+	// 82DB3138: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB313C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3140: 9421FF40  stwu r1, -0xc0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-192 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3144: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3148: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB314C: 4800A795  bl 0x82dbd8e0
+	ctx.lr = 0x82DB3150;
+	sub_82DBD8E0(ctx, base);
+	// 82DB3150: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB3154: 382100C0  addi r1, r1, 0xc0
+	ctx.r[1].s64 = ctx.r[1].s64 + 192;
+	// 82DB3158: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB315C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB3160: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3168(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3168 size=4
+    let mut pc: u32 = 0x82DB3168;
+    'dispatch: loop {
+        match pc {
+            0x82DB3168 => {
+    //   block [0x82DB3168..0x82DB316C)
+	// 82DB3168: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3170(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3170 size=4
+    let mut pc: u32 = 0x82DB3170;
+    'dispatch: loop {
+        match pc {
+            0x82DB3170 => {
+    //   block [0x82DB3170..0x82DB3174)
+	// 82DB3170: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3178(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3178 size=20
+    let mut pc: u32 = 0x82DB3178;
+    'dispatch: loop {
+        match pc {
+            0x82DB3178 => {
+    //   block [0x82DB3178..0x82DB318C)
+	// 82DB3178: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB317C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3180: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3184: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB3188: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3190(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3190 size=40
+    let mut pc: u32 = 0x82DB3190;
+    'dispatch: loop {
+        match pc {
+            0x82DB3190 => {
+    //   block [0x82DB3190..0x82DB31B8)
+	// 82DB3190: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB3194: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB3198: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB319C: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB31A0: 396B1E94  addi r11, r11, 0x1e94
+	ctx.r[11].s64 = ctx.r[11].s64 + 7828;
+	// 82DB31A4: 39200009  li r9, 9
+	ctx.r[9].s64 = 9;
+	// 82DB31A8: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB31AC: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB31B0: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB31B4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB31B8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB31B8 size=12
+    let mut pc: u32 = 0x82DB31B8;
+    'dispatch: loop {
+        match pc {
+            0x82DB31B8 => {
+    //   block [0x82DB31B8..0x82DB31C4)
+	// 82DB31B8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB31BC: 386B1E94  addi r3, r11, 0x1e94
+	ctx.r[3].s64 = ctx.r[11].s64 + 7828;
+	// 82DB31C0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB31C8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB31C8 size=152
+    let mut pc: u32 = 0x82DB31C8;
+    'dispatch: loop {
+        match pc {
+            0x82DB31C8 => {
+    //   block [0x82DB31C8..0x82DB3210)
+	// 82DB31C8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB31CC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB31D0: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB31D4: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB31D8: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB31DC: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB31E0: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB31E4: 817F001C  lwz r11, 0x1c(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(28 as u32) ) } as u64;
+	// 82DB31E8: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB31EC: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB31F0: 409A0020  bne cr6, 0x82db3210
+	if !ctx.cr[6].eq {
+	pc = 0x82DB3210; continue 'dispatch;
+	}
+	// 82DB31F4: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB31F8: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB31FC: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB3200: 809F0014  lwz r4, 0x14(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(20 as u32) ) } as u64;
+	// 82DB3204: 55652036  slwi r5, r11, 4
+	ctx.r[5].u32 = ctx.r[11].u32.wrapping_shl(4);
+	ctx.r[5].u64 = ctx.r[5].u32 as u64;
+	// 82DB3208: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB320C: 4BFA20BD  bl 0x82d552c8
+	ctx.lr = 0x82DB3210;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB3210; continue 'dispatch;
+            }
+            0x82DB3210 => {
+    //   block [0x82DB3210..0x82DB3244)
+	// 82DB3210: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DB3214: 57CA07FE  clrlwi r10, r30, 0x1f
+	ctx.r[10].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB3218: 396B39E0  addi r11, r11, 0x39e0
+	ctx.r[11].s64 = ctx.r[11].s64 + 14816;
+	// 82DB321C: 2B0A0000  cmplwi cr6, r10, 0
+	ctx.cr[6].compare_u32(ctx.r[10].u32, 0 as u32, &mut ctx.xer);
+	// 82DB3220: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB3224: 419A0020  beq cr6, 0x82db3244
+	if ctx.cr[6].eq {
+	pc = 0x82DB3244; continue 'dispatch;
+	}
+	// 82DB3228: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB322C: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB3230: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB3234: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB3238: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB323C: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB3240: 4BFA2089  bl 0x82d552c8
+	ctx.lr = 0x82DB3244;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB3244; continue 'dispatch;
+            }
+            0x82DB3244 => {
+    //   block [0x82DB3244..0x82DB3260)
+	// 82DB3244: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3248: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB324C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB3250: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB3254: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB3258: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB325C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3260(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3260 size=20
+    let mut pc: u32 = 0x82DB3260;
+    'dispatch: loop {
+        match pc {
+            0x82DB3260 => {
+    //   block [0x82DB3260..0x82DB3274)
+	// 82DB3260: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3264: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3268: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB326C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB3270: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3278(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3278 size=32
+    let mut pc: u32 = 0x82DB3278;
+    'dispatch: loop {
+        match pc {
+            0x82DB3278 => {
+    //   block [0x82DB3278..0x82DB3298)
+	// 82DB3278: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB327C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB3280: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3284: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB3288: 396B86C8  addi r11, r11, -0x7938
+	ctx.r[11].s64 = ctx.r[11].s64 + -31032;
+	// 82DB328C: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB3290: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB3294: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3298(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3298 size=12
+    let mut pc: u32 = 0x82DB3298;
+    'dispatch: loop {
+        match pc {
+            0x82DB3298 => {
+    //   block [0x82DB3298..0x82DB32A4)
+	// 82DB3298: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB329C: 386B86C8  addi r3, r11, -0x7938
+	ctx.r[3].s64 = ctx.r[11].s64 + -31032;
+	// 82DB32A0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB32A8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB32A8 size=124
+    let mut pc: u32 = 0x82DB32A8;
+    'dispatch: loop {
+        match pc {
+            0x82DB32A8 => {
+    //   block [0x82DB32A8..0x82DB3324)
+	// 82DB32A8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB32AC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB32B0: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB32B4: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB32B8: 39400000  li r10, 0
+	ctx.r[10].s64 = 0;
+	// 82DB32BC: 39610050  addi r11, r1, 0x50
+	ctx.r[11].s64 = ctx.r[1].s64 + 80;
+	// 82DB32C0: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB32C4: 99410050  stb r10, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[10].u8 ) };
+	// 82DB32C8: 888B0000  lbz r4, 0(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB32CC: 4800D23D  bl 0x82dc0508
+	ctx.lr = 0x82DB32D0;
+	sub_82DC0508(ctx, base);
+	// 82DB32D0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB32D4: 4801ADA5  bl 0x82dce078
+	ctx.lr = 0x82DB32D8;
+	sub_82DCE078(ctx, base);
+	// 82DB32D8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB32DC: 480183CD  bl 0x82dcb6a8
+	ctx.lr = 0x82DB32E0;
+	sub_82DCB6A8(ctx, base);
+	// 82DB32E0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB32E4: 4801774D  bl 0x82dcaa30
+	ctx.lr = 0x82DB32E8;
+	sub_82DCAA30(ctx, base);
+	// 82DB32E8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB32EC: 48016BFD  bl 0x82dc9ee8
+	ctx.lr = 0x82DB32F0;
+	sub_82DC9EE8(ctx, base);
+	// 82DB32F0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB32F4: 4805569D  bl 0x82e08990
+	ctx.lr = 0x82DB32F8;
+	sub_82E08990(ctx, base);
+	// 82DB32F8: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB32FC: 39610050  addi r11, r1, 0x50
+	ctx.r[11].s64 = ctx.r[1].s64 + 80;
+	// 82DB3300: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3304: 99410050  stb r10, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[10].u8 ) };
+	// 82DB3308: 888B0000  lbz r4, 0(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB330C: 4800D1FD  bl 0x82dc0508
+	ctx.lr = 0x82DB3310;
+	sub_82DC0508(ctx, base);
+	// 82DB3310: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB3314: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB3318: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB331C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB3320: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3328(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3328 size=76
+    let mut pc: u32 = 0x82DB3328;
+    'dispatch: loop {
+        match pc {
+            0x82DB3328 => {
+    //   block [0x82DB3328..0x82DB3374)
+	// 82DB3328: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB332C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3330: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB3334: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3338: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB333C: 4801EB85  bl 0x82dd1ec0
+	ctx.lr = 0x82DB3340;
+	sub_82DD1EC0(ctx, base);
+	// 82DB3340: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3344: 4801D8C5  bl 0x82dd0c08
+	ctx.lr = 0x82DB3348;
+	sub_82DD0C08(ctx, base);
+	// 82DB3348: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB334C: 480561FD  bl 0x82e09548
+	ctx.lr = 0x82DB3350;
+	sub_82E09548(ctx, base);
+	// 82DB3350: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3354: 4801BC45  bl 0x82dcef98
+	ctx.lr = 0x82DB3358;
+	sub_82DCEF98(ctx, base);
+	// 82DB3358: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB335C: 48055A25  bl 0x82e08d80
+	ctx.lr = 0x82DB3360;
+	sub_82E08D80(ctx, base);
+	// 82DB3360: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB3364: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB3368: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB336C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB3370: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3378(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3378 size=164
+    let mut pc: u32 = 0x82DB3378;
+    'dispatch: loop {
+        match pc {
+            0x82DB3378 => {
+    //   block [0x82DB3378..0x82DB341C)
+	// 82DB3378: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB337C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3380: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB3384: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3388: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB338C: 48027C85  bl 0x82ddb010
+	ctx.lr = 0x82DB3390;
+	sub_82DDB010(ctx, base);
+	// 82DB3390: 38A00001  li r5, 1
+	ctx.r[5].s64 = 1;
+	// 82DB3394: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DB3398: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB339C: 480587ED  bl 0x82e0bb88
+	ctx.lr = 0x82DB33A0;
+	sub_82E0BB88(ctx, base);
+	// 82DB33A0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33A4: 48057E55  bl 0x82e0b1f8
+	ctx.lr = 0x82DB33A8;
+	sub_82E0B1F8(ctx, base);
+	// 82DB33A8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33AC: 48027A65  bl 0x82ddae10
+	ctx.lr = 0x82DB33B0;
+	sub_82DDAE10(ctx, base);
+	// 82DB33B0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33B4: 48056F7D  bl 0x82e0a330
+	ctx.lr = 0x82DB33B8;
+	sub_82E0A330(ctx, base);
+	// 82DB33B8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33BC: 4802719D  bl 0x82dda558
+	ctx.lr = 0x82DB33C0;
+	sub_82DDA558(ctx, base);
+	// 82DB33C0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33C4: 480263E5  bl 0x82dd97a8
+	ctx.lr = 0x82DB33C8;
+	sub_82DD97A8(ctx, base);
+	// 82DB33C8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33CC: 4802531D  bl 0x82dd86e8
+	ctx.lr = 0x82DB33D0;
+	sub_82DD86E8(ctx, base);
+	// 82DB33D0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33D4: 480245C5  bl 0x82dd7998
+	ctx.lr = 0x82DB33D8;
+	sub_82DD7998(ctx, base);
+	// 82DB33D8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33DC: 480235E5  bl 0x82dd69c0
+	ctx.lr = 0x82DB33E0;
+	sub_82DD69C0(ctx, base);
+	// 82DB33E0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33E4: 48022265  bl 0x82dd5648
+	ctx.lr = 0x82DB33E8;
+	sub_82DD5648(ctx, base);
+	// 82DB33E8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33EC: 48056A55  bl 0x82e09e40
+	ctx.lr = 0x82DB33F0;
+	sub_82E09E40(ctx, base);
+	// 82DB33F0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33F4: 48020B65  bl 0x82dd3f58
+	ctx.lr = 0x82DB33F8;
+	sub_82DD3F58(ctx, base);
+	// 82DB33F8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB33FC: 4801F835  bl 0x82dd2c30
+	ctx.lr = 0x82DB3400;
+	sub_82DD2C30(ctx, base);
+	// 82DB3400: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3404: 480176FD  bl 0x82dcab00
+	ctx.lr = 0x82DB3408;
+	sub_82DCAB00(ctx, base);
+	// 82DB3408: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB340C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB3410: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB3414: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB3418: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3420(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3420 size=220
+    let mut pc: u32 = 0x82DB3420;
+    'dispatch: loop {
+        match pc {
+            0x82DB3420 => {
+    //   block [0x82DB3420..0x82DB34FC)
+	// 82DB3420: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB3424: 4BEF5FE9  bl 0x82ca940c
+	ctx.lr = 0x82DB3428;
+	sub_82CA93D0(ctx, base);
+	// 82DB3428: 9421FF80  stwu r1, -0x80(r1)
+	ea = ctx.r[1].u32.wrapping_add(-128 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB342C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3430: 4802CC91  bl 0x82de00c0
+	ctx.lr = 0x82DB3434;
+	sub_82DE00C0(ctx, base);
+	// 82DB3434: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3438: 4802C7E1  bl 0x82ddfc18
+	ctx.lr = 0x82DB343C;
+	sub_82DDFC18(ctx, base);
+	// 82DB343C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3440: 4802B1B9  bl 0x82dde5f8
+	ctx.lr = 0x82DB3444;
+	sub_82DDE5F8(ctx, base);
+	// 82DB3444: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3448: 4BFFFE61  bl 0x82db32a8
+	ctx.lr = 0x82DB344C;
+	sub_82DB32A8(ctx, base);
+	// 82DB344C: 3BA00000  li r29, 0
+	ctx.r[29].s64 = 0;
+	// 82DB3450: 39610050  addi r11, r1, 0x50
+	ctx.r[11].s64 = ctx.r[1].s64 + 80;
+	// 82DB3454: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3458: 9BA10050  stb r29, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[29].u8 ) };
+	// 82DB345C: 888B0000  lbz r4, 0(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3460: 4800D0A9  bl 0x82dc0508
+	ctx.lr = 0x82DB3464;
+	sub_82DC0508(ctx, base);
+	// 82DB3464: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3468: 4802A599  bl 0x82ddda00
+	ctx.lr = 0x82DB346C;
+	sub_82DDDA00(ctx, base);
+	// 82DB346C: 3BC00001  li r30, 1
+	ctx.r[30].s64 = 1;
+	// 82DB3470: 39610050  addi r11, r1, 0x50
+	ctx.r[11].s64 = ctx.r[1].s64 + 80;
+	// 82DB3474: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3478: 9BC10050  stb r30, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[30].u8 ) };
+	// 82DB347C: 888B0000  lbz r4, 0(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3480: 4800D089  bl 0x82dc0508
+	ctx.lr = 0x82DB3484;
+	sub_82DC0508(ctx, base);
+	// 82DB3484: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3488: 4801EA39  bl 0x82dd1ec0
+	ctx.lr = 0x82DB348C;
+	sub_82DD1EC0(ctx, base);
+	// 82DB348C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3490: 4801D779  bl 0x82dd0c08
+	ctx.lr = 0x82DB3494;
+	sub_82DD0C08(ctx, base);
+	// 82DB3494: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB3498: 480560B1  bl 0x82e09548
+	ctx.lr = 0x82DB349C;
+	sub_82E09548(ctx, base);
+	// 82DB349C: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34A0: 4801BAF9  bl 0x82dcef98
+	ctx.lr = 0x82DB34A4;
+	sub_82DCEF98(ctx, base);
+	// 82DB34A4: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34A8: 480558D9  bl 0x82e08d80
+	ctx.lr = 0x82DB34AC;
+	sub_82E08D80(ctx, base);
+	// 82DB34AC: 39610050  addi r11, r1, 0x50
+	ctx.r[11].s64 = ctx.r[1].s64 + 80;
+	// 82DB34B0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34B4: 9BA10050  stb r29, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[29].u8 ) };
+	// 82DB34B8: 888B0000  lbz r4, 0(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB34BC: 4800D04D  bl 0x82dc0508
+	ctx.lr = 0x82DB34C0;
+	sub_82DC0508(ctx, base);
+	// 82DB34C0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34C4: 48059E65  bl 0x82e0d328
+	ctx.lr = 0x82DB34C8;
+	sub_82E0D328(ctx, base);
+	// 82DB34C8: 39610050  addi r11, r1, 0x50
+	ctx.r[11].s64 = ctx.r[1].s64 + 80;
+	// 82DB34CC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34D0: 9BC10050  stb r30, 0x50(r1)
+	unsafe { crate::rt::store_u8( base as *mut u8, ctx.r[1].u32.wrapping_add(80 as u32), ctx.r[30].u8 ) };
+	// 82DB34D4: 888B0000  lbz r4, 0(r11)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u8( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB34D8: 4800D031  bl 0x82dc0508
+	ctx.lr = 0x82DB34DC;
+	sub_82DC0508(ctx, base);
+	// 82DB34DC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34E0: 48028F49  bl 0x82ddc428
+	ctx.lr = 0x82DB34E4;
+	sub_82DDC428(ctx, base);
+	// 82DB34E4: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34E8: 48028501  bl 0x82ddb9e8
+	ctx.lr = 0x82DB34EC;
+	sub_82DDB9E8(ctx, base);
+	// 82DB34EC: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB34F0: 4BFFFE89  bl 0x82db3378
+	ctx.lr = 0x82DB34F4;
+	sub_82DB3378(ctx, base);
+	// 82DB34F4: 38210080  addi r1, r1, 0x80
+	ctx.r[1].s64 = ctx.r[1].s64 + 128;
+	// 82DB34F8: 4BEF5F64  b 0x82ca945c
+	sub_82CA9420(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3500(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3500 size=4
+    let mut pc: u32 = 0x82DB3500;
+    'dispatch: loop {
+        match pc {
+            0x82DB3500 => {
+    //   block [0x82DB3500..0x82DB3504)
+	// 82DB3500: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3520(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3520 size=88
+    let mut pc: u32 = 0x82DB3520;
+    'dispatch: loop {
+        match pc {
+            0x82DB3520 => {
+    //   block [0x82DB3520..0x82DB3564)
+	// 82DB3520: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB3524: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3528: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB352C: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3530: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3534: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DB3538: 419A002C  beq cr6, 0x82db3564
+	if ctx.cr[6].eq {
+	pc = 0x82DB3564; continue 'dispatch;
+	}
+	// 82DB353C: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DB3540: 480094B1  bl 0x82dbc9f0
+	ctx.lr = 0x82DB3544;
+	sub_82DBC9F0(ctx, base);
+	// 82DB3544: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3548: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB354C: 396B2020  addi r11, r11, 0x2020
+	ctx.r[11].s64 = ctx.r[11].s64 + 8224;
+	// 82DB3550: 394A1FFC  addi r10, r10, 0x1ffc
+	ctx.r[10].s64 = ctx.r[10].s64 + 8188;
+	// 82DB3554: 39200014  li r9, 0x14
+	ctx.r[9].s64 = 20;
+	// 82DB3558: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB355C: 915F0010  stw r10, 0x10(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(16 as u32), ctx.r[10].u32 ) };
+	// 82DB3560: 913F000C  stw r9, 0xc(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	pc = 0x82DB3564; continue 'dispatch;
+            }
+            0x82DB3564 => {
+    //   block [0x82DB3564..0x82DB3578)
+	// 82DB3564: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB3568: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB356C: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB3570: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB3574: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3578(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3578 size=48
+    let mut pc: u32 = 0x82DB3578;
+    'dispatch: loop {
+        match pc {
+            0x82DB3578 => {
+    //   block [0x82DB3578..0x82DB35A8)
+	// 82DB3578: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB357C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3580: 9421FF40  stwu r1, -0xc0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-192 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3584: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3588: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB358C: 48009465  bl 0x82dbc9f0
+	ctx.lr = 0x82DB3590;
+	sub_82DBC9F0(ctx, base);
+	// 82DB3590: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3594: 386B2020  addi r3, r11, 0x2020
+	ctx.r[3].s64 = ctx.r[11].s64 + 8224;
+	// 82DB3598: 382100C0  addi r1, r1, 0xc0
+	ctx.r[1].s64 = ctx.r[1].s64 + 192;
+	// 82DB359C: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB35A0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB35A4: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB35A8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB35A8 size=172
+    let mut pc: u32 = 0x82DB35A8;
+    'dispatch: loop {
+        match pc {
+            0x82DB35A8 => {
+    //   block [0x82DB35A8..0x82DB35E8)
+	// 82DB35A8: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB35AC: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB35B0: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB35B4: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB35B8: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB35BC: 817F0048  lwz r11, 0x48(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(72 as u32) ) } as u64;
+	// 82DB35C0: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB35C4: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB35C8: 409A0020  bne cr6, 0x82db35e8
+	if !ctx.cr[6].eq {
+	pc = 0x82DB35E8; continue 'dispatch;
+	}
+	// 82DB35CC: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB35D0: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB35D4: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB35D8: 809F0040  lwz r4, 0x40(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(64 as u32) ) } as u64;
+	// 82DB35DC: 5565087C  rlwinm r5, r11, 1, 1, 0x1e
+	ctx.r[5].u64 = ctx.r[11].u32 as u64 & 0x7FFFFFFFu64;
+	// 82DB35E0: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB35E4: 4BFA1CE5  bl 0x82d552c8
+	ctx.lr = 0x82DB35E8;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB35E8; continue 'dispatch;
+            }
+            0x82DB35E8 => {
+    //   block [0x82DB35E8..0x82DB3618)
+	// 82DB35E8: 817F003C  lwz r11, 0x3c(r31)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(60 as u32) ) } as u64;
+	// 82DB35EC: 556A0000  rlwinm r10, r11, 0, 0, 0
+	ctx.r[10].u64 = ctx.r[11].u32 as u64 & 0xFFFFFFFFu64;
+	// 82DB35F0: 2F0A0000  cmpwi cr6, r10, 0
+	ctx.cr[6].compare_i32(ctx.r[10].s32, 0, &mut ctx.xer);
+	// 82DB35F4: 409A0024  bne cr6, 0x82db3618
+	if !ctx.cr[6].eq {
+	pc = 0x82DB3618; continue 'dispatch;
+	}
+	// 82DB35F8: 814D0000  lwz r10, 0(r13)
+	ctx.r[10].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB35FC: 39200004  li r9, 4
+	ctx.r[9].s64 = 4;
+	// 82DB3600: 556B00BE  clrlwi r11, r11, 2
+	ctx.r[11].u64 = ctx.r[11].u32 as u64 & 0x3FFFFFFFu64;
+	// 82DB3604: 809F0034  lwz r4, 0x34(r31)
+	ctx.r[4].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(52 as u32) ) } as u64;
+	// 82DB3608: 38C00016  li r6, 0x16
+	ctx.r[6].s64 = 22;
+	// 82DB360C: 1CAB0038  mulli r5, r11, 0x38
+	ctx.r[5].s32 = ((ctx.r[11].s32 as i64 * 56 as i64) as i32);
+	ctx.r[5].s64 = ctx.r[5].s32 as i64;
+	// 82DB3610: 7C69502E  lwzx r3, r9, r10
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[9].u32.wrapping_add(ctx.r[10].u32)) } as u64;
+	// 82DB3614: 4BFA1CB5  bl 0x82d552c8
+	ctx.lr = 0x82DB3618;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB3618; continue 'dispatch;
+            }
+            0x82DB3618 => {
+    //   block [0x82DB3618..0x82DB3628)
+	// 82DB3618: 2B1F0000  cmplwi cr6, r31, 0
+	ctx.cr[6].compare_u32(ctx.r[31].u32, 0 as u32, &mut ctx.xer);
+	// 82DB361C: 393F0010  addi r9, r31, 0x10
+	ctx.r[9].s64 = ctx.r[31].s64 + 16;
+	// 82DB3620: 409A0008  bne cr6, 0x82db3628
+	if !ctx.cr[6].eq {
+	pc = 0x82DB3628; continue 'dispatch;
+	}
+	// 82DB3624: 39200000  li r9, 0
+	ctx.r[9].s64 = 0;
+	pc = 0x82DB3628; continue 'dispatch;
+            }
+            0x82DB3628 => {
+    //   block [0x82DB3628..0x82DB3654)
+	// 82DB3628: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB362C: 3D408202  lis r10, -0x7dfe
+	ctx.r[10].s64 = -2113798144;
+	// 82DB3630: 396B00C4  addi r11, r11, 0xc4
+	ctx.r[11].s64 = ctx.r[11].s64 + 196;
+	// 82DB3634: 394A39E0  addi r10, r10, 0x39e0
+	ctx.r[10].s64 = ctx.r[10].s64 + 14816;
+	// 82DB3638: 91690000  stw r11, 0(r9)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[9].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB363C: 915F0000  stw r10, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[10].u32 ) };
+	// 82DB3640: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB3644: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB3648: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB364C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB3650: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3658(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3658 size=8
+    let mut pc: u32 = 0x82DB3658;
+    'dispatch: loop {
+        match pc {
+            0x82DB3658 => {
+    //   block [0x82DB3658..0x82DB3660)
+	// 82DB3658: 3863FFF0  addi r3, r3, -0x10
+	ctx.r[3].s64 = ctx.r[3].s64 + -16;
+	// 82DB365C: 48000004  b 0x82db3660
+	sub_82DB3660(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3660(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3660 size=100
+    let mut pc: u32 = 0x82DB3660;
+    'dispatch: loop {
+        match pc {
+            0x82DB3660 => {
+    //   block [0x82DB3660..0x82DB36A8)
+	// 82DB3660: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB3664: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3668: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB366C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB3670: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3674: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3678: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB367C: 4BFFFF2D  bl 0x82db35a8
+	ctx.lr = 0x82DB3680;
+	sub_82DB35A8(ctx, base);
+	// 82DB3680: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB3684: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB3688: 419A0020  beq cr6, 0x82db36a8
+	if ctx.cr[6].eq {
+	pc = 0x82DB36A8; continue 'dispatch;
+	}
+	// 82DB368C: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3690: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB3694: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB3698: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB369C: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB36A0: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB36A4: 4BFA1C25  bl 0x82d552c8
+	ctx.lr = 0x82DB36A8;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB36A8; continue 'dispatch;
+            }
+            0x82DB36A8 => {
+    //   block [0x82DB36A8..0x82DB36C4)
+	// 82DB36A8: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB36AC: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB36B0: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB36B4: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB36B8: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB36BC: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB36C0: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB36C8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB36C8 size=20
+    let mut pc: u32 = 0x82DB36C8;
+    'dispatch: loop {
+        match pc {
+            0x82DB36C8 => {
+    //   block [0x82DB36C8..0x82DB36DC)
+	// 82DB36C8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB36CC: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB36D0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB36D4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB36D8: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB36E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB36E0 size=136
+    let mut pc: u32 = 0x82DB36E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB36E0 => {
+    //   block [0x82DB36E0..0x82DB3768)
+	// 82DB36E0: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB36E4: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB36E8: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB36EC: 38C00001  li r6, 1
+	ctx.r[6].s64 = 1;
+	// 82DB36F0: 396B85E8  addi r11, r11, -0x7a18
+	ctx.r[11].s64 = ctx.r[11].s64 + -31256;
+	// 82DB36F4: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB36F8: 3D208203  lis r9, -0x7dfd
+	ctx.r[9].s64 = -2113732608;
+	// 82DB36FC: 394A8610  addi r10, r10, -0x79f0
+	ctx.r[10].s64 = ctx.r[10].s64 + -31216;
+	// 82DB3700: B0C30006  sth r6, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[6].u16 ) };
+	// 82DB3704: 3D008203  lis r8, -0x7dfd
+	ctx.r[8].s64 = -2113732608;
+	// 82DB3708: 91630008  stw r11, 8(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[11].u32 ) };
+	// 82DB370C: 3CE08203  lis r7, -0x7dfd
+	ctx.r[7].s64 = -2113732608;
+	// 82DB3710: 3CC08203  lis r6, -0x7dfd
+	ctx.r[6].s64 = -2113732608;
+	// 82DB3714: 3CA08203  lis r5, -0x7dfd
+	ctx.r[5].s64 = -2113732608;
+	// 82DB3718: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB371C: 9143000C  stw r10, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[10].u32 ) };
+	// 82DB3720: 3C808203  lis r4, -0x7dfd
+	ctx.r[4].s64 = -2113732608;
+	// 82DB3724: 39298624  addi r9, r9, -0x79dc
+	ctx.r[9].s64 = ctx.r[9].s64 + -31196;
+	// 82DB3728: 39088604  addi r8, r8, -0x79fc
+	ctx.r[8].s64 = ctx.r[8].s64 + -31228;
+	// 82DB372C: 38E72114  addi r7, r7, 0x2114
+	ctx.r[7].s64 = ctx.r[7].s64 + 8468;
+	// 82DB3730: 38C62108  addi r6, r6, 0x2108
+	ctx.r[6].s64 = ctx.r[6].s64 + 8456;
+	// 82DB3734: 38A520F4  addi r5, r5, 0x20f4
+	ctx.r[5].s64 = ctx.r[5].s64 + 8436;
+	// 82DB3738: 396B20E8  addi r11, r11, 0x20e8
+	ctx.r[11].s64 = ctx.r[11].s64 + 8424;
+	// 82DB373C: 91230010  stw r9, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[9].u32 ) };
+	// 82DB3740: 388420DC  addi r4, r4, 0x20dc
+	ctx.r[4].s64 = ctx.r[4].s64 + 8412;
+	// 82DB3744: 91030014  stw r8, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[8].u32 ) };
+	// 82DB3748: 39400002  li r10, 2
+	ctx.r[10].s64 = 2;
+	// 82DB374C: 90E30000  stw r7, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[7].u32 ) };
+	// 82DB3750: 90C30008  stw r6, 8(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(8 as u32), ctx.r[6].u32 ) };
+	// 82DB3754: 90A3000C  stw r5, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[5].u32 ) };
+	// 82DB3758: 91630010  stw r11, 0x10(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(16 as u32), ctx.r[11].u32 ) };
+	// 82DB375C: 90830014  stw r4, 0x14(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(20 as u32), ctx.r[4].u32 ) };
+	// 82DB3760: 91430020  stw r10, 0x20(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(32 as u32), ctx.r[10].u32 ) };
+	// 82DB3764: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3768(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3768 size=12
+    let mut pc: u32 = 0x82DB3768;
+    'dispatch: loop {
+        match pc {
+            0x82DB3768 => {
+    //   block [0x82DB3768..0x82DB3774)
+	// 82DB3768: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB376C: 386B2114  addi r3, r11, 0x2114
+	ctx.r[3].s64 = ctx.r[11].s64 + 8468;
+	// 82DB3770: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3778(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3778 size=100
+    let mut pc: u32 = 0x82DB3778;
+    'dispatch: loop {
+        match pc {
+            0x82DB3778 => {
+    //   block [0x82DB3778..0x82DB37C0)
+	// 82DB3778: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB377C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3780: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB3784: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB3788: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB378C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3790: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB3794: 4800391D  bl 0x82db70b0
+	ctx.lr = 0x82DB3798;
+	sub_82DB70B0(ctx, base);
+	// 82DB3798: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB379C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB37A0: 419A0020  beq cr6, 0x82db37c0
+	if ctx.cr[6].eq {
+	pc = 0x82DB37C0; continue 'dispatch;
+	}
+	// 82DB37A4: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB37A8: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB37AC: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB37B0: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB37B4: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB37B8: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB37BC: 4BFA1B0D  bl 0x82d552c8
+	ctx.lr = 0x82DB37C0;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB37C0; continue 'dispatch;
+            }
+            0x82DB37C0 => {
+    //   block [0x82DB37C0..0x82DB37DC)
+	// 82DB37C0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB37C4: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB37C8: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB37CC: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB37D0: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB37D4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB37D8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB37E0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB37E0 size=8
+    let mut pc: u32 = 0x82DB37E0;
+    'dispatch: loop {
+        match pc {
+            0x82DB37E0 => {
+    //   block [0x82DB37E0..0x82DB37E8)
+	// 82DB37E0: 3863FFF8  addi r3, r3, -8
+	ctx.r[3].s64 = ctx.r[3].s64 + -8;
+	// 82DB37E4: 4BFFFF94  b 0x82db3778
+	sub_82DB3778(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB37E8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB37E8 size=8
+    let mut pc: u32 = 0x82DB37E8;
+    'dispatch: loop {
+        match pc {
+            0x82DB37E8 => {
+    //   block [0x82DB37E8..0x82DB37F0)
+	// 82DB37E8: 3863FFF4  addi r3, r3, -0xc
+	ctx.r[3].s64 = ctx.r[3].s64 + -12;
+	// 82DB37EC: 4BFFFF8C  b 0x82db3778
+	sub_82DB3778(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB37F0(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB37F0 size=8
+    let mut pc: u32 = 0x82DB37F0;
+    'dispatch: loop {
+        match pc {
+            0x82DB37F0 => {
+    //   block [0x82DB37F0..0x82DB37F8)
+	// 82DB37F0: 3863FFF0  addi r3, r3, -0x10
+	ctx.r[3].s64 = ctx.r[3].s64 + -16;
+	// 82DB37F4: 4BFFFF84  b 0x82db3778
+	sub_82DB3778(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB37F8(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB37F8 size=8
+    let mut pc: u32 = 0x82DB37F8;
+    'dispatch: loop {
+        match pc {
+            0x82DB37F8 => {
+    //   block [0x82DB37F8..0x82DB3800)
+	// 82DB37F8: 3863FFEC  addi r3, r3, -0x14
+	ctx.r[3].s64 = ctx.r[3].s64 + -20;
+	// 82DB37FC: 4BFFFF7C  b 0x82db3778
+	sub_82DB3778(ctx, base);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3800(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3800 size=20
+    let mut pc: u32 = 0x82DB3800;
+    'dispatch: loop {
+        match pc {
+            0x82DB3800 => {
+    //   block [0x82DB3800..0x82DB3814)
+	// 82DB3800: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3804: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3808: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB380C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB3810: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3818(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3818 size=88
+    let mut pc: u32 = 0x82DB3818;
+    'dispatch: loop {
+        match pc {
+            0x82DB3818 => {
+    //   block [0x82DB3818..0x82DB3870)
+	// 82DB3818: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB381C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB3820: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB3824: 3D408203  lis r10, -0x7dfd
+	ctx.r[10].s64 = -2113732608;
+	// 82DB3828: 396B2894  addi r11, r11, 0x2894
+	ctx.r[11].s64 = ctx.r[11].s64 + 10388;
+	// 82DB382C: 39200001  li r9, 1
+	ctx.r[9].s64 = 1;
+	// 82DB3830: 394A00E8  addi r10, r10, 0xe8
+	ctx.r[10].s64 = ctx.r[10].s64 + 232;
+	// 82DB3834: 3900000B  li r8, 0xb
+	ctx.r[8].s64 = 11;
+	// 82DB3838: 38E00010  li r7, 0x10
+	ctx.r[7].s64 = 16;
+	// 82DB383C: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB3840: B1230006  sth r9, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[9].u16 ) };
+	// 82DB3844: 39200020  li r9, 0x20
+	ctx.r[9].s64 = 32;
+	// 82DB3848: 91430030  stw r10, 0x30(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(48 as u32), ctx.r[10].u32 ) };
+	// 82DB384C: 81630010  lwz r11, 0x10(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB3850: 9103000C  stw r8, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[8].u32 ) };
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3870(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3870 size=12
+    let mut pc: u32 = 0x82DB3870;
+    'dispatch: loop {
+        match pc {
+            0x82DB3870 => {
+    //   block [0x82DB3870..0x82DB387C)
+	// 82DB3870: 3D608200  lis r11, -0x7e00
+	ctx.r[11].s64 = -2113929216;
+	// 82DB3874: 386B2894  addi r3, r11, 0x2894
+	ctx.r[3].s64 = ctx.r[11].s64 + 10388;
+	// 82DB3878: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3880(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3880 size=124
+    let mut pc: u32 = 0x82DB3880;
+    'dispatch: loop {
+        match pc {
+            0x82DB3880 => {
+    //   block [0x82DB3880..0x82DB38DC)
+	// 82DB3880: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB3884: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3888: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB388C: 9421FFA0  stwu r1, -0x60(r1)
+	ea = ctx.r[1].u32.wrapping_add(-96 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3890: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3894: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3898: 396B21FC  addi r11, r11, 0x21fc
+	ctx.r[11].s64 = ctx.r[11].s64 + 8700;
+	// 82DB389C: 807F0010  lwz r3, 0x10(r31)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[31].u32.wrapping_add(16 as u32) ) } as u64;
+	// 82DB38A0: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB38A4: A1630004  lhz r11, 4(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB38A8: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB38AC: 419A0030  beq cr6, 0x82db38dc
+	if ctx.cr[6].eq {
+	pc = 0x82DB38DC; continue 'dispatch;
+	}
+	// 82DB38B0: A1630006  lhz r11, 6(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[3].u32.wrapping_add(6 as u32) ) } as u64;
+	// 82DB38B4: 396BFFFF  addi r11, r11, -1
+	ctx.r[11].s64 = ctx.r[11].s64 + -1;
+	// 82DB38B8: 7D6B0734  extsh r11, r11
+	ctx.r[11].s64 = ctx.r[11].s16 as i64;
+	// 82DB38BC: 2F0B0000  cmpwi cr6, r11, 0
+	ctx.cr[6].compare_i32(ctx.r[11].s32, 0, &mut ctx.xer);
+	// 82DB38C0: B1630006  sth r11, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[11].u16 ) };
+	// 82DB38C4: 409A0018  bne cr6, 0x82db38dc
+	if !ctx.cr[6].eq {
+	pc = 0x82DB38DC; continue 'dispatch;
+	}
+	// 82DB38C8: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB38CC: 38800001  li r4, 1
+	ctx.r[4].s64 = 1;
+	// 82DB38D0: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB38D4: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB38D8: 4E800421  bctrl
+	ctx.lr = 0x82DB38DC;
+	crate::rt::call_indirect(ctx.ctr.u32);
+            }
+            0x82DB38DC => {
+    //   block [0x82DB38DC..0x82DB38FC)
+	// 82DB38DC: 3D608202  lis r11, -0x7dfe
+	ctx.r[11].s64 = -2113798144;
+	// 82DB38E0: 396B39E0  addi r11, r11, 0x39e0
+	ctx.r[11].s64 = ctx.r[11].s64 + 14816;
+	// 82DB38E4: 917F0000  stw r11, 0(r31)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[31].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB38E8: 38210060  addi r1, r1, 0x60
+	ctx.r[1].s64 = ctx.r[1].s64 + 96;
+	// 82DB38EC: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB38F0: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB38F4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB38F8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3900(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3900 size=100
+    let mut pc: u32 = 0x82DB3900;
+    'dispatch: loop {
+        match pc {
+            0x82DB3900 => {
+    //   block [0x82DB3900..0x82DB3948)
+	// 82DB3900: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB3904: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3908: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB390C: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB3910: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3914: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3918: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB391C: 4BFFFF65  bl 0x82db3880
+	ctx.lr = 0x82DB3920;
+	sub_82DB3880(ctx, base);
+	// 82DB3920: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB3924: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB3928: 419A0020  beq cr6, 0x82db3948
+	if ctx.cr[6].eq {
+	pc = 0x82DB3948; continue 'dispatch;
+	}
+	// 82DB392C: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3930: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB3934: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB3938: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB393C: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB3940: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB3944: 4BFA1985  bl 0x82d552c8
+	ctx.lr = 0x82DB3948;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB3948; continue 'dispatch;
+            }
+            0x82DB3948 => {
+    //   block [0x82DB3948..0x82DB3964)
+	// 82DB3948: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB394C: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB3950: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB3954: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB3958: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB395C: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB3960: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3968(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3968 size=100
+    let mut pc: u32 = 0x82DB3968;
+    'dispatch: loop {
+        match pc {
+            0x82DB3968 => {
+    //   block [0x82DB3968..0x82DB39B0)
+	// 82DB3968: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB396C: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3970: FBC1FFE8  std r30, -0x18(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-24 as u32), ctx.r[30].u64 ) };
+	// 82DB3974: FBE1FFF0  std r31, -0x10(r1)
+	unsafe { crate::rt::store_u64( base as *mut u8, ctx.r[1].u32.wrapping_add(-16 as u32), ctx.r[31].u64 ) };
+	// 82DB3978: 9421FF90  stwu r1, -0x70(r1)
+	ea = ctx.r[1].u32.wrapping_add(-112 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB397C: 7C7F1B78  mr r31, r3
+	ctx.r[31].u64 = ctx.r[3].u64;
+	// 82DB3980: 7C9E2378  mr r30, r4
+	ctx.r[30].u64 = ctx.r[4].u64;
+	// 82DB3984: 48002E95  bl 0x82db6818
+	ctx.lr = 0x82DB3988;
+	sub_82DB6818(ctx, base);
+	// 82DB3988: 57CB07FE  clrlwi r11, r30, 0x1f
+	ctx.r[11].u64 = ctx.r[30].u32 as u64 & 0x00000001u64;
+	// 82DB398C: 2B0B0000  cmplwi cr6, r11, 0
+	ctx.cr[6].compare_u32(ctx.r[11].u32, 0 as u32, &mut ctx.xer);
+	// 82DB3990: 419A0020  beq cr6, 0x82db39b0
+	if ctx.cr[6].eq {
+	pc = 0x82DB39B0; continue 'dispatch;
+	}
+	// 82DB3994: 816D0000  lwz r11, 0(r13)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[13].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3998: 39400004  li r10, 4
+	ctx.r[10].s64 = 4;
+	// 82DB399C: 38C00026  li r6, 0x26
+	ctx.r[6].s64 = 38;
+	// 82DB39A0: A0BF0004  lhz r5, 4(r31)
+	ctx.r[5].u64 = unsafe { crate::rt::load_u16( base as *const u8, ctx.r[31].u32.wrapping_add(4 as u32) ) } as u64;
+	// 82DB39A4: 7FE4FB78  mr r4, r31
+	ctx.r[4].u64 = ctx.r[31].u64;
+	// 82DB39A8: 7C6A582E  lwzx r3, r10, r11
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32(base as *const u8, ctx.r[10].u32.wrapping_add(ctx.r[11].u32)) } as u64;
+	// 82DB39AC: 4BFA191D  bl 0x82d552c8
+	ctx.lr = 0x82DB39B0;
+	sub_82D552C8(ctx, base);
+	pc = 0x82DB39B0; continue 'dispatch;
+            }
+            0x82DB39B0 => {
+    //   block [0x82DB39B0..0x82DB39CC)
+	// 82DB39B0: 7FE3FB78  mr r3, r31
+	ctx.r[3].u64 = ctx.r[31].u64;
+	// 82DB39B4: 38210070  addi r1, r1, 0x70
+	ctx.r[1].s64 = ctx.r[1].s64 + 112;
+	// 82DB39B8: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB39BC: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB39C0: EBC1FFE8  ld r30, -0x18(r1)
+	ctx.r[30].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-24 as u32) ) };
+	// 82DB39C4: EBE1FFF0  ld r31, -0x10(r1)
+	ctx.r[31].u64 = unsafe { crate::rt::load_u64( base as *const u8, ctx.r[1].u32.wrapping_add(-16 as u32) ) };
+	// 82DB39C8: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3A00(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    let mut ea: u32 = 0;
+    // ---- function 0x82DB3A00 size=44
+    let mut pc: u32 = 0x82DB3A00;
+    'dispatch: loop {
+        match pc {
+            0x82DB3A00 => {
+    //   block [0x82DB3A00..0x82DB3A2C)
+	// 82DB3A00: 7D8802A6  mflr r12
+	ctx.r[12].u64 = ctx.lr;
+	// 82DB3A04: 9181FFF8  stw r12, -8(r1)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[1].u32.wrapping_add(-8 as u32), ctx.r[12].u32 ) };
+	// 82DB3A08: 9421FF10  stwu r1, -0xf0(r1)
+	ea = ctx.r[1].u32.wrapping_add(-240 as u32);
+	unsafe { crate::rt::store_u32(base as *mut u8, ea, ctx.r[1].u32) };
+	ctx.r[1].u32 = ea;
+	// 82DB3A0C: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3A10: 38610050  addi r3, r1, 0x50
+	ctx.r[3].s64 = ctx.r[1].s64 + 80;
+	// 82DB3A14: 4802D0BD  bl 0x82de0ad0
+	ctx.lr = 0x82DB3A18;
+	sub_82DE0AD0(ctx, base);
+	// 82DB3A18: 80610050  lwz r3, 0x50(r1)
+	ctx.r[3].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(80 as u32) ) } as u64;
+	// 82DB3A1C: 382100F0  addi r1, r1, 0xf0
+	ctx.r[1].s64 = ctx.r[1].s64 + 240;
+	// 82DB3A20: 8181FFF8  lwz r12, -8(r1)
+	ctx.r[12].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[1].u32.wrapping_add(-8 as u32) ) } as u64;
+	// 82DB3A24: 7D8803A6  mtlr r12
+	ctx.lr = ctx.r[12].u64;
+	// 82DB3A28: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3A30(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3A30 size=20
+    let mut pc: u32 = 0x82DB3A30;
+    'dispatch: loop {
+        match pc {
+            0x82DB3A30 => {
+    //   block [0x82DB3A30..0x82DB3A44)
+	// 82DB3A30: 81630000  lwz r11, 0(r3)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[3].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3A34: 38800000  li r4, 0
+	ctx.r[4].s64 = 0;
+	// 82DB3A38: 816B0000  lwz r11, 0(r11)
+	ctx.r[11].u64 = unsafe { crate::rt::load_u32( base as *const u8, ctx.r[11].u32.wrapping_add(0 as u32) ) } as u64;
+	// 82DB3A3C: 7D6903A6  mtctr r11
+	ctx.ctr.u64 = ctx.r[11].u64;
+	// 82DB3A40: 4E800420  bctr
+	crate::rt::call_indirect(ctx.ctr.u32);
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3A48(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3A48 size=40
+    let mut pc: u32 = 0x82DB3A48;
+    'dispatch: loop {
+        match pc {
+            0x82DB3A48 => {
+    //   block [0x82DB3A48..0x82DB3A70)
+	// 82DB3A48: 2B030000  cmplwi cr6, r3, 0
+	ctx.cr[6].compare_u32(ctx.r[3].u32, 0 as u32, &mut ctx.xer);
+	// 82DB3A4C: 4D9A0020  beqlr cr6
+	if ctx.cr[6].eq { return; }
+	// 82DB3A50: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3A54: 39400001  li r10, 1
+	ctx.r[10].s64 = 1;
+	// 82DB3A58: 396B2314  addi r11, r11, 0x2314
+	ctx.r[11].s64 = ctx.r[11].s64 + 8980;
+	// 82DB3A5C: 39200012  li r9, 0x12
+	ctx.r[9].s64 = 18;
+	// 82DB3A60: B1430006  sth r10, 6(r3)
+	unsafe { crate::rt::store_u16( base as *mut u8, ctx.r[3].u32.wrapping_add(6 as u32), ctx.r[10].u16 ) };
+	// 82DB3A64: 91630000  stw r11, 0(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(0 as u32), ctx.r[11].u32 ) };
+	// 82DB3A68: 9123000C  stw r9, 0xc(r3)
+	unsafe { crate::rt::store_u32( base as *mut u8, ctx.r[3].u32.wrapping_add(12 as u32), ctx.r[9].u32 ) };
+	// 82DB3A6C: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
+pub fn sub_82DB3A70(ctx: &mut crate::recompiler::ppc_context::PPCContext, base: *mut u8) {
+    // ---- function 0x82DB3A70 size=12
+    let mut pc: u32 = 0x82DB3A70;
+    'dispatch: loop {
+        match pc {
+            0x82DB3A70 => {
+    //   block [0x82DB3A70..0x82DB3A7C)
+	// 82DB3A70: 3D608203  lis r11, -0x7dfd
+	ctx.r[11].s64 = -2113732608;
+	// 82DB3A74: 386B2314  addi r3, r11, 0x2314
+	ctx.r[3].s64 = ctx.r[11].s64 + 8980;
+	// 82DB3A78: 4E800020  blr
+	return;
+            }
+            _ => unsafe { core::hint::unreachable_unchecked() },
+        }
+    }
+}
+
+
