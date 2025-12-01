@@ -7,6 +7,20 @@ pub(crate) fn handle_dcbf(_: &mut LowerCtx) -> bool { true }
 pub(crate) fn handle_dcbt(_: &mut LowerCtx) -> bool { true }
 pub(crate) fn handle_dcbtst(_: &mut LowerCtx) -> bool { true }
 
+pub(crate) fn handle_dcbst(ctx: &mut LowerCtx) -> bool {
+    let ra = ctx.op_reg(0);
+    let rb = ctx.op_reg(1);
+
+    let ra_s = ctx.r(ra).to_string();
+    let rb_s = ctx.r(rb).to_string();
+
+    ctx.println_fmt(format_args!(
+        "\t// dcbst {ra_s}, {rb_s}: data cache block store (no-op in recompiler)"
+    ));
+
+    true
+}
+
 /// dcbz  rA,rB  -> zero 32-byte cache line at EA=(rA?rA+rB:rB)
 pub(crate) fn handle_dcbz(ctx: &mut LowerCtx) -> bool {
     let a = ctx.op_reg(0);

@@ -102,6 +102,9 @@ pub struct Recompiler {
 
     // Alternate entrypoints that share a body with a primary function.
     pub aliases: Vec<FunctionAlias>,
+
+    // Which module (ppc_000, ppc_001, ...) each function base lives in
+    pub func_modules: HashMap<u32, String>,    
 }
 
 impl Recompiler {
@@ -131,6 +134,7 @@ impl Recompiler {
             xex_bytes: Vec::new(),
             generated_files: Vec::new(),
             missing_insns: BTreeMap::new(),
+            func_modules: HashMap::new(),
         }
     }
 

@@ -175,6 +175,17 @@ impl Pass for AnalyseFunctions {
         }
         drop(_p_words);
 
+        // -------- Switch site set (for switch-aware function sizing) --------
+        //
+        // We treat bctr at known switch sites (ctx.db.switches[*].base) as *non-final*
+        // terminators so that fast_function_size_with_term will continue walking
+        // past the jump-table head into the real case bodies. This prevents the
+        // dispatcher from being split into:
+        //   - tiny head function [prologue .. bctr]
+        //   - bogus second function at the jump table base.
+        let switch_bases: HashSet<u32> =
+            ctx.db.switches.iter().map(|sw| sw.base).collect();
+
        // If `addr` is inside one or more .pdata function ranges, snap it to the
         // *nearest* function start: the one with the largest begin <= addr < end.
         //
@@ -616,6 +627,7 @@ impl Pass for AnalyseFunctions {
             words: &[u32],
             fn_base: u32,
             fn_limit: u32,
+            switch_bases: &HashSet<u32>,
         ) -> (usize, bool) {
             if words.is_empty() {
                 return (0, false);
@@ -692,6 +704,11 @@ impl Pass for AnalyseFunctions {
                 // then this BLR/BCTR is just an early-return on one path and the
                 // function's code continues at that target.
                 if w == 0x4E80_0020 /* blr */ || w == 0x4E80_0420 /* bctr */ {
+                    // Switch dispatcher: let the walker step through the jump table
+                    // to reach the case bodies instead of stopping here.
+                    if w == 0x4E80_0420 && switch_bases.contains(&pc) {
+                        continue;
+                    }
                     if max_internal_target > pc {
                         // There is a path that jumps past this BLR/BCTR; keep scanning.
                         continue;
@@ -706,8 +723,13 @@ impl Pass for AnalyseFunctions {
         }
 
         #[inline]
-        fn fast_function_size(words: &[u32], fn_base: u32, fn_limit: u32) -> usize {
-            fast_function_size_with_term(words, fn_base, fn_limit).0
+        fn fast_function_size(
+            words: &[u32],
+            fn_base: u32,
+            fn_limit: u32,
+            switch_bases: &HashSet<u32>,
+        ) -> usize {
+            fast_function_size_with_term(words, fn_base, fn_limit, switch_bases).0
         }
 
         // Precompute how many instructions BL_scan will look at, for % reporting.
@@ -961,7 +983,8 @@ impl Pass for AnalyseFunctions {
                     // ---- FAST FUNCTION SIZE (no CFG analysis) ----
                     let tgt_sec = &ctx.img.sections[span_idx];
                     let sec_end = tgt_sec.base.wrapping_add(tgt_sec.data.len() as u32);
-                    let size = fast_function_size(&words[start_idx..], tgt, sec_end);
+                    let size = fast_function_size(&words[start_idx..], tgt, sec_end, &switch_bases);
+
 
                     // ---- analysis-phase progress reporting ----
                     let done = processed_candidates.fetch_add(1, Ordering::Relaxed) + 1;
@@ -1230,8 +1253,9 @@ impl Pass for AnalyseFunctions {
                                     sec.base.wrapping_add(sec.data.len() as u32);
                                 let gap_limit = job_end.min(sec_end);
 
-                                let (size_usize, has_term) =
-                                    fast_function_size_with_term(&sec_words[start_idx..], cursor, gap_limit);
+                                let (size_usize, has_term) = fast_function_size_with_term(
+                                    &sec_words[start_idx..],
+                                    cursor, gap_limit, &switch_bases);
                                 let mut size_u32 = size_usize as u32;
 
                                 if size_u32 == 0 || !has_term {
@@ -1388,8 +1412,12 @@ impl Pass for AnalyseFunctions {
 
                     // Use the same fast, terminator-aware boundary finder we use elsewhere.
                     let sec_end = code_sec.base.wrapping_add(code_sec.data.len() as u32);
-                    let (size_usize, has_term) =
-                        fast_function_size_with_term(&code_words[start_idx..], val, sec_end);
+                    let (size_usize, has_term) = fast_function_size_with_term(
+                        &code_words[start_idx..],
+                        val,
+                        sec_end,
+                        &switch_bases,
+                    );
                     let mut size_u32 = size_usize as u32;
 
                     if size_u32 == 0 || !has_term {

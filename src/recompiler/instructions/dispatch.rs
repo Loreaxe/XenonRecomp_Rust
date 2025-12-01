@@ -144,6 +144,7 @@ fn dispatch_by_id(ctx: &mut LowerCtx<'_>) -> bool {
 
         _ if has_mn(ctx, "db16cyc")    => handle_db16cyc(ctx),
         x if x == PpcInsn::PPC_INS_DCBF as u32    => handle_dcbf(ctx),
+        x if x == PpcInsn::PPC_INS_DCBST as u32   => handle_dcbst(ctx),
         x if x == PpcInsn::PPC_INS_DCBT as u32    => handle_dcbt(ctx),
         x if x == PpcInsn::PPC_INS_DCBTST as u32  => handle_dcbtst(ctx),
         x if x == PpcInsn::PPC_INS_DCBZ as u32    => handle_dcbz(ctx),

@@ -72,10 +72,12 @@ pub(crate) fn handle_rlwimi(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_rlwinm(ctx: &mut LowerCtx) -> bool {
-    // RLWINM rA,rS,sh,mb,me (word), then set CR0 if dotted
+    // RLWINM rA,rS,sh,mb,me  (word rotate/mask)
     let d  = ctx.op_reg(0);
     let s  = ctx.op_reg(1);
     let sh = ctx.op_imm(2) as u32;
+
+    // Use +32 trick so the 32-bit field lands in the *lower* 32 bits.
     let mb = (ctx.op_imm(3) as u32) + 32;
     let me = (ctx.op_imm(4) as u32) + 32;
 
@@ -84,15 +86,19 @@ pub(crate) fn handle_rlwinm(ctx: &mut LowerCtx) -> bool {
     let rd = ctx.r(d).to_string();
     let rs = ctx.r(s).to_string();
 
+    // Result is 32-bit, zero-extended
     ctx.println_fmt(format_args!(
-        "\t{rd}.u64 = (({rs}.u32).rotate_left({sh}) as u64) & 0x{mask:016X};"
+        "\t{rd}.u64 = ((({rs}.u32).rotate_left({sh})) as u64) & 0x{mask:016X};"
     ));
 
     if ctx.insn.mnemonic().unwrap_or_default().ends_with('.') {
         let cr0 = ctx.cr(0).to_string();
         let xer = ctx.xer().to_string();
-        ctx.println_fmt(format_args!("\t{cr0}.compare_i32({rd}.s32, 0, &mut {xer});"));
+        ctx.println_fmt(format_args!(
+            "\t{cr0}.compare_i32({rd}.s32, 0, &mut {xer});"
+        ));
     }
+
     true
 }
 

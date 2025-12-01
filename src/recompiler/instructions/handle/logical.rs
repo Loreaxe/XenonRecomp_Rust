@@ -106,7 +106,8 @@ pub(crate) fn handle_orc(ctx: &mut LowerCtx) -> bool {
     let ra = ctx.r(a).to_string();
     let rb = ctx.r(b).to_string();
 
-    ctx.println_fmt(format_args!("\t{rd}.u64 = {ra}.u64 | ~{rb}.u64;"));
+    // orc rD,rA,rB  => rD = rA | ~rB  (bitwise NOT is `!` in Rust)
+    ctx.println_fmt(format_args!("\t{rd}.u64 = {ra}.u64 | !{rb}.u64;"));
     true
 }
 
@@ -168,7 +169,8 @@ pub(crate) fn handle_not(ctx: &mut LowerCtx) -> bool {
     let rd = ctx.r(d).to_string();
     let rs = ctx.r(s).to_string();
 
-    ctx.println_fmt(format_args!("\t{rd}.u64 = ~{rs}.u64;"));
+    // not rD,rS  => rD = ~rS
+    ctx.println_fmt(format_args!("\t{rd}.u64 = !{rs}.u64;"));
     if ctx.insn.mnemonic().unwrap_or_default().ends_with('.') {
         let cr0 = ctx.cr(0).to_string();
         let xer = ctx.xer().to_string();

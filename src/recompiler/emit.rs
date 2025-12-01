@@ -611,11 +611,8 @@ impl Recompiler {
         let _phase = Phase::new("recomp::recompile_all");
         let cs = PpcCs::new()?;
 
-        // Build extern wrappers & mapping first
+        // Build extern wrappers first (xam/xboxkrnl shims etc.)
         self.emit_externs_if_any()?;
-
-        // Emit a Rust mapping table up-front so you get a stable index.
-        self.emit_rust_mapping()?;
 
         let mut in_this_file = 0usize;
         let total = self.functions.len();
@@ -627,6 +624,12 @@ impl Recompiler {
             let fnc: &Function = unsafe { &*fnc_ptr };
 
             println!("> lowering 0x{:08X} ({} / {})", fnc.base, idx + 1, total);
+
+            // Current chunk module name (ppc_000, ppc_001, ...)
+            let current_module = format!("ppc_{:03}", self.file_index);
+            // Record where this function will live
+            self.func_modules
+                .insert(fnc.base as u32, current_module);
 
             self.recompile_fn(fnc, &cs)?;
 
@@ -659,9 +662,12 @@ impl Recompiler {
             self.save_current_out_data(None)?;
         }
 
+        // Now that we know which module each function is in, emit the mapping table.
+        self.emit_rust_mapping()?;
+
         println!("✅ Recompile complete: wrote {} file(s)", self.file_index);
 
-        // NEW: summary of any instructions we didn't know how to lower.
+        // Summary of any instructions we didn't know how to lower.
         self.report_unhandled_insns();
 
         Ok(())
@@ -687,11 +693,17 @@ impl Recompiler {
             if existing.len() == self.out.len() && existing == self.out.as_bytes() {
                 xlog!("RECOMP: unchanged '{}', skipping write", path.display());
                 self.out.clear();
-                if fname.starts_with("ppc_") && fname.ends_with(".rs") {
+
+                // Track generated ppc_###.rs files, but exclude the mapping file.
+                if fname.starts_with("ppc_")
+                    && fname.ends_with(".rs")
+                    && fname != "ppc_func_mapping.rs"
+                {
                     if !self.generated_files.contains(&fname) {
                         self.generated_files.push(fname.clone());
                     }
                 }
+
                 if name.is_none() {
                     self.file_index += 1;
                 }
@@ -703,7 +715,11 @@ impl Recompiler {
         xlog!("RECOMP: wrote '{}'", path.display());
         self.out.clear();
 
-        if fname.starts_with("ppc_") && fname.ends_with(".rs") {
+        // Track generated ppc_###.rs files, but exclude the mapping file.
+        if fname.starts_with("ppc_")
+            && fname.ends_with(".rs")
+            && fname != "ppc_func_mapping.rs"
+        {
             if !self.generated_files.contains(&fname) {
                 self.generated_files.push(fname.clone());
             }
@@ -717,9 +733,12 @@ impl Recompiler {
 
     /// Emit a **Rust** mapping table:
     ///   pub type FuncPtr = fn(&mut PPCContext, *mut u8);
-    ///   pub static PPC_FUNC_MAPPINGS: &[(u32, FuncPtr)] = &[(0xADDR, sub_XXXXXXXX), ...];
+    ///   pub static PPC_FUNC_MAPPINGS: &[(u32, FuncPtr)] =
+    ///       &[(0xADDR, crate::ppc_000::sub_XXXXXXXX), ...];
     pub fn emit_rust_mapping(&mut self) -> Result<()> {
         let _p = Phase::new("recomp::emit_rust_mapping");
+
+        self.out.clear();
 
         // Header
         self.println("// Auto-generated function mapping (Rust style)");
@@ -730,24 +749,42 @@ impl Recompiler {
         // Stage entries without mut-borrowing self while iterating
         let mut entries = String::new();
 
-        // 1) Primary functions: (base -> sub_BASE)
+        // 1) Primary functions: (base -> crate::ppc_###::sub_BASE)
         for f in &self.functions {
             let base = f.base as u32;
             let name = Self::resolve_func_name(self, f);
-            entries.push_str(&format!("    (0x{:08X}, {}),\n", base, name));
+
+            if let Some(module) = self.func_modules.get(&base) {
+                entries.push_str(&format!(
+                    "    (0x{base:08X}, crate::{}::{}),\n",
+                    module, name
+                ));
+            } else {
+                // Fallback (shouldn't normally happen): keep old flat style.
+                entries.push_str(&format!("    (0x{:08X}, {}),\n", base, name));
+            }
         }
 
-        // 2) Aliases: (alias_addr -> sub_PRIMARY)
+        // 2) Aliases: (alias_addr -> crate::ppc_###::sub_PRIMARY)
         //
         // NOTE: We intentionally map aliases directly to the primary function's
-        // implementation, not to the tiny alias wrapper. Semantically, a call
-        // to the alias VA should execute the same body as the primary.
+        // implementation, not to the tiny alias wrapper.
         for al in &self.aliases {
-            entries.push_str(&format!(
-                "    (0x{:08X}, sub_{:08X}),\n",
-                al.alias,
-                al.primary
-            ));
+            if let Some(module) = self.func_modules.get(&al.primary) {
+                entries.push_str(&format!(
+                    "    (0x{:08X}, crate::{}::sub_{:08X}),\n",
+                    al.alias,
+                    module,
+                    al.primary
+                ));
+            } else {
+                // Fallback: no module info; keep older style
+                entries.push_str(&format!(
+                    "    (0x{:08X}, sub_{:08X}),\n",
+                    al.alias,
+                    al.primary
+                ));
+            }
         }
 
         self.println("pub static PPC_FUNC_MAPPINGS: &[(u32, FuncPtr)] = &[");
@@ -801,11 +838,10 @@ impl Recompiler {
             s.push_str("\n");
         }
 
-        // Chunk modules (mod + pub use)
+        // Chunk modules (public submodules; no global re-export)
         for f in &self.generated_files {
             if let Some(stem) = f.strip_suffix(".rs") {
-                s.push_str(&format!("#[path = \"{}\"] mod {};\n", f, stem));
-                s.push_str(&format!("pub use {}::*;\n", stem));
+                s.push_str(&format!("#[path = \"{}\"] pub mod {};\n", f, stem));
             }
         }
 

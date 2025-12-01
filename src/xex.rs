@@ -31,6 +31,7 @@ const XEX_HEADER_FILE_FORMAT_INFO:   u32 = 0x0000_03FF;
 const XEX_HEADER_IMAGE_BASE_ADDRESS: u32 = 0x0001_0201;
 const XEX_HEADER_ENTRY_POINT:        u32 = 0x0001_0100;
 const XEX_HEADER_IMPORT_LIBRARIES:   u32 = 0x0001_03FF;
+const XEX_HEADER_ORIGINAL_PE_NAME:   u32 = 0x0001_83FF;
 
 // Retail key / blank IV
 const XEX2_RETAIL_KEY: [u8; 16] = [
@@ -139,6 +140,63 @@ fn get_opt_ptr<'a>(x: &'a [u8], hdr: &Xex2Header, key: u32) -> Option<OptRef<'a>
     None
 }
 
+/// Parse the XEX2 xex2_opt_original_pe_name struct:
+///   be<u32> size;
+///   char    name[size - 4];
+fn parse_original_pe_name_blob(b: &[u8]) -> Option<String> {
+    // Need at least the size field.
+    if b.len() < 4 {
+        return None;
+    }
+
+    let size = BE::read_u32(&b[0..4]) as usize;
+
+    // Size is total struct size; must be > 4 and within the blob.
+    if size <= 4 || size > b.len() {
+        return None;
+    }
+
+    // Name bytes immediately follow the size field.
+    let name_bytes = &b[4..size];
+
+    // Stop at first NUL if present, otherwise use the whole range.
+    let end = name_bytes
+        .iter()
+        .position(|&c| c == 0)
+        .unwrap_or(name_bytes.len());
+
+    if end == 0 {
+        return None;
+    }
+
+    Some(String::from_utf8_lossy(&name_bytes[..end]).into_owned())
+}
+
+fn normalize_module_basename(raw: &str) -> String {
+    use std::path::Path;
+
+    // Strip any directory component first.
+    let base = Path::new(raw)
+        .file_name()
+        .and_then(|s| s.to_str())
+        .unwrap_or(raw);
+
+    let mut s = base.to_string();
+    let lower = s.to_ascii_lowercase();
+
+    // Strip common extensions (.exe, .xex, .dll) – tweak list if you want.
+    for ext in [".exe", ".xex", ".dll"] {
+        if lower.ends_with(ext) {
+            let new_len = s.len() - ext.len();
+            s.truncate(new_len);
+            break;
+        }
+    }
+
+    s
+}
+
+
 // File format info (be)
 #[derive(Clone, Copy)]
 struct FileFormatInfo {
@@ -166,6 +224,102 @@ fn parse_normal_info(b: &[u8]) -> Result<NormalFirstBlock<'_>> {
 }
 
 // ---------------- PE helpers (LE) — FIXED OFFSETS + BOUNDS ----------------
+
+fn pe_rva_to_file_offset(img: &[u8], nt_off: usize, rva: u32) -> Option<usize> {
+    // Need Signature + FileHeader
+    if nt_off + 4 + 20 > img.len() {
+        return None;
+    }
+
+    let file_hdr = &img[nt_off + 4 .. nt_off + 4 + 20];
+    let nsects = pe_num_sections(file_hdr).ok()?;
+    let secs_slice = pe_sections_slice(img, nt_off).ok()?;
+
+    // IMAGE_SECTION_HEADER is 40 bytes
+    for i in 0..nsects {
+        let off = i * 40;
+        if off + 40 > secs_slice.len() {
+            break;
+        }
+        let sh = &secs_slice[off..off + 40];
+
+        let virt_addr = LE::read_u32(&sh[12..16]); // VirtualAddress
+        let size_raw  = LE::read_u32(&sh[16..20]); // SizeOfRawData
+        let ptr_raw   = LE::read_u32(&sh[20..24]); // PointerToRawData
+
+        if size_raw == 0 {
+            continue;
+        }
+
+        if rva >= virt_addr && rva < virt_addr + size_raw {
+            let delta    = (rva - virt_addr) as usize;
+            let file_off = ptr_raw as usize + delta;
+            if file_off < img.len() {
+                return Some(file_off);
+            } else {
+                return None;
+            }
+        }
+    }
+
+    None
+}
+
+fn pe_module_name_from_image_bytes(img: &[u8]) -> Option<String> {
+    let nt_off = pe_try_nt_headers_off(img)?;
+
+    let (oh, magic) = pe_optional_header(img, nt_off).ok()?;
+
+    // In PE32, DataDirectory[0] (export dir) starts at 0x60.
+    // In PE32+, it starts at 0x70.
+    let dd_off = match magic {
+        0x10B => 0x60, // PE32
+        0x20B => 0x70, // PE32+
+        _ => return None,
+    };
+
+    if oh.len() < dd_off + 8 {
+        return None;
+    }
+
+    let export_rva  = LE::read_u32(&oh[dd_off .. dd_off + 4]);
+    let export_size = LE::read_u32(&oh[dd_off + 4 .. dd_off + 8]);
+
+    if export_rva == 0 || export_size == 0 {
+        return None;
+    }
+
+    let export_off = pe_rva_to_file_offset(img, nt_off, export_rva)?;
+    if export_off + 40 > img.len() {
+        return None;
+    }
+
+    // IMAGE_EXPORT_DIRECTORY is 40 bytes
+    let ed = &img[export_off .. export_off + 40];
+
+    // DWORD Name; // RVA of ASCII module name
+    let name_rva = LE::read_u32(&ed[12..16]);
+    if name_rva == 0 {
+        return None;
+    }
+
+    let name_off = pe_rva_to_file_offset(img, nt_off, name_rva)?;
+    if name_off >= img.len() {
+        return None;
+    }
+
+    let mut end = name_off;
+    while end < img.len() && img[end] != 0 {
+        end += 1;
+    }
+    if end == name_off {
+        return None;
+    }
+
+    std::str::from_utf8(&img[name_off..end])
+        .ok()
+        .map(|s| s.to_string())
+}
 
 fn pe_e_lfanew(img: &[u8]) -> Result<usize> {
     // DOS header must be at least 0x40 bytes, e_lfanew at 0x3C..0x40
@@ -569,6 +723,58 @@ pub fn load_xex2(xex: &[u8]) -> Result<Image> {
     let dos = image_bytes.as_slice();
     let nt_off_opt = pe_try_nt_headers_off(dos);
 
+    // ---------------- module name resolution ----------------
+    //
+    // 1) Prefer the XEX "Original PE Name" header (0x000183FF), which is
+    //    stored as:
+    //      be<u32> size;
+    //      char    name[size - 4];
+    // 2) Fall back to the PE export directory name (if present).
+    let original_pe_name: Option<String> =
+        match get_opt_ptr(xex, &hdr, XEX_HEADER_ORIGINAL_PE_NAME) {
+            // Normal case: low byte 0xFF → Blob, so `b` starts at xex2_opt_original_pe_name.
+            Some(OptRef::Blob(b)) => {
+                let name = parse_original_pe_name_blob(b);
+                if let Some(ref n) = name {
+                    xlog!("XEX: Original PE Name: '{}'", n);
+                }
+                name
+            }
+
+            // Extremely defensive: if someone encoded it as a pointer, treat the
+            // first 4 bytes as an offset to the same struct and parse that.
+            Some(OptRef::InlinePtr(p)) if p.len() >= 4 => {
+                let off = BE::read_u32(&p[0..4]) as usize;
+                if off < xex.len() {
+                    let name = parse_original_pe_name_blob(&xex[off..]);
+                    if let Some(ref n) = name {
+                        xlog!("XEX: Original PE Name (via ptr): '{}'", n);
+                    }
+                    name
+                } else {
+                    None
+                }
+            }
+
+            _ => None,
+        };
+
+    // Try to derive a human-readable PE module name (e.g. "default.xex") from the image itself.
+    let export_module_name = pe_module_name_from_image_bytes(dos);
+
+    // Prefer XEX header name, fall back to PE export name, then normalise:
+    //  - strip any directory component
+    //  - strip .exe/.xex/.dll suffixes
+    let module_name = original_pe_name
+        .or(export_module_name)
+        .map(|raw| normalize_module_basename(&raw));
+
+    if let Some(ref n) = module_name {
+        xlog!("PE: module_name='{}'", n);
+    } else {
+        xlog!("PE: module_name=<unknown>");
+    }
+
     // Base Image object
     let mut img = Image {
         data: image_bytes.clone(),
@@ -576,6 +782,7 @@ pub fn load_xex2(xex: &[u8]) -> Result<Image> {
         size: image_bytes.len() as u32,
         entry_point: entry,
         sections: Vec::new(),
+        module_name,
     };
 
     // If no valid PE header, behave like a very forgiving loader: treat the entire

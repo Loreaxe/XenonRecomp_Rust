@@ -100,9 +100,10 @@ fn main() -> Result<()> {
             let cfg = RecompilerConfig::default();
 
             let pipeline = Pipeline::new()
-                .add(AnalyseFunctions)
-                // No TOML dump: keep it in-memory only
+                // First: detect switches and populate db.switches
                 .add(AnalyseSwitchScan { dump_to: None })
+                // Then: function discovery (now switch-aware)
+                .add(AnalyseFunctions)
                 .add(AnalyseSwitchBind);
 
             xlog!("CLI: running pipeline on '{}'", input.display());
@@ -132,8 +133,10 @@ fn main() -> Result<()> {
             let mut db = AnalysisDb::default();
             let cs_for_pass = build_ppc_cs()?;
             let pipeline = Pipeline::new()
-                .add(AnalyseFunctions)
+                // First: detect switches and populate db.switches
                 .add(AnalyseSwitchScan { dump_to: None })
+                // Then: function discovery (now switch-aware)
+                .add(AnalyseFunctions)
                 .add(AnalyseSwitchBind);
             pipeline.run(Ctx { img: &img, cs: &cs_for_pass, cfg: &cfg, db: &mut db })?;
             xlog!(
@@ -142,8 +145,8 @@ fn main() -> Result<()> {
                 db.switches.len()
             );
 
-            // 4) Resolve output dir based on config + XEX path
-            let (output_dir, _output_file) = derive_output_paths(&cfg, &xex_path);
+            // 4) Resolve output dir based on config + XEX path + PE module name
+            let (output_dir, _output_file) = derive_output_paths(&cfg, &xex_path, &img);
             fs::create_dir_all(&output_dir)
                 .with_context(|| format!("failed to create {}", output_dir.display()))?;
 
@@ -157,8 +160,13 @@ fn main() -> Result<()> {
             // 6) Emit everything (including xam.rs/xboxkrnl.rs via emit_externs_if_any)
             r.recompile_all()?;
             r.write_mod_index("lib.rs")?;
+            r.write_mod_index("mod.rs")?;
 
-            println!("✅ Module index written to {}", output_dir.join("lib.rs").display());
+            println!(
+                "✅ Module indices written to {} and {}",
+                output_dir.join("lib.rs").display(),
+                output_dir.join("mod.rs").display()
+            );
         }
 
         Cmd::All { input, config } => {
@@ -175,8 +183,10 @@ fn main() -> Result<()> {
             // 1) Run analysis pipeline → AnalysisDb (in-memory only)
             let mut db = AnalysisDb::default();
             let pipeline = Pipeline::new()
-                .add(AnalyseFunctions)
+                // First: detect switches and populate db.switches
                 .add(AnalyseSwitchScan { dump_to: None })
+                // Then: function discovery (now switch-aware)
+                .add(AnalyseFunctions)
                 .add(AnalyseSwitchBind);
             pipeline.run(Ctx { img: &img, cs: &cs, cfg: &cfg, db: &mut db })?;
             xlog!(
@@ -188,7 +198,7 @@ fn main() -> Result<()> {
             // 2) Resolve output dir
             let xex_path =
                 resolve_xex_path(&cfg).unwrap_or_else(|| input.to_string_lossy().into_owned());
-            let (output_dir, _output_file) = derive_output_paths(&cfg, &xex_path);
+            let (output_dir, _output_file) = derive_output_paths(&cfg, &xex_path, &img);
             fs::create_dir_all(&output_dir)
                 .with_context(|| format!("failed to create {}", output_dir.display()))?;
 
@@ -200,8 +210,13 @@ fn main() -> Result<()> {
             r.seed_from_analysis_db(&db); // trust the analysis DB
             r.recompile_all()?;
             r.write_mod_index("lib.rs")?;
+            r.write_mod_index("mod.rs")?;
 
-            println!("✅ Module index written to {}", output_dir.join("lib.rs").display());
+            println!(
+                "✅ Module indices written to {} and {}",
+                output_dir.join("lib.rs").display(),
+                output_dir.join("mod.rs").display()
+            );
         }
 
         Cmd::Auto => {
@@ -214,12 +229,6 @@ fn main() -> Result<()> {
                 );
             }
 
-            let output_dir = default_output_dir();
-            if !output_dir.exists() {
-                fs::create_dir_all(&output_dir)
-                    .with_context(|| format!("failed to create {}", output_dir.display()))?;
-            }
-
             let (img, _cs_for_loader, blob) = open_xex_cs_and_blob(&default_path)
                 .with_context(|| format!("failed to open XEX {}", default_path.display()))?;
 
@@ -227,14 +236,24 @@ fn main() -> Result<()> {
             let mut cfg = RecompilerConfig::default();
             cfg.directory_path = "xex/".to_string();
             cfg.file_path = "default.xex".to_string();
+
+            // Derive an output dir using the same logic: base + PE module name
+            let xex_path_str = default_path.to_string_lossy().into_owned();
+            let (output_dir, _output_file) = derive_output_paths(&cfg, &xex_path_str, &img);
+            if !output_dir.exists() {
+                fs::create_dir_all(&output_dir)
+                    .with_context(|| format!("failed to create {}", output_dir.display()))?;
+            }
             cfg.out_directory_path = output_dir.to_string_lossy().into_owned();
 
             // 1) Run analysis passes with a dedicated Capstone handle
             let mut db = AnalysisDb::default();
             let cs_for_pass = build_ppc_cs()?;
             let pipeline = Pipeline::new()
-                .add(AnalyseFunctions)
+                // First: detect switches and populate db.switches
                 .add(AnalyseSwitchScan { dump_to: None })
+                // Then: function discovery (now switch-aware)
+                .add(AnalyseFunctions)
                 .add(AnalyseSwitchBind);
             pipeline.run(Ctx { img: &img, cs: &cs_for_pass, cfg: &cfg, db: &mut db })?;
             xlog!(
@@ -248,8 +267,13 @@ fn main() -> Result<()> {
             r.seed_from_analysis_db(&db); // trust the analysis DB
             r.recompile_all()?;
             r.write_mod_index("lib.rs")?;
+            r.write_mod_index("mod.rs")?;
 
-            println!("✅ Module index written to {}", output_dir.join("lib.rs").display());
+            println!(
+                "✅ Module indices written to {} and {}",
+                output_dir.join("lib.rs").display(),
+                output_dir.join("mod.rs").display()
+            );
         }
     }
 
@@ -325,8 +349,11 @@ fn default_output_dir() -> PathBuf {
     base
 }
 
-/// Build `xex/output/<stem>.rs` alongside the XEX (or cfg dir if set)
-fn derive_output_paths(cfg: &RecompilerConfig, xex_path: &str) -> (PathBuf, PathBuf) {
+/// Build `<base>/<pe_name>/lib.rs` alongside the XEX (or cfg dir if set)
+fn derive_output_paths(cfg: &RecompilerConfig, xex_path: &str, img: &Image) -> (PathBuf, PathBuf) {
+    use std::path::Path;
+
+    // Base directory: from cfg.directory_path, or alongside the XEX
     let base_dir = if !cfg.directory_path.is_empty() {
         PathBuf::from(&cfg.directory_path)
     } else {
@@ -335,13 +362,39 @@ fn derive_output_paths(cfg: &RecompilerConfig, xex_path: &str) -> (PathBuf, Path
             .map(|p| p.to_path_buf())
             .unwrap_or_else(|| PathBuf::from("."))
     };
-    let out_dir = base_dir.join("output");
 
-    let stem = Path::new(xex_path)
-        .file_stem()
-        .and_then(|s| s.to_str())
-        .unwrap_or("recompiled");
+    // Helper: fallback name from the XEX filename (stem), defaulting to "default"
+    fn fallback_from_xex(xex_path: &str) -> String {
+        Path::new(xex_path)
+            .file_stem()               // "default.xex" -> "default"
+            .and_then(|s| s.to_str())
+            .unwrap_or("default")
+            .to_string()
+    }
 
-    let file = out_dir.join(format!("{stem}.rs"));
+    // Prefer module_name from the image (Original PE Name / export name),
+    // but only as a *folder* name, not as a full path.
+    let folder_name = if let Some(raw) = img.module_name.as_deref() {
+        let candidate = Path::new(raw)
+            .file_name()              // strip any embedded path
+            .and_then(|s| s.to_str())
+            .unwrap_or(raw)
+            .to_string();
+
+        if candidate.is_empty() {
+            fallback_from_xex(xex_path)
+        } else {
+            candidate
+        }
+    } else {
+        // No module name at all → "default" (or stem of xex_path)
+        fallback_from_xex(xex_path)
+    };
+
+    // Final layout: <base>/<folder_name>/lib.rs
+    let out_dir = base_dir.join(&folder_name);
+    let file = out_dir.join("lib.rs");
+
     (out_dir, file)
+
 }

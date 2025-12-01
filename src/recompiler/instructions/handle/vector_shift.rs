@@ -15,22 +15,50 @@ pub(crate) fn handle_vslb_scalar(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_vsldoi_like(ctx: &mut LowerCtx) -> bool {
-    // VSLDOI / VSLDOI128
-    let d = ctx.op_reg(0); let a = ctx.op_reg(1); let b = ctx.op_reg(2);
+    // VSLDOI / VSLDOI128, scalarised:
+    // r = (a||b) << (imm bytes), taking the high 16 bytes after the shift.
+    let d   = ctx.op_reg(0);
+    let a   = ctx.op_reg(1);
+    let b   = ctx.op_reg(2);
     let imm = (ctx.op_imm(3) as u32) & 0xFF;
-    // NOTE: VSLOI = left shift of [a||b] by imm bytes. With SSSE3 alignr:
-    // alignr(a,b,imm) ≈ (concat(b,a) >> imm). If your previous C++ used (a,b),
-    // keep that ordering for equivalence.
-    let sh = 16u32.wrapping_sub(imm);
 
     let vd = ctx.v(d).to_string();
     let va = ctx.v(a).to_string();
     let vb = ctx.v(b).to_string();
+
+    // We only care about imm mod 16 for the 16-byte result.
+    let sh = (imm & 0x0F) as usize;
+
+    // Emit a small Rust block that reconstructs [a||b] logically and shifts by `sh` bytes.
+    ctx.println("\t{");
     ctx.println_fmt(format_args!(
-        "\tsimde_mm_store_si128((simde__m128i*){vd}.u8, \
-           simde_mm_alignr_epi8(simde_mm_load_si128((simde__m128i*){va}.u8), \
-                                simde_mm_load_si128((simde__m128i*){vb}.u8), {sh}));"
+        "\t\tlet sh = {sh}usize;  // VSLDOI byte shift (imm & 0xF)"
     ));
+    ctx.println_fmt(format_args!(
+        "\t\tfor i in 0..16 {{"
+    ));
+    ctx.println_fmt(format_args!(
+        "\t\t\tlet src = i + sh;"
+    ));
+    ctx.println_fmt(format_args!(
+        "\t\t\tif src < 16 {{"
+    ));
+    ctx.println_fmt(format_args!(
+        "\t\t\t\t{vd}.u8[i] = {va}.u8[src];"
+    ));
+    ctx.println_fmt(format_args!(
+        "\t\t\t}} else {{"
+    ));
+    ctx.println_fmt(format_args!(
+        "\t\t\t\t{vd}.u8[i] = {vb}.u8[src - 16];"
+    ));
+    ctx.println_fmt(format_args!(
+        "\t\t\t}}"
+    ));
+    ctx.println_fmt(format_args!(
+        "\t\t}}"
+    ));
+    ctx.println("\t}");
     true
 }
 
@@ -50,16 +78,17 @@ pub(crate) fn handle_vslw_scalar(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_vsr(ctx: &mut LowerCtx) -> bool {
-    // VSR (byte-wise right shift with vector count)
+    // VSR (byte-wise right shift with vector count, scalar loop form)
     let d = ctx.op_reg(0); let a = ctx.op_reg(1); let b = ctx.op_reg(2);
     let vd = ctx.v(d).to_string();
     let va = ctx.v(a).to_string();
     let vb = ctx.v(b).to_string();
-    ctx.println_fmt(format_args!(
-        "\tsimde_mm_store_si128((simde__m128i*){vd}.u8, \
-           simde_mm_vsr(simde_mm_load_si128((simde__m128i*){va}.u8), \
-                        simde_mm_load_si128((simde__m128i*){vb}.u8)));"
-    ));
+
+    for i in 0..16 {
+        ctx.println_fmt(format_args!(
+            "\t{vd}.u8[{i}] = {va}.u8[{i}] >> ({vb}.u8[{i}] & 0x7);"
+        ));
+    }
     true
 }
 

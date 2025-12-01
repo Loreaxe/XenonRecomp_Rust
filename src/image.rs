@@ -26,6 +26,10 @@ pub struct Image {
     pub size: u32,
     pub entry_point: u32,
     pub sections: Vec<Section>,
+
+    /// Optional human-readable module name (e.g. PE export name like "default.xex").
+    /// Filled by the XEX loader when possible.
+    pub module_name: Option<String>,
 }
 
 impl Image {
@@ -152,6 +156,7 @@ impl Image {
             size: data.len() as u32,
             entry_point: e_entry,
             sections: Vec::new(),
+            module_name: None,
         };
 
         // Section name string table

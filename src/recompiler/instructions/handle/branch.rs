@@ -6,16 +6,18 @@ use crate::recompiler::CSRState;
 
 pub(crate) fn handle_b(ctx: &mut LowerCtx) -> bool {
     let tgt = ctx.branch_target();
-    if tgt < ctx.fnc.base as u32 || tgt >= (ctx.fnc.base + ctx.fnc.size) as u32 {
-        // Cross-function or external: becomes a tail call & return.
-        ctx.print_function_call(tgt);
-        ctx.println("\treturn;");
-        ctx.mark_block_terminated();          // no fallthrough inside this fn
-    } else {
+
+    if ctx.target_in_current_function(tgt) {
         // Intra-function jump.
         ctx.goto(tgt);
-        ctx.mark_block_terminated();          // no fallthrough inside this block
+        ctx.mark_block_terminated();
+    } else {
+        // Cross-function or external: tail call & return.
+        ctx.print_function_call(tgt);
+        ctx.println("\treturn;");
+        ctx.mark_block_terminated();
     }
+
     true
 }
 
