@@ -9,7 +9,7 @@ pub(crate) fn handle_cntlzd(ctx: &mut LowerCtx) -> bool {
     let rs = ctx.r(s).to_string();
 
     ctx.println_fmt(format_args!(
-        "\t{rd}.u64 = if {rs}.u64 == 0 {{ 64 }} else {{ {rs}.u64.leading_zeros() as u64 }};"
+        "\tunsafe {{ {rd}.u64 = if {rs}.u64 == 0 {{ 64 }} else {{ {rs}.u64.leading_zeros() as u64 }}; }}",
     ));
     true
 }
@@ -23,7 +23,7 @@ pub(crate) fn handle_cntlzw(ctx: &mut LowerCtx) -> bool {
     let rs = ctx.r(s).to_string();
 
     ctx.println_fmt(format_args!(
-        "\t{rd}.u64 = if {rs}.u32 == 0 {{ 32 }} else {{ {rs}.u32.leading_zeros() as u64 }};"
+        "\tunsafe {{ {rd}.u64 = if {rs}.u32 == 0 {{ 32 }} else {{ {rs}.u32.leading_zeros() as u64 }}; }}",
     ));
     true
 }

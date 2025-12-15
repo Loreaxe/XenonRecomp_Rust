@@ -28,7 +28,11 @@ pub(crate) fn handle_clrldi(ctx: &mut LowerCtx) -> bool {
     let rs = ctx.r(s).to_string();
 
     let mask: u64 = if n >= 64 { 0 } else { u64::MAX >> n };
-    ctx.println_fmt(format_args!("\t{rd}.u64 = {rs}.u64 & 0x{mask:016X}u64;"));
+
+    // union field access must be unsafe
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {rd}.u64 = {rs}.u64 & 0x{mask:016X}u64; }}"
+    ));
     true
 }
 
@@ -42,12 +46,19 @@ pub(crate) fn handle_clrlwi(ctx: &mut LowerCtx) -> bool {
     let rs = ctx.r(s).to_string();
 
     let mask: u32 = if n >= 32 { 0 } else { u32::MAX >> n };
-    ctx.println_fmt(format_args!("\t{rd}.u64 = {rs}.u32 as u64 & 0x{mask:08X}u64;"));
+
+    // read {rs}.u32 and write {rd}.u64 under unsafe
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {rd}.u64 = ({rs}.u32 as u64) & 0x{mask:08X}u64; }}"
+    ));
 
     if ctx.insn.mnemonic().unwrap_or_default().ends_with('.') {
         let cr0 = ctx.cr(0).to_string();
         let xer = ctx.xer().to_string();
-        ctx.println_fmt(format_args!("\t{cr0}.compare_i32({rd}.s32, 0, &mut {xer});"));
+        // compare_i32 reads {rd}.s32 (union) and mutates XER, so also unsafe
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {cr0}.compare_i32({rd}.s32, 0, &mut {xer}); }}"
+        ));
     }
     true
 }

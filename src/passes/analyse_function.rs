@@ -65,20 +65,34 @@ impl Pass for AnalyseFunctions {
             None
         }
 
-        let find_sig = |image: &crate::image::Image, pat: &[u8]| -> Option<u32> {
+        fn find_all_sigs(image: &crate::image::Image, pat: &[u8]) -> Vec<u32> {
+            let mut hits = Vec::new();
+
             for sec in &image.sections {
                 if !sec.flags.contains(SectionFlags::CODE) {
                     continue;
                 }
-                if sec.data.len() < pat.len() {
+                let data = &sec.data;
+                if data.len() < pat.len() {
                     continue;
                 }
-                if let Some(pos) = find_subslice(&sec.data, pat) {
-                    return Some(sec.base + pos as u32);
+
+                let mut search_off = 0usize;
+                while search_off + pat.len() <= data.len() {
+                    if let Some(rel) = find_subslice(&data[search_off..], pat) {
+                        let pos = search_off + rel;
+                        hits.push(sec.base + pos as u32);
+
+                        // Like IDA: advance past this hit so we can find later ones.
+                        search_off = pos + pat.len();
+                    } else {
+                        break;
+                    }
                 }
             }
-            None
-        };
+
+            hits
+        }
 
         // Small helper to push a function record.
         fn push_fn_if_new(seen: &mut HashSet<u32>, ctx: &mut Ctx, base: u32, size: u32) {
@@ -89,6 +103,10 @@ impl Pass for AnalyseFunctions {
                     blocks: Vec::new(), // no CFG persisted
                 });
             }
+        }
+
+        fn find_sig(image: &crate::image::Image, pat: &[u8]) -> Option<u32> {
+            find_all_sigs(image, pat).into_iter().next()
         }
 
         // Helper: check if an address lies inside any known (base,size) function range.
@@ -186,7 +204,7 @@ impl Pass for AnalyseFunctions {
         let switch_bases: HashSet<u32> =
             ctx.db.switches.iter().map(|sw| sw.base).collect();
 
-       // If `addr` is inside one or more .pdata function ranges, snap it to the
+        // If `addr` is inside one or more .pdata function ranges, snap it to the
         // *nearest* function start: the one with the largest begin <= addr < end.
         //
         // Additionally, respect db.aliases created from .pdata EH landing-pad
@@ -198,8 +216,14 @@ impl Pass for AnalyseFunctions {
                 return 0;
             }
 
-            // First, if this address is explicitly known as an alias, canonicalise
-            // directly to its primary function root.
+            // NEW: if this address is itself a .pdata root, treat it as canonical.
+            // This prevents real functions like 0x82090888 from being collapsed
+            // into a previous entry via EH/alias heuristics.
+            if ctx.db.pdata.iter().any(|p| p.begin == addr) {
+                return addr;
+            }
+
+            // Then consider alias mappings (EH landing pads, etc.)
             if let Some(a) = ctx.db.aliases.iter().find(|a| a.alias == addr) {
                 return a.primary;
             }
@@ -243,6 +267,18 @@ impl Pass for AnalyseFunctions {
                 .pdata
                 .iter()
                 .any(|p| start >= p.begin && end <= p.end)
+        }
+
+        // Helper: find the .pdata range that most specifically covers `addr`
+        // (the one with the largest begin <= addr < end).
+        #[inline]
+        fn find_pdata_range_for(ctx: &Ctx, addr: u32) -> Option<(u32, u32)> {
+            ctx.db
+                .pdata
+                .iter()
+                .filter(|p| addr >= p.begin && addr < p.end)
+                .max_by_key(|p| p.begin)
+                .map(|p| (p.begin, p.end))
         }
 
         // -------- signatures (big-endian bytes) --------
@@ -298,25 +334,17 @@ impl Pass for AnalyseFunctions {
             0x7C, 0x08, 0x02, 0xA6,
         ];
 
-        // -------- resolve thunk bases (signature only, then canonicalize via .pdata) --------
-        let restgprlr_14_address =
-            find_sig(ctx.img, SIG_RESTGPRLR_CHAIN).unwrap_or(0);
-        let savegprlr_14_address =
-            find_sig(ctx.img, SIG_SAVEGPRLR_CHAIN).unwrap_or(0);
-        let restfpr_14_address =
-            find_sig(ctx.img, SIG_RESTFPR_CHAIN).unwrap_or(0);
-        let savefpr_14_address =
-            find_sig(ctx.img, SIG_SAVEFPR_CHAIN).unwrap_or(0);
-        let restvmx_14_address =
-            find_sig(ctx.img, SIG_RESTVMX_CHAIN_14_32).unwrap_or(0);
-        let savevmx_14_address =
-            find_sig(ctx.img, SIG_SAVEVMX_CHAIN_14_32).unwrap_or(0);
-        let restvmx_64_address =
-            find_sig(ctx.img, SIG_RESTVMX_CHAIN_64_128).unwrap_or(0);
-        let savevmx_64_address =
-            find_sig(ctx.img, SIG_SAVEVMX_CHAIN_64_128).unwrap_or(0);
+        // -------- resolve thunk bases (all occurrences, signature-only) --------
+        let savegprlr_14_bases = find_all_sigs(ctx.img, SIG_SAVEGPRLR_CHAIN);
+        let restgprlr_14_bases = find_all_sigs(ctx.img, SIG_RESTGPRLR_CHAIN);
+        let savefpr_14_bases   = find_all_sigs(ctx.img, SIG_SAVEFPR_CHAIN);
+        let restfpr_14_bases   = find_all_sigs(ctx.img, SIG_RESTFPR_CHAIN);
+        let savevmx_14_bases   = find_all_sigs(ctx.img, SIG_SAVEVMX_CHAIN_14_32);
+        let restvmx_14_bases   = find_all_sigs(ctx.img, SIG_RESTVMX_CHAIN_14_32);
+        let savevmx_64_bases   = find_all_sigs(ctx.img, SIG_SAVEVMX_CHAIN_64_128);
+        let restvmx_64_bases   = find_all_sigs(ctx.img, SIG_RESTVMX_CHAIN_64_128);
 
-        // Resolve longjmp/setjmp (signature only, then canonicalize via .pdata).
+        // ... keep longjmp/setjmp as-is if you like:
         let mut longjmp_address: u32 =
             find_sig(ctx.img, SIG_LONGJMP).unwrap_or(0);
         let mut setjmp_address: u32 =
@@ -324,20 +352,23 @@ impl Pass for AnalyseFunctions {
 
         // Snap them to their .pdata root if they lie inside a runtime function.
         longjmp_address = canonicalize_to_pdata(ctx, longjmp_address);
-        setjmp_address = canonicalize_to_pdata(ctx, setjmp_address);
+        setjmp_address  = canonicalize_to_pdata(ctx, setjmp_address);
 
         xlog!(
-            "FUN: thunk bases restgpr14=0x{:08X} savegpr14=0x{:08X} restfpr14=0x{:08X} \
-             savefpr14=0x{:08X} restvmx14=0x{:08X} savevmx14=0x{:08X} restvmx64=0x{:08X} \
-             savevmx64=0x{:08X} longjmp=0x{:08X} setjmp=0x{:08X}",
-            restgprlr_14_address,
-            savegprlr_14_address,
-            restfpr_14_address,
-            savefpr_14_address,
-            restvmx_14_address,
-            savevmx_14_address,
-            restvmx_64_address,
-            savevmx_64_address,
+            "FUN: thunk bases \
+             savegprlr14={} restgprlr14={} \
+             savefpr14={}   restfpr14={} \
+             savevmx14={}   restvmx14={} \
+             savevmx64={}   restvmx64={} \
+             longjmp=0x{:08X} setjmp=0x{:08X}",
+            savegprlr_14_bases.len(),
+            restgprlr_14_bases.len(),
+            savefpr_14_bases.len(),
+            restfpr_14_bases.len(),
+            savevmx_14_bases.len(),
+            restvmx_14_bases.len(),
+            savevmx_64_bases.len(),
+            restvmx_64_bases.len(),
             longjmp_address,
             setjmp_address,
         );
@@ -346,14 +377,14 @@ impl Pass for AnalyseFunctions {
         let mut inner_pdata_entries: Vec<u32> = Vec::new();
 
         #[inline]
-        fn seed_thunk_chain(
+        fn seed_thunk_family_cpp_style(
             seen: &mut HashSet<u32>,
             ctx: &mut Ctx,
-            base_start: u32, // address of the start_reg thunk (e.g. __savegprlr_14)
+            base_start: u32,
             start_reg: u32,
-            end_reg: u32,    // exclusive, e.g. 32
-            fn_size: u32,    // pattern.fn_size (per-reg stride in bytes)
-            final_size: u32, // pattern.final_size (size of last thunk body)
+            end_reg: u32,   // exclusive, e.g. 32 or 128
+            stride: u32,    // 4 for GPR/FPR, 8 for VMX
+            tail_bytes: u32,
         ) {
             if base_start == 0 {
                 return;
@@ -362,123 +393,85 @@ impl Pass for AnalyseFunctions {
                 return;
             }
 
-            // Total bytes from start_reg entrypoint to final BLR.
-            let reg_count = end_reg - start_reg;
-            let total_len = (reg_count - 1) * fn_size + final_size;
+            // 1) One real function at the chain root (like __savegprlr_14).
+            //
+            //    C++:
+            //      size = (end_reg - start_reg) * stride + tail_bytes
+            let regs_total = end_reg - start_reg;
+            let fn_base    = base_start;
+            let fn_size    = regs_total * stride + tail_bytes;
 
-            for r in start_reg..end_reg {
-                let delta_regs = r - start_reg;
-                let offset = delta_regs * fn_size;
-                let base = base_start.wrapping_add(offset);
+            push_fn_if_new(seen, ctx, fn_base, fn_size);
 
-                // Body size for this entrypoint: from its label to the shared tail BLR.
-                let size = total_len - offset;
+            // 2) Aliases for every later entry point inside that chain:
+            //    __savegprlr_15, __savegprlr_16, ... map to the same implementation,
+            //    but will pass a different entry_pc (their alias address).
+            for i in (start_reg + 1)..end_reg {
+                let offset_regs = i - start_reg;
+                let alias_addr  = base_start.wrapping_add(offset_regs * stride);
 
-                push_fn_if_new(seen, ctx, base, size);
+                // avoid duplicate alias entries
+                if !ctx.db.aliases.iter().any(|a|
+                    a.primary == fn_base && a.alias == alias_addr
+                ) {
+                    ctx.db.aliases.push(crate::db::FunctionAlias {
+                        primary: fn_base,
+                        alias:   alias_addr,
+                    });
+                }
             }
         }
 
-        // -------- seed save/restore thunks --------
+        // -------- seed save/restore thunks (C++-style) --------
         {
             let _p_seed = Phase::new("pass::AnalyseFunctions.seed_thunks");
 
-            // GPR chain: "__savegprlr_%d" / "__restgprlr_%d"
+            // GPR save/restore: "__savegprlr_%d" / "__restgprlr_%d"
             //
-            // IDA pattern:
-            //   { "__savegprlr_%d", ..., true,  14, 32, 4, 12 }
-            //   { "__restgprlr_%d", ..., false, 14, 32, 4, 16 }
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                savegprlr_14_address,
-                14,
-                32,
-                4,
-                12,
-            );
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                restgprlr_14_address,
-                14,
-                32,
-                4,
-                16,
-            );
+            // C++:
+            //   rest: size = (32 - i) * 4 + 12
+            //   save: size = (32 - i) * 4 + 8
+            for base in savegprlr_14_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 14, 32, 4, 8);
+            }
+            for base in restgprlr_14_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 14, 32, 4, 12);
+            }
 
-            // FPR chain: "__savefpr_%d" / "__restfpr_%d"
+            // FPR save/restore: "__savefpr_%d" / "__restfpr_%d"
             //
-            // IDA pattern:
-            //   { "__savefpr_%d", ..., true,  14, 32, 4, 8 }
-            //   { "__restfpr_%d", ..., false, 14, 32, 4, 8 }
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                savefpr_14_address,
-                14,
-                32,
-                4,
-                8,
-            );
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                restfpr_14_address,
-                14,
-                32,
-                4,
-                8,
-            );
+            // C++:
+            //   rest/save: size = (32 - i) * 4 + 4
+            for base in savefpr_14_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 14, 32, 4, 4);
+            }
+            for base in restfpr_14_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 14, 32, 4, 4);
+            }
 
-            // VMX 14..31/32: "__savevmx_%d" / "__restvmx_%d" (classic 32-reg VMX)
+            // VMX 14..31/32: "__savevmx_%d" / "__restvmx_%d"
             //
-            // IDA pattern:
-            //   { "__savevmx_%d", ..., true,  14, 32, 8, 12 }
-            //   { "__restvmx_%d", ..., false, 14, 32, 8, 12 }
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                savevmx_14_address,
-                14,
-                32,
-                8,
-                12,
-            );
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                restvmx_14_address,
-                14,
-                32,
-                8,
-                12,
-            );
+            // C++:
+            //   size = (32 - i) * 8 + 4
+            for base in savevmx_14_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 14, 32, 8, 4);
+            }
+            for base in restvmx_14_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 14, 32, 8, 4);
+            }
 
-            // VMX 64..127/128: "__savevmx_%d" / "__restvmx_%d" (vmx128 style)
+            // VMX 64..127/128: "__savevmx_%d" / "__restvmx_%d"
             //
-            // IDA pattern:
-            //   { "__savevmx_%d", ..., true,  64, 128, 8, 12 }
-            //   { "__restvmx_%d", ..., false, 64, 128, 8, 12 }
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                savevmx_64_address,
-                64,
-                128,
-                8,
-                12,
-            );
-            seed_thunk_chain(
-                &mut seen,
-                ctx,
-                restvmx_64_address,
-                64,
-                128,
-                8,
-                12,
-            );
+            // C++:
+            //   size = (128 - i) * 8 + 4
+            for base in savevmx_64_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 64, 128, 8, 4);
+            }
+            for base in restvmx_64_bases {
+                seed_thunk_family_cpp_style(&mut seen, ctx, base, 64, 128, 8, 4);
+            }
 
-            // Seed setjmp/longjmp as normal functions so BL scan doesn't have to guess.
+            // setjmp/longjmp seeding can stay as you had it:
             if longjmp_address != 0 {
                 push_fn_if_new(
                     &mut seen,
@@ -495,8 +488,6 @@ impl Pass for AnalyseFunctions {
                     SIG_SETJMP.len() as u32,
                 );
             }
-
-            xlog!("FUN: seeded {} thunk funcs", seen.len());
         }
 
         // -------- seed from entry point (if present) --------
@@ -743,7 +734,6 @@ impl Pass for AnalyseFunctions {
             })
             .sum();
 
-
         // -------- Decode .pdata once, stash in DB, and seed root functions --------
         {
             let _p = Phase::new("pass::AnalyseFunctions.decode_pdata");
@@ -792,8 +782,6 @@ impl Pass for AnalyseFunctions {
                     let end    = begin.wrapping_add(size_bytes);
 
                     // For EH landing-pad detection we only care about whether EH is present.
-                    // If you have a specific "EH flag" bit, you can derive has_eh from that.
-                    // For now we keep your previous has_eh logic if it came from elsewhere.
                     let has_eh = (data & 0x8000_0000) != 0;
 
                     // Record the raw entry in db.pdata.
@@ -829,28 +817,19 @@ impl Pass for AnalyseFunctions {
                         }
                     }
 
-                    // Seed a root function for each .pdata entry, except for save/restore
-                    // millicode (vmx thunks) which we handle via signature-based chains.
-                    let is_millicode = match func_type {
-                        // Adjust these discriminants to match your RuntimeFunctionType enum.
-                        // Example mapping:
-                        //   0 = None/Normal
-                        //   1 = Export
-                        //   2 = SaveMillicode
-                        //   3 = RestoreMillicode
-                        2 | 3 => true, // SaveMillicode / RestoreMillicode
-                        _ => false,
-                    };
-
-                    if !is_millicode {
-                        if seen.insert(begin) {
-                            ctx.db.functions.push(crate::db::FunctionInfo {
-                                base: begin,
-                                size: size_bytes,
-                                blocks: Vec::new(),
-                            });
-                            added += 1;
-                        }
+                    // Seed a root function for every .pdata entry that has a non-zero size.
+                    //
+                    // NOTE: save/restore millicode thunks will already have been seeded earlier
+                    //       by the signature-based `seed_thunk_chain` calls. Because we share
+                    //       the `seen` set across all seeds, any `.pdata` entries that happen
+                    //       to point at those thunks will just be deduped here.
+                    if seen.insert(begin) {
+                        ctx.db.functions.push(crate::db::FunctionInfo {
+                            base: begin,
+                            size: size_bytes,
+                            blocks: Vec::new(),
+                        });
+                        added += 1;
                     }
 
                     // Remember this entry for the next iteration.
@@ -908,9 +887,32 @@ impl Pass for AnalyseFunctions {
                     let pc = caller_base + (i as u32) * 4;
                     let tgt = branch_target(insn, pc);
 
-                    // Map target to *any* CODE span (cross-section OK).
-                    let Some(tgt_span) = find_code_span(tgt, &code_spans) else {
-                        continue;
+                    // First try to map target to a CODE span (normal case).
+                    let tgt_span = if let Some(span) = find_code_span(tgt, &code_spans) {
+                        Some(span)
+                    } else {
+                        // If it's not in a CODE span, but it *is* inside a .pdata function,
+                        // we still want to treat it as valid code so that we can create an alias.
+                        if let Some((pdata_start, _pdata_end)) = find_pdata_range_for(ctx, tgt) {
+                            // Make sure we at least record an alias for this BL target → .pdata root.
+                            if !ctx.db.aliases.iter().any(|a| a.primary == pdata_start && a.alias == tgt) {
+                                ctx.db.aliases.push(crate::db::FunctionAlias {
+                                    primary: pdata_start,
+                                    alias: tgt,
+                                });
+                                xdebug!(
+                                    "FUN: BL alias (no CODE span) 0x{:08X} -> 0x{:08X}",
+                                    tgt, pdata_start
+                                );
+                            }
+
+                            // We WON'T run Function::analyze on this (no CODE span), so we *only*
+                            // get the alias mapping. That’s enough for call_guest() to dispatch.
+                            continue;
+                        } else {
+                            // Not in CODE, not in .pdata: ignore.
+                            continue;
+                        }
                     };
 
                     // Only aligned targets make sense as code.
@@ -925,7 +927,31 @@ impl Pass for AnalyseFunctions {
 
                     // Skip targets that lie inside any known function (O(log N)),
                     // *except* for inner .pdata addresses we want to split out later.
+                    //
+                    // NEW: if we see a BL that targets the *middle* of an existing function,
+                    // register that target as an alias entrypoint so the runtime mapping
+                    // can dispatch calls made to that address.
                     if addr_in_ranges(&ranges, tgt) && !is_inner_pdata {
+                        // Find owning function
+                        if let Some(owner) = ctx.db.functions.iter().find(|f| {
+                            let start = f.base;
+                            let end   = start.wrapping_add(f.size);
+                            tgt >= start && tgt < end
+                        }) {
+                            // Avoid duplicate aliases
+                            if !ctx.db.aliases.iter().any(|a| a.primary == owner.base && a.alias == tgt) {
+                                ctx.db.aliases.push(crate::db::FunctionAlias {
+                                    primary: owner.base,
+                                    alias: tgt,
+                                });
+                                xdebug!(
+                                    "FUN: BL alias 0x{:08X} -> 0x{:08X}",
+                                    tgt,
+                                    owner.base
+                                );
+                            }
+                        }
+
                         continue;
                     }
 
@@ -941,6 +967,7 @@ impl Pass for AnalyseFunctions {
                         continue;
                     }
 
+                    let tgt_span = tgt_span.unwrap();
                     let tgt_sec = &ctx.img.sections[tgt_span.idx];
                     let Some(tgt_words) = &words_per_sec[tgt_span.idx] else {
                         continue;
@@ -984,7 +1011,6 @@ impl Pass for AnalyseFunctions {
                     let tgt_sec = &ctx.img.sections[span_idx];
                     let sec_end = tgt_sec.base.wrapping_add(tgt_sec.data.len() as u32);
                     let size = fast_function_size(&words[start_idx..], tgt, sec_end, &switch_bases);
-
 
                     // ---- analysis-phase progress reporting ----
                     let done = processed_candidates.fetch_add(1, Ordering::Relaxed) + 1;
@@ -1058,27 +1084,18 @@ impl Pass for AnalyseFunctions {
             );
         }
 
-                // --- Synthesise aliases for inner .pdata BL targets (cheap) ---
+        // --- Synthesise aliases for inner .pdata BL targets (cheap) ---
         {
             let _p = Phase::new("pass::AnalyseFunctions.inner_pdata_split");
+            let mut added_aliases = 0usize;
+            let added_funcs   = 0usize;
 
             if !inner_pdata_entries.is_empty() {
                 inner_pdata_entries.sort();
                 inner_pdata_entries.dedup();
 
-                // Helper: like AnalyseSwitchBind::find_pdata_range
-                fn find_pdata_range_for(ctx: &Ctx, addr: u32) -> Option<(u32, u32)> {
-                    ctx.db
-                        .pdata
-                        .iter()
-                        .filter(|p| addr >= p.begin && addr < p.end)
-                        .max_by_key(|p| p.begin)
-                        .map(|p| (p.begin, p.end))
-                }
-
                 // Snapshot of current functions so we can test for “already a root”.
                 let funcs_snapshot = ctx.db.functions.clone();
-                let mut added_aliases = 0usize;
 
                 for &addr in &inner_pdata_entries {
                     // Already have a function that starts exactly here? Skip.
@@ -1095,27 +1112,26 @@ impl Pass for AnalyseFunctions {
                     }
 
                     // Avoid duplicate alias records.
-                    if ctx.db.aliases.iter().any(|a| a.primary == start && a.alias == addr) {
-                        continue;
+                    if !ctx.db.aliases.iter().any(|a| a.primary == start && a.alias == addr) {
+                        ctx.db.aliases.push(crate::db::FunctionAlias {
+                            primary: start,
+                            alias: addr,
+                        });
+                        added_aliases += 1;
                     }
-
-                    ctx.db.aliases.push(crate::db::FunctionAlias {
-                        primary: start,
-                        alias: addr,
-                    });
-                    added_aliases += 1;
                 }
 
-                if added_aliases != 0 {
+                if added_aliases != 0 || added_funcs != 0 {
                     xlog!(
-                        "FUN: inner .pdata split added {} alias entrypoints",
-                        added_aliases
+                        "FUN: inner .pdata split added {} alias entrypoints and {} synthetic funcs",
+                        added_aliases,
+                        added_funcs
                     );
                 }
             }
         }
 
-       // ======================== Gap rescan (aggressive leaf search) ========================
+         // ======================== Gap rescan (aggressive leaf search) ========================
         //
         // After BL scan, we may still have gaps between known functions that contain tiny
         // frameless / leaf helpers (like 0x821DB5A0..0x821DB5E0 in your sample).
@@ -1132,12 +1148,16 @@ impl Pass for AnalyseFunctions {
             // Only bother with reasonably large gaps; tiny padding holes are rarely code.
             const GAP_MIN_BYTES: u32 = 0x40;
 
-            let img = &ctx.img;
+            let img = &ctx.img; // keep Capstone/PpcCs out of the parallel closure
 
             // Work on a snapshot of the current functions, sorted by base, so that our
             // gap detection and "already covered" checks are stable for the whole pass.
             ctx.db.functions.sort_by_key(|f| f.base);
             let funcs_snapshot = ctx.db.functions.clone();
+
+            // Snapshot pdata + aliases so Rayon closure doesn't need &Ctx (which holds Capstone).
+            let pdata_snapshot   = ctx.db.pdata.clone();
+            let aliases_snapshot = ctx.db.aliases.clone();
 
             #[derive(Clone, Copy)]
             struct GapJob {
@@ -1207,16 +1227,49 @@ impl Pass for AnalyseFunctions {
             }
 
             if !jobs.is_empty() {
-                let words_ref = &words_per_sec;
-                let funcs_snapshot_ref = &funcs_snapshot;
+                let words_ref            = &words_per_sec;
+                let funcs_snapshot_ref   = &funcs_snapshot;
+                let pdata_ref:    &[crate::db::PdataEntry]      = &pdata_snapshot;
+                let aliases_ref:  &[crate::db::FunctionAlias]   = &aliases_snapshot;
 
                 // Local helper: check coverage against the snapshot (no &Ctx inside Rayon).
                 fn addr_in_snapshot(fns: &[crate::db::FunctionInfo], addr: u32) -> bool {
                     fns.iter().any(|f| {
                         let start = f.base;
-                        let end = start.wrapping_add(f.size);
+                        let end   = start.wrapping_add(f.size);
                         addr >= start && addr < end
                     })
+                }
+
+                // Local version of canonicalize_to_pdata which only depends on the .pdata +
+                // alias snapshots, so it’s `Sync`-friendly.
+                fn canonicalize_to_pdata_snapshot(
+                    aliases: &[crate::db::FunctionAlias],
+                    pdata: &[crate::db::PdataEntry],
+                    addr: u32,
+                ) -> u32 {
+                    if addr == 0 {
+                        return 0;
+                    }
+
+                    if let Some(a) = aliases.iter().find(|a| a.alias == addr) {
+                        return a.primary;
+                    }
+
+                    let mut best_start: u32 = 0;
+                    for p in pdata {
+                        let start = p.begin;
+                        let end   = p.end;
+                        if addr >= start && addr < end && start > best_start {
+                            best_start = start;
+                        }
+                    }
+
+                    if best_start != 0 {
+                        best_start
+                    } else {
+                        addr
+                    }
                 }
 
                 let per_job_new: Vec<Vec<crate::db::FunctionInfo>> =
@@ -1233,11 +1286,29 @@ impl Pass for AnalyseFunctions {
                             let job_end = job.end;
 
                             while cursor + 4 <= job_end {
-                                // Require alignment and skip anything already covered by an
-                                // existing function in the snapshot.
-                                if (cursor & 3) != 0
-                                    || addr_in_snapshot(funcs_snapshot_ref, cursor)
-                                {
+                                // Require alignment
+                                if (cursor & 3) != 0 {
+                                    cursor = cursor.wrapping_add(4);
+                                    continue;
+                                }
+
+                                // 1) Don’t start a new root at an address that we already know is
+                                //    inside some function (snapshot).
+                                if addr_in_snapshot(funcs_snapshot_ref, cursor) {
+                                    cursor = cursor.wrapping_add(4);
+                                    continue;
+                                }
+
+                                // 2) Don’t start a new root inside a .pdata-owned range.
+                                //
+                                //    If this address canonicalizes to a *different* root, it’s
+                                //    owned by .pdata and should be left to the stitching passes.
+                                let canon = canonicalize_to_pdata_snapshot(
+                                    aliases_ref,
+                                    pdata_ref,
+                                    cursor,
+                                );
+                                if canon != cursor {
                                     cursor = cursor.wrapping_add(4);
                                     continue;
                                 }
@@ -1255,7 +1326,10 @@ impl Pass for AnalyseFunctions {
 
                                 let (size_usize, has_term) = fast_function_size_with_term(
                                     &sec_words[start_idx..],
-                                    cursor, gap_limit, &switch_bases);
+                                    cursor,
+                                    gap_limit,
+                                    &switch_bases,
+                                );
                                 let mut size_u32 = size_usize as u32;
 
                                 if size_u32 == 0 || !has_term {
@@ -1309,8 +1383,6 @@ impl Pass for AnalyseFunctions {
         {
             let _p = Phase::new("pass::AnalyseFunctions.pointer_roots");
 
-            use std::collections::HashSet;
-
             // Build a set of existing function bases so we don't spam duplicates.
             let mut base_set: HashSet<u32> =
                 ctx.db.functions.iter().map(|f| f.base).collect();
@@ -1319,7 +1391,7 @@ impl Pass for AnalyseFunctions {
             let mut added_aliases = 0usize;
 
             // Scan all NON-CODE sections for 4-byte values that look like code pointers.
-            for (sec_idx, sec) in ctx.img.sections.iter().enumerate() {
+            for (_sec_idx, sec) in ctx.img.sections.iter().enumerate() {
                 // We only care about data-like sections here; CODE is handled elsewhere.
                 if sec.flags.contains(SectionFlags::CODE) {
                     continue;
@@ -1332,6 +1404,8 @@ impl Pass for AnalyseFunctions {
                 for (word_idx, chunk) in sec.data.chunks_exact(4).enumerate() {
                     let val = u32::from_be_bytes([chunk[0], chunk[1], chunk[2], chunk[3]]);
 
+                    let _word_idx = word_idx; // silence unused; useful if you want logging
+
                     // Only aligned addresses make sense as code.
                     if (val & 3) != 0 {
                         continue;
@@ -1342,7 +1416,6 @@ impl Pass for AnalyseFunctions {
                         continue;
                     }
 
-
                     // If this value points *inside* a .pdata-described function,
                     // we never want to create a brand new root function there.
                     // Instead, treat it as an alias of the .pdata primary.
@@ -1350,8 +1423,7 @@ impl Pass for AnalyseFunctions {
                         // Prefer an existing alias mapping if one exists (e.g. EH pad).
                         if let Some(a) = ctx.db.aliases.iter().find(|a| a.alias == val) {
                             // Alias is already known; nothing more to do here.
-                            // We *still* do not create a new function root.
-                            let _ = a; // silence unused warning if you like
+                            let _ = a;
                         } else if let Some(p) = ctx
                             .db
                             .pdata

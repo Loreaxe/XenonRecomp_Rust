@@ -1,29 +1,17 @@
 // src/recompiler/ppc_context.rs
 
-#![allow(non_camel_case_types)]
-#![allow(non_snake_case)]
-#![allow(dead_code)]
-#![allow(improper_ctypes)]
-#![cfg_attr(any(target_arch = "x86_64", target_arch = "aarch64"), allow(unused_unsafe))]
-
 use core::mem::MaybeUninit;
 
 pub const PPC_MEMORY_SIZE: u64 = 0x1_0000_0000;
 
-// ---------- Function indirection plumbing (pure Rust) ----------
-
-pub type FuncPtr = fn(&mut PPCContext, *mut u8);
-
 // ---------- Context ----------
 
-#[repr(C)]
+#[repr(C, align(64))]
 pub struct PPCContext {
     // ---------- GPRs ----------
     pub r3: PPCRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub r0: PPCRegister,
     pub r1: PPCRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub r2: PPCRegister,
     pub r4: PPCRegister,
     pub r5: PPCRegister,
@@ -32,9 +20,7 @@ pub struct PPCContext {
     pub r8: PPCRegister,
     pub r9: PPCRegister,
     pub r10: PPCRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub r11: PPCRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub r12: PPCRegister,
     pub r13: PPCRegister,
 
@@ -58,7 +44,6 @@ pub struct PPCContext {
     pub r30: PPCRegister,
     pub r31: PPCRegister,
 
-    #[cfg(not(feature = "skip_lr"))]
     pub lr: u64,
 
     // (ctr_as_local/xer_as_local/reserved_as_local) removed → always present
@@ -66,30 +51,20 @@ pub struct PPCContext {
     pub xer: PPCXERRegister,
     pub reserved: PPCRegister,
 
-    #[cfg(not(feature = "skip_msr"))]
     pub msr: u32, // default set in Default impl
 
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr0: PPCCRRegister,
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr1: PPCCRRegister,
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr2: PPCCRRegister,
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr3: PPCCRRegister,
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr4: PPCCRRegister,
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr5: PPCCRRegister,
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr6: PPCCRRegister,
-    #[cfg(not(feature = "cr_as_local"))]
     pub cr7: PPCCRRegister,
 
     pub fpscr: PPCFPSCRRegister,
 
     // ---------- FPRs ----------
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub f0: PPCRegister,
     pub f1: PPCRegister,
     pub f2: PPCRegister,
@@ -162,69 +137,37 @@ pub struct PPCContext {
     pub v31: PPCVRegister,
 
     // v32..v63 keep non_argument_as_local gate (your current setup)
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v32: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v33: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v34: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v35: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v36: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v37: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v38: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v39: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v40: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v41: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v42: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v43: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v44: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v45: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v46: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v47: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v48: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v49: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v50: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v51: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v52: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v53: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v54: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v55: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v56: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v57: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v58: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v59: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v60: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v61: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v62: PPCVRegister,
-    #[cfg(not(feature = "non_argument_as_local"))]
     pub v63: PPCVRegister,
 
     // (non_volatile_as_local) removed → always present v64..v127
@@ -299,7 +242,6 @@ impl Default for PPCContext {
     fn default() -> Self {
         // Zero-init, then set MSR if present.
         let mut ctx: Self = unsafe { MaybeUninit::zeroed().assume_init() };
-        #[cfg(not(feature = "skip_msr"))]
         {
             ctx.msr = 0x0200A000;
         }
@@ -307,12 +249,30 @@ impl Default for PPCContext {
     }
 }
 
+impl Default for PPCRegister {
+    #[inline]
+    fn default() -> Self {
+        // Safe because all union variants (ints/floats) accept 0 as a valid bit pattern.
+        // This matches how PPCContext::default() zeroes the whole struct.
+        unsafe { core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
+impl Default for PPCVRegister {
+    #[inline]
+    fn default() -> Self {
+        // Same rationale as PPCRegister: zeroed vector register.
+        unsafe { core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
 // ---------- Registers ----------
 
 #[repr(C)]
+#[derive(Copy, Clone)]
 pub union PPCRegister {
-    pub s8: i8,
-    pub u8: u8,
+    pub s8:  i8,
+    pub u8:  u8,
     pub s16: i16,
     pub u16: u16,
     pub s32: i32,
@@ -400,9 +360,10 @@ impl PPCCRRegister {
 }
 
 #[repr(C, align(16))]
+#[derive(Copy, Clone)]
 pub union PPCVRegister {
-    pub s8: [i8; 16],
-    pub u8: [u8; 16],
+    pub s8:  [i8; 16],
+    pub u8:  [u8; 16],
     pub s16: [i16; 8],
     pub u16: [u16; 8],
     pub s32: [i32; 4],
@@ -667,23 +628,3 @@ pub static VectorShiftTableR: [u8; 16*16] = [
     0x11,0x10,0x0F,0x0E,0x0D,0x0C,0x0B,0x0A,0x09,0x08,0x07,0x06,0x05,0x04,0x03,0x02,
     0x10,0x0F,0x0E,0x0D,0x0C,0x0B,0x0A,0x09,0x08,0x07,0x06,0x05,0x04,0x03,0x02,0x01,
 ];
-
-// ---------- Helpful arch timers for MFTB (optional re-export) ----------
-
-#[inline]
-pub fn rdtsc_u64() -> u64 {
-    #[cfg(target_arch = "x86_64")]
-    {
-        unsafe { core::arch::x86_64::_rdtsc() }
-    }
-    #[cfg(target_arch = "aarch64")]
-    {
-        let v: u64;
-        unsafe { core::arch::asm!("mrs {dst}, cntvct_el0", dst = out(reg) v); }
-        v
-    }
-    #[cfg(not(any(target_arch = "x86_64", target_arch = "aarch64")))]
-    {
-        0
-    }
-}

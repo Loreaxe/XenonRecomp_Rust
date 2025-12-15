@@ -73,4 +73,62 @@ impl PpcRaw {
         let lo = lower.simm16() as i32 as u32;
         hi.wrapping_add(lo)
     }
+
+    // Primary opcodes we care about (matches C++ semantics)
+    pub const OP_BC:  u32 = 16; // conditional branch
+    pub const OP_B:   u32 = 18; // unconditional branch
+    pub const OP_XL:  u32 = 19; // bclr/bcctr/etc (XL-form)
+
+    // XO values for bclr / bcctr (what C++ checked with PPC_OP_CTR + xop test)
+    pub const XO_BCLR:  u32 = 16;
+    pub const XO_BCCTR: u32 = 528;
+
+    #[inline]
+    pub fn is_bc(self) -> bool {
+        self.op() == Self::OP_BC
+    }
+
+    #[inline]
+    pub fn is_b_or_bl(self) -> bool {
+        self.op() == Self::OP_B
+    }
+
+    /// C++: `op == PPC_OP_CTR && (xop == 16 || xop == 528)`
+    #[inline]
+    pub fn is_ctr_form(self) -> bool {
+        self.op() == Self::OP_XL && (self.xop() == Self::XO_BCLR || self.xop() == Self::XO_BCCTR)
+    }
+
+    /// C++: `PPC_BL(instruction)` (is it a *call*?)
+    #[inline]
+    pub fn is_link(self) -> bool {
+        self.lk()
+    }
+
+    /// C++: `PPC_BO(instruction) & 0x10` (“ignore CTR” bit).
+    /// If this bit is *clear*, the branch is conditional on CTR.
+    #[inline]
+    pub fn bo_ignores_ctr(self) -> bool {
+        (self.bo() & 0x10) != 0
+    }
+
+    /// C++: `PPC_BA(instruction)` – AA bit (absolute branch)
+    #[inline]
+    pub fn is_absolute(self) -> bool {
+        self.aa()
+    }
+
+    /// BC-form branch destination, matching C++: `addr + PPC_BD(instruction)`
+    #[inline]
+    pub fn bc_target(self, pc: u32) -> u32 {
+        pc.wrapping_add(self.bd() as u32)
+    }
+
+    /// B/BL destination as in C++: `addr + PPC_BI(instruction)` for AA == 0,
+    /// and “absolute” when AA == 1.
+    #[inline]
+    pub fn b_target(self, pc: u32) -> u32 {
+        self.branch_target(pc)
+    }
+
 }

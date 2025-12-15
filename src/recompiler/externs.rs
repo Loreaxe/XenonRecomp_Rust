@@ -86,19 +86,43 @@ impl Recompiler {
         self.println("#![allow(non_snake_case)]");
         self.println("#![allow(unused_variables)]");
         self.println("");
-        self.println("use crate::recompiler::ppc_context::PPCContext;");
+        self.println("use ppc_ctx::PPCContext;");
         self.println("");
 
+        // ---------- extern "C" block that links to C++ shims ----------
+        self.println("extern \"C\" {");
+        for (_addr, sym_name, rust_ident) in entries {
+            // C symbol name: __imp__<original_symbol>
+            // If your import name already starts with __imp__, don't double-prefix.
+            let c_sym = if sym_name.starts_with("__imp__") {
+                sym_name.clone()
+            } else {
+                format!("__imp__{}", sym_name)
+            };
+
+            let ffi_ident = format!("ffi_{}", rust_ident);
+
+            // Use {:?} so we get proper quotes in the attribute without needing escapes.
+            self.println_fmt(format_args!(
+                "    #[link_name = {c_sym:?}] fn {ffi_ident}(ctx: &mut PPCContext, base: *mut u8);"
+            ));
+        }
+        self.println("}");
+        self.println("");
+        // ---------------------------------------------------------------
+
+        // Safe Rust wrappers that the recompiled code will call
         for (addr, sym_name, rust_ident) in entries {
+            let ffi_ident = format!("ffi_{}", rust_ident);
+
             self.println_fmt(format_args!(
                 "// thunk VA: 0x{addr:08X}  ({sym_name})"
             ));
             self.println_fmt(format_args!(
                 "pub fn {rust_ident}(ctx: &mut PPCContext, base: *mut u8) {{"
             ));
-            self.println("    // TODO: implement this import for this title.");
             self.println_fmt(format_args!(
-                "    unimplemented!(\"{rust_ident} (VA 0x{addr:08X})\");"
+                "    unsafe {{ {ffi_ident}(ctx, base); }}"
             ));
             self.println("}");
             self.println("");
@@ -109,7 +133,7 @@ impl Recompiler {
         Ok(())
     }
 
-/// Main entry used by `Recompiler::emit_externs_if_any`.
+    /// Main entry used by `Recompiler::emit_externs_if_any`.
     ///
     /// `imports` is `(thunk_va_or_impl_va, symbol_name)` from
     /// `xex::collect_import_symbols`.
@@ -176,8 +200,8 @@ impl Recompiler {
         for (addr, sym_name) in imports {
             if let Some((module, rust_ident, _primary)) = sym_map.get(sym_name) {
                 let qual = match module {
-                    ModuleKind::Xam => format!("crate::xam::{}", rust_ident),
-                    ModuleKind::XboxKrnl => format!("crate::xboxkrnl::{}", rust_ident),
+                    ModuleKind::Xam      => format!("xam::{}", rust_ident),
+                    ModuleKind::XboxKrnl => format!("xboxkrnl::{}", rust_ident),
                 };
                 map.insert(*addr, qual);
             }
@@ -225,27 +249,4 @@ impl Recompiler {
             addr
         );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Runtime-facing stub `call`
-// -----------------------------------------------------------------------------
-//
-// The generated code does things like:
-//
-//     crate::recompiler::externs::call(ctx, base, 0x82CA9408);
-//
-// This stub keeps both the generator and any naive host builds compiling.
-// For a real game/host crate, you are expected to *override* this module
-// with a proper implementation that dispatches to your generated xam.rs /
-// xboxkrnl.rs wrappers.
-
-/// Stub implementation of the runtime import dispatcher.
-///
-/// In a real host/game crate you should provide your own `externs::call`
-/// that matches this signature and forwards to the generated wrappers.
-pub fn call(ctx: &mut PPCContext, base: *mut u8, addr: u32) {
-    // For now, just use the panic-y stub so we notice if anything actually
-    // tries to call this when running the generator itself.
-    Recompiler::externs_call_stub(ctx, base, addr);
 }

@@ -15,7 +15,7 @@ pub(crate) fn handle_stb(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u8( \
                     base as *mut u8, \
-                    {ra_s}.u32.wrapping_add({imm} as u32), \
+                    (({ra_s}.u32 as i32).wrapping_add({imm})) as u32, \
                     {rs}.u8 \
                 ) \
             }};"
@@ -25,7 +25,7 @@ pub(crate) fn handle_stb(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u8( \
                     base as *mut u8, \
-                    {imm}u32, \
+                    ({imm}) as u32, \
                     {rs}.u8 \
                 ) \
             }};"
@@ -46,16 +46,30 @@ pub(crate) fn handle_stbu(ctx: &mut LowerCtx) -> bool {
 
     if let Some(ra) = ra_opt {
         let ra_s = ctx.r(ra).to_string();
-        ctx.println_fmt(format_args!("\t{ea} = {ra_s}.u32.wrapping_add({imm} as u32);"));
+        // EA = rA.u32 + imm  (union access inside unsafe)
         ctx.println_fmt(format_args!(
-            "\tunsafe {{ crate::rt::store_u8(base as *mut u8, {ea}, {rs}.u8) }};"
+            "\t{ea} = unsafe {{ {ra}.u32.wrapping_add(({imm}) as u32) }};",
+            ea = ea,
+            ra = ra_s,
+            imm = imm,
         ));
-        ctx.println_fmt(format_args!("\t{ra_s}.u32 = {ea};"));
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ crate::rt::store_u8(base as *mut u8, {ea}, {rs}.u8) }};",
+            ea = ea,
+            rs = rs,
+        ));
+        ctx.println_fmt(format_args!(
+            "\t{ra}.u32 = {ea};",
+            ra = ra_s,
+            ea = ea,
+        ));
     } else {
         // RA field == 0 is reserved in the ISA; we just treat it as absolute EA.
-        ctx.println_fmt(format_args!("\t{ea} = {imm}u32;"));
+        ctx.println_fmt(format_args!("\t{ea} = ({imm}) as u32;", ea = ea, imm = imm));
         ctx.println_fmt(format_args!(
-            "\tunsafe {{ crate::rt::store_u8(base as *mut u8, {ea}, {rs}.u8) }};"
+            "\tunsafe {{ crate::rt::store_u8(base as *mut u8, {ea}, {rs}.u8) }};",
+            ea = ea,
+            rs = rs,
         ));
     }
 
@@ -99,7 +113,7 @@ pub(crate) fn handle_std(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u64( \
                     base as *mut u8, \
-                    {ra_s}.u32.wrapping_add({imm} as u32), \
+                    (({ra_s}.u32 as i32).wrapping_add({imm})) as u32, \
                     {rs}.u64 \
                 ) \
             }};"
@@ -109,7 +123,7 @@ pub(crate) fn handle_std(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u64( \
                     base as *mut u8, \
-                    {imm}u32, \
+                    ({imm}) as u32, \
                     {rs}.u64 \
                 ) \
             }};"
@@ -120,32 +134,49 @@ pub(crate) fn handle_std(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_stdcx(ctx: &mut LowerCtx) -> bool {
-	// STDCX. rS, rA, rB  -> CR0.eq = CAS64(base+(ra+rb), expected=reserved, new=rS)
-	let s  = ctx.op_reg(0);
-	let ra  = ctx.op_reg(1);
-	let rb  = ctx.op_reg(2);
+    // STDCX. rS, rA, rB  -> CR0.eq = CAS64(base+(ra+rb), expected=reserved, new=rS)
+    let s  = ctx.op_reg(0);
+    let ra = ctx.op_reg(1);
+    let rb = ctx.op_reg(2);
 
-	let rs   = ctx.r(s).to_string();
-	let rra  = if ra != 0 { Some(ctx.r(ra).to_string()) } else { None };
-	let rrb  = ctx.r(rb).to_string();
-	let cr0  = ctx.cr(0).to_string();
-	let xer  = ctx.xer().to_string();
-	let rsvd = ctx.reserved().to_string();
+    let rs   = ctx.r(s).to_string();
+    let rra  = if ra != 0 { Some(ctx.r(ra).to_string()) } else { None };
+    let rrb  = ctx.r(rb).to_string();
+    let cr0  = ctx.cr(0).to_string();
+    let xer  = ctx.xer().to_string();
+    let rsvd = ctx.reserved().to_string();
 
-	if let Some(ra_s) = rra {
-		ctx.println_fmt(format_args!("\tlet addr = {ra}.u32.wrapping_add({rb}.u32);", ra = ra_s, rb = rrb));
-	} else {
-		ctx.println_fmt(format_args!("\tlet addr = {rb}.u32;", rb = rrb));
-	}
+    // addr = base + (rA+rB) or rB, with union access wrapped in unsafe
+    if let Some(ra_s) = rra {
+        ctx.println_fmt(format_args!(
+            "\tlet addr = unsafe {{ {ra}.u32.wrapping_add({rb}.u32) }};",
+            ra = ra_s,
+            rb = rrb,
+        ));
+    } else {
+        ctx.println_fmt(format_args!(
+            "\tlet addr = unsafe {{ {rb}.u32 }};",
+            rb = rrb,
+        ));
+    }
 
-	ctx.println_fmt(format_args!("\t{cr}.lt = false;", cr = cr0));
-	ctx.println_fmt(format_args!("\t{cr}.gt = false;", cr = cr0));
-	ctx.println_fmt(format_args!(
-		"\tlet ok = unsafe {{ crate::rt::stdcx64(base as *mut u8, addr, {rsvd}.u64 as u64, {rs}.u64) }};"
-	));
-	ctx.println_fmt(format_args!("\t{cr}.eq = ok;", cr = cr0));
-	ctx.println_fmt(format_args!("\t{cr}.so = {xer}.so;", cr = cr0, xer = xer));
-	true
+    // CR0.lt = 0, CR0.gt = 0
+    ctx.println_fmt(format_args!("\t{cr}.lt = 0;", cr = cr0));
+    ctx.println_fmt(format_args!("\t{cr}.gt = 0;", cr = cr0));
+
+    // stdcx64 returns bool: true on success, false on failure
+    ctx.println_fmt(format_args!(
+        "\tlet ok = unsafe {{ crate::rt::stdcx64(base as *mut u8, addr, {rsvd}.u64 as u64, {rs}.u64) }};",
+        rsvd = rsvd,
+        rs   = rs,
+    ));
+
+    // CR0.eq = 1 on success, 0 on failure
+    ctx.println_fmt(format_args!("\t{cr}.eq = if ok {{ 1 }} else {{ 0 }};", cr = cr0));
+    // (or: {cr}.eq = ok as u8;)
+
+    ctx.println_fmt(format_args!("\t{cr}.so = {xer}.so;", cr = cr0, xer = xer));
+    true
 }
 
 pub(crate) fn handle_stdu(ctx: &mut LowerCtx) -> bool {
@@ -159,20 +190,36 @@ pub(crate) fn handle_stdu(ctx: &mut LowerCtx) -> bool {
 
     if let Some(ra) = ra_opt {
         let ra_s = ctx.r(ra).to_string();
-        ctx.println_fmt(format_args!("\t{ea} = {ra_s}.u32.wrapping_add({imm} as u32);"));
+
+        // EA = (rA.u32 as i32 + imm) as u32  (union read in unsafe)
         ctx.println_fmt(format_args!(
-            "\tunsafe {{ crate::rt::store_u64(base as *mut u8, {ea}, {rs}.u64) }};"
+            "\t{ea} = unsafe {{ (({ra}.u32 as i32).wrapping_add({imm})) as u32 }};",
+            ea = ea,
+            ra = ra_s,
+            imm = imm,
         ));
-        ctx.println_fmt(format_args!("\t{ra_s}.u32 = {ea};"));
-    } else {
-        ctx.println_fmt(format_args!("\t{ea} = {imm}u32;"));
         ctx.println_fmt(format_args!(
-            "\tunsafe {{ crate::rt::store_u64(base as *mut u8, {ea}, {rs}.u64) }};"
+            "\tunsafe {{ crate::rt::store_u64(base as *mut u8, {ea}, {rs}.u64) }};",
+            ea = ea,
+            rs = rs,
+        ));
+        ctx.println_fmt(format_args!(
+            "\t{ra}.u32 = {ea};",
+            ra = ra_s,
+            ea = ea,
+        ));
+    } else {
+        ctx.println_fmt(format_args!("\t{ea} = ({imm}) as u32;", ea = ea, imm = imm));
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ crate::rt::store_u64(base as *mut u8, {ea}, {rs}.u64) }};",
+            ea = ea,
+            rs = rs,
         ));
     }
 
     true
 }
+
 
 pub(crate) fn handle_stdx(ctx: &mut LowerCtx) -> bool {
 	let s  = ctx.op_reg(0);
@@ -212,7 +259,7 @@ pub(crate) fn handle_stfd(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u64( \
                     base as *mut u8, \
-                    {ra_s}.u32.wrapping_add({imm} as u32), \
+                    (({ra_s}.u32 as i32).wrapping_add({imm})) as u32, \
                     {ff}.u64 \
                 ) \
             }};"
@@ -222,7 +269,7 @@ pub(crate) fn handle_stfd(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u64( \
                     base as *mut u8, \
-                    {imm}u32, \
+                    ({imm}) as u32, \
                     {ff}.u64 \
                 ) \
             }};"
@@ -257,29 +304,49 @@ pub(crate) fn handle_stfdx(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_stfiwx(ctx: &mut LowerCtx) -> bool {
-	ctx.set_flush_mode(false);
-	let f  = ctx.op_reg(0);
-	let ra  = ctx.op_reg(1);
-	let rb  = ctx.op_reg(2);
+    ctx.set_flush_mode(false);
 
-	let ff = ctx.f(f).to_string();
-	let rrb = ctx.r(rb).to_string();
-	let rra = if ra != 0 { Some(ctx.r(ra).to_string()) } else { None };
-	let t   = ctx.temp().to_string();
+    let f  = ctx.op_reg(0);
+    let ra = ctx.op_reg(1);
+    let rb = ctx.op_reg(2);
 
-	ctx.println_fmt(format_args!("\t{t}.f32 = ({ff}.f64 as f32);"));
-	if let Some(ra_s) = rra {
-		ctx.println_fmt(format_args!(
-			"\tunsafe {{ crate::rt::store_u32(base as *mut u8, {ra}.u32.wrapping_add({rb}.u32), {t}.u32) }};",
-			ra = ra_s, rb = rrb
-		));
-	} else {
-		ctx.println_fmt(format_args!(
-			"\tunsafe {{ crate::rt::store_u32(base as *mut u8, {rb}.u32, {t}.u32) }};",
-			rb = rrb
-		));
-	}
-	true
+    let ff  = ctx.f(f).to_string();
+    let rrb = ctx.r(rb).to_string();
+    let rra = if ra != 0 { Some(ctx.r(ra).to_string()) } else { None };
+    let t   = ctx.temp().to_string();
+
+    // tmp.f32 = (ctx.f13.f64 as f32);
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {t}.f32 = ({ff}.f64 as f32); }}",
+    ));
+
+    // EA = (rA + rB) or RB if RA == 0, then store tmp.u32
+    if let Some(ra_s) = rra {
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ \
+                crate::rt::store_u32( \
+                    base as *mut u8, \
+                    {ra}.u32.wrapping_add({rb}.u32), \
+                    {t}.u32 \
+                ) \
+            }};",
+            ra = ra_s,
+            rb = rrb,
+        ));
+    } else {
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ \
+                crate::rt::store_u32( \
+                    base as *mut u8, \
+                    {rb}.u32, \
+                    {t}.u32 \
+                ) \
+            }};",
+            rb = rrb,
+        ));
+    }
+
+    true
 }
 
 pub(crate) fn handle_stfs(ctx: &mut LowerCtx) -> bool {
@@ -292,7 +359,10 @@ pub(crate) fn handle_stfs(ctx: &mut LowerCtx) -> bool {
     let t   = ctx.temp().to_string();
     let imm = disp as i32;
 
-    ctx.println_fmt(format_args!("\t{t}.f32 = ({ff}.f64 as f32);"));
+    // tmp.f32 = (ctx.fS.f64 as f32);
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {t}.f32 = ({ff}.f64 as f32); }}",
+    ));
 
     if let Some(ra) = ra_opt {
         let ra_s = ctx.r(ra).to_string();
@@ -300,7 +370,7 @@ pub(crate) fn handle_stfs(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u32( \
                     base as *mut u8, \
-                    {ra_s}.u32.wrapping_add({imm} as u32), \
+                    (({ra_s}.u32 as i32).wrapping_add({imm})) as u32, \
                     {t}.u32 \
                 ) \
             }};"
@@ -310,7 +380,7 @@ pub(crate) fn handle_stfs(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u32( \
                     base as *mut u8, \
-                    {imm}u32, \
+                    ({imm}) as u32, \
                     {t}.u32 \
                 ) \
             }};"
@@ -321,29 +391,47 @@ pub(crate) fn handle_stfs(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_stfsx(ctx: &mut LowerCtx) -> bool {
-	ctx.set_flush_mode(false);
-	let f  = ctx.op_reg(0);
-	let ra  = ctx.op_reg(1);
-	let rb  = ctx.op_reg(2);
+    ctx.set_flush_mode(false);
+    let f  = ctx.op_reg(0);
+    let ra = ctx.op_reg(1);
+    let rb = ctx.op_reg(2);
 
-	let ff  = ctx.f(f).to_string();
-	let rrb = ctx.r(rb).to_string();
-	let rra = if ra != 0 { Some(ctx.r(ra).to_string()) } else { None };
-	let t   = ctx.temp().to_string();
+    let ff  = ctx.f(f).to_string();
+    let rrb = ctx.r(rb).to_string();
+    let rra = if ra != 0 { Some(ctx.r(ra).to_string()) } else { None };
+    let t   = ctx.temp().to_string();
 
-	ctx.println_fmt(format_args!("\t{t}.f32 = ({ff}.f64 as f32);"));
-	if let Some(ra_s) = rra {
-		ctx.println_fmt(format_args!(
-			"\tunsafe {{ crate::rt::store_u32(base as *mut u8, {ra}.u32.wrapping_add({rb}.u32), {t}.u32) }};",
-			ra = ra_s, rb = rrb
-		));
-	} else {
-		ctx.println_fmt(format_args!(
-			"\tunsafe {{ crate::rt::store_u32(base as *mut u8, {rb}.u32, {t}.u32) }};",
-			rb = rrb
-		));
-	}
-	true
+    // tmp.f32 = (ctx.f?.f64 as f32);  → union read/write → unsafe
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {t}.f32 = ({ff}.f64 as f32); }};"
+    ));
+
+    if let Some(ra_s) = rra {
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ \
+                crate::rt::store_u32( \
+                    base as *mut u8, \
+                    {ra}.u32.wrapping_add({rb}.u32), \
+                    {t}.u32 \
+                ) \
+            }};",
+            ra = ra_s,
+            rb = rrb,
+        ));
+    } else {
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ \
+                crate::rt::store_u32( \
+                    base as *mut u8, \
+                    {rb}.u32, \
+                    {t}.u32 \
+                ) \
+            }};",
+            rb = rrb,
+        ));
+    }
+
+    true
 }
 
 pub(crate) fn handle_sth(ctx: &mut LowerCtx) -> bool {
@@ -361,7 +449,7 @@ pub(crate) fn handle_sth(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u16( \
                     base as *mut u8, \
-                    {ra_s}.u32.wrapping_add({imm} as u32), \
+                    (({ra_s}.u32 as i32).wrapping_add({imm})) as u32, \
                     {rs}.u16 \
                 ) \
             }};"
@@ -371,7 +459,7 @@ pub(crate) fn handle_sth(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u16( \
                     base as *mut u8, \
-                    {imm}u32, \
+                    ({imm}) as u32, \
                     {rs}.u16 \
                 ) \
             }};"
@@ -434,7 +522,7 @@ pub(crate) fn handle_stw(ctx: &mut LowerCtx) -> bool {
     // MEM (disp(ra)) is operand 1
     let (ra_opt, disp) = ctx.op_mem(1);
 
-    let rs = ctx.r(s).to_string();
+    let rs  = ctx.r(s).to_string();
     let imm = disp as i32;
 
     if let Some(ra) = ra_opt {
@@ -443,17 +531,18 @@ pub(crate) fn handle_stw(ctx: &mut LowerCtx) -> bool {
             "\tunsafe {{ \
                 crate::rt::store_u32( \
                     base as *mut u8, \
-                    {ra_s}.u32.wrapping_add({imm} as u32), \
+                    (({ra_s}.u32 as i32).wrapping_add({imm})) as u32, \
                     {rs}.u32 \
                 ) \
             }};"
         ));
     } else {
+        // RA == 0 → absolute EA = imm
         ctx.println_fmt(format_args!(
             "\tunsafe {{ \
                 crate::rt::store_u32( \
                     base as *mut u8, \
-                    {imm}u32, \
+                    ({imm}) as u32, \
                     {rs}.u32 \
                 ) \
             }};"
@@ -462,8 +551,6 @@ pub(crate) fn handle_stw(ctx: &mut LowerCtx) -> bool {
 
     true
 }
-
-
 
 pub(crate) fn handle_stwbrx(ctx: &mut LowerCtx) -> bool {
 	let s  = ctx.op_reg(0);
@@ -506,18 +593,30 @@ pub(crate) fn handle_stwcx(ctx: &mut LowerCtx) -> bool {
 
     // Effective address: if RA == 0, EA = RB; else EA = RA + RB
     if let Some(ra_s) = rra {
-        ctx.println_fmt(format_args!("\tlet addr = {ra}.u32.wrapping_add({rb}.u32);", ra = ra_s, rb = rrb));
+        ctx.println_fmt(format_args!(
+            "\tlet addr = unsafe {{ {ra}.u32.wrapping_add({rb}.u32) }};",
+            ra = ra_s,
+            rb = rrb,
+        ));
     } else {
-        ctx.println_fmt(format_args!("\tlet addr = {rb}.u32;", rb = rrb));
+        ctx.println_fmt(format_args!(
+            "\tlet addr = unsafe {{ {rb}.u32 }};",
+            rb = rrb,
+        ));
     }
 
-    ctx.println_fmt(format_args!("\t{cr}.lt = false;", cr = cr0));
-    ctx.println_fmt(format_args!("\t{cr}.gt = false;", cr = cr0));
+    // CR0 fields are u8, not bool
+    ctx.println_fmt(format_args!("\t{cr}.lt = 0;", cr = cr0));
+    ctx.println_fmt(format_args!("\t{cr}.gt = 0;", cr = cr0));
+
     ctx.println_fmt(format_args!(
         "\tlet ok = unsafe {{ crate::rt::stwcx32(base as *mut u8, addr, {rsvd}.u32, {rs}.u32) }};"
     ));
-    ctx.println_fmt(format_args!("\t{cr}.eq = ok;", cr = cr0));
+
+    // ok: bool → 0/1 in CR0.eq
+    ctx.println_fmt(format_args!("\t{cr}.eq = ok as u8;", cr = cr0));
     ctx.println_fmt(format_args!("\t{cr}.so = {xer}.so;", cr = cr0, xer = xer));
+
     true
 }
 
@@ -532,13 +631,24 @@ pub(crate) fn handle_stwu(ctx: &mut LowerCtx) -> bool {
 
     if let Some(ra) = ra_opt {
         let ra_s = ctx.r(ra).to_string();
-        ctx.println_fmt(format_args!("\t{ea} = {ra_s}.u32.wrapping_add({imm} as u32);"));
+
+        // EA = (rA.u32 as i32 + disp) as u32  (needs unsafe due to union read)
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = (({ra_s}.u32 as i32).wrapping_add({imm})) as u32; }}",
+        ));
+
+        // store_u32 also needs unsafe (raw pointer + union read of rs.u32)
         ctx.println_fmt(format_args!(
             "\tunsafe {{ crate::rt::store_u32(base as *mut u8, {ea}, {rs}.u32) }};"
         ));
-        ctx.println_fmt(format_args!("\t{ra_s}.u32 = {ea};"));
+
+        // Writing to a union field is safe → no unsafe block here
+        ctx.println_fmt(format_args!(
+            "\t{ra_s}.u32 = {ea};",
+        ));
     } else {
-        ctx.println_fmt(format_args!("\t{ea} = {imm}u32;"));
+        // RA == 0 → treat disp as absolute EA (no union access)
+        ctx.println_fmt(format_args!("\t{ea} = {imm} as u32;"));
         ctx.println_fmt(format_args!(
             "\tunsafe {{ crate::rt::store_u32(base as *mut u8, {ea}, {rs}.u32) }};"
         ));
@@ -548,19 +658,34 @@ pub(crate) fn handle_stwu(ctx: &mut LowerCtx) -> bool {
 }
 
 pub(crate) fn handle_stwux(ctx: &mut LowerCtx) -> bool {
-	let s  = ctx.op_reg(0);
-	let ra  = ctx.op_reg(1);
-	let rb  = ctx.op_reg(2);
+    let s  = ctx.op_reg(0);
+    let ra = ctx.op_reg(1);
+    let rb = ctx.op_reg(2);
 
-	let rs  = ctx.r(s).to_string();
-	let rra = ctx.r(ra).to_string();
-	let rrb = ctx.r(rb).to_string();
-	let ea  = ctx.ea().to_string();
+    let rs  = ctx.r(s).to_string();
+    let rra = ctx.r(ra).to_string();
+    let rrb = ctx.r(rb).to_string();
+    let ea  = ctx.ea().to_string();
 
-	ctx.println_fmt(format_args!("\t{ea} = {ra}.u32.wrapping_add({rb}.u32);", ra = rra, rb = rrb));
-	ctx.println_fmt(format_args!("\tunsafe {{ crate::rt::store_u32(base as *mut u8, {ea}, {rs}.u32) }};"));
-	ctx.println_fmt(format_args!("\t{ra}.u32 = {ea};", ra = rra));
-	true
+    // EA = rA + rB (both union fields → unsafe)
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {ea} = {ra}.u32.wrapping_add({rb}.u32); }}",
+        ra = rra,
+        rb = rrb,
+    ));
+
+    // store word at EA (rS.u32 is also a union field, but it's inside unsafe already)
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ crate::rt::store_u32(base as *mut u8, {ea}, {rs}.u32) }};"
+    ));
+
+    // update rA = EA (union write → unsafe)
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {ra}.u32 = {ea}; }}",
+        ra = rra,
+    ));
+
+    true
 }
 
 pub(crate) fn handle_stwx(ctx: &mut LowerCtx) -> bool {

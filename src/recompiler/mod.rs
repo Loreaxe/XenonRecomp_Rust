@@ -20,6 +20,7 @@ mod externs;
 // NEW: split big impl into separate modules
 mod analyse;
 mod emit;
+mod templates;
 
 /// Local variable tracking used by the lowering stage.
 #[derive(Copy, Clone, Debug)]

@@ -42,15 +42,21 @@ pub(crate) fn emit_stvlx_at(ctx: &mut LowerCtx, vd: usize, ra: usize, rb: usize)
     let rrb = ctx.r(rb).to_string();
     let vvd = ctx.v(vd).to_string();
 
-    // addr = ra + rb
-    ctx.print(format!("\t{ea} = "));
+    // addr = ra + rb (union fields, so unsafe)
     if let Some(ra_s) = rra.as_ref() {
-        ctx.print(format!("{ra_s}.u32 + "));
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {ra_s}.u32.wrapping_add({rrb}.u32); }}",
+        ));
+    } else {
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {rrb}.u32; }}",
+        ));
     }
-    ctx.println_fmt(format_args!("{rrb}.u32;"));
 
     // n = 16 - (addr & 0xF)
-    ctx.println_fmt(format_args!("\tlet n = 16usize - ((({ea} & 0xFu32) as usize) & 0xF);"));
+    ctx.println_fmt(format_args!(
+        "\tlet n = 16usize - ((({ea} & 0xFu32) as usize) & 0xF);"
+    ));
 
     // for i in 0..n { *(addr+i) = v[i] }
     ctx.println("\tfor i in 0..n {");
@@ -68,7 +74,6 @@ pub(crate) fn handle_stvlx_like(ctx: &mut LowerCtx) -> bool {
     emit_stvlx_at(ctx, vd, ra, rb)
 }
 
-
 /// Core STVRX / STVRX128 using explicit (vd, ra, rb).
 pub(crate) fn emit_stvrx_at(ctx: &mut LowerCtx, vd: usize, ra: usize, rb: usize) -> bool {
     // STVRX / STVRX128: store bytes from the *right* up to the previous 16B boundary.
@@ -77,12 +82,16 @@ pub(crate) fn emit_stvrx_at(ctx: &mut LowerCtx, vd: usize, ra: usize, rb: usize)
     let rrb = ctx.r(rb).to_string();
     let vvd = ctx.v(vd).to_string();
 
-    // addr = ra + rb
-    ctx.print(format!("\t{ea} = "));
+    // addr = ra + rb (union fields → unsafe)
     if let Some(ra_s) = rra.as_ref() {
-        ctx.print(format!("{ra_s}.u32 + "));
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {ra_s}.u32.wrapping_add({rrb}.u32); }}",
+        ));
+    } else {
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {rrb}.u32; }}",
+        ));
     }
-    ctx.println_fmt(format_args!("{rrb}.u32;"));
 
     // n = (addr & 0xF); start = addr - n
     ctx.println_fmt(format_args!("\tlet n = ((({ea} & 0xFu32) as usize) & 0xF);"));
@@ -115,12 +124,19 @@ pub(crate) fn handle_stvx_like(ctx: &mut LowerCtx) -> bool {
     let rrb = ctx.r(rb).to_string();
     let vvd = ctx.v(vd).to_string();
 
-    // addr = ra + rb
-    ctx.print(format!("\tlet addr = "));
+    // addr = RA + RB (or just RB if RA == 0), all union reads in unsafe
     if let Some(ra_s) = rra.as_ref() {
-        ctx.print(format!("{ra_s}.u32 + "));
+        ctx.println_fmt(format_args!(
+            "\tlet addr = unsafe {{ {ra}.u32.wrapping_add({rb}.u32) }};",
+            ra = ra_s,
+            rb = rrb,
+        ));
+    } else {
+        ctx.println_fmt(format_args!(
+            "\tlet addr = unsafe {{ {rb}.u32 }};",
+            rb = rrb,
+        ));
     }
-    ctx.println_fmt(format_args!("{rrb}.u32;"));
 
     // off = addr & 0xF; base_aligned = addr & !0xF
     ctx.println("\tlet off = (addr & 0xFu32) as usize;");
@@ -130,17 +146,28 @@ pub(crate) fn handle_stvx_like(ctx: &mut LowerCtx) -> bool {
     ctx.println("\tlet first = 16usize - off;");
     ctx.println("\tfor i in 0..first {");
     ctx.println_fmt(format_args!(
-        "\t\tunsafe {{ crate::rt::store_u8(base as *mut u8, base_aligned.wrapping_add((off + i) as u32), {vvd}.u8[i]); }}"
+        "\t\tunsafe {{ \
+            crate::rt::store_u8( \
+                base as *mut u8, \
+                base_aligned.wrapping_add((off + i) as u32), \
+                {vvd}.u8[i] \
+            ) \
+        }};"
     ));
     ctx.println("\t}");
 
     // then: off bytes to [base_aligned+16 .. base_aligned+16+off-1] from v[first..)
     ctx.println("\tfor i in 0..off {");
     ctx.println_fmt(format_args!(
-        "\t\tunsafe {{ crate::rt::store_u8(base as *mut u8, base_aligned.wrapping_add(16).wrapping_add(i as u32), {vvd}.u8[first + i]); }}"
+        "\t\tunsafe {{ \
+            crate::rt::store_u8( \
+                base as *mut u8, \
+                base_aligned.wrapping_add(16).wrapping_add(i as u32), \
+                {vvd}.u8[first + i] \
+            ) \
+        }};"
     ));
     ctx.println("\t}");
+
     true
 }
-
-

@@ -33,6 +33,7 @@ pub mod vector_misc;
 
 pub(crate) use crate::recompiler::instructions::{
     LowerCtx,
-    compute_mask,
+    compute_mask64,
+    compute_mask32,
     handle_link_if_needed,
 };

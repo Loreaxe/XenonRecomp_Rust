@@ -116,7 +116,7 @@ fn dispatch_by_id(ctx: &mut LowerCtx<'_>) -> bool {
         _ if has_mn(ctx, "cctpl")      => handle_cctpl(ctx),
         _ if has_mn(ctx, "cctpm")      => handle_cctpm(ctx),
         x if x == PpcInsn::PPC_INS_CLRLDI as u32 => handle_clrldi(ctx),
-        x if x == PpcInsn::PPC_INS_CLRLWI as u32 => handle_clrlwi(ctx),
+        _ if has_mn(ctx, "clrlwi")      => handle_clrlwi(ctx),
 
         // ----- compares -----
         x if x == PpcInsn::PPC_INS_CMPD as u32
@@ -264,7 +264,7 @@ fn dispatch_by_id(ctx: &mut LowerCtx<'_>) -> bool {
         x if x == PpcInsn::PPC_INS_RLDICR as u32 => handle_rldicr(ctx),
         x if x == PpcInsn::PPC_INS_RLDIMI as u32 => handle_rldimi(ctx),
         x if x == PpcInsn::PPC_INS_RLWIMI as u32 => handle_rlwimi(ctx),
-        x if x == PpcInsn::PPC_INS_RLWINM as u32 => handle_rlwinm(ctx),
+        _ if has_mn(ctx, "rlwinm")      => handle_rlwinm(ctx),
         x if x == PpcInsn::PPC_INS_ROTLDI as u32 => handle_rotldi(ctx),
         x if x == PpcInsn::PPC_INS_ROTLW as u32  => handle_rotlw(ctx),
         x if x == PpcInsn::PPC_INS_ROTLWI as u32 => handle_rotlwi(ctx),

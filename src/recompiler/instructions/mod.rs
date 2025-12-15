@@ -16,7 +16,8 @@ pub(crate) use ctx::{
     LowerCtx,
     has_mn,
     has_any_mn,
-    compute_mask,
+    compute_mask32,
+    compute_mask64,
     handle_link_if_needed,
     id_u32,
 };

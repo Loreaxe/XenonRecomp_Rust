@@ -8,57 +8,72 @@ pub(crate) fn handle_cctpm(_: &mut LowerCtx) -> bool { true }
 // ----- 64-bit signed/unsigned -----
 
 pub(crate) fn handle_cmpd(ctx: &mut LowerCtx) -> bool {
-    // CR field comes from a CRx register operand (not an immediate)
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let b   = ctx.op_reg(2);
+    // rA, rB are first and second GPRs
+    let a   = ctx.op_gpr(0);
+    let b   = ctx.op_gpr(1);
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let rb  = ctx.r(b).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_i64({ra}.s64, {rb}.s64, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ \
+            let left  = {ra}.s64; \
+            let right = {rb}.s64; \
+            {cr}.compare_i64(left, right, &mut {xer}); \
+        }}"
+    ));
+
     true
 }
 
 pub(crate) fn handle_cmpdi(ctx: &mut LowerCtx) -> bool {
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let imm = ctx.op_imm(2) as i64;
+    // rA is first GPR, imm is first IMM
+    let a   = ctx.op_gpr(0);
+    let imm = ctx.op_imm_n(0) as i64;
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_i64({ra}.s64, {imm}, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {cr}.compare_i64({ra}.s64, {imm}, &mut {xer}); }}"
+    ));
     true
 }
 
 pub(crate) fn handle_cmpld(ctx: &mut LowerCtx) -> bool {
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let b   = ctx.op_reg(2);
+    let a   = ctx.op_gpr(0);
+    let b   = ctx.op_gpr(1);
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let rb  = ctx.r(b).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_u64({ra}.u64, {rb}.u64, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {cr}.compare_u64({ra}.u64, {rb}.u64, &mut {xer}); }}",
+    ));
+
     true
 }
 
 pub(crate) fn handle_cmpldi(ctx: &mut LowerCtx) -> bool {
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let imm = ctx.op_imm(2) as u64;
+    let a   = ctx.op_gpr(0);
+    let imm = ctx.op_imm_n(0) as u64;
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_u64({ra}.u64, {imm}, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {cr}.compare_u64({ra}.u64, {imm}, &mut {xer}); }}"
+    ));
     true
 }
 
@@ -66,54 +81,62 @@ pub(crate) fn handle_cmpldi(ctx: &mut LowerCtx) -> bool {
 
 pub(crate) fn handle_cmplw(ctx: &mut LowerCtx) -> bool {
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let b   = ctx.op_reg(2);
+    let a   = ctx.op_gpr(0);
+    let b   = ctx.op_gpr(1);
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let rb  = ctx.r(b).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_u32({ra}.u32, {rb}.u32, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {cr}.compare_u32({ra}.u32, {rb}.u32, &mut {xer}); }}",
+    ));
     true
 }
 
 pub(crate) fn handle_cmplwi(ctx: &mut LowerCtx) -> bool {
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let imm = ctx.op_imm(2) as u64;
+    let a   = ctx.op_gpr(0);
+    let imm = ctx.op_imm_n(0) as u64;
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_u32({ra}.u32, {imm} as u32, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {cr}.compare_u32({ra}.u32, {imm} as u32, &mut {xer}); }}",
+    ));
     true
 }
 
 pub(crate) fn handle_cmpw(ctx: &mut LowerCtx) -> bool {
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let b   = ctx.op_reg(2);
+    let a   = ctx.op_gpr(0);
+    let b   = ctx.op_gpr(1);
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let rb  = ctx.r(b).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_i32({ra}.s32, {rb}.s32, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {cr}.compare_i32({ra}.s32, {rb}.s32, &mut {xer}); }}",
+    ));
     true
 }
 
 pub(crate) fn handle_cmpwi(ctx: &mut LowerCtx) -> bool {
     let crf = ctx.branch_cr_index();
-    let a   = ctx.op_reg(1);
-    let imm = ctx.op_imm(2) as i32;
+    let a   = ctx.op_gpr(0);
+    let imm = ctx.op_imm_n(0) as i32;
 
     let cr  = ctx.cr(crf).to_string();
     let ra  = ctx.r(a).to_string();
     let xer = ctx.xer().to_string();
 
-    ctx.println_fmt(format_args!("\t{cr}.compare_i32({ra}.s32, {imm}, &mut {xer});"));
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ {cr}.compare_i32({ra}.s32, {imm}, &mut {xer}); }}",
+    ));
     true
 }

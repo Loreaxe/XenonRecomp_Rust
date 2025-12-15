@@ -382,6 +382,70 @@ impl<'a> LowerCtx<'a> {
         }
     }
 
+    /// nth GPR operand (0 = first GPR), or 0 if none (falls back to r0).
+    #[inline]
+    pub fn op_gpr(&self, nth: usize) -> usize {
+        use capstone::arch::ppc::PpcOperand;
+
+        let detail = match self.cs.insn_detail(self.insn) {
+            Ok(d) => d,
+            Err(_) => return 0,
+        };
+        let arch = detail.arch_detail();
+        let ppc = match arch.ppc() {
+            Some(p) => p,
+            None => return 0,
+        };
+
+        let mut count = 0usize;
+        for op in ppc.operands() {
+            if let PpcOperand::Reg(rid) = op {
+                let id = rid.0 as u16;
+
+                // Only GPRs r0..r31
+                if id >= capstone::arch::ppc::PpcReg::PPC_REG_R0 as u16
+                    && id <= capstone::arch::ppc::PpcReg::PPC_REG_R31 as u16
+                {
+                    if count == nth {
+                        // map to 0..31 like ctx.r0..ctx.r31
+                        return (id - capstone::arch::ppc::PpcReg::PPC_REG_R0 as u16) as usize;
+                    }
+                    count += 1;
+                }
+            }
+        }
+
+        // Fallback to r0 if we didn't find enough GPRs
+        0
+    }
+
+    /// nth immediate operand (0 = first IMM), or 0 if none.
+    #[inline]
+    pub fn op_imm_n(&self, nth: usize) -> i64 {
+        use capstone::arch::ppc::PpcOperand;
+
+        let detail = match self.cs.insn_detail(self.insn) {
+            Ok(d) => d,
+            Err(_) => return 0,
+        };
+        let arch = detail.arch_detail();
+        let ppc = match arch.ppc() {
+            Some(p) => p,
+            None => return 0,
+        };
+
+        let mut count = 0usize;
+        for op in ppc.operands() {
+            if let PpcOperand::Imm(v) = op {
+                if count == nth {
+                    return v;
+                }
+                count += 1;
+            }
+        }
+        0
+    }
+
     /// Parse MEM operand `i`: returns (base_reg_index, disp).
     #[inline]
     pub fn op_mem(&self, i: usize) -> (Option<usize>, i64) {
@@ -471,6 +535,44 @@ impl<'a> LowerCtx<'a> {
     }
 
     // -------- Register printers (index form for Rust) --------
+    fn ctx_gpr_name(idx: usize) -> &'static str {
+        match idx {
+            0  => "ctx.r0",
+            1  => "ctx.r1",
+            2  => "ctx.r2",
+            3  => "ctx.r3",
+            4  => "ctx.r4",
+            5  => "ctx.r5",
+            6  => "ctx.r6",
+            7  => "ctx.r7",
+            8  => "ctx.r8",
+            9  => "ctx.r9",
+            10 => "ctx.r10",
+            11 => "ctx.r11",
+            12 => "ctx.r12",
+            13 => "ctx.r13",
+            14 => "ctx.r14",
+            15 => "ctx.r15",
+            16 => "ctx.r16",
+            17 => "ctx.r17",
+            18 => "ctx.r18",
+            19 => "ctx.r19",
+            20 => "ctx.r20",
+            21 => "ctx.r21",
+            22 => "ctx.r22",
+            23 => "ctx.r23",
+            24 => "ctx.r24",
+            25 => "ctx.r25",
+            26 => "ctx.r26",
+            27 => "ctx.r27",
+            28 => "ctx.r28",
+            29 => "ctx.r29",
+            30 => "ctx.r30",
+            31 => "ctx.r31",
+            _ => panic!("GPR index out of range: {}", idx),
+        }
+    }
+
     pub fn r(&mut self, idx: usize) -> String {
         let use_local = (cfg!(feature = "non_argument_as_local") && matches!(idx, 0 | 2 | 11 | 12))
             || (cfg!(feature = "non_volatile_as_local") && idx >= 14);
@@ -479,7 +581,45 @@ impl<'a> LowerCtx<'a> {
             self.locals.r[idx] = true;
             format!("r[{idx}]")
         } else {
-            format!("ctx.r[{idx}]")
+            Self::ctx_gpr_name(idx).to_string()
+        }
+    }
+
+    fn ctx_fpr_name(idx: usize) -> &'static str {
+        match idx {
+            0  => "ctx.f0",
+            1  => "ctx.f1",
+            2  => "ctx.f2",
+            3  => "ctx.f3",
+            4  => "ctx.f4",
+            5  => "ctx.f5",
+            6  => "ctx.f6",
+            7  => "ctx.f7",
+            8  => "ctx.f8",
+            9  => "ctx.f9",
+            10 => "ctx.f10",
+            11 => "ctx.f11",
+            12 => "ctx.f12",
+            13 => "ctx.f13",
+            14 => "ctx.f14",
+            15 => "ctx.f15",
+            16 => "ctx.f16",
+            17 => "ctx.f17",
+            18 => "ctx.f18",
+            19 => "ctx.f19",
+            20 => "ctx.f20",
+            21 => "ctx.f21",
+            22 => "ctx.f22",
+            23 => "ctx.f23",
+            24 => "ctx.f24",
+            25 => "ctx.f25",
+            26 => "ctx.f26",
+            27 => "ctx.f27",
+            28 => "ctx.f28",
+            29 => "ctx.f29",
+            30 => "ctx.f30",
+            31 => "ctx.f31",
+            _ => panic!("FPR index out of range: {}", idx),
         }
     }
 
@@ -491,7 +631,141 @@ impl<'a> LowerCtx<'a> {
             self.locals.f[idx] = true;
             format!("f[{idx}]")
         } else {
-            format!("ctx.f[{idx}]")
+            Self::ctx_fpr_name(idx).to_string()
+        }
+    }
+
+    fn ctx_vr_name(idx: usize) -> &'static str {
+        match idx {
+             0 => "ctx.v0",
+             1 => "ctx.v1",
+             2 => "ctx.v2",
+             3 => "ctx.v3",
+             4 => "ctx.v4",
+             5 => "ctx.v5",
+             6 => "ctx.v6",
+             7 => "ctx.v7",
+             8 => "ctx.v8",
+             9 => "ctx.v9",
+            10 => "ctx.v10",
+            11 => "ctx.v11",
+            12 => "ctx.v12",
+            13 => "ctx.v13",
+            14 => "ctx.v14",
+            15 => "ctx.v15",
+            16 => "ctx.v16",
+            17 => "ctx.v17",
+            18 => "ctx.v18",
+            19 => "ctx.v19",
+            20 => "ctx.v20",
+            21 => "ctx.v21",
+            22 => "ctx.v22",
+            23 => "ctx.v23",
+            24 => "ctx.v24",
+            25 => "ctx.v25",
+            26 => "ctx.v26",
+            27 => "ctx.v27",
+            28 => "ctx.v28",
+            29 => "ctx.v29",
+            30 => "ctx.v30",
+            31 => "ctx.v31",
+            32 => "ctx.v32",
+            33 => "ctx.v33",
+            34 => "ctx.v34",
+            35 => "ctx.v35",
+            36 => "ctx.v36",
+            37 => "ctx.v37",
+            38 => "ctx.v38",
+            39 => "ctx.v39",
+            40 => "ctx.v40",
+            41 => "ctx.v41",
+            42 => "ctx.v42",
+            43 => "ctx.v43",
+            44 => "ctx.v44",
+            45 => "ctx.v45",
+            46 => "ctx.v46",
+            47 => "ctx.v47",
+            48 => "ctx.v48",
+            49 => "ctx.v49",
+            50 => "ctx.v50",
+            51 => "ctx.v51",
+            52 => "ctx.v52",
+            53 => "ctx.v53",
+            54 => "ctx.v54",
+            55 => "ctx.v55",
+            56 => "ctx.v56",
+            57 => "ctx.v57",
+            58 => "ctx.v58",
+            59 => "ctx.v59",
+            60 => "ctx.v60",
+            61 => "ctx.v61",
+            62 => "ctx.v62",
+            63 => "ctx.v63",
+            64 => "ctx.v64",
+            65 => "ctx.v65",
+            66 => "ctx.v66",
+            67 => "ctx.v67",
+            68 => "ctx.v68",
+            69 => "ctx.v69",
+            70 => "ctx.v70",
+            71 => "ctx.v71",
+            72 => "ctx.v72",
+            73 => "ctx.v73",
+            74 => "ctx.v74",
+            75 => "ctx.v75",
+            76 => "ctx.v76",
+            77 => "ctx.v77",
+            78 => "ctx.v78",
+            79 => "ctx.v79",
+            80 => "ctx.v80",
+            81 => "ctx.v81",
+            82 => "ctx.v82",
+            83 => "ctx.v83",
+            84 => "ctx.v84",
+            85 => "ctx.v85",
+            86 => "ctx.v86",
+            87 => "ctx.v87",
+            88 => "ctx.v88",
+            89 => "ctx.v89",
+            90 => "ctx.v90",
+            91 => "ctx.v91",
+            92 => "ctx.v92",
+            93 => "ctx.v93",
+            94 => "ctx.v94",
+            95 => "ctx.v95",
+            96 => "ctx.v96",
+            97 => "ctx.v97",
+            98 => "ctx.v98",
+            99 => "ctx.v99",
+           100 => "ctx.v100",
+           101 => "ctx.v101",
+           102 => "ctx.v102",
+           103 => "ctx.v103",
+           104 => "ctx.v104",
+           105 => "ctx.v105",
+           106 => "ctx.v106",
+           107 => "ctx.v107",
+           108 => "ctx.v108",
+           109 => "ctx.v109",
+           110 => "ctx.v110",
+           111 => "ctx.v111",
+           112 => "ctx.v112",
+           113 => "ctx.v113",
+           114 => "ctx.v114",
+           115 => "ctx.v115",
+           116 => "ctx.v116",
+           117 => "ctx.v117",
+           118 => "ctx.v118",
+           119 => "ctx.v119",
+           120 => "ctx.v120",
+           121 => "ctx.v121",
+           122 => "ctx.v122",
+           123 => "ctx.v123",
+           124 => "ctx.v124",
+           125 => "ctx.v125",
+           126 => "ctx.v126",
+           127 => "ctx.v127",
+           _ => panic!("VR index out of range: {}", idx),
         }
     }
 
@@ -505,7 +779,21 @@ impl<'a> LowerCtx<'a> {
             self.locals.v[idx] = true;
             format!("v[{idx}]")
         } else {
-            format!("ctx.v[{idx}]")
+            Self::ctx_vr_name(idx).to_string()
+        }
+    }
+
+    fn ctx_cr_name(idx: usize) -> &'static str {
+        match idx {
+            0 => "ctx.cr0",
+            1 => "ctx.cr1",
+            2 => "ctx.cr2",
+            3 => "ctx.cr3",
+            4 => "ctx.cr4",
+            5 => "ctx.cr5",
+            6 => "ctx.cr6",
+            7 => "ctx.cr7",
+            _ => panic!("CR index out of range: {}", idx),
         }
     }
 
@@ -514,7 +802,7 @@ impl<'a> LowerCtx<'a> {
             self.locals.cr[idx] = true;
             format!("cr[{idx}]")
         } else {
-            format!("ctx.cr[{idx}]")
+            Self::ctx_cr_name(idx).to_string()
         }
     }
 
@@ -574,13 +862,14 @@ impl<'a> LowerCtx<'a> {
 
     pub fn call_external(&mut self, addr: u32) {
         self.println_fmt(format_args!(
-            "\tcrate::recompiler::externs::call(ctx, base, 0x{addr:08X});"
+            "\tcrate::rt::call(ctx, base, 0x{addr:08X});"
         ));
     }
 
     pub fn print_function_call(&mut self, addr: u32) {
         let cfg = &self.rec.config;
 
+        // --- special longjmp / setjmp handling stays as-is ---
         if addr == cfg.longJmpAddress {
             self.println("\t// TODO: longjmp model");
             self.println("\tunsafe { core::intrinsics::abort(); }");
@@ -589,8 +878,8 @@ impl<'a> LowerCtx<'a> {
 
         if addr == cfg.setJmpAddress {
             let env = self.env();
-            let t = self.temp();
-            let r3 = self.r(3);
+            let t   = self.temp();
+            let r3  = self.r(3);
             self.println_fmt(format_args!("\t{env} = ctx.clone();"));
             self.println_fmt(format_args!(
                 "\t{t}.s64 = 0; // TODO setjmp(&mut {env}, {r3}/*env addr*/);"
@@ -602,48 +891,73 @@ impl<'a> LowerCtx<'a> {
             return;
         }
 
-        if let Some(name) = self.resolve_callee_name(addr) {
-            self.println_fmt(format_args!("\t{name}(ctx, base);"));
-            return;
-        }
-
+        // 1) Prefer extern wrappers (xam/xboxkrnl shims etc.)
         if let Some(ext) = self.resolve_extern_name(addr) {
             self.println_fmt(format_args!("\t{ext}(ctx, base);"));
             return;
         }
 
+        // 2) In multi-crate mode, only direct-call if we KNOW the callee
+        //    lives in the same chunk crate as the caller. Otherwise,
+        //    fall back to the external dispatcher.
+        if self.target_in_any_function(addr) {
+            if let Some(name) = self.resolve_callee_name(addr) {
+                let caller_base = self.fnc.base as u32;
+
+                if let (Some(caller_chunk), Some(callee_chunk)) = (
+                    self.rec.chunk_crate_for_func(caller_base),
+                    self.rec.chunk_crate_for_func(addr),
+                ) {
+                    if caller_chunk == callee_chunk {
+                        // Same chunk crate => direct Rust call is valid
+                        self.println_fmt(format_args!(
+                            "\tcrate::{name}(ctx, base, 0x{addr:08X});"
+                        ));
+                        return;
+                    }
+                }
+            }
+        }
+
+        // 3) Fallback: unknown or cross-crate target => go through the
+        //    address-based external dispatcher (host/runtime decides).
         self.call_external(addr);
     }
 
     pub fn print_conditional_branch(&mut self, invert: bool, cond_field: &str, target: u32) {
         let cr_idx = self.branch_cr_index();
-        let cond = {
+        let cond_bit = {
             let cr = self.cr(cr_idx);
             format!("{cr}.{cond_field}")
         };
 
-        self.println_fmt(format_args!(
-            "\tif {}{} {{",
-            if invert { "!" } else { "" },
-            cond
-        ));
+        // CR bits are u8 (0/1). We interpret:
+        //   - non-inverted: branch if bit != 0
+        //   - inverted:     branch if bit == 0
+        let cmp_expr = if invert {
+            format!("{cond_bit} == 0")
+        } else {
+            format!("{cond_bit} != 0")
+        };
 
+        // if (condition) { ... }
+        self.println_fmt(format_args!("\tif {cmp} {{", cmp = cmp_expr));
+
+        // 1) Intra-function branch → just a goto
         if self.target_in_current_function(target) {
             self.goto(target);
             self.println("\t}");
             return;
         }
 
-        if let Some(name) = self.resolve_callee_name(target) {
-            self.println_fmt(format_args!("\t\t{name}(ctx, base);"));
-            self.println("\t\treturn;");
-            self.println("\t}");
-            return;
-        }
-
-        self.print("\t");
+        // 2) Cross-function / external:
+        //    delegate to print_function_call(), which already:
+        //      - handles longjmp/setjmp
+        //      - prefers extern wrappers
+        //      - only direct-calls same-chunk functions
+        //      - falls back to rt::call(ctx, base, addr)
         self.print_function_call(target);
-        self.println("\t\treturn;");
+        self.println("\treturn;");
         self.println("\t}");
     }
 
@@ -838,7 +1152,7 @@ fn classify_vmx128_mem_word(word: u32) -> Option<Vmx128MemOp> {
     })
 }
 
-pub const fn compute_mask(mut mstart: u32, mut mstop: u32) -> u64 {
+pub const fn compute_mask64(mut mstart: u32, mut mstop: u32) -> u64 {
     mstart &= 0x3F;
     mstop &= 0x3F;
 
@@ -854,6 +1168,27 @@ pub const fn compute_mask(mut mstart: u32, mut mstop: u32) -> u64 {
         value
     } else {
         !value
+    }
+}
+
+// 32-bit RLWINM / RLWIMI / RLWNM mask helper.
+// MB/ME are in the usual 0..31 range.
+pub const fn compute_mask32(mb: u32, me: u32) -> u32 {
+    let all: u32 = !0;
+    let mb = mb & 31;
+    let me = me & 31;
+
+    if mb <= me {
+        // Bits mb..me set (MSR-style numbering but this combination
+        // matches the RLWINM examples from the IBM docs when used
+        // with a standard u32.rotate_left).
+        let left = all >> mb;
+        let right = if me == 31 { 0 } else { all >> (me + 1) };
+        left ^ right
+    } else {
+        // Wrap-around case: mb..31 and 0..me
+        let t = (all >> (me + 1)) ^ (all >> mb);
+        !t
     }
 }
 

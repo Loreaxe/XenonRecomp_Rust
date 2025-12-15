@@ -53,9 +53,12 @@ impl Pass for AnalyseSwitchBind {
                 return 0;
             }
 
-            // Respect db.aliases produced by AnalyseFunctions / decode_pdata:
-            // if this address is a known alias entrypoint (e.g. EH landing pad),
-            // canonicalise to its primary runtime entry.
+            // NEW: if `addr` is itself a .pdata root, treat it as canonical.
+            if ctx.db.pdata.iter().any(|p| p.begin == addr) {
+                return addr;
+            }
+
+            // Then apply alias mapping for true "inner" entrypoints (EH pads, etc.)
             if let Some(a) = ctx.db.aliases.iter().find(|a| a.alias == addr) {
                 return a.primary;
             }
@@ -350,26 +353,30 @@ impl Pass for AnalyseSwitchBind {
                 //
                 // We use the sorted snapshot to find the previous function in O(log N).
                 // Find the index of the owner function (or its insertion point)
-                let idx = funcs_snapshot
+                let mut idx = funcs_snapshot
                     .binary_search_by_key(&owner_base, |f| f.base)
                     .unwrap_or_else(|i| i);
 
-                if idx > 0 {
+                // Walk backwards through any chain of functions where
+                //   prev_end == cur_base
+                // so that we treat the *first* such function as the true owner root.
+                while idx > 0 {
                     let prev = &funcs_snapshot[idx - 1];
                     let prev_base = prev.base;
                     let prev_end  = prev.base.wrapping_add(prev.size);
 
-                    // If the previous function ends exactly at the owner's base,
-                    // treat that previous function as the real "owner root".
                     if prev_end == owner_base {
+                        // Merge this previous chunk into the owner cluster.
                         owner_base = prev_base;
 
-                        // Make sure our initial cluster_end covers both the previous
-                        // function and the one that contained the switch.
                         let prev_cluster_end = prev_base.wrapping_add(prev.size);
                         if prev_cluster_end > cluster_end {
                             cluster_end = prev_cluster_end;
                         }
+
+                        idx -= 1;
+                    } else {
+                        break;
                     }
                 }
 
@@ -585,7 +592,17 @@ impl Pass for AnalyseSwitchBind {
                 None
             }
 
+            // Sort once so our “next function” logic is stable.
             ctx.db.functions.sort_by_key(|f| f.base);
+
+            // Precompute the canonical .pdata root for each function base so we don't
+            // have to call canonicalize_to_pdata() while holding a mutable borrow.
+            let roots: Vec<u32> = ctx
+                .db
+                .functions
+                .iter()
+                .map(|f| canonicalize_to_pdata(ctx, f.base))
+                .collect();
 
             let old_len = ctx.db.functions.len();
             let len     = old_len;
@@ -604,11 +621,26 @@ impl Pass for AnalyseSwitchBind {
                     }
                 }
 
-                // Clamp to next function base
+                // Clamp to next function base, **unless** both functions share
+                // the same .pdata root (or alias primary). In that case they are
+                // part of the same logical cluster and stitching is expected to
+                // handle overlaps.
                 if i + 1 < len {
-                    let next_base = rest[0].base;
-                    if end > next_base {
-                        end = next_base;
+                    let next = &rest[0];
+
+                    let cur_root  = roots[i];
+                    let next_root = roots[i + 1];
+
+                    let same_cluster =
+                        cur_root != 0 &&
+                        next_root != 0 &&
+                        cur_root == next_root;
+
+                    if !same_cluster {
+                        let next_base = next.base;
+                        if end > next_base {
+                            end = next_base;
+                        }
                     }
                 }
 

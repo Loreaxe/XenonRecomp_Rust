@@ -159,8 +159,7 @@ fn main() -> Result<()> {
 
             // 6) Emit everything (including xam.rs/xboxkrnl.rs via emit_externs_if_any)
             r.recompile_all()?;
-            r.write_mod_index("lib.rs")?;
-            r.write_mod_index("mod.rs")?;
+            r.write_workspace_multi_crate()?;
 
             println!(
                 "✅ Module indices written to {} and {}",
@@ -209,8 +208,7 @@ fn main() -> Result<()> {
             let mut r = Recompiler::new_with_blob(img, cfg.clone(), blob);
             r.seed_from_analysis_db(&db); // trust the analysis DB
             r.recompile_all()?;
-            r.write_mod_index("lib.rs")?;
-            r.write_mod_index("mod.rs")?;
+            r.write_workspace_multi_crate()?;
 
             println!(
                 "✅ Module indices written to {} and {}",
@@ -266,8 +264,7 @@ fn main() -> Result<()> {
             let mut r = Recompiler::new_with_blob(img, cfg, blob);
             r.seed_from_analysis_db(&db); // trust the analysis DB
             r.recompile_all()?;
-            r.write_mod_index("lib.rs")?;
-            r.write_mod_index("mod.rs")?;
+            r.write_workspace_multi_crate()?;
 
             println!(
                 "✅ Module indices written to {} and {}",

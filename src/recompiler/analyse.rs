@@ -21,7 +21,6 @@ impl Recompiler {
         }
     }
 
-    /// Ensure all function bases and switch-table keys/labels are VA, not RVA.
     fn normalize_va_invariants(&mut self) {
         let base = self.image.base;
         let size = self.image.size;
@@ -57,6 +56,24 @@ impl Recompiler {
         }
         for (k, v) in remap {
             self.switch_tables.insert(k, v);
+        }
+
+        // --- Aliases ---  ✅ NEW
+        for a in &mut self.aliases {
+            let old_primary = a.primary;
+            let old_alias   = a.alias;
+            a.primary = mut_to_va(a.primary);
+            a.alias   = mut_to_va(a.alias);
+
+            if a.primary != old_primary || a.alias != old_alias {
+                xlog!(
+                    "RECOMP: fixup alias 0x{:08X}→0x{:08X} => 0x{:08X}→0x{:08X}",
+                    old_primary,
+                    old_alias,
+                    a.primary,
+                    a.alias
+                );
+            }
         }
     }
 
@@ -141,6 +158,7 @@ impl Recompiler {
     pub fn seed_from_analysis_db(&mut self, db: &crate::db::AnalysisDb) {
         self.functions.clear();
         self.switch_tables.clear();
+        self.aliases.clear(); // 👈 clear existing aliases
 
         // ---- functions ----
         for f in &db.functions {
@@ -174,13 +192,19 @@ impl Recompiler {
             );
         }
 
+        // ---- aliases ----  ✅ NEW
+        for a in &db.aliases {
+            self.aliases.push(a.clone());
+        }
+
         // Make sure everything is in VA space, not RVAs.
         self.normalize_va_invariants();
 
         xlog!(
-            "RECOMP: seeded {} function(s), {} switch table(s) from analysis DB",
+            "RECOMP: seeded {} function(s), {} switch table(s), {} alias(es) from analysis DB",
             self.functions.len(),
-            self.switch_tables.len()
+            self.switch_tables.len(),
+            self.aliases.len(), // 👈 extra logging if you want
         );
     }
 

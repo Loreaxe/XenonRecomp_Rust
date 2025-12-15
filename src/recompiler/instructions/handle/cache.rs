@@ -1,3 +1,4 @@
+// src/recompiler/instructions/handel/cache.rs
 use super::*;
 
 /// Optionally: treat the “do nothing” cache hints as hooks for future modeling.
@@ -26,39 +27,73 @@ pub(crate) fn handle_dcbz(ctx: &mut LowerCtx) -> bool {
     let a = ctx.op_reg(0);
     let b = ctx.op_reg(1);
 
-    let ea = ctx.ea().to_string();
+    let ea = ctx.ea().to_string(); // local `let mut ea: u32`
     let ra = ctx.r(a).to_string();
     let rb = ctx.r(b).to_string();
 
     if a != 0 {
-        ctx.println_fmt(format_args!("\t{ea}.u32 = {ra}.u32.wrapping_add({rb}.u32);"));
+        // EA = rA + rB (union fields => unsafe)
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {ra}.u32.wrapping_add({rb}.u32); }}",
+            ea = ea,
+            ra = ra,
+            rb = rb,
+        ));
     } else {
-        ctx.println_fmt(format_args!("\t{ea}.u32 = {rb}.u32;"));
+        // EA = rB
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {rb}.u32; }}",
+            ea = ea,
+            rb = rb,
+        ));
     }
 
-    // Align to 32B and zero via runtime
-    ctx.println_fmt(format_args!("\t{ea}.u32 &= !31;"));
-    ctx.println_fmt(format_args!("\tunsafe {{ crate::rt::memset_ea({ea}.u32, 0, 32) }};"));
+    // Align EA down to 32-byte boundary (plain u32 local, no union)
+    ctx.println_fmt(format_args!("\t{ea} &= !31;", ea = ea));
+
+    // Zero 32 bytes at base + EA
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ crate::rt::memset_ea(base, {ea}, 0, 32) }};",
+        ea = ea,
+    ));
+
     true
 }
 
-/// dcbzl rA,rB  -> zero 128-byte cache line at EA=(rA?rA+rB:rB)
+/// dcbzl rA,rB  -> zero 128-byte cache line at EA=(rA ? rA+rB : rB)
 pub(crate) fn handle_dcbzl(ctx: &mut LowerCtx) -> bool {
     let a = ctx.op_reg(0);
     let b = ctx.op_reg(1);
 
-    let ea = ctx.ea().to_string();
+    let ea = ctx.ea().to_string(); // `let mut ea: u32`
     let ra = ctx.r(a).to_string();
     let rb = ctx.r(b).to_string();
 
     if a != 0 {
-        ctx.println_fmt(format_args!("\t{ea}.u32 = {ra}.u32.wrapping_add({rb}.u32);"));
+        // EA = rA + rB (union fields => unsafe)
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {ra}.u32.wrapping_add({rb}.u32); }}",
+            ea = ea,
+            ra = ra,
+            rb = rb,
+        ));
     } else {
-        ctx.println_fmt(format_args!("\t{ea}.u32 = {rb}.u32;"));
+        // EA = rB
+        ctx.println_fmt(format_args!(
+            "\tunsafe {{ {ea} = {rb}.u32; }}",
+            ea = ea,
+            rb = rb,
+        ));
     }
 
-    // Align to 128B and zero via runtime
-    ctx.println_fmt(format_args!("\t{ea}.u32 &= !127;"));
-    ctx.println_fmt(format_args!("\tunsafe {{ crate::rt::memset_ea({ea}.u32, 0, 128) }};"));
+    // Align EA down to 128-byte boundary (plain u32)
+    ctx.println_fmt(format_args!("\t{ea} &= !127;", ea = ea));
+
+    // Zero 128 bytes at base + EA
+    ctx.println_fmt(format_args!(
+        "\tunsafe {{ crate::rt::memset_ea(base, {ea}, 0, 128) }};",
+        ea = ea,
+    ));
+
     true
 }

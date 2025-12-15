@@ -4,13 +4,22 @@ use super::*;
 pub(crate) fn handle_vaddfp_like(ctx: &mut LowerCtx) -> bool {
     // VADDFP / VADDFP128 : per-lane f32 add
     ctx.set_flush_mode(true);
-    let d = ctx.op_reg(0); let a = ctx.op_reg(1); let b = ctx.op_reg(2);
-    let vd = ctx.v(d).to_string(); let va = ctx.v(a).to_string(); let vb = ctx.v(b).to_string();
+    let d = ctx.op_reg(0);
+    let a = ctx.op_reg(1);
+    let b = ctx.op_reg(2);
+
+    let vd = ctx.v(d).to_string();
+    let va = ctx.v(a).to_string();
+    let vb = ctx.v(b).to_string();
+
     ctx.println("\tfor i in 0..4 {");
-    ctx.println_fmt(format_args!("\t\t{vd}.f32[i] = {va}.f32[i] + {vb}.f32[i];"));
+    ctx.println_fmt(format_args!(
+        "\t\tunsafe {{ {vd}.f32[i] = {va}.f32[i] + {vb}.f32[i]; }}",
+    ));
     ctx.println("\t}");
     true
 }
+
 
 pub(crate) fn handle_vaddshs(ctx: &mut LowerCtx) -> bool {
     // saturated i16 add
@@ -211,12 +220,20 @@ pub(crate) fn handle_vctsx_like(ctx: &mut LowerCtx) -> bool {
 pub(crate) fn handle_vcfsx_like(ctx: &mut LowerCtx) -> bool {
     // signed i32 -> float with scale 2^-sh
     ctx.set_flush_mode(true);
-    let d=ctx.op_reg(0); let a=ctx.op_reg(1);
+    let d  = ctx.op_reg(0);
+    let a  = ctx.op_reg(1);
     let sh = ctx.op_imm(2) as i32;
-    let vd=ctx.v(d).to_string(); let va=ctx.v(a).to_string();
-    ctx.println_fmt(format_args!("\tlet scale = f32::from_bits(((127u32 - ({sh} as u32)) << 23));"));
+
+    let vd = ctx.v(d).to_string();
+    let va = ctx.v(a).to_string();
+
+    ctx.println_fmt(format_args!(
+        "\tlet scale = f32::from_bits(((127u32 - ({sh} as u32)) << 23));"
+    ));
     ctx.println("\tfor i in 0..4 {");
-    ctx.println_fmt(format_args!("\t\t{vd}.f32[i] = ({va}.s32[i] as f32) * scale;"));
+    ctx.println_fmt(format_args!(
+        "\t\tunsafe {{ {vd}.f32[i] = ({va}.s32[i] as f32) * scale; }}",
+    ));
     ctx.println("\t}");
     true
 }
@@ -233,9 +250,18 @@ pub(crate) fn handle_vcfux_like(ctx: &mut LowerCtx) -> bool {
     ctx.println_fmt(format_args!(
         "\t// vcfux/vcuxwfp128: {vd}.f32[i] = ( {vb}.u32[i] as f32 ) * (2.0f32).powi({uimm});"
     ));
+
+    ctx.println("\tunsafe {");
+    ctx.println("\t\tfor i in 0..4 {");
     ctx.println_fmt(format_args!(
-        "\tfor i in 0..4 {{ {vd}.f32[i] = ({vb}.u32[i] as f32) * (2.0f32).powi({uimm}); }}"
+        "\t\t\t{vd}.f32[i] = ({vb}.u32[i] as f32) * (2.0f32).powi({uimm});",
+        vd = vd,
+        vb = vb,
+        uimm = uimm,
     ));
+    ctx.println("\t\t}");
+    ctx.println("\t}");
+
     true
 }
 
@@ -253,11 +279,26 @@ pub(crate) fn handle_vnmsubfp_like(ctx: &mut LowerCtx) -> bool {
 pub(crate) fn handle_vsubfp_like(ctx: &mut LowerCtx) -> bool {
     // per-lane f32 subtract
     ctx.set_flush_mode(true);
-    let d=ctx.op_reg(0); let a=ctx.op_reg(1); let b=ctx.op_reg(2);
-    let vd=ctx.v(d).to_string(); let va=ctx.v(a).to_string(); let vb=ctx.v(b).to_string();
-    ctx.println("\tfor i in 0..4 {");
-    ctx.println_fmt(format_args!("\t\t{vd}.f32[i] = {va}.f32[i] - {vb}.f32[i];"));
+
+    let d = ctx.op_reg(0);
+    let a = ctx.op_reg(1);
+    let b = ctx.op_reg(2);
+
+    let vd = ctx.v(d).to_string();
+    let va = ctx.v(a).to_string();
+    let vb = ctx.v(b).to_string();
+
+    ctx.println("\tunsafe {");
+    ctx.println("\t\tfor i in 0..4 {");
+    ctx.println_fmt(format_args!(
+        "\t\t\t{vd}.f32[i] = {va}.f32[i] - {vb}.f32[i];",
+        vd = vd,
+        va = va,
+        vb = vb,
+    ));
+    ctx.println("\t\t}");
     ctx.println("\t}");
+
     true
 }
 
